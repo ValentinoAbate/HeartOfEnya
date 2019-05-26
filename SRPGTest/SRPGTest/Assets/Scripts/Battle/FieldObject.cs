@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class FieldObject : MonoBehaviour
 {
-    public enum ObjectType
+    public enum ObjType
     {
         Party,
         Enemy,
-        Object,
+        Item,
+        Obstacle,
     }
+    public bool CanShareSquare { get => objType == ObjType.Item; }
     [SerializeField]
-    private ObjectType objType;
-    public ObjectType ObjType { get => objType; set => objType = value; }
+    private ObjType objType;
+    public ObjType ObjectType { get => objType; set => objType = value; }
     public int Row { get; set; }
     public int Col { get; set; }
+    public BattleGrid.Pos Pos { get => new BattleGrid.Pos(Row, Col); }
 
     public virtual bool Select() { return false; }
+    public virtual void Highlight() { }
+    public virtual void UnHighlight() { }
 
     [System.Serializable]
     public class Matrix : Serializable2DMatrix<FieldObject>

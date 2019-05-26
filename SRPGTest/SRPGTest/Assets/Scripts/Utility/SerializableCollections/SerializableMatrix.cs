@@ -106,6 +106,11 @@ public class Serializable2DMatrix<T> : IEnumerable<T>
         _cols = columns;
         _data = data;
     }
+
+    public bool Contains(int row, int col)
+    {
+        return row >= 0 && col >= 0 && row < Rows && col < Columns;
+    }
     // Warning: shallow copy if reference type!
     public Serializable2DMatrix<T> rotated90()
     {

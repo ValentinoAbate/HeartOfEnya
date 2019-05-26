@@ -6,12 +6,12 @@ public class PartyPhase : Phase
 {
     public Cursor cursor;
     public List<PartyMember> party;
-    private List<PartyMember> turnAvailible = new List<PartyMember>();
+    public List<PartyMember> turnAvailible;
     private int selected;
-    private bool inMenu = false;
 
     public override Coroutine OnPhaseEnd()
     {
+        cursor.gameObject.SetActive(false);
         return null;
     }
 
@@ -19,45 +19,39 @@ public class PartyPhase : Phase
     {
         Debug.Log("Party Phase Starting");
         turnAvailible.AddRange(party);
+        turnAvailible.ForEach((p) => p.HasTurn = true);
+        selected = -1;
+        SelectNext();
+        cursor.SetActive(true);
         return null;
+    }
+
+    public void EndAction(PartyMember p)
+    {
+        turnAvailible.Remove(p);
+        if (turnAvailible.Count <= 0)
+            PhaseManager.main.NextPhase();
+        SelectNext();
+        cursor.SetActive(true);
+    }
+
+    public void SelectNext()
+    {
+        if (++selected >= turnAvailible.Count)
+            selected = 0;
+        var p = turnAvailible[selected];
+        cursor.Highlight(p.Row, p.Col);
+    }
+
+    public void SelectPrev()
+    {
+        if (--selected < 0)
+            selected = turnAvailible.Count - 1;
+        var p = turnAvailible[selected];
+        cursor.Highlight(p.Row, p.Col);
     }
 
     public override void OnPhaseUpdate()
     {
-        if (inMenu)
-            return;
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (++selected >= turnAvailible.Count)
-                selected = 0;
-            cursor.Select(turnAvailible[selected]);
-        }
-        else if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (--selected < 0)
-                selected = turnAvailible.Count - 1;
-            cursor.Select(turnAvailible[selected]);
-        }
-        else if(Input.GetKeyDown(KeyCode.Return))
-        {
-            var highlighted = BattleGrid.main.GetObject(cursor.Row, cursor.Col);
-            if(highlighted != null)
-            {
-                inMenu = highlighted.Select();
-            }
-        }
-        else
-        {
-            cursor.OnPhaseUpdate();
-        }       
-    }
-
-    public void EndMenu(PartyMember turnTaken)
-    {
-        if (turnTaken != null)
-            turnAvailible.Remove(turnTaken);
-        if (turnAvailible.Count <= 0)
-            PhaseManager.main.NextPhase();
-        inMenu = false;
     }
 }

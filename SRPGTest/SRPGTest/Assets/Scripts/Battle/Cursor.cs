@@ -4,43 +4,93 @@ using UnityEngine;
 
 public class Cursor : MonoBehaviour
 {
+    public BattleGrid.Pos Pos { get => new BattleGrid.Pos(Row, Col); }
     public int Row { get; set; }
     public int Col { get; set; }
     // Start is called before the first frame update
     void Start()
     {
         transform.position = BattleGrid.main.GetSpace(Row, Col);
+        Highlight();
     }
 
-    public void Select(FieldObject f)
+    public virtual void SetActive(bool value)
     {
-        Row = f.Row;
-        Col = f.Col;
+        gameObject.SetActive(value);
+    }
+
+    public virtual void Highlight(int row, int col)
+    {
+        if (row == Row && col == Col)
+            return;
+        if (!BattleGrid.main.IsLegal(row, col))
+            return;
+        var obj = BattleGrid.main.GetObject(row, col);
+        if (obj != null && obj.ObjectType == FieldObject.ObjType.Obstacle)
+            return;
+
+        UnHighlight();
+        Row = row;
+        Col = col;
         transform.position = BattleGrid.main.GetSpace(Row, Col);
+        Highlight();
+    }
+
+    public virtual void Select()
+    {
+        var highlighted = BattleGrid.main.GetObject(Row, Col);
+        if (highlighted != null)
+        {
+            if (highlighted.Select())
+                gameObject.SetActive(false);
+        }
     }
 
     // Update is called once per frame
-    public void OnPhaseUpdate()
+    private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.W))
+        ProecessInput();
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Row - 1 >= 0)
-                transform.position = BattleGrid.main.GetSpace(--Row, Col);
+            (PhaseManager.main.ActivePhase as PartyPhase)?.SelectNext();
         }
-        else if(Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (Row + 1 < BattleGrid.main.Rows)
-                transform.position = BattleGrid.main.GetSpace(++Row, Col);
+            (PhaseManager.main.ActivePhase as PartyPhase)?.SelectPrev();
         }
-        if (Input.GetKeyDown(KeyCode.A))
+    }
+
+    public virtual void ProecessInput()
+    {
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            if (Col - 1 >= 0)
-                transform.position = BattleGrid.main.GetSpace(Row, --Col);
+            Highlight(Row - 1, Col);
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            Highlight(Row + 1, Col);
+        }
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            Highlight(Row, Col - 1);
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            if (Col + 1 < BattleGrid.main.Cols)
-                transform.position = BattleGrid.main.GetSpace(Row, ++Col);
+            Highlight(Row, Col + 1);
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Select();
+        }
+    }
+
+    public void Highlight()
+    {
+        BattleGrid.main.GetObject(Row, Col)?.Highlight();
+    }
+
+    public void UnHighlight()
+    {
+        BattleGrid.main.GetObject(Row, Col)?.UnHighlight();
     }
 }

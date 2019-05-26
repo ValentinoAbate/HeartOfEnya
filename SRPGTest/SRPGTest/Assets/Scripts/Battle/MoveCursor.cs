@@ -24,7 +24,7 @@ public class MoveCursor : Cursor
         enabled = value;
         if(value)
         {
-            traversible = BattleGrid.main.Reachable(partyMember.Pos, partyMember.Move, FieldObject.ObjType.Obstacle, FieldObject.ObjType.Enemy);
+            traversible = BattleGrid.main.Reachable(partyMember.Pos, partyMember.move, FieldObject.ObjType.Obstacle, FieldObject.ObjType.Enemy);
             foreach(var spot in traversible)
                 squares.Add(Instantiate(squarePrefab, BattleGrid.main.GetSpace(spot.row, spot.col), Quaternion.identity));
         }           

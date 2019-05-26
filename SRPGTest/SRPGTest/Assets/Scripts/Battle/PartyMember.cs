@@ -13,6 +13,7 @@ public class PartyMember : Combatant
     private void Start()
     {
         cursor = GetComponent<MoveCursor>();
+        Initialize();
     }
 
     public override bool Select()
@@ -23,6 +24,18 @@ public class PartyMember : Combatant
             return true;
         }
         return false;
+    }
+
+    public override void OnPhaseStart()
+    {
+        base.OnPhaseStart();
+        HasTurn = true;
+    }
+
+    public void Attack()
+    {
+        var target = BattleGrid.main.GetObject(Row, Col + 1) as Combatant;
+        target?.Damage(atk);
     }
 
     public void EndAction()

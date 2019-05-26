@@ -19,7 +19,7 @@ public class PartyPhase : Phase
     {
         Debug.Log("Party Phase Starting");
         turnAvailible.AddRange(party);
-        turnAvailible.ForEach((p) => p.HasTurn = true);
+        turnAvailible.ForEach((p) => p.OnPhaseStart() );
         selected = -1;
         SelectNext();
         cursor.SetActive(true);

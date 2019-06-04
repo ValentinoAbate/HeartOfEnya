@@ -12,6 +12,7 @@ public class EnemyPhase : Phase
 
     public override Coroutine OnPhaseStart()
     {
+        enemies.RemoveAll((e) => e == null);
         Debug.Log("Starting Enemy Phase");
         return StartCoroutine(PlayTurns());
     }
@@ -24,7 +25,11 @@ public class EnemyPhase : Phase
     private IEnumerator PlayTurns()
     {
         foreach (var enemy in enemies)
-            yield return enemy.DoTurn();       
+        {
+            enemy.OnPhaseStart();
+            yield return enemy.DoTurn();
+        }
+                 
     }
 
 }

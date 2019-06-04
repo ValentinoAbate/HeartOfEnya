@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class PartyPhase : Phase
 {
-    public Cursor cursor;
+    public SelectNextCursor cursor;
     public List<PartyMember> party;
-    public List<PartyMember> turnAvailible;
     private int selected;
 
     public override Coroutine OnPhaseEnd()
@@ -17,41 +16,27 @@ public class PartyPhase : Phase
 
     public override Coroutine OnPhaseStart()
     {
+        party.RemoveAll((e) => e == null);
         Debug.Log("Party Phase Starting");
-        turnAvailible.AddRange(party);
-        turnAvailible.ForEach((p) => p.OnPhaseStart() );
-        selected = -1;
-        SelectNext();
+        cursor.SelectionList.Clear();
+        cursor.SelectionList.AddRange(party);
+        party.ForEach((p) => p.OnPhaseStart() );
+        cursor.HighlightFirst();
         cursor.SetActive(true);
         return null;
     }
 
     public void EndAction(PartyMember p)
     {
-        turnAvailible.Remove(p);
-        if (turnAvailible.Count <= 0)
+        cursor.SelectionList.Remove(p);
+        if (cursor.SelectionList.Count <= 0)
             PhaseManager.main.NextPhase();
-        SelectNext();
-        cursor.SetActive(true);
+        else
+        {
+            cursor.HighlightNext();
+            cursor.SetActive(true);
+        }
     }
 
-    public void SelectNext()
-    {
-        if (++selected >= turnAvailible.Count)
-            selected = 0;
-        var p = turnAvailible[selected];
-        cursor.Highlight(p.Row, p.Col);
-    }
-
-    public void SelectPrev()
-    {
-        if (--selected < 0)
-            selected = turnAvailible.Count - 1;
-        var p = turnAvailible[selected];
-        cursor.Highlight(p.Row, p.Col);
-    }
-
-    public override void OnPhaseUpdate()
-    {
-    }
+    public override void OnPhaseUpdate() { }
 }

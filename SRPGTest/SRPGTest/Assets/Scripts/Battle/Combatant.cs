@@ -12,6 +12,7 @@ public class Combatant : FieldObject
     public int move;
     public int cook;
 
+    public bool Dead { get => Hp == 0; }
     private int hp;
     public int Hp
     {
@@ -35,7 +36,10 @@ public class Combatant : FieldObject
 
     public Text hpText;
     public Text armorText;
-
+    private void Start()
+    {
+        Initialize();
+    }
     public void Initialize()
     {
         Hp = maxHp;
@@ -51,6 +55,12 @@ public class Combatant : FieldObject
         }
         else
             Hp = Mathf.Max(0, hp - damage);
+        if (Dead)
+            Kill();
+    }
+    public virtual void Kill()
+    {
+        Destroy(gameObject);
     }
 
     public override void OnPhaseStart()

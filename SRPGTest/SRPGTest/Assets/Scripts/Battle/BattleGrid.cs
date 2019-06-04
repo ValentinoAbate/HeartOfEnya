@@ -45,14 +45,14 @@ public class BattleGrid : MonoBehaviour
             objects[i].transform.position = GetSpace(pos.y, pos.x);
         }
     }
-
+    public Vector2 GetSpace(Pos pos) => GetSpace(pos.row, pos.col);
     public Vector2 GetSpace(int row, int col)
     {
         float y = transform.position.y - row * (cellSize.y + skew.y + linewidth) + linewidth;
         float x = transform.position.x + col * (cellSize.x + skew.x + linewidth) + linewidth;
         return new Vector2(x, y);
     }
-
+    public FieldObject GetObject(Pos pos) => GetObject(pos.row, pos.col);
     public FieldObject GetObject(int row, int col)
     {
         if (IsLegal(row, col))
@@ -60,16 +60,24 @@ public class BattleGrid : MonoBehaviour
         return null;
     }
 
+    public bool IsEmpty(Pos pos) => IsEmpty(pos.row, pos.col);
     public bool IsEmpty(int row, int col)
     {
         return field[row, col] == null;
     }
 
+    public bool IsLegal(Pos pos) => IsLegal(pos.row, pos.col);
     public bool IsLegal(int row, int col)
     {
         return field.Contains(row, col);
     }
 
+    public void Remove(FieldObject obj)
+    {
+        field[obj.Row, obj.Col] = null;
+    }
+
+    public bool Move(Pos src, Pos dest) => Move(src.row, src.col, dest.row, dest.col);
     public bool Move(int srcRow, int srcCol, int dstRow, int dstCol)
     {
         if (!IsEmpty(dstRow, dstCol) || IsEmpty(srcRow, srcCol))
@@ -82,7 +90,7 @@ public class BattleGrid : MonoBehaviour
         return true;
     }
 
-    public HashSet<Pos> Reachable(Pos startPos, int moveRange, params FieldObject.ObjType[] nonTraversible)
+    public HashSet<Pos> Reachable(Pos startPos, int range, params FieldObject.ObjType[] nonTraversible)
     {
         #region Initialize return set and distances
         var ret = new HashSet<Pos>();
@@ -97,21 +105,24 @@ public class BattleGrid : MonoBehaviour
             // Inner adjacency method
             List<Pos> Adj(Pos node)
             {
-                bool Traversible(int row, int col)
-                {
-                    Pos travPos = new Pos(row, col);
-                    return IsLegal(row, col) && (!distances.ContainsKey(travPos) || currDepth + 1 < distances[travPos]) &&
-                        (field[row, col] == null || nonTraversible.All((t) => field[row, col].ObjectType != t));
-                }
                 var positions = new List<Pos>();
-                if (Traversible(node.row, node.col - 1))
-                    positions.Add(new Pos(node.row, node.col - 1));
-                if (Traversible(node.row, node.col + 1))
-                    positions.Add(new Pos(node.row, node.col + 1));
-                if (Traversible(node.row - 1, node.col))
-                    positions.Add(new Pos(node.row - 1, node.col));
-                if (Traversible(node.row + 1, node.col))
-                    positions.Add(new Pos(node.row + 1, node.col));
+                var travPos = node.Offset(0, -1);
+                bool Traversible()
+                {
+                    return IsLegal(travPos) && (!distances.ContainsKey(travPos) || currDepth + 1 < distances[travPos]) &&
+                        (field[travPos.row, travPos.col] == null || nonTraversible.All((t) => field[travPos.row, travPos.col].ObjectType != t));
+                }
+                if (Traversible())
+                    positions.Add(travPos);
+                travPos.col += 2;
+                if (Traversible())
+                    positions.Add(travPos);
+                travPos = node.Offset(-1, 0);
+                if (Traversible())
+                    positions.Add(travPos);
+                travPos.row += 2;
+                if (Traversible())
+                    positions.Add(travPos);
                 return positions;
             }
             // Log discovery and distance
@@ -124,11 +135,11 @@ public class BattleGrid : MonoBehaviour
             {
                 distances.Add(p, currDepth);
                 // Only Log in return if the square is empty or can be ended on
-                if (field[p.row, p.col] == null || field[p.row, p.col].CanShareSquare)
+                //if (field[p.row, p.col] == null || field[p.row, p.col].CanShareSquare)
                     ret.Add(p);
             }
             // End Recursion
-            if (currDepth >= moveRange)
+            if (currDepth >= range)
                 return;
             // Get adjacent nodes
             var nodes = Adj(p);
@@ -149,6 +160,10 @@ public class BattleGrid : MonoBehaviour
         {
             this.row = row;
             this.col = col;
+        }
+        public Pos Offset(int rowOff, int colOff)
+        {
+            return new Pos(row + rowOff, col + colOff);
         }
 
         public override bool Equals(object obj)

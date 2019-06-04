@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PartyMember))]
-public class MoveCursor : Cursor
+public class MoveCursor : GridCursor
 {
     public GameObject squarePrefab;
     private BattleGrid.Pos lastPosition;
@@ -13,9 +13,8 @@ public class MoveCursor : Cursor
     private void Start()
     {
         partyMember = GetComponent<PartyMember>();
-        Row = partyMember.Row;
-        Col = partyMember.Col;
-        lastPosition = new BattleGrid.Pos(Row, Col);
+        Pos = partyMember.Pos;
+        lastPosition = Pos;
         enabled = false;
     }
 
@@ -30,21 +29,20 @@ public class MoveCursor : Cursor
         }           
     }
 
-    public override void Highlight(int row, int col)
+    public override void Highlight(BattleGrid.Pos newPos)
     {
-        if (row == Row && col == Col)
+        if (newPos == Pos)
             return;
-        if (!traversible.Contains(new BattleGrid.Pos(row, col)))
+        if (!traversible.Contains(newPos))
             return;
-        Row = row;
-        Col = col;
-        transform.position = BattleGrid.main.GetSpace(Row, Col);
+        Pos = newPos;
+        transform.position = BattleGrid.main.GetSpace(Pos);
     }
 
     public override void Select()
     {
         lastPosition = new BattleGrid.Pos(partyMember.Row, partyMember.Col);
-        BattleGrid.main.Move(partyMember.Row, partyMember.Col, Row, Col);
+        BattleGrid.main.Move(partyMember.Pos, Pos);
         foreach (var obj in squares)
             Destroy(obj);
         squares.Clear();
@@ -54,13 +52,13 @@ public class MoveCursor : Cursor
 
     public void ResetToLastPosition()
     {
-        Highlight(lastPosition.row, lastPosition.col);
-        BattleGrid.main.Move(partyMember.Row, partyMember.Col, Row, Col);
+        Highlight(lastPosition);
+        BattleGrid.main.Move(partyMember.Pos, Pos);
     }
 
     // Update is called once per frame
     private void Update()
     {
-        ProecessInput();
+        ProcessInput();
     }
 }

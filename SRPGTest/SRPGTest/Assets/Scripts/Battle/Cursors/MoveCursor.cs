@@ -24,7 +24,9 @@ public class MoveCursor : GridCursor
         if(value)
         {
             traversible = BattleGrid.main.Reachable(partyMember.Pos, partyMember.move, FieldObject.ObjType.Obstacle, FieldObject.ObjType.Enemy);
-            foreach(var spot in traversible)
+            traversible.RemoveWhere((pos) => (!BattleGrid.main.IsEmpty(pos) && !BattleGrid.main.GetObject(pos).CanShareSquare));
+            traversible.Add(Pos);
+            foreach (var spot in traversible)
                 squares.Add(Instantiate(squarePrefab, BattleGrid.main.GetSpace(spot.row, spot.col), Quaternion.identity));
         }           
     }

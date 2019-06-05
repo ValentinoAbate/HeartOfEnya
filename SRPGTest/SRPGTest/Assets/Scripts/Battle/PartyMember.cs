@@ -32,12 +32,6 @@ public class PartyMember : Combatant
         HasTurn = true;
     }
 
-    public void Attack()
-    {
-        var target = BattleGrid.main.GetObject(Row, Col + 1) as Combatant;
-        target?.Damage(atk);
-    }
-
     public void EndAction()
     {
         var phase = PhaseManager.main.ActivePhase as PartyPhase;

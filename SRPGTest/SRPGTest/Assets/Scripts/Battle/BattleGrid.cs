@@ -143,8 +143,7 @@ public class BattleGrid : MonoBehaviour
             {
                 distances.Add(p, currDepth);
                 // Only Log in return if the square is empty or can be ended on
-                if (field[p.row, p.col] == null || field[p.row, p.col].CanShareSquare)
-                    ret.Add(p);
+                ret.Add(p);
             }
             // End Recursion
             if (currDepth >= range)

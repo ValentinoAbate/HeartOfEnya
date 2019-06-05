@@ -45,6 +45,12 @@ public class BattleGrid : MonoBehaviour
             objects[i].transform.position = GetSpace(pos.y, pos.x);
         }
     }
+
+    public GameObject SpawnDebugSquare(Pos p)
+    {
+        return Instantiate(debugSquarePrefab, GetSpace(p), Quaternion.identity);
+    }
+
     public Vector2 GetSpace(Pos pos) => GetSpace(pos.row, pos.col);
     public Vector2 GetSpace(int row, int col)
     {
@@ -60,6 +66,11 @@ public class BattleGrid : MonoBehaviour
         return null;
     }
 
+    public void RemoveObject(FieldObject obj)
+    {
+        field[obj.Row, obj.Col] = null;
+    }
+
     public bool IsEmpty(Pos pos) => IsEmpty(pos.row, pos.col);
     public bool IsEmpty(int row, int col)
     {
@@ -72,10 +83,7 @@ public class BattleGrid : MonoBehaviour
         return field.Contains(row, col);
     }
 
-    public void Remove(FieldObject obj)
-    {
-        field[obj.Row, obj.Col] = null;
-    }
+    
 
     public bool Move(Pos src, Pos dest) => Move(src.row, src.col, dest.row, dest.col);
     public bool Move(int srcRow, int srcCol, int dstRow, int dstCol)
@@ -135,7 +143,7 @@ public class BattleGrid : MonoBehaviour
             {
                 distances.Add(p, currDepth);
                 // Only Log in return if the square is empty or can be ended on
-                //if (field[p.row, p.col] == null || field[p.row, p.col].CanShareSquare)
+                if (field[p.row, p.col] == null || field[p.row, p.col].CanShareSquare)
                     ret.Add(p);
             }
             // End Recursion
@@ -151,6 +159,42 @@ public class BattleGrid : MonoBehaviour
         ReachableRecursive(startPos, 0);
         return ret;
     }
+
+    public List<Pos> Path(Pos start, Pos goal, params FieldObject.ObjType[] nonTraversible)
+    {
+        List<Pos> NodeAdj(Pos p) => Adj(p, (pos) => Traversible(pos, nonTraversible));
+        return AStar.Pathfind(start, goal, NodeAdj, (p, pAdj) => 1, Dist);
+    }
+
+    List<Pos> Adj(Pos node, System.Predicate<Pos> traversible)
+    {
+        var positions = new List<Pos>();
+        var travPos = node.Offset(0, -1);
+        if (traversible(travPos))
+            positions.Add(travPos);
+        travPos.col += 2;
+        if (traversible(travPos))
+            positions.Add(travPos);
+        travPos = node.Offset(-1, 0);
+        if (traversible(travPos))
+            positions.Add(travPos);
+        travPos.row += 2;
+        if (traversible(travPos))
+            positions.Add(travPos);
+        return positions;
+    }
+
+    bool Traversible(Pos travPos, params FieldObject.ObjType[] nonTraversible)
+    {
+        return IsLegal(travPos) 
+            && (field[travPos.row, travPos.col] == null || nonTraversible.All((t) => field[travPos.row, travPos.col].ObjectType != t));
+    }
+
+    float Dist(Pos p, Pos p2)
+    {
+        return Math.Abs(p2.row - p.row) + Math.Abs(p2.col - p.col);
+    }
+
 
     public struct Pos : IEquatable<Pos>
     {
@@ -173,8 +217,7 @@ public class BattleGrid : MonoBehaviour
 
         public bool Equals(Pos other)
         {
-            return row == other.row &&
-                    col == other.col;
+            return row == other.row && col == other.col;
         }
 
         public override int GetHashCode()

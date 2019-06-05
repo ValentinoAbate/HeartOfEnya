@@ -6,6 +6,7 @@ public class PhaseManager : MonoBehaviour
 {
     public static PhaseManager main;
     public Phase ActivePhase { get => phases[currPhase]; }
+    public List<PartyMember> Party { get => (phases.Find((p) => p is PartyPhase) as PartyPhase)?.party; }
     public List<Phase> phases;
     private int currPhase;
     private bool transitioning = true;

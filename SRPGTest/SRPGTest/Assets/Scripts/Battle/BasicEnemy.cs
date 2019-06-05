@@ -6,16 +6,35 @@ public class BasicEnemy : Enemy
 {
     public override Coroutine DoTurn()
     {
-        var targetPositions = BattleGrid.main.Reachable(Pos, 1, ObjType.Enemy);
-        foreach(var target in targetPositions)
+        return StartCoroutine(TurnCR());
+    }
+
+    private IEnumerator TurnCR()
+    {
+        //Debug.Log("FindingReachable");
+        //var targetPositions = BattleGrid.main.Reachable(Pos, 1000, ObjType.Enemy, ObjType.Obstacle);
+        foreach (var target in PhaseManager.main.Party)
         {
-            var obj = BattleGrid.main.GetObject(target) as Combatant;
-            if(obj != null && obj.ObjectType != ObjType.Enemy)
+            if (target != null && target.ObjectType != ObjType.Enemy)
             {
-                obj.Damage(atk);
-                Debug.Log(name + " attacks " + obj.name + " for " + atk + " damage!");
+                Debug.Log("FindingPath");
+                var path = BattleGrid.main.Path(Pos, target.Pos, ObjType.Enemy, ObjType.Obstacle);
+                if (path != null)
+                {
+                    List<GameObject> objs = new List<GameObject>();
+                    foreach (var node in path)
+                    {
+                        objs.Add(BattleGrid.main.SpawnDebugSquare(node));
+                        
+                    }
+                    yield return new WaitForSeconds(2f);
+                    foreach (var debugObj in objs)
+                        Destroy(debugObj);
+                }
+                target.Damage(atk);
+                Debug.Log(name + " attacks " + target.name + " for " + atk + " damage!");
+                yield return new WaitForSeconds(1);
             }
         }
-        return null;
     }
 }

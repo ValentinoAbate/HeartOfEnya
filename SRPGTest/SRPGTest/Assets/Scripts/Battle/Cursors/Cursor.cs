@@ -4,14 +4,14 @@ using UnityEngine;
 
 public abstract class Cursor : MonoBehaviour
 {
-    public BattleGrid.Pos Pos { get; set; }
+    public Pos Pos { get; set; }
 
     public virtual void SetActive(bool value)
     {
         gameObject.SetActive(value);
     }
 
-    public abstract void Highlight(BattleGrid.Pos pos);
+    public abstract void Highlight(Pos pos);
 
     public virtual void Select()
     {

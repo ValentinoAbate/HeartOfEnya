@@ -21,7 +21,7 @@ public class SelectNextCursor : Cursor
         
     }
 
-    public override void Highlight(BattleGrid.Pos newPos)
+    public override void Highlight(Pos newPos)
     {
         BattleGrid.main.GetObject(Pos)?.UnHighlight();
         Pos = newPos;

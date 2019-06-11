@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnemyPhase : Phase
 {
-    public List<Enemy> enemies = new List<Enemy>();
+    public List<Enemy> Enemies { get; } = new List<Enemy>();
+
     public override Coroutine OnPhaseEnd()
     {
         return null;
@@ -12,8 +13,7 @@ public class EnemyPhase : Phase
 
     public override Coroutine OnPhaseStart()
     {
-        enemies.RemoveAll((e) => e == null);
-        Debug.Log("Starting Enemy Phase");
+        Enemies.RemoveAll((e) => e == null);
         return StartCoroutine(PlayTurns());
     }
 
@@ -24,7 +24,7 @@ public class EnemyPhase : Phase
 
     private IEnumerator PlayTurns()
     {
-        foreach (var enemy in enemies)
+        foreach (var enemy in Enemies)
         {
             enemy.OnPhaseStart();
             yield return enemy.DoTurn();

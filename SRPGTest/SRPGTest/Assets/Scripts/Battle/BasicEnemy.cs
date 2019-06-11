@@ -13,7 +13,7 @@ public class BasicEnemy : Enemy
     {
         //Debug.Log("FindingReachable");
         //var targetPositions = BattleGrid.main.Reachable(Pos, 1000, ObjType.Enemy, ObjType.Obstacle);
-        foreach (var target in PhaseManager.main.Party)
+        foreach (var target in PhaseManager.main.PartyPhase.Party)
         {
             if (target != null && target.ObjectType != ObjType.Enemy)
             {

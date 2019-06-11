@@ -20,7 +20,7 @@ public class Combatant : FieldObject
         set
         {
             hp = value;
-            hpText.text = hp + " / " + maxHp;
+            hpText.text = hp.ToString();
         }
     }
     private int armor;
@@ -30,20 +30,18 @@ public class Combatant : FieldObject
         set
         {
             armor = value;
-            armorText.text = armor + " / " + def;
+            armorText.text = armor.ToString();
         }
     }
 
     public Text hpText;
     public Text armorText;
-    private void Start()
+
+    protected override void Initialize()
     {
-        Initialize();
-    }
-    public void Initialize()
-    {
+        base.Initialize();
         Hp = maxHp;
-        Armor = def;
+        Armor = def;       
     }
     public void Damage(int damage)
     {

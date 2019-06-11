@@ -6,9 +6,9 @@ using UnityEngine;
 public class MoveCursor : GridCursor
 {
     public GameObject squarePrefab;
-    private BattleGrid.Pos lastPosition;
+    private Pos lastPosition;
     private PartyMember partyMember;
-    private HashSet<BattleGrid.Pos> traversible;
+    private HashSet<Pos> traversible;
     private List<GameObject> squares = new List<GameObject>();
     private void Start()
     {
@@ -27,11 +27,11 @@ public class MoveCursor : GridCursor
             traversible.RemoveWhere((pos) => (!BattleGrid.main.IsEmpty(pos) && !BattleGrid.main.GetObject(pos).CanShareSquare));
             traversible.Add(Pos);
             foreach (var spot in traversible)
-                squares.Add(Instantiate(squarePrefab, BattleGrid.main.GetSpace(spot.row, spot.col), Quaternion.identity));
+                squares.Add(Instantiate(squarePrefab, BattleGrid.main.GetSpace(spot), Quaternion.identity));
         }           
     }
 
-    public override void Highlight(BattleGrid.Pos newPos)
+    public override void Highlight(Pos newPos)
     {
         if (newPos == Pos)
             return;
@@ -43,7 +43,7 @@ public class MoveCursor : GridCursor
 
     public override void Select()
     {
-        lastPosition = new BattleGrid.Pos(partyMember.Row, partyMember.Col);
+        lastPosition = partyMember.Pos;
         BattleGrid.main.Move(partyMember.Pos, Pos);
         foreach (var obj in squares)
             Destroy(obj);

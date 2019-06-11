@@ -6,8 +6,9 @@ public class PhaseManager : MonoBehaviour
 {
     public static PhaseManager main;
     public Phase ActivePhase { get => phases[currPhase]; }
-    public List<PartyMember> Party { get => (phases.Find((p) => p is PartyPhase) as PartyPhase)?.party; }
-    public List<Phase> phases;
+    public PartyPhase PartyPhase { get; set; }
+    public EnemyPhase EnemyPhase { get; set; }
+    private List<Phase> phases;
     private int currPhase;
     private bool transitioning = true;
 
@@ -16,9 +17,22 @@ public class PhaseManager : MonoBehaviour
         if (main == null)
         {
             main = this;
+            InitializePhases();
         }
         else
             Destroy(gameObject);
+    }
+
+    private void InitializePhases()
+    {
+        phases = new List<Phase>(); 
+        phases.AddRange(GetComponentsInChildren<Phase>());
+        PartyPhase = phases.Find((p) => p is PartyPhase) as PartyPhase;
+        if (PartyPhase == null)
+            Debug.LogError("Improper Phase Manager Setup: No Party Phase Found");
+        EnemyPhase = phases.Find((p) => p is EnemyPhase) as EnemyPhase;
+        if (EnemyPhase == null)
+            Debug.LogError("Improper Phase Manager Setup: No Enemy Phase Found");
     }
 
     // Start is called before the first frame update
@@ -53,6 +67,7 @@ public class PhaseManager : MonoBehaviour
         yield return ActivePhase.OnPhaseEnd();
         if (++currPhase >= phases.Count)
             currPhase = 0;
+        Debug.Log("Starting Phase: " + ActivePhase.displayName);
         yield return ActivePhase.OnPhaseStart();
         transitioning = false;
     }

@@ -5,8 +5,9 @@ using UnityEngine;
 public class PartyPhase : Phase
 {
     public SelectNextCursor cursor;
-    public List<PartyMember> party;
     private int selected;
+
+    public List<PartyMember> Party { get; } = new List<PartyMember>();
 
     public override Coroutine OnPhaseEnd()
     {
@@ -16,11 +17,10 @@ public class PartyPhase : Phase
 
     public override Coroutine OnPhaseStart()
     {
-        party.RemoveAll((e) => e == null);
-        Debug.Log("Party Phase Starting");
+        Party.RemoveAll((e) => e == null);
         cursor.SelectionList.Clear();
-        cursor.SelectionList.AddRange(party);
-        party.ForEach((p) => p.OnPhaseStart() );
+        cursor.SelectionList.AddRange(Party);
+        Party.ForEach((p) => p.OnPhaseStart() );
         cursor.HighlightFirst();
         cursor.SetActive(true);
         return null;

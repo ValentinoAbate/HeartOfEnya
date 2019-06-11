@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Phase : MonoBehaviour
 {
-    public string ID;
+    public string displayName;
 
     public abstract Coroutine OnPhaseStart();
     public abstract Coroutine OnPhaseEnd();

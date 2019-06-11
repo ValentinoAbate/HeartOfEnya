@@ -11,7 +11,7 @@ public class GridCursor : Cursor
         Highlight();
     }
 
-    public override void Highlight(BattleGrid.Pos newPos)
+    public override void Highlight(Pos newPos)
     {
         if (newPos == Pos)
             return;

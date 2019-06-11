@@ -10,10 +10,11 @@ public class PartyMember : Combatant
     public bool HasTurn { get; set; } = false;
     private MoveCursor cursor;
 
-    private void Start()
+    protected override void Initialize()
     {
+        base.Initialize();
         cursor = GetComponent<MoveCursor>();
-        Initialize();
+        PhaseManager.main?.PartyPhase.Party.Add(this);
     }
 
     public override bool Select()

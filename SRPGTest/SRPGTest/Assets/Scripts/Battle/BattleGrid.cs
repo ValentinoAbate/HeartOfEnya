@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 
+[ExecuteInEditMode]
 public class BattleGrid : MonoBehaviour
 {
     public int Rows { get => field.Rows; }
@@ -15,12 +16,8 @@ public class BattleGrid : MonoBehaviour
     public Vector2Int dimensions;
     public Vector2 cellSize;
     public Vector2 skew;
-    [SerializeField]
-    private FieldObject.Matrix field;
+    private Matrix field;
 
-    //Temp Debug Fields
-    public List<Vector2Int> positions;
-    public List<FieldObject> objects;
     private void Awake()
     {
         if (main == null)
@@ -33,70 +30,81 @@ public class BattleGrid : MonoBehaviour
 
     }
 
-    private void Initialize()
+    private void Update()
     {
-        field = new FieldObject.Matrix(dimensions.y, dimensions.x);
-        for (int i = 0; i < Mathf.Min(positions.Count, objects.Count); ++i)
+        if(!Application.isPlaying && main == null)
         {
-            var pos = positions[i];
-            field[pos.y, pos.x] = objects[i];
-            objects[i].Col = pos.x;
-            objects[i].Row = pos.y;
-            objects[i].transform.position = GetSpace(pos.y, pos.x);
+            main = this;
+            Initialize();
         }
     }
+
+    private void Initialize()
+    {
+        field = new Matrix(dimensions.y, dimensions.x);
+    }
+
+    #region Debugging
 
     public GameObject SpawnDebugSquare(Pos p)
     {
         return Instantiate(debugSquarePrefab, GetSpace(p), Quaternion.identity);
     }
 
-    public Vector2 GetSpace(Pos pos) => GetSpace(pos.row, pos.col);
-    public Vector2 GetSpace(int row, int col)
+    #endregion
+
+    #region Field Methods
+
+    public Vector2 GetSpace(Pos pos)
     {
-        float y = transform.position.y - row * (cellSize.y + skew.y + linewidth) + linewidth;
-        float x = transform.position.x + col * (cellSize.x + skew.x + linewidth) + linewidth;
+        float y = transform.position.y - pos.row * (cellSize.y + skew.y + linewidth) + linewidth;
+        float x = transform.position.x + pos.col * (cellSize.x + skew.x + linewidth) + linewidth;
         return new Vector2(x, y);
     }
-    public FieldObject GetObject(Pos pos) => GetObject(pos.row, pos.col);
-    public FieldObject GetObject(int row, int col)
+
+    public Pos GetPos (Vector2 worldSpace)
     {
-        if (IsLegal(row, col))
-            return field[row, col];
+        int row = Mathf.FloorToInt(transform.position.y + 0.5f - worldSpace.y / (cellSize.y + skew.y + linewidth * 2));
+        int col = Mathf.FloorToInt(worldSpace.x - transform.position.x / (cellSize.x + skew.x + linewidth * 2)) + 1;
+        return new Pos(row, col);
+    }
+
+    public FieldObject GetObject(Pos pos)
+    {
+        if (IsLegal(pos))
+            return field.Get(pos);
         return null;
+    }
+
+    public void SetObject(Pos pos, FieldObject value)
+    {
+        if(IsLegal(pos))
+            field.Set(pos, value);
     }
 
     public void RemoveObject(FieldObject obj)
     {
-        field[obj.Row, obj.Col] = null;
+        field.Set(obj.Pos, null);
     }
 
-    public bool IsEmpty(Pos pos) => IsEmpty(pos.row, pos.col);
-    public bool IsEmpty(int row, int col)
-    {
-        return field[row, col] == null;
-    }
+    public bool IsEmpty(Pos pos) => field.Get(pos) == null;
 
-    public bool IsLegal(Pos pos) => IsLegal(pos.row, pos.col);
-    public bool IsLegal(int row, int col)
-    {
-        return field.Contains(row, col);
-    }
+    public bool IsLegal(Pos pos) => field.Contains(pos.row, pos.col);    
 
-    
-
-    public bool Move(Pos src, Pos dest) => Move(src.row, src.col, dest.row, dest.col);
-    public bool Move(int srcRow, int srcCol, int dstRow, int dstCol)
+    public bool Move(Pos src, Pos dest)
     {
-        if (!IsEmpty(dstRow, dstCol) || IsEmpty(srcRow, srcCol))
+        if (!IsEmpty(dest) || IsEmpty(src))
             return false;
-        var obj = field[srcRow, srcCol];
-        field[dstRow, dstCol] = obj;
-        field[srcRow, srcCol] = null;
-        obj.Row = dstRow;
-        obj.Col = dstCol;
+        var obj = field.Get(src);
+        field.Set(dest, obj);
+        field.Set(src, null);
+        obj.Pos = dest;
         return true;
     }
+
+    #endregion
+
+    #region Pathing and Reachablilty
 
     public HashSet<Pos> Reachable(Pos startPos, int range, params FieldObject.ObjType[] nonTraversible)
     {
@@ -194,54 +202,26 @@ public class BattleGrid : MonoBehaviour
         return Math.Abs(p2.row - p.row) + Math.Abs(p2.col - p.col);
     }
 
+    #endregion
 
-    public struct Pos : IEquatable<Pos>
+    [System.Serializable]
+    public class Matrix : Serializable2DMatrix<FieldObject>
     {
-        public int row;
-        public int col;
-        public Pos(int row, int col)
+        public Matrix(int rows, int columns) : base(rows, columns)
         {
-            this.row = row;
-            this.col = col;
-        }
-        public Pos Offset(int rowOff, int colOff)
-        {
-            return new Pos(row + rowOff, col + colOff);
+
         }
 
-        public override bool Equals(object obj)
+        public void Set(Pos p, FieldObject value)
         {
-            return obj is Pos && Equals((Pos)obj);
+            this[p.row, p.col] = value;
         }
 
-        public bool Equals(Pos other)
+        public FieldObject Get(Pos p)
         {
-            return row == other.row && col == other.col;
+            return this[p.row, p.col];
         }
-
-        public override int GetHashCode()
-        {
-            var hashCode = -1720622044;
-            hashCode = hashCode * -1521134295 + row.GetHashCode();
-            hashCode = hashCode * -1521134295 + col.GetHashCode();
-            return hashCode;
-        }
-
-        public override string ToString()
-        {
-            return "row: " + row + " col: " + col;
-        }
-
-        public static bool operator ==(Pos pos1, Pos pos2)
-        {
-            return pos1.Equals(pos2);
-        }
-
-        public static bool operator !=(Pos pos1, Pos pos2)
-        {
-            return !(pos1 == pos2);
-        }
-    }
+    };
 
 }
 

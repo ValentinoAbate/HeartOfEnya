@@ -89,7 +89,15 @@ public class BattleGrid : MonoBehaviour
 
     public bool IsEmpty(Pos pos) => field.Get(pos) == null;
 
-    public bool IsLegal(Pos pos) => field.Contains(pos.row, pos.col);    
+    public bool IsLegal(Pos pos) => field.Contains(pos.row, pos.col);
+
+    public bool MoveAndSetPosition(FieldObject obj, Pos dest)
+    {
+        bool moveSuccess = Move(obj.Pos, dest);
+        if (moveSuccess)
+            obj.transform.position = GetSpace(obj.Pos);
+        return moveSuccess;
+    }
 
     public bool Move(Pos src, Pos dest)
     {
@@ -170,10 +178,10 @@ public class BattleGrid : MonoBehaviour
     public List<Pos> Path(Pos start, Pos goal, params FieldObject.ObjType[] nonTraversible)
     {
         List<Pos> NodeAdj(Pos p) => Adj(p, (pos) => Traversible(pos, nonTraversible));
-        return AStar.Pathfind(start, goal, NodeAdj, (p, pAdj) => 1, Dist);
+        return AStar.Pathfind(start, goal, NodeAdj, (p, pAdj) => 1, (p1, p2) => Pos.Distance(p1,p2));
     }
 
-    List<Pos> Adj(Pos node, System.Predicate<Pos> traversible)
+    List<Pos> Adj(Pos node, Predicate<Pos> traversible)
     {
         var positions = new List<Pos>();
         var travPos = node.Offset(0, -1);
@@ -197,9 +205,15 @@ public class BattleGrid : MonoBehaviour
             && (field[travPos.row, travPos.col] == null || nonTraversible.All((t) => field[travPos.row, travPos.col].ObjectType != t));
     }
 
-    float Dist(Pos p, Pos p2)
+    public FieldObject SearchArea(Pos p, int range, Predicate<FieldObject> pred, params FieldObject.ObjType[] nonTraversible)
     {
-        return Math.Abs(p2.row - p.row) + Math.Abs(p2.col - p.col);
+        foreach(var node in Reachable(p, range, nonTraversible))
+        {
+            var obj = field.Get(node);
+            if (pred(obj))
+                return obj;
+        }
+        return null;
     }
 
     #endregion

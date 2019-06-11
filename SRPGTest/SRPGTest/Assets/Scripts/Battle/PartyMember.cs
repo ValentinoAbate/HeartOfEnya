@@ -5,8 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(MoveCursor))]
 public class PartyMember : Combatant
 {
-    public GameObject ActionMenu;
-    public UnityEngine.UI.Button FirstButton;
+    public ActionMenu ActionMenu;
     public bool HasTurn { get; set; } = false;
     private MoveCursor cursor;
 
@@ -42,12 +41,11 @@ public class PartyMember : Combatant
     public void OpenActionMenu()
     {
         ActionMenu.SetActive(true);
-        FirstButton.Select();
     }
 
     public void CloseActionMenu()
     {
-        ActionMenu.gameObject.SetActive(false);
+        ActionMenu.SetActive(false);
     }
 
     public void CancelActionMenu()

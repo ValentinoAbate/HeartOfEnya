@@ -61,11 +61,11 @@ public class SelectNextCursor : Cursor
 
     public override void ProcessInput()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             HighlightNext();
         }
-        else if (Input.GetKeyDown(KeyCode.Q))
+        else if (Input.GetKeyDown(KeyCode.A))
         {
             HighlightPrev();
         }

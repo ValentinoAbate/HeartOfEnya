@@ -8,6 +8,12 @@ public struct Pos : IEquatable<Pos>
 {
     public int row;
     public int col;
+
+    public static int Distance(Pos p, Pos p2)
+    {
+        return Math.Abs(p2.row - p.row) + Math.Abs(p2.col - p.col);
+    }
+
     public Pos(int row, int col)
     {
         this.row = row;

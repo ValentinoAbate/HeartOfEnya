@@ -8,9 +8,11 @@ public class SingleTargetAttackCursor : SelectNextCursor
     public FieldObject.ObjType[] blockedBy;
     public FieldObject.ObjType[] ignore;
     public Combatant attacker;
+    private List<GameObject> targetGraphics = new List<GameObject>();
 
     public void CalculateTargets(int range)
     {
+        HideTargets();
         Pos = attacker.Pos;
         SelectionList.Clear();
         var positions = BattleGrid.main.Reachable(Pos, range, blockedBy);
@@ -23,6 +25,26 @@ public class SingleTargetAttackCursor : SelectNextCursor
         }
         if (SelectionList.Count > 0)
             HighlightFirst();
+    }
+
+    public void ShowTargets(int range)
+    {
+        Pos = attacker.Pos;
+        var positions = BattleGrid.main.Reachable(Pos, range, blockedBy);
+        foreach (var p in positions)
+        {
+            var obj = BattleGrid.main.GetObject(p) as Combatant;
+            if (obj == null || ignore.Any((t) => t == obj.ObjectType))
+                continue;
+            targetGraphics.Add(BattleGrid.main.SpawnDebugSquare(p));
+        }
+    }
+
+    public void HideTargets()
+    {
+        foreach (var obj in targetGraphics)
+            Destroy(obj);
+        targetGraphics.Clear();
     }
 
     public override void Select()

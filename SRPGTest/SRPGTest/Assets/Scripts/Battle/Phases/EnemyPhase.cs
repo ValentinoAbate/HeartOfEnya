@@ -14,6 +14,8 @@ public class EnemyPhase : Phase
     public override Coroutine OnPhaseStart()
     {
         Enemies.RemoveAll((e) => e == null);
+        // Farthest to right takes action first
+        Enemies.Sort((e, e2) => e2.Col.CompareTo(e.Col));
         return StartCoroutine(PlayTurns());
     }
 

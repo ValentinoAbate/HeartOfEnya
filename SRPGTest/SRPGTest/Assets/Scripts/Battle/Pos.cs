@@ -8,6 +8,10 @@ public struct Pos : IEquatable<Pos>
 {
     public int row;
     public int col;
+    /// <summary>
+    /// Returns the magnitude of this position considered as a Vector2Int squared
+    /// </summary>
+    public int SquareMagnitude { get => row * row + col * col; }
 
     public static int Distance(Pos p, Pos p2)
     {
@@ -45,6 +49,16 @@ public struct Pos : IEquatable<Pos>
     public override string ToString()
     {
         return "row: " + row + " col: " + col;
+    }
+
+    public static Pos operator -(Pos pos1, Pos pos2)
+    {
+        return new Pos(pos1.row - pos2.row, pos1.col - pos2.col);
+    }
+
+    public static Pos operator +(Pos pos1, Pos pos2)
+    {
+        return new Pos(pos1.row + pos2.row, pos1.col + pos2.col);
     }
 
     public static bool operator ==(Pos pos1, Pos pos2)

@@ -38,5 +38,10 @@ public class PartyPhase : Phase
         }
     }
 
+    public void CancelAction(PartyMember p)
+    {
+        cursor.SetActive(true);
+    }
+
     public override void OnPhaseUpdate() { }
 }

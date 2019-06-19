@@ -2,46 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartyPhase : Phase
+public abstract class PartyPhase : Phase
 {
-    public SelectNextCursor cursor;
-    private int selected;
-
+    public abstract Cursor Cursor { get; }
     public List<PartyMember> Party { get; } = new List<PartyMember>();
 
-    public override Coroutine OnPhaseEnd()
-    {
-        cursor.gameObject.SetActive(false);
-        return null;
-    }
+    public abstract void EndAction(PartyMember member);
 
-    public override Coroutine OnPhaseStart()
+    public virtual void CancelAction(PartyMember p)
     {
-        Party.RemoveAll((e) => e == null);
-        cursor.SelectionList.Clear();
-        cursor.SelectionList.AddRange(Party);
-        Party.ForEach((p) => p.OnPhaseStart() );
-        cursor.HighlightFirst();
-        cursor.SetActive(true);
-        return null;
+        Cursor.SetActive(true);
     }
-
-    public void EndAction(PartyMember p)
-    {
-        cursor.SelectionList.Remove(p);
-        if (cursor.SelectionList.Count <= 0)
-            PhaseManager.main.NextPhase();
-        else
-        {
-            cursor.HighlightNext();
-            cursor.SetActive(true);
-        }
-    }
-
-    public void CancelAction(PartyMember p)
-    {
-        cursor.SetActive(true);
-    }
-
-    public override void OnPhaseUpdate() { }
 }

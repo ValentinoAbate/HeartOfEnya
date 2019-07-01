@@ -20,7 +20,7 @@ public class PartyPhaseWholeTeam : PartyPhase
         Party.RemoveAll((e) => e == null);
         selectNextCursor.SelectionList.Clear();
         selectNextCursor.SelectionList.AddRange(Party);
-        Party.ForEach((p) => p.OnPhaseStart() );
+        Party.ForEach((p) => p.OnPhaseStart());
         selectNextCursor.HighlightFirst();
         selectNextCursor.SetActive(true);
         return null;

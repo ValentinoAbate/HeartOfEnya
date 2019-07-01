@@ -9,5 +9,4 @@ public abstract class Enemy : Combatant
         base.Initialize();
         PhaseManager.main?.EnemyPhase.Enemies.Add(this);
     }
-    public abstract Coroutine DoTurn();
 }

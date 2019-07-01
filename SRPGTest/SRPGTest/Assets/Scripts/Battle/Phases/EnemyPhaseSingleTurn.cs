@@ -30,8 +30,7 @@ public class EnemyPhaseSingleTurn : EnemyPhase
         {
             activeTurnMember = EnemiesTurnOrder.Dequeue();
         }
-        activeTurnMember.OnPhaseStart();
-        return activeTurnMember.DoTurn();
+        return activeTurnMember.StartTurn();
     }
 
     public override void OnPhaseUpdate()

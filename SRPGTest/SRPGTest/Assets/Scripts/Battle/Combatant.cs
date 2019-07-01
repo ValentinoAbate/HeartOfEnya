@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Combatant : FieldObject
 {
+    public System.Func<Pos, Coroutine> preparedAction;
+    public TargetPattern preparedTarget;
     public int maxHp;  
     public int atk;
     public int def;    
@@ -58,12 +60,32 @@ public class Combatant : FieldObject
     }
     public virtual void Kill()
     {
+        preparedTarget?.Hide();
         Destroy(gameObject);
     }
 
-    public override void OnPhaseStart()
+    public override Coroutine StartTurn()
     {
         Armor = def;
+        if(preparedAction == null)
+            return null;
+
+        return StartCoroutine(DoPreparedAction());
+    }
+
+    protected void PrepareAction(System.Func<Pos, Coroutine> action, TargetPattern targets)
+    {
+        preparedAction = action;
+        preparedTarget = targets;
+        preparedTarget.Show(BattleGrid.main.debugSquarePrefab);
+    }
+    protected IEnumerator DoPreparedAction()
+    {
+        preparedTarget.Hide();
+        foreach(var pos in preparedTarget.Positions)
+        {
+            yield return preparedAction(pos);
+        }
     }
 
 }

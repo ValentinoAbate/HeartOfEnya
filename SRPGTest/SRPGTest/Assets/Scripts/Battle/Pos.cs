@@ -6,6 +6,8 @@ using System;
 [Serializable]
 public struct Pos : IEquatable<Pos>
 {
+    public static Pos Origin { get; } = new Pos(0, 0);
+    public Vector2 AsVector2 { get => new Vector2(col, row); }
     public int row;
     public int col;
     /// <summary>

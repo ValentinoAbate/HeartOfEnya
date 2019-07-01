@@ -35,10 +35,15 @@ public class PartyPhaseSingleTurn : PartyPhase
         {
             activeTurnMember = PartyTurnOrder.Dequeue();
         }
-        activeTurnMember.OnPhaseStart();
+        StartCoroutine(TurnCr());
+        return null;
+    }
+
+    private IEnumerator TurnCr()
+    {
+        yield return activeTurnMember.StartTurn();
         Cursor.Highlight(activeTurnMember.Pos);
         Cursor.SetActive(true);
-        return null;
     }
 
     public override void OnPhaseUpdate() { }

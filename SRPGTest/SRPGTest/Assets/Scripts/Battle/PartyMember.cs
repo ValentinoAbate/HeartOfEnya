@@ -26,10 +26,11 @@ public class PartyMember : Combatant
         return false;
     }
 
-    public override void OnPhaseStart()
+    public override Coroutine StartTurn()
     {
-        base.OnPhaseStart();
-        HasTurn = true;
+        base.StartTurn();
+        cursor.SetActive(true);
+        return null;
     }
 
     public void EndAction()
@@ -53,5 +54,10 @@ public class PartyMember : Combatant
         ActionMenu.gameObject.SetActive(false);
         cursor.ResetToLastPosition();
         cursor.SetActive(true);
+    }
+
+    public override void OnPhaseStart()
+    {
+        HasTurn = true;
     }
 }

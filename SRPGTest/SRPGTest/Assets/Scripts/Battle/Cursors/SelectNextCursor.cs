@@ -34,8 +34,8 @@ public class SelectNextCursor : Cursor
         var highlighted = BattleGrid.main.GetObject(Pos);
         if (highlighted != null)
         {
-            if (highlighted.Select())
-                gameObject.SetActive(false);
+            highlighted.StartTurn();
+            SetActive(false);
         }
     }
 

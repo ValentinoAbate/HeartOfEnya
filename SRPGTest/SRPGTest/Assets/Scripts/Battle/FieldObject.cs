@@ -34,6 +34,7 @@ public class FieldObject : MonoBehaviour
     public virtual bool Select() { return false; }
     public virtual void Highlight() { }
     public virtual void UnHighlight() { }
+    public virtual Coroutine StartTurn() { return null; }    
     public virtual void OnPhaseStart() { }
     public virtual void OnPhaseEnd() { }
 }

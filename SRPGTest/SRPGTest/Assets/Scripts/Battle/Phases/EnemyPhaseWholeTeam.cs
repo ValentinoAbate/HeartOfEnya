@@ -26,8 +26,7 @@ public class EnemyPhaseWholeTeam : EnemyPhase
     {
         foreach (var enemy in Enemies)
         {
-            enemy.OnPhaseStart();
-            yield return enemy.DoTurn();
+            yield return enemy.StartTurn();
         }
                  
     }

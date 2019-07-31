@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Combatant : FieldObject
+public abstract class Combatant : FieldObject
 {
     public System.Func<Pos, Coroutine> preparedAction;
     public TargetPattern preparedTarget;
@@ -44,6 +44,11 @@ public class Combatant : FieldObject
         base.Initialize();
         Hp = maxHp;
         Armor = def;       
+    }
+
+    public override bool CanMoveThrough(FieldObject other)
+    {
+        return other == null || (other is Combatant && other.Allegiance == Allegiance);
     }
     public void Damage(int damage)
     {

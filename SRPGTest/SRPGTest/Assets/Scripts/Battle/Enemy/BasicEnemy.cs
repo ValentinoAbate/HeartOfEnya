@@ -20,7 +20,7 @@ public class BasicEnemy : Enemy
         
         foreach (var target in targetList)
         {
-            var path = BattleGrid.main.Path(Pos, target.Pos, ObjType.Enemy, ObjType.Obstacle);
+            var path = BattleGrid.main.Path(Pos, target.Pos, (obj) => CanMoveThrough(obj) || obj == target);
             if (path == null)
                 continue;
             path.RemoveAt(path.Count - 1);

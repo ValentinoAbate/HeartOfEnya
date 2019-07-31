@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class FieldObject : MonoBehaviour
 {
-    public enum ObjType
+    public enum Team
     {
         Party,
         Enemy,
-        Item,
-        Obstacle,
+        Neutral,
     }
-    public bool CanShareSquare { get => objType == ObjType.Item; }
-    [SerializeField]
-    private ObjType objType;
-    public ObjType ObjectType { get => objType; set => objType = value; }
+    public virtual Team Allegiance { get => Team.Neutral; }
     public int Row { get => pos.row; set => pos.row = value; }
     public int Col { get => pos.col; set => pos.col = value; }
     [SerializeField]
@@ -26,6 +23,7 @@ public class FieldObject : MonoBehaviour
         Initialize();
     }
 
+    public virtual bool CanMoveThrough(FieldObject other) => true;
     protected virtual void Initialize()
     {
         BattleGrid.main.SetObject(Pos, this);

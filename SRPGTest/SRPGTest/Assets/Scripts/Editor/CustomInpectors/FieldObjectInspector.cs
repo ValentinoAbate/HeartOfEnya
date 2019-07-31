@@ -14,7 +14,10 @@ public class FieldObjectInpector : Editor
         if(GUILayout.Button("Set Grid Position from World Pos"))
         {
             if (BattleGrid.main == null)
+            {
                 Debug.LogWarning("No detected battle grid. Please reload scene or add one");
+                return;
+            }
             serializedObject.Update();
             var newPos = BattleGrid.main.GetPos(obj.transform.position);
             var posProp = serializedObject.FindProperty("pos");

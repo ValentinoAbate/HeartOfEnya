@@ -17,9 +17,6 @@ public class GridCursor : Cursor
             return;
         if (!BattleGrid.main.IsLegal(newPos))
             return;
-        var obj = BattleGrid.main.GetObject(newPos);
-        if (obj != null && obj.ObjectType == FieldObject.ObjType.Obstacle)
-            return;
 
         UnHighlight();
         Pos = newPos;

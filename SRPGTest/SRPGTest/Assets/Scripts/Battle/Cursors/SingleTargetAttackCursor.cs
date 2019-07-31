@@ -5,21 +5,21 @@ using System.Linq;
 
 public class SingleTargetAttackCursor : SelectNextCursor
 {
-    public FieldObject.ObjType[] blockedBy;
-    public FieldObject.ObjType[] ignore;
+    public bool ranged;
+    public FieldObject.Team[] ignore;
     public Combatant attacker;
-    private List<GameObject> targetGraphics = new List<GameObject>();
+    private readonly List<GameObject> targetGraphics = new List<GameObject>();
 
     public void CalculateTargets(int range)
     {
         HideTargets();
         Pos = attacker.Pos;
         SelectionList.Clear();
-        var positions = BattleGrid.main.Reachable(Pos, range, blockedBy);
+        var positions = BattleGrid.main.Reachable(Pos, range, CanMoveThrough);
         foreach(var p in positions)
         {
             var obj = BattleGrid.main.GetObject(p) as Combatant;
-            if (obj == null || ignore.Any((t) => t == obj.ObjectType))
+            if (obj == null || ignore.Any((t) => t == obj.Allegiance))
                 continue;
             SelectionList.Add(obj);
         }
@@ -30,11 +30,11 @@ public class SingleTargetAttackCursor : SelectNextCursor
     public void ShowTargets(int range)
     {
         Pos = attacker.Pos;
-        var positions = BattleGrid.main.Reachable(Pos, range, blockedBy);
+        var positions = BattleGrid.main.Reachable(Pos, range, CanMoveThrough);
         foreach (var p in positions)
         {
             var obj = BattleGrid.main.GetObject(p) as Combatant;
-            if (obj == null || ignore.Any((t) => t == obj.ObjectType))
+            if (obj == null || ignore.Any((t) => t == obj.Allegiance))
                 continue;
             targetGraphics.Add(BattleGrid.main.SpawnDebugSquare(p));
         }
@@ -53,5 +53,10 @@ public class SingleTargetAttackCursor : SelectNextCursor
         target.Damage(attacker.atk);
         SetActive(false);
         (attacker as PartyMember)?.EndAction();
+    }
+
+    public bool CanMoveThrough(FieldObject obj)
+    {
+        return obj == null || ranged;
     }
 }

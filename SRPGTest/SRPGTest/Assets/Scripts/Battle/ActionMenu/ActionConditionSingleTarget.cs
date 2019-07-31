@@ -9,11 +9,11 @@ public class ActionConditionSingleTarget : ActionCondition
     public SingleTargetAttackCursor cursor;
     public override bool CheckCondition()
     {
-        return BattleGrid.main.SearchArea(cursor.attacker.Pos, range, IsTarget, cursor.blockedBy);
+        return BattleGrid.main.SearchArea(cursor.attacker.Pos, range, cursor.CanMoveThrough, IsTarget);
     }
 
     private bool IsTarget(FieldObject obj)
     {
-        return !(obj == null || cursor.ignore.Any((t) => t == obj.ObjectType));
+        return !(obj == null || obj == cursor.attacker || cursor.ignore.Any((t) => t == obj.Allegiance));
     }
 }

@@ -8,8 +8,8 @@ public class MoveCursor : GridCursor
     public GameObject squarePrefab;
     private Pos lastPosition;
     private PartyMember partyMember;
-    private HashSet<Pos> traversible;
-    private List<GameObject> squares = new List<GameObject>();
+    private List<Pos> traversable;
+    private readonly List<GameObject> squares = new List<GameObject>();
     private void Start()
     {
         partyMember = GetComponent<PartyMember>();
@@ -24,18 +24,18 @@ public class MoveCursor : GridCursor
         if(value)
         {
             lastPosition = Pos;
-            traversible = BattleGrid.main.Reachable(partyMember.Pos, partyMember.move, FieldObject.ObjType.Obstacle, FieldObject.ObjType.Party, FieldObject.ObjType.Enemy);
-            traversible.RemoveWhere((pos) => (!BattleGrid.main.IsEmpty(pos) && !BattleGrid.main.GetObject(pos).CanShareSquare));
-            traversible.Add(Pos);
+            traversable = BattleGrid.main.Reachable(partyMember.Pos, partyMember.move, partyMember.CanMoveThrough);
+            traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
+            traversable.Add(Pos);
         }
-        DisplayTraversible(value);
+        DisplayTraversable(value);
     }
 
-    public void DisplayTraversible(bool value)
+    public void DisplayTraversable(bool value)
     {
         if(value)
         {
-            foreach (var spot in traversible)
+            foreach (var spot in traversable)
                 squares.Add(Instantiate(squarePrefab, BattleGrid.main.GetSpace(spot), Quaternion.identity));
         }
         else
@@ -50,7 +50,7 @@ public class MoveCursor : GridCursor
     {
         if (newPos == Pos)
             return;
-        if (!traversible.Contains(newPos))
+        if (!traversable.Contains(newPos))
         {
             Pos difference = newPos - Pos;
             if (difference.SquareMagnitude > partyMember.move * partyMember.move)

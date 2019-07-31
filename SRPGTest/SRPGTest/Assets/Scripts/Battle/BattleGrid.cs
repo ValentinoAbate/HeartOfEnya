@@ -114,41 +114,19 @@ public class BattleGrid : MonoBehaviour
 
     #region Pathing and Reachablilty
 
-    public HashSet<Pos> Reachable(Pos startPos, int range, params FieldObject.ObjType[] nonTraversible)
+    public List<Pos> Reachable(Pos startPos, int range, Predicate<FieldObject> canMoveThrough)
     {
-        #region Initialize return set and distances
-        var ret = new HashSet<Pos>();
-        var distances = new Dictionary<Pos, int>();
-        ret.Add(startPos);
-        distances.Add(startPos, 0);
-        #endregion
+        // Initialize distances with the startPosition
+        var distances = new Dictionary<Pos, int> { { startPos, 0 } };
 
         // Inner recursive method
         void ReachableRecursive(Pos p, int currDepth)
         {
-            // Inner adjacency method
-            List<Pos> Adj(Pos node)
+            bool Traversable(Pos pos)
             {
-                var positions = new List<Pos>();
-                var travPos = node.Offset(0, -1);
-                bool Traversible()
-                {
-                    return IsLegal(travPos) && (!distances.ContainsKey(travPos) || currDepth + 1 < distances[travPos]) &&
-                        (field[travPos.row, travPos.col] == null || nonTraversible.All((t) => field[travPos.row, travPos.col].ObjectType != t));
-                }
-                if (Traversible())
-                    positions.Add(travPos);
-                travPos.col += 2;
-                if (Traversible())
-                    positions.Add(travPos);
-                travPos = node.Offset(-1, 0);
-                if (Traversible())
-                    positions.Add(travPos);
-                travPos.row += 2;
-                if (Traversible())
-                    positions.Add(travPos);
-                return positions;
-            }
+                return (!distances.ContainsKey(pos) || currDepth + 1 < distances[pos]) && StdTraversable(pos, canMoveThrough);
+            };
+
             // Log discovery and distance
             if (distances.ContainsKey(p))
             {
@@ -158,56 +136,52 @@ public class BattleGrid : MonoBehaviour
             else
             {
                 distances.Add(p, currDepth);
-                // Only Log in return if the square is empty or can be ended on
-                ret.Add(p);
             }
             // End Recursion
             if (currDepth >= range)
                 return;
             // Get adjacent nodes
-            var nodes = Adj(p);
+            var nodes = Adj(p, (travPos) => !Traversable(travPos));
             // Recur
             foreach (var node in nodes)
                 ReachableRecursive(node, currDepth + 1);
         }
         // Start Recursion
         ReachableRecursive(startPos, 0);
-        return ret;
+        return distances.Keys.ToList();
     }
 
-    public List<Pos> Path(Pos start, Pos goal, params FieldObject.ObjType[] nonTraversible)
+    public List<Pos> Path(Pos start, Pos goal, Predicate<FieldObject> canMoveThrough)
     {
-        List<Pos> NodeAdj(Pos p) => Adj(p, (pos) => Traversible(pos, nonTraversible));
+        List<Pos> NodeAdj(Pos p) => Adj(p, (pos) => StdNonTraversable(pos, canMoveThrough));
         return AStar.Pathfind(start, goal, NodeAdj, (p, pAdj) => 1, (p1, p2) => Pos.Distance(p1,p2));
     }
 
-    List<Pos> Adj(Pos node, Predicate<Pos> traversible)
+    List<Pos> Adj(Pos pos, Predicate<Pos> nonTraversable)
     {
-        var positions = new List<Pos>();
-        var travPos = node.Offset(0, -1);
-        if (traversible(travPos))
-            positions.Add(travPos);
-        travPos.col += 2;
-        if (traversible(travPos))
-            positions.Add(travPos);
-        travPos = node.Offset(-1, 0);
-        if (traversible(travPos))
-            positions.Add(travPos);
-        travPos.row += 2;
-        if (traversible(travPos))
-            positions.Add(travPos);
+        var positions = new List<Pos>()
+        {
+            pos.Offset( 0, 1),
+            pos.Offset( 0,-1),
+            pos.Offset( 1, 0),
+            pos.Offset(-1, 0),
+        };
+        positions.RemoveAll(nonTraversable);
         return positions;
     }
 
-    bool Traversible(Pos travPos, params FieldObject.ObjType[] nonTraversible)
+    bool StdTraversable(Pos pos, Predicate<FieldObject> canMoveThrough)
     {
-        return IsLegal(travPos) 
-            && (field[travPos.row, travPos.col] == null || nonTraversible.All((t) => field[travPos.row, travPos.col].ObjectType != t));
+        if (!IsLegal(pos))
+            return false;
+        return canMoveThrough(field.Get(pos));
     }
 
-    public FieldObject SearchArea(Pos p, int range, Predicate<FieldObject> pred, params FieldObject.ObjType[] nonTraversible)
+    bool StdNonTraversable(Pos pos, Predicate<FieldObject> canMoveThrough) => !StdTraversable(pos, canMoveThrough);
+
+    public FieldObject SearchArea(Pos p, int range, Predicate<FieldObject> canMoveThrough, Predicate<FieldObject> pred)
     {
-        foreach(var node in Reachable(p, range, nonTraversible))
+        foreach(var node in Reachable(p, range, canMoveThrough))
         {
             var obj = field.Get(node);
             if (pred(obj))
@@ -236,7 +210,6 @@ public class BattleGrid : MonoBehaviour
             return this[p.row, p.col];
         }
     };
-
 }
 
 

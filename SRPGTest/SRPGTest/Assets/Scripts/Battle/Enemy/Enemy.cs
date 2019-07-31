@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy : Combatant
+public class Enemy : Combatant
 {
+    public override Team Allegiance { get => Team.Enemy; }
     protected override void Initialize()
     {
         base.Initialize();

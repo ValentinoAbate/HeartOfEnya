@@ -17,6 +17,7 @@ public class BattleGrid : MonoBehaviour
     public Vector2 cellSize;
     public Vector2 skew;
     private Matrix field;
+    private Dictionary<Pos, List<EventTile>> eventTiles;
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class BattleGrid : MonoBehaviour
     private void Initialize()
     {
         field = new Matrix(dimensions.y, dimensions.x);
+        eventTiles = new Dictionary<Pos, List<EventTile>>();
     }
 
     #region Debugging
@@ -69,6 +71,14 @@ public class BattleGrid : MonoBehaviour
         return new Pos(row, col);
     }
 
+    public bool IsLegal(Pos pos) => field.Contains(pos.row, pos.col);
+
+    #endregion
+
+    #region Field Object Methods
+
+    public bool IsEmpty(Pos pos) => field.Get(pos) == null;
+
     public FieldObject GetObject(Pos pos)
     {
         if (IsLegal(pos))
@@ -87,10 +97,6 @@ public class BattleGrid : MonoBehaviour
         field.Set(obj.Pos, null);
     }
 
-    public bool IsEmpty(Pos pos) => field.Get(pos) == null;
-
-    public bool IsLegal(Pos pos) => field.Contains(pos.row, pos.col);
-
     public bool MoveAndSetPosition(FieldObject obj, Pos dest)
     {
         bool moveSuccess = Move(obj.Pos, dest);
@@ -107,9 +113,46 @@ public class BattleGrid : MonoBehaviour
         field.Set(dest, obj);
         field.Set(src, null);
         obj.Pos = dest;
+        // Activate any event tiles if present
+        if (eventTiles.ContainsKey(dest))
+            eventTiles[dest].ForEach((et) => et.OnSteppedOn(obj));
         return true;
     }
 
+    #endregion
+
+    #region Tile Event Methods
+    public void AddEventTile(Pos pos, EventTile e)
+    {
+        if (!IsLegal(pos))
+            return;
+        if(!eventTiles.ContainsKey(pos))
+        {
+            eventTiles.Add(pos, new List<EventTile>() { e });
+        }
+        else
+        {
+            var tiles = eventTiles[pos];
+            // If the tile we are trying to add is a primary type
+            if (e.TileType == EventTile.TType.Primary)
+            {
+                var primaryTile = tiles.Find((et) => et.TileType == EventTile.TType.Primary);
+                if (primaryTile != null)
+                    return;
+            }
+            tiles.Add(e);
+        }
+    }
+    public void RemoveEventTile(Pos pos, EventTile e)
+    {
+        if (!IsLegal(pos) || !eventTiles.ContainsKey(pos))
+            return;
+        var events = eventTiles[pos];
+        if (events.Count == 1)
+            eventTiles.Remove(pos);
+        else
+            events.Remove(e);
+    }
     #endregion
 
     #region Pathing and Reachablilty

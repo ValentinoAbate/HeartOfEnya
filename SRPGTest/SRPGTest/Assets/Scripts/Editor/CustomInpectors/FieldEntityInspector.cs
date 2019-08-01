@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 
-[CustomEditor(typeof(FieldObject), true)]
-public class FieldObjectInpector : Editor
+[CustomEditor(typeof(FieldEntity), true)]
+[CanEditMultipleObjects]
+public class FieldEntityInpector : Editor
 {
     public override void OnInspectorGUI()
     {
-        var obj = target as FieldObject;
+        var obj = target as FieldEntity;
         base.OnInspectorGUI();
         if(GUILayout.Button("Set Grid Position from World Pos"))
         {

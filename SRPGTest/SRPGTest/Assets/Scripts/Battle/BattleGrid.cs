@@ -236,7 +236,7 @@ public class BattleGrid : MonoBehaviour
     #endregion
 
     [System.Serializable]
-    public class Matrix : Serializable2DMatrix<FieldObject>
+    public class Matrix : SerializableCollections.SMatrix2D<FieldObject>
     {
         public Matrix(int rows, int columns) : base(rows, columns)
         {

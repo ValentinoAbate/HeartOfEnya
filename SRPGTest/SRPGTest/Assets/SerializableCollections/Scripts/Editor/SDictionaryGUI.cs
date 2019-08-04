@@ -11,12 +11,16 @@ namespace SerializableCollections.EditorGUIUtils
         public delegate void AddGUI();
         public delegate T GetNew<T>();
 
+        #region AddGUI options
+
         #region String
         public static void StringAddGUI<TValue>(this SDictionary<string, TValue> dict, ref string toAdd) where TValue : new()
         {
             StringAddGUI(dict, ref toAdd, () => new TValue());
         }
-
+        /// <summary>
+        /// Extension method for String add GUI that initilizes new values with defualt
+        /// </summary>
         public static void StringAddGUID<TValue>(this SDictionary<string, TValue> dict, ref string toAdd)
         {
             StringAddGUI(dict, ref toAdd, () => default);
@@ -97,6 +101,22 @@ namespace SerializableCollections.EditorGUIUtils
                 menu.ShowAsContext();
             }
         }
+
+        #endregion
+
+        #region ValueGUI options
+
+        public static TValue ValueGUIObjAllowSceneAssets<TKey, TValue>(this SDictionary<TKey, TValue> dict, TValue value) where TValue : UnityEngine.Object
+        {
+            return EditorUtils.ObjectField(value, true);
+        }
+
+        public static TValue ValueGUIObj<TKey, TValue>(this SDictionary<TKey, TValue> dict, TValue value) where TValue : UnityEngine.Object
+        {
+            return EditorUtils.ObjectField(value, false);
+        }
+
+        #endregion
 
         public static void DoGUILayout<TKey, TValue>(this SDictionary<TKey, TValue> dict, ValueGUI<TValue> valueGUI, AddGUI addGUI, string title, bool oneLine = false)
         {

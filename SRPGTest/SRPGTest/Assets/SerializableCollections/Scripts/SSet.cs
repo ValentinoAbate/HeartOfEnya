@@ -13,7 +13,7 @@ namespace SerializableCollections
     public class SSet<T> : ISerializationCallbackReceiver, IEnumerable<T>
     {
         HashSet<T> _hashset = new HashSet<T>(); // Internal HashSet interface
-        [SerializeField] private readonly List<T> _items = new List<T>(); // Serializable list of items
+        [SerializeField] private List<T> _items = new List<T>(); // Serializable list of items
 
         #region Set Implementation
         public int Count { get { return _hashset.Count; } }

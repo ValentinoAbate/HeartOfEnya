@@ -5,9 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newCharaData", menuName = "Character Data")]
 public class CharacterData : ScriptableObject
 {
-    public AudioClip textSrollSfx;
+    public AudioClip textScrollSfx;
     public PortraitDict portraits;
 
-    [System.Serializable]
-    public class PortraitDict : SerializableCollections.SDictionary<string, Sprite> { }
+    [System.Serializable]  public class PortraitDict : SerializableCollections.SDictionary<string, Sprite> { }
 }

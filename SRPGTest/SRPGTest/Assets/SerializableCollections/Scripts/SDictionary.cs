@@ -12,8 +12,8 @@ namespace SerializableCollections
     public class SDictionary<TKey, TValue> : ISerializationCallbackReceiver, IEnumerable<KeyValuePair<TKey, TValue>>
     {
         private Dictionary<TKey, TValue> _dictionary = new Dictionary<TKey, TValue>(); // Internal dictionary interface
-        [SerializeField] private readonly List<TKey> _keys = new List<TKey>(); // Serlializable list of keys; Keys and values match up 1-to-1
-        [SerializeField] private readonly List<TValue> _values = new List<TValue>(); // Serlializable list of values
+        [SerializeField] private List<TKey> _keys = new List<TKey>(); // Serlializable list of keys; Keys and values match up 1-to-1
+        [SerializeField] private List<TValue> _values = new List<TValue>(); // Serlializable list of values
 
         #region Dictionary Implementation
         public int Count

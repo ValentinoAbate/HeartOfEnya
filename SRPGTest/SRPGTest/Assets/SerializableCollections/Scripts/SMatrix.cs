@@ -86,7 +86,7 @@ namespace SerializableCollections
     [System.Serializable]
     public class SMatrix2D<T> : IEnumerable<T>
     {
-        [SerializeField] private readonly T[] _data;
+        [SerializeField] private T[] _data;
         [SerializeField] private int _rows;
         public int Rows { get => _rows; }
         [SerializeField] private int _cols;

@@ -16,10 +16,8 @@ public class CharacterDataInspector : Editor
     public override void OnInspectorGUI()
     {
         data.textScrollSfx = EditorUtils.ObjectField(new GUIContent("Text Scroll SFX"), data.textScrollSfx, false);
-        int numPortraits = data.portraits.Count;
-        Sprite valGUI(Sprite spr) => EditorUtils.ObjectField(spr, false);
-        data.portraits.DoGUILayout(valGUI, () => data.portraits.StringAddGUID(ref toAdd), "Portraits", true);
-        if (GUI.changed) //|| data.portraits.Count != numPortraits)
+        data.portraits.DoGUILayout(data.portraits.ValueGUIObj, () => data.portraits.StringAddGUID(ref toAdd), "Portraits", true);
+        if (GUI.changed)
             EditorUtility.SetDirty(data);
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 182550468577840787}
   - component: {fileID: 3135180716048844380}
+  - component: {fileID: 7744906175402212231}
   m_Layer: 0
   m_Name: DialogBox
   m_TagString: Untagged
@@ -47,7 +48,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 182550470058486731}
-  portrait: {fileID: 0}
+  portrait: {fileID: 8465458304078003636}
+--- !u!114 &7744906175402212231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182550468577849708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 531628d37b6806346bbacd1fbc392d39,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.InputSystem.PlayerInput.PlayerInput+DeviceLostEvent, Unity.InputSystem,
+      Version=0.9.0.0, Culture=neutral, PublicKeyToken=null
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.InputSystem.PlayerInput.PlayerInput+DeviceRegainedEvent,
+      Unity.InputSystem, Version=0.9.0.0, Culture=neutral, PublicKeyToken=null
+  m_ActionEvents: []
+  m_AutoSwitchControlScheme: 0
+  m_DefaultControlScheme: Keyboard
+  m_DefaultActionMap: 4fd01db1-b754-43f5-9eea-9bb337f9b9fe
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &182550470058486725
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +92,6 @@ GameObject:
   - component: {fileID: 182550470058486724}
   - component: {fileID: 182550470058486730}
   - component: {fileID: 182550470058486731}
-  - component: {fileID: 182550470058486729}
   m_Layer: 0
   m_Name: Dialog Text
   m_TagString: Untagged
@@ -114,7 +146,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: This is a line of dialog
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -183,13 +215,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 182550470058486731}
-    characterCount: 24
+    characterCount: 0
     spriteCount: 0
-    spaceCount: 5
-    wordCount: 6
+    spaceCount: 0
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -206,21 +238,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &182550470058486729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 182550470058486725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4e0d9ccee5f4950be8979268c9014e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AngleMultiplier: 1
-  SpeedMultiplier: 1
-  CurveScale: 1
 --- !u!1 &182550470167756431
 GameObject:
   m_ObjectHideFlags: 0

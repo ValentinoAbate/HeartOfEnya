@@ -4,29 +4,48 @@ using UnityEngine;
 
 public class SelectNextCursor : Cursor
 {
-    public FieldObject Selected { get => SelectionList[selected]; }
-    public List<FieldObject> SelectionList { get; set; } = new List<FieldObject>();
-    private int selected = 0;
+    public KeyCode nextKey;
+    public KeyCode lastKey;
+    public FieldObject Selected { get => SelectionList[selectedInd]; }
+    public bool Empty => SelectionList.Count <= 0;
+    protected List<FieldObject> SelectionList { get; set; } = new List<FieldObject>();
+    protected int selectedInd = 0;
     // Start is called before the first frame update
     void Start()
     {
         transform.position = BattleGrid.main.GetSpace(Pos);
-        Highlight();
+        Highlight(Pos);
+    }
+
+    public void SetSelected(IEnumerable<FieldObject> objects)
+    {
+        SelectionList.Clear();
+        SelectionList.AddRange(objects);
+    }
+
+    public void RemovedCurrentSelection()
+    {
+        SelectionList.RemoveAt(selectedInd);
+        selectedInd--;
     }
 
     public void HighlightFirst()
     {
-        selected = -1;
+        selectedInd = -1;
         HighlightNext();
         
     }
 
     public override void Highlight(Pos newPos)
     {
+        if (newPos == Pos)
+            return;
+        if (!BattleGrid.main.IsLegal(newPos))
+            return;
         BattleGrid.main.GetObject(Pos)?.UnHighlight();
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(Pos);
-        BattleGrid.main.GetObject(Pos)?.UnHighlight();
+        BattleGrid.main.GetObject(Pos)?.Highlight();
     }
 
     public override void Select()
@@ -34,23 +53,26 @@ public class SelectNextCursor : Cursor
         var highlighted = BattleGrid.main.GetObject(Pos);
         if (highlighted != null)
         {
-            highlighted.StartTurn();
-            SetActive(false);
+            if(highlighted.Select())
+            {
+                highlighted.StartTurn();
+                SetActive(false);
+            }
         }
     }
 
     public void HighlightNext()
     {
-        if (++selected >= SelectionList.Count)
-            selected = 0;
-        Highlight(SelectionList[selected].Pos);
+        if (++selectedInd >= SelectionList.Count)
+            selectedInd = 0;
+        Highlight(SelectionList[selectedInd].Pos);
     }
 
     public void HighlightPrev()
     {
-        if (--selected < 0)
-            selected = SelectionList.Count - 1;
-        Highlight(SelectionList[selected].Pos);
+        if (--selectedInd < 0)
+            selectedInd = SelectionList.Count - 1;
+        Highlight(SelectionList[selectedInd].Pos);
     }
 
     // Update is called once per frame
@@ -61,11 +83,11 @@ public class SelectNextCursor : Cursor
 
     public override void ProcessInput()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(nextKey))
         {
             HighlightNext();
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(lastKey))
         {
             HighlightPrev();
         }
@@ -73,15 +95,5 @@ public class SelectNextCursor : Cursor
         {
             Select();
         }
-    }
-
-    public void Highlight()
-    {
-        BattleGrid.main.GetObject(Pos)?.Highlight();
-    }
-
-    public void UnHighlight()
-    {
-        BattleGrid.main.GetObject(Pos)?.UnHighlight();
     }
 }

@@ -23,12 +23,17 @@ public class MoveCursor : GridCursor
         enabled = value;
         if(value)
         {
-            lastPosition = Pos;
-            traversable = BattleGrid.main.Reachable(partyMember.Pos, partyMember.move, partyMember.CanMoveThrough);
-            traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
-            traversable.Add(Pos);
+            CalculateTraversable();
         }
         DisplayTraversable(value);
+    }
+
+    public void CalculateTraversable()
+    {
+        lastPosition = Pos;
+        traversable = BattleGrid.main.Reachable(partyMember.Pos, partyMember.move, partyMember.CanMoveThrough);
+        traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
+        traversable.Add(Pos);
     }
 
     public void DisplayTraversable(bool value)

@@ -18,8 +18,15 @@ public class PartyPhaseWholeTeam : PartyPhase
     public override Coroutine OnPhaseStart()
     {
         Party.RemoveAll((e) => e == null);
-        selectNextCursor.SelectionList.Clear();
-        selectNextCursor.SelectionList.AddRange(Party);
+        Party.Sort((p1, p2) =>
+        {
+            int colComp = p1.Pos.col.CompareTo(p2.Pos.col);
+            if (colComp != 0)
+                return colComp;
+            return p1.Pos.row.CompareTo(p2.Pos.row);
+        }
+        );
+        selectNextCursor.SetSelected(Party);
         Party.ForEach((p) => p.OnPhaseStart());
         selectNextCursor.HighlightFirst();
         selectNextCursor.SetActive(true);
@@ -28,8 +35,8 @@ public class PartyPhaseWholeTeam : PartyPhase
 
     public override void EndAction(PartyMember p)
     {
-        selectNextCursor.SelectionList.Remove(p);
-        if (selectNextCursor.SelectionList.Count <= 0)
+        selectNextCursor.RemovedCurrentSelection();
+        if (selectNextCursor.Empty)
             EndPhase();
         else
         {

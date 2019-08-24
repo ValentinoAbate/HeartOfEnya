@@ -60,4 +60,15 @@ public class PartyMember : Combatant
     {
         HasTurn = true;
     }
+
+    public override void Highlight()
+    {
+        cursor.CalculateTraversable();
+        cursor.DisplayTraversable(true);
+    }
+
+    public override void UnHighlight()
+    {
+        cursor.DisplayTraversable(false);
+    }
 }

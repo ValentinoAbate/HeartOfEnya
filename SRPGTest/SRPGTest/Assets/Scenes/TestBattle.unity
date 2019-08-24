@@ -127,6 +127,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2088186588}
     m_Modifications:
+    - target: {fileID: 6271636570576552739, guid: 1197fbde662e5c048834af8c7fce9032,
+        type: 3}
+      propertyPath: m_Name
+      value: DebugPrimary
+      objectReference: {fileID: 0}
     - target: {fileID: 6184692411755889503, guid: 1197fbde662e5c048834af8c7fce9032,
         type: 3}
       propertyPath: pos.row
@@ -136,11 +141,6 @@ PrefabInstance:
         type: 3}
       propertyPath: pos.col
       value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 6271636570576552739, guid: 1197fbde662e5c048834af8c7fce9032,
-        type: 3}
-      propertyPath: m_Name
-      value: DebugPrimary
       objectReference: {fileID: 0}
     - target: {fileID: 6271636570576552798, guid: 1197fbde662e5c048834af8c7fce9032,
         type: 3}
@@ -2040,7 +2040,7 @@ MonoBehaviour:
   debugSquarePrefab: {fileID: 1575776492372951534, guid: 58f7decac555de547b3f4fe963dec6a6,
     type: 3}
   linewidth: 0.05
-  dimensions: {x: 100, y: 5}
+  dimensions: {x: 14, y: 5}
   cellSize: {x: 1, y: 1}
   skew: {x: 0, y: 0}
 --- !u!1 &1692863896
@@ -2229,9 +2229,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1698946576}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c0a95364e1bab94085711c8311fa6cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 59234a12c7fd5204b901507b15be3661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextKey: 101
+  lastKey: 113
 --- !u!1 &1942110648
 GameObject:
   m_ObjectHideFlags: 0

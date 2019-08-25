@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beed36a54e459fe41acf0922cba14550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 2
+  ability: {fileID: 8902642157473425592, guid: d77b6dd8000741c43ac2284886090a0c, type: 3}
   cursor: {fileID: 8358593994102641065}
 --- !u!114 &9110266574895770232
 MonoBehaviour:
@@ -23,7 +23,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4582076202183115027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
@@ -32,12 +32,24 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 8358593994102641065}
+          m_MethodName: SetAttack
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8902642157473425592, guid: d77b6dd8000741c43ac2284886090a0c,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: ActiveAbility, Assembly-CSharp
+            m_IntArgument: 2
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 8358593994102641065}
           m_MethodName: ShowTargets
-          m_Mode: 3
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 2
+            m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
@@ -184,6 +196,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2257095481806516413, guid: 7dcb375d3cc89d344bc7d84d5aabc89f,
+        type: 3}
+      propertyPath: ranged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5997579283980197889, guid: 7dcb375d3cc89d344bc7d84d5aabc89f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -222,7 +239,7 @@ PrefabInstance:
     - target: {fileID: 5997579283980197889, guid: 7dcb375d3cc89d344bc7d84d5aabc89f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5997579283980197889, guid: 7dcb375d3cc89d344bc7d84d5aabc89f,
         type: 3}
@@ -266,7 +283,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4582076202183115027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &8358593994102641065 stripped

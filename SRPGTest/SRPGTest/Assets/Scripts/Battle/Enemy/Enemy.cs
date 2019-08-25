@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : Combatant
 {
-    public override Team Allegiance { get => Team.Enemy; }
+    public override Team Allegiance => Team.Enemy;
     public GameObject squarePrefab;
     private List<Pos> traversable;
     private readonly List<GameObject> squares = new List<GameObject>();

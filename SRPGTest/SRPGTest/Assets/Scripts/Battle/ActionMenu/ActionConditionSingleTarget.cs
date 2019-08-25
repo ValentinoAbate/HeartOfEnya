@@ -5,11 +5,13 @@ using System.Linq;
 
 public class ActionConditionSingleTarget : ActionCondition
 {
-    public int range;
-    public SingleTargetAttackCursor cursor;
+    public ActiveAbility ability;
+    public AttackCursor cursor;
     public override bool CheckCondition()
     {
-        return BattleGrid.main.SearchArea(cursor.attacker.Pos, range, cursor.CanMoveThrough, IsTarget);
+        cursor.SetAttack(ability);
+        cursor.CalculateTargets();
+        return !cursor.Empty;
     }
 
     private bool IsTarget(FieldObject obj)

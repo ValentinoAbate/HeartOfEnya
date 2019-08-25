@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(MoveCursor))]
 public class PartyMember : Combatant
 {
+    public override Team Allegiance => Team.Party;
     public ActionMenu ActionMenu;
     public bool HasTurn { get; set; } = false;
     private MoveCursor cursor;

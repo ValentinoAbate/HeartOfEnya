@@ -310,8 +310,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 2257095481806516413}
-        m_MethodName: SetActive
-        m_Mode: 6
+        m_MethodName: CalculateTargets
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -321,8 +321,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 2257095481806516413}
-        m_MethodName: CalculateTargets
-        m_Mode: 3
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -351,12 +351,24 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2257095481806516413}
+          m_MethodName: SetAttack
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8954479606096020560, guid: bae7de17af9bbaf47be4d3769e739cd5,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: ActiveAbility, Assembly-CSharp
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2257095481806516413}
           m_MethodName: ShowTargets
-          m_Mode: 3
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 1
+            m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
@@ -392,7 +404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beed36a54e459fe41acf0922cba14550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 1
+  ability: {fileID: 8954479606096020560, guid: bae7de17af9bbaf47be4d3769e739cd5, type: 3}
   cursor: {fileID: 2257095481806516413}
 --- !u!1 &5997579284185976457
 GameObject:
@@ -445,13 +457,11 @@ MonoBehaviour:
     row: 0
     col: 0
   maxHp: 0
-  atk: 1
-  def: 0
-  mag: 0
   move: 0
-  cook: 0
+  reactions:
+    _keys: 
+    _values: 
   hpText: {fileID: 190684656537670107}
-  armorText: {fileID: 9077636646211168575}
   ActionMenu: {fileID: 4821603187498920911}
 --- !u!212 &5997579284185976459
 SpriteRenderer:
@@ -1096,10 +1106,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbc200a8707f8d4199a7e8ea6e8d71c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextKey: 0
-  lastKey: 0
+  nextKey: 101
+  lastKey: 113
   ranged: 0
-  ignore: 0000000003000000
+  ignore: 00000000
   attacker: {fileID: 5997579284185976452}
 --- !u!1 &6999807629132042855
 GameObject:
@@ -1445,18 +1455,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3431d6ae042352547af2e878d2f2997f, type: 3}
---- !u!114 &9077636646211168575 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6503472439311345633, guid: 3431d6ae042352547af2e878d2f2997f,
+--- !u!224 &4275571912070136248 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2084926751139041126, guid: 3431d6ae042352547af2e878d2f2997f,
     type: 3}
   m_PrefabInstance: {fileID: 2862820231708806878}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &190684656537670107 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2675056241013006085, guid: 3431d6ae042352547af2e878d2f2997f,
@@ -1469,9 +1473,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &4275571912070136248 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2084926751139041126, guid: 3431d6ae042352547af2e878d2f2997f,
-    type: 3}
-  m_PrefabInstance: {fileID: 2862820231708806878}
-  m_PrefabAsset: {fileID: 0}

@@ -18,14 +18,7 @@ public class PartyPhaseWholeTeam : PartyPhase
     public override Coroutine OnPhaseStart()
     {
         Party.RemoveAll((e) => e == null);
-        Party.Sort((p1, p2) =>
-        {
-            int colComp = p1.Pos.col.CompareTo(p2.Pos.col);
-            if (colComp != 0)
-                return colComp;
-            return p1.Pos.row.CompareTo(p2.Pos.row);
-        }
-        );
+        Party.Sort((p1, p2) => Pos.CompareLeftToRightTopToBottom(p1.Pos, p2.Pos));
         selectNextCursor.SetSelected(Party);
         Party.ForEach((p) => p.OnPhaseStart());
         selectNextCursor.HighlightFirst();

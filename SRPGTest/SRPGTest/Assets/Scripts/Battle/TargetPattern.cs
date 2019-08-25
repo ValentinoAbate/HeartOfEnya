@@ -3,10 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+[System.Serializable]
 public class TargetPattern
 {
+    public enum Type
+    {
+        Spread,
+        Directional,
+    }
+
+    public Type type; 
+    public Vector2Int maxReach = new Vector2Int(1,1);
     public Pos Origin { get; private set; }
     public IEnumerable<Pos> Positions { get => offsets.Select((p) => p + Origin); }
+    [SerializeField]
     private List<Pos> offsets = new List<Pos>();
     private List<GameObject> visualizationObjs = new List<GameObject>();
 
@@ -48,5 +58,10 @@ public class TargetPattern
         {
             obj.transform.position += offsetWorldPos;
         }
+    }
+
+    public void Target(Pos targetPos)
+    {
+        Origin = targetPos;
     }
 }

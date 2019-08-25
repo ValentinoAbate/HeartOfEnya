@@ -34,7 +34,7 @@ public class BasicEnemy : Enemy
             {
                 //PrepareAction(Attack, new TargetPattern(target.Pos, target.Pos.Offset(0, 1)));
                 Attack(target.Pos);
-                Debug.Log(name + " attacks " + target.name + " for " + atk + " damage!");
+                Debug.Log(name + " attacks " + target.name);
                 yield return new WaitForSeconds(1);
             }
             
@@ -45,7 +45,7 @@ public class BasicEnemy : Enemy
     private Coroutine Attack(Pos p)
     {
         var target = BattleGrid.main.GetObject(p) as Combatant;
-        target?.Damage(atk);
+        target?.Damage(1);
         return null;
     }
 }

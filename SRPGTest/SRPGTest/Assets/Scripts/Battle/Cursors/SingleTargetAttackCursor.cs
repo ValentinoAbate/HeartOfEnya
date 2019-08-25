@@ -50,7 +50,7 @@ public class SingleTargetAttackCursor : SelectNextCursor
     public override void Select()
     {
         var target = Selected as Combatant;
-        target.Damage(attacker.atk);
+        target.Damage(1);
         SetActive(false);
         (attacker as PartyMember)?.EndAction();
     }

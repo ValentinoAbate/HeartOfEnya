@@ -6,13 +6,11 @@ using UnityEngine.UI;
 public abstract class Combatant : FieldObject
 {
     public System.Func<Pos, Coroutine> preparedAction;
+    [System.NonSerialized]
     public TargetPattern preparedTarget;
     public int maxHp;  
-    public int atk;
-    public int def;    
-    public int mag;
     public int move;
-    public int cook;
+    public ActiveAbilityEffect.ReactionDict reactions = new ActiveAbilityEffect.ReactionDict();
 
     public bool Dead { get => Hp == 0; }
     private int hp;
@@ -25,25 +23,12 @@ public abstract class Combatant : FieldObject
             hpText.text = hp.ToString();
         }
     }
-    private int armor;
-    public int Armor
-    {
-        get => armor;
-        set
-        {
-            armor = value;
-            armorText.text = armor.ToString();
-        }
-    }
-
     public Text hpText;
-    public Text armorText;
 
     protected override void Initialize()
     {
         base.Initialize();
-        Hp = maxHp;
-        Armor = def;       
+        Hp = maxHp; 
     }
 
     public override bool CanMoveThrough(FieldObject other)
@@ -52,14 +37,7 @@ public abstract class Combatant : FieldObject
     }
     public void Damage(int damage)
     {
-        if(armor > 0)
-        {
-            if (damage > armor)
-                Hp = Mathf.Max(0, hp - (damage - armor));
-            Armor = Mathf.Max(0, armor - damage);
-        }
-        else
-            Hp = Mathf.Max(0, hp - damage);
+        Hp = Mathf.Max(0, hp - damage);
         if (Dead)
             Kill();
     }
@@ -71,7 +49,6 @@ public abstract class Combatant : FieldObject
 
     public override Coroutine StartTurn()
     {
-        Armor = def;
         if(preparedAction == null)
             return null;
 
@@ -92,5 +69,7 @@ public abstract class Combatant : FieldObject
             yield return preparedAction(pos);
         }
     }
+
+    
 
 }

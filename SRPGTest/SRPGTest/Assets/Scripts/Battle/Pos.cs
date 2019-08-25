@@ -7,6 +7,10 @@ using System;
 public struct Pos : IEquatable<Pos>
 {
     public static Pos Origin { get; } = new Pos(0, 0);
+    public static Pos Right { get; } = new Pos(0, 1);
+    public static Pos Left { get; } = new Pos(0, -1);
+    public static Pos Up { get; } = new Pos(-1, 0);
+    public static Pos Down { get; } = new Pos(1, 0);
     public Vector2 AsVector2 { get => new Vector2(col, row); }
     public int row;
     public int col;
@@ -15,9 +19,29 @@ public struct Pos : IEquatable<Pos>
     /// </summary>
     public int SquareMagnitude { get => row * row + col * col; }
 
-    public static int Distance(Pos p, Pos p2)
+    public static int Distance(Pos p1, Pos p2)
     {
-        return Math.Abs(p2.row - p.row) + Math.Abs(p2.col - p.col);
+        return Math.Abs(p2.row - p1.row) + Math.Abs(p2.col - p1.col);
+    }
+    /// <summary>
+    /// Compares two positions by their column and then by their row if their columns are equal
+    /// </summary>
+    public static int CompareLeftToRightTopToBottom(Pos p1, Pos p2)
+    {
+        int colComp = p1.col.CompareTo(p2.col);
+        if (colComp != 0)
+            return colComp;
+        return p1.row.CompareTo(p2.row);
+    }
+    /// <summary>
+    /// Compares two positions by their row and then by their column if their rows are equal
+    /// </summary>
+    public static int CompareTopToBottomLeftToRight(Pos p1, Pos p2)
+    {
+        int rowComp = p1.row.CompareTo(p2.row);
+        if (rowComp != 0)
+            return rowComp;
+        return p1.col.CompareTo(p2.col);
     }
 
     public Pos(int row, int col)

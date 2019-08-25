@@ -9,15 +9,14 @@ public class AttackCursor : SelectNextCursor
     public Combatant attacker;
     private readonly List<GameObject> targetGraphics = new List<GameObject>();
     [System.NonSerialized]
-    public ActiveAbility ability;
+    public ActiveAbility attack;
+    public GameObject attackSquarePrefab;
 
     public override void SetActive(bool value)
     {
         base.SetActive(value);
         if (value && !Empty)
             HighlightFirst();
-        if (value)
-            HideTargets(); // TEMP: no structure for cleaning up stuff currently
     }
 
     public override void Highlight(Pos newPos)
@@ -28,18 +27,20 @@ public class AttackCursor : SelectNextCursor
             return;
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(Pos);
+        attack.targetPattern.Target(newPos);
+        attack.targetPattern.Show(attackSquarePrefab);
     }
 
     public void SetAttack(ActiveAbility ability)
     {
-        this.ability = ability;
+        this.attack = ability;
     }
 
     public void CalculateTargets()
     {
         Pos = attacker.Pos;
         SelectionList.Clear();
-        var positions = BattleGrid.main.Reachable(Pos, ability.range.maxRange, CanMoveThrough);
+        var positions = BattleGrid.main.Reachable(Pos, attack.range.maxRange, CanMoveThrough);
         foreach(var p in positions)
         {
             var obj = BattleGrid.main.GetObject(p) as Combatant;
@@ -52,7 +53,7 @@ public class AttackCursor : SelectNextCursor
     public void ShowTargets()
     {
         Pos = attacker.Pos;
-        var positions = BattleGrid.main.Reachable(Pos, ability.range.maxRange, CanMoveThrough);
+        var positions = BattleGrid.main.Reachable(Pos, attack.range.maxRange, CanMoveThrough);
         foreach (var p in positions)
         {
             var obj = BattleGrid.main.GetObject(p) as Combatant;
@@ -71,10 +72,14 @@ public class AttackCursor : SelectNextCursor
 
     public override void Select()
     {
+        HideTargets();
+        attack.targetPattern.Hide();
         var target = Selected as Combatant;
-        target.Damage(1);
+        var atkClone = Instantiate(attack);
+        atkClone.Activate(attacker, target.Pos);
         SetActive(false);
         (attacker as PartyMember)?.EndAction();
+        
     }
 
     public bool CanMoveThrough(FieldObject obj)

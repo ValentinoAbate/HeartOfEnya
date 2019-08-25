@@ -25,7 +25,7 @@ public class ActiveAbility : MonoBehaviour
         {
             var pos = targetPattern.type == TargetPattern.Type.Directional ? 
                 RotatedAroundToDirection(user.Pos, targetPos - user.Pos, position) : position;
-            var target = BattleGrid.main.GetObject(pos).GetComponent<Combatant>();
+            var target = BattleGrid.main.GetObject(pos)?.GetComponent<Combatant>();
             if(target == null)
             {
                 continue;
@@ -41,6 +41,7 @@ public class ActiveAbility : MonoBehaviour
                 effect.ApplyEffect(user, target, r);
             }
         }
+        Destroy(gameObject);
     }
 
     private Pos RotatedAroundToDirection(Pos center, Pos direction, Pos targetPos)

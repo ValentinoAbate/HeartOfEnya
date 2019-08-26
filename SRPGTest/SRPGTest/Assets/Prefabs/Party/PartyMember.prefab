@@ -458,10 +458,12 @@ MonoBehaviour:
     col: 0
   maxHp: 0
   move: 0
-  reactions:
-    _keys: 
-    _values: 
+  reactionToPhys: 0
+  reactionToMagic: 0
+  reactionToFire: 0
+  reactionToIce: 0
   hpText: {fileID: 190684656537670107}
+  hpImage: {fileID: 8370856388754479543}
   ActionMenu: {fileID: 4821603187498920911}
 --- !u!212 &5997579284185976459
 SpriteRenderer:
@@ -1456,12 +1458,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3431d6ae042352547af2e878d2f2997f, type: 3}
---- !u!224 &4275571912070136248 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2084926751139041126, guid: 3431d6ae042352547af2e878d2f2997f,
+--- !u!114 &8370856388754479543 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6021741914440275817, guid: 3431d6ae042352547af2e878d2f2997f,
     type: 3}
   m_PrefabInstance: {fileID: 2862820231708806878}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &190684656537670107 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2675056241013006085, guid: 3431d6ae042352547af2e878d2f2997f,
@@ -1474,3 +1482,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &4275571912070136248 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2084926751139041126, guid: 3431d6ae042352547af2e878d2f2997f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2862820231708806878}
+  m_PrefabAsset: {fileID: 0}

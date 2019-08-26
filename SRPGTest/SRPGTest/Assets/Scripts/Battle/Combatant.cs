@@ -24,7 +24,12 @@ public abstract class Combatant : FieldObject
             stunned = value;
             if(value)
             {
+                hpImage.color = Color.yellow;
                 CancelPreparedAction();
+            }
+            else
+            {
+                hpImage.color = Color.red;
             }
         }
     }
@@ -41,6 +46,7 @@ public abstract class Combatant : FieldObject
     }
     private int hp;
     public Text hpText;
+    public Image hpImage;
 
     protected override void Initialize()
     {

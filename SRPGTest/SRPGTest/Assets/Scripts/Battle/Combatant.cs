@@ -5,17 +5,15 @@ using UnityEngine.UI;
 
 public abstract class Combatant : FieldObject
 {
-    public System.Func<Pos, Coroutine> preparedAction;
-    [System.NonSerialized]
-    public TargetPattern preparedTarget;
+    [Header("General Combatant Fields")]
     public int maxHp;  
     public int move;
-    public ActiveAbilityEffect.Reaction reactionToPhys;
-    public ActiveAbilityEffect.Reaction reactionToMagic;
-    public ActiveAbilityEffect.Reaction reactionToFire;
-    public ActiveAbilityEffect.Reaction reactionToIce;
+    public ActionEffect.Reaction reactionToPhys;
+    public ActionEffect.Reaction reactionToMagic;
+    public ActionEffect.Reaction reactionToFire;
+    public ActionEffect.Reaction reactionToIce;
     [System.NonSerialized]
-    public ActiveAbilityEffect.ReactionDict reactions;
+    public ActionEffect.ReactionDict reactions;
     public virtual bool Stunned
     {
         get => stunned;
@@ -24,17 +22,19 @@ public abstract class Combatant : FieldObject
             stunned = value;
             if(value)
             {
+                Debug.Log(name + " is stunned!");
                 hpImage.color = Color.yellow;
-                CancelPreparedAction();
+                CancelChargingAction();
             }
             else
             {
+                Debug.Log(name + " is no longer stunned");
                 hpImage.color = Color.red;
             }
         }
     }
     protected bool stunned;
-    public bool Dead { get => Hp == 0; }  
+    public bool Dead { get => Hp <= 0; }  
     public int Hp
     {
         get => hp;
@@ -45,18 +45,24 @@ public abstract class Combatant : FieldObject
         }
     }
     private int hp;
+    [Header("UI References")]
     public Text hpText;
     public Image hpImage;
+    public GameObject chargeUI;
+    public Text chargeText;
+    public bool IsChargingAction => chargingAction != null;
+    public bool ChargingActionReady => IsChargingAction && chargingAction.Ready;
+    private ChargingAction chargingAction;
 
     protected override void Initialize()
     {
         base.Initialize();
-        reactions = new ActiveAbilityEffect.ReactionDict()
+        reactions = new ActionEffect.ReactionDict()
         {
-            { ActiveAbilityEffect.Attribute.Physical, reactionToPhys  },
-            { ActiveAbilityEffect.Attribute.Magic,    reactionToMagic },
-            { ActiveAbilityEffect.Attribute.Fire,     reactionToFire  },
-            { ActiveAbilityEffect.Attribute.Ice,      reactionToIce   },
+            { ActionEffect.Attribute.Physical, reactionToPhys  },
+            { ActionEffect.Attribute.Magic,    reactionToMagic },
+            { ActionEffect.Attribute.Fire,     reactionToFire  },
+            { ActionEffect.Attribute.Ice,      reactionToIce   },
         };
         Hp = maxHp; 
     }
@@ -73,39 +79,52 @@ public abstract class Combatant : FieldObject
     }
     public virtual void Kill()
     {
-        preparedTarget?.Hide();
+        chargingAction?.Cancel();
+        Debug.Log(name + " has died...");
         Destroy(gameObject);
     }
 
-    public override Coroutine StartTurn()
+    public void UseAction(Action action, Pos targetPos)
     {
-        if(preparedAction == null)
-            return null;
-        return StartCoroutine(DoPreparedAction());
-    }
-    protected void CancelPreparedAction()
-    {
-        if (preparedAction == null)
-            return;
-        preparedTarget.Hide();
-        preparedTarget = null;
-        preparedAction = null;
-    }
-    protected void PrepareAction(System.Func<Pos, Coroutine> action, TargetPattern targets)
-    {
-        preparedAction = action;
-        preparedTarget = targets;
-        preparedTarget.Show(BattleGrid.main.debugSquarePrefab);
-    }
-    protected IEnumerator DoPreparedAction()
-    {
-        preparedTarget.Hide();
-        foreach(var pos in preparedTarget.Positions)
+        if (action.chargeTurns <= 0)
         {
-            yield return preparedAction(pos);
+            var actionClone = Instantiate(action.gameObject).GetComponent<Action>();
+            actionClone.Activate(this, targetPos);
+        }
+        else
+        {
+            chargingAction = new ChargingAction(action, this, targetPos);            
+            ChargeChargingAction();
+            chargeUI.SetActive(true);
         }
     }
 
-    
+    #region Action Charging
+    protected void CancelChargingAction()
+    {
+        if (!IsChargingAction)
+            return;
+        chargeUI.SetActive(false);
+        chargingAction.Cancel();
+        chargingAction = null;
+    }
 
+    protected void ChargeChargingAction()
+    {
+        if (!IsChargingAction)
+            return;
+        chargingAction.Charge();
+        chargeText.text = chargingAction.TurnsLeft.ToString();
+    }
+
+    protected void ActivateChargedAction()
+    {
+        if (!IsChargingAction)
+            return;
+        Debug.Log(name + " uses charged action!");
+        chargeUI.SetActive(false);
+        chargingAction.Activate();
+        chargingAction = null;
+    }
+    #endregion
 }

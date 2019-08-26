@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct AbilityRange
+public struct ActionRange
 {
-    public int minRange;
-    public int maxRange;
+    public int min;
+    public int max;
 }

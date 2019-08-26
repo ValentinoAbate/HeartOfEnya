@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Linq;
 
 public class AttackCursor : GridAndSelectNextCursor
@@ -9,9 +10,10 @@ public class AttackCursor : GridAndSelectNextCursor
     public Combatant attacker;
     private readonly List<GameObject> targetGraphics = new List<GameObject>();
     [System.NonSerialized]
-    public ActiveAbility attack;
+    public Action action;
     public GameObject attackSquarePrefab;
     private readonly HashSet<Pos> inRange = new HashSet<Pos>();
+    public UnityEvent OnCancel = new UnityEvent();
 
     public override void SetActive(bool value)
     {
@@ -32,8 +34,8 @@ public class AttackCursor : GridAndSelectNextCursor
             return;
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(newPos);
-        attack.targetPattern.Target(attacker.Pos, newPos);
-        attack.targetPattern.Show(attackSquarePrefab);
+        action.targetPattern.Target(attacker.Pos, newPos);
+        action.targetPattern.Show(attackSquarePrefab);
         var highlightedObj = BattleGrid.main.GetObject(newPos);
         if (highlightedObj != null)
         {
@@ -43,19 +45,19 @@ public class AttackCursor : GridAndSelectNextCursor
         }
     }
 
-    public void SetAttack(ActiveAbility ability)
+    public void SetAction(Action action)
     {
-        this.attack = ability;
+        this.action = action;
     }
 
     public void CalculateTargets()
     {
         SelectionList.Clear();
         inRange.Clear();
-        var reachable = BattleGrid.main.Reachable(attacker.Pos, attack.range.maxRange, CanMoveThrough);
+        var reachable = BattleGrid.main.Reachable(attacker.Pos, action.range.max, CanMoveThrough);
         foreach(var kvp in reachable)
         {
-            if (kvp.Value < attack.range.minRange)
+            if (kvp.Value < action.range.min)
                 continue;
             var pos = kvp.Key;
             inRange.Add(pos);
@@ -85,8 +87,8 @@ public class AttackCursor : GridAndSelectNextCursor
     public override void Select()
     {
         HideTargets();
-        attack.targetPattern.Hide();
-        var atkClone = Instantiate(attack);
+        action.targetPattern.Hide();
+        var atkClone = Instantiate(action);
         atkClone.Activate(attacker, Pos);
         SetActive(false);
         (attacker as PartyMember)?.EndAction();
@@ -95,7 +97,16 @@ public class AttackCursor : GridAndSelectNextCursor
 
     public override void ProcessInput()
     {
-        if(attack.targetPattern.type == TargetPattern.Type.Spread)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Highlight(attacker.Pos);
+            HideTargets();
+            action.targetPattern.Hide();
+            SetActive(false);
+            OnCancel.Invoke();
+            return;
+        }          
+        if(action.targetPattern.type == TargetPattern.Type.Spread)
             base.ProcessInput();
         else
         {

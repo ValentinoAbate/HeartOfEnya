@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ActiveAbilityEffect : MonoBehaviour
+public abstract class ActionEffect : MonoBehaviour
 {
     public enum Attribute
     {

@@ -19,6 +19,7 @@ public class PartyMember : Combatant
         }
     }
     public override Team Allegiance => Team.Party;
+    [Header("Party Member Specific Fields")]
     public ActionMenu ActionMenu;
     public bool HasTurn
     {

@@ -21,10 +21,10 @@ public class TargetPattern
     private List<Pos> offsets = new List<Pos>();
     private List<GameObject> visualizationObjs = new List<GameObject>();
 
-    public TargetPattern(params Pos[] positions)
+    public TargetPattern(params Pos[] offsets)
     {
         TargetPos = Pos.Zero;
-        offsets.AddRange(positions);
+        this.offsets.AddRange(offsets);
     }
 
     public TargetPattern(Pos origin, Pos[] offsets)
@@ -33,7 +33,17 @@ public class TargetPattern
         this.offsets.AddRange(offsets);
     }
 
-    public void Show(GameObject visualizationPrefab)
+    public TargetPattern Clone()
+    {
+        TargetPattern newT = new TargetPattern();
+        newT.offsets.AddRange(offsets);
+        newT.Target(UserPos, TargetPos);
+        newT.type = type;
+        newT.maxReach = maxReach;
+        return newT;
+    }
+
+    public void Show(GameObject visualizationPrefab, Transform parent = null)
     {
         Hide();
         foreach(var pos in Positions)
@@ -44,8 +54,10 @@ public class TargetPattern
                 Pos direction = TargetPos - UserPos;
                 modPos = Pos.Rotated(UserPos, pos - direction, Pos.Right, direction);
             }
-                 
-            visualizationObjs.Add(GameObject.Instantiate(visualizationPrefab, BattleGrid.main.GetSpace(modPos), Quaternion.identity));
+            if(parent == null)
+                visualizationObjs.Add(GameObject.Instantiate(visualizationPrefab, BattleGrid.main.GetSpace(modPos), Quaternion.identity));
+            else
+                visualizationObjs.Add(GameObject.Instantiate(visualizationPrefab, BattleGrid.main.GetSpace(modPos), Quaternion.identity, parent));
         }
     }
 

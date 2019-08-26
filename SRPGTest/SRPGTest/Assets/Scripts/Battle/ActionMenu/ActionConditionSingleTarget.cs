@@ -5,11 +5,11 @@ using System.Linq;
 
 public class ActionConditionSingleTarget : ActionCondition
 {
-    public ActiveAbility ability;
+    public Action action;
     public AttackCursor cursor;
     public override bool CheckCondition()
     {
-        cursor.SetAttack(ability);
+        cursor.SetAction(action);
         cursor.CalculateTargets();
         return !cursor.Empty;
     }

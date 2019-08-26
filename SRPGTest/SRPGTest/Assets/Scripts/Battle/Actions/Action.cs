@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class ActiveAbility : MonoBehaviour
+public class Action : MonoBehaviour
 {
-    public AbilityRange range;
+    public ActionRange range;
     public TargetPattern targetPattern;
-    public float accuracy;
-    private ActiveAbilityEffect[] effects;
+    public int chargeTurns = 0;
+    private ActionEffect[] effects;
 
     private void Awake()
     {
-        effects = GetComponentsInChildren<ActiveAbilityEffect>();
+        effects = GetComponentsInChildren<ActionEffect>();
     }
 
     public void Activate(Combatant user, Pos targetPos)
@@ -35,14 +35,9 @@ public class ActiveAbility : MonoBehaviour
             {
                 continue;
             }
-            if (Random.Range(0, 1f) > accuracy)
-            {
-                Debug.Log("Ability: " + name + " used by " + user.name + " missed target: " + target.name);
-                continue;
-            }
             foreach (var effect in effects)
             {
-                ActiveAbilityEffect.Reaction r = effect.CalculateReaction(target);
+                ActionEffect.Reaction r = effect.CalculateReaction(target);
                 effect.ApplyEffect(user, target, r);
                 // If the target died from this effect
                 if (target == null)

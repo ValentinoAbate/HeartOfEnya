@@ -5,7 +5,8 @@ using System.Linq;
 
 public class BasicEnemy : Enemy
 {
-    public ActiveAbility attack;
+    [Header("Enemy-Specific Fields")]
+    public Action action;
     public override Coroutine StartTurn()
     {
         return StartCoroutine(TurnCR());
@@ -20,8 +21,19 @@ public class BasicEnemy : Enemy
     private IEnumerator TurnCR()
     {
         if(Stunned)
+        {
+            yield return new WaitForSeconds(1);
             yield break;
-        yield return base.StartTurn();
+        }           
+        if(IsChargingAction)
+        {
+            yield return new WaitForSeconds(1);
+            if (ChargingActionReady)
+                ActivateChargedAction();
+            else
+                ChargeChargingAction();
+            yield break;
+        }
         // Sort targets by distance
         var targetList = new List<PartyMember>(PhaseManager.main.PartyPhase.Party);
         targetList.RemoveAll((t) => t == null);
@@ -41,9 +53,11 @@ public class BasicEnemy : Enemy
             }
             if(move >= path.Count - 1)
             {
-                //PrepareAction(Attack, new TargetPattern(target.Pos, target.Pos.Offset(0, 1)));
-                Attack(target.Pos);
-                Debug.Log(name + " attacks " + target.name + " with " + attack.name);
+                if(action.chargeTurns > 0)
+                    Debug.Log(name + " begins charging " + action.name);
+                else
+                    Debug.Log(name + " attacks " + target.name + " with " + action.name);
+                Attack(target.Pos);              
                 yield return new WaitForSeconds(1);
             }
             
@@ -56,8 +70,7 @@ public class BasicEnemy : Enemy
         var target = BattleGrid.main.GetObject(p) as Combatant;
         if(target != null)
         {
-            var atkClone = Instantiate(attack.gameObject).GetComponent<ActiveAbility>();
-            atkClone.Activate(this, p);
+            UseAction(action, p);
         }
         return null;
     }

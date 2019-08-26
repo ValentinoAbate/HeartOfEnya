@@ -1,20 +1,34 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &5587868021433231728
+--- !u!114 &5773500578343551808
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 417375792446999537}
+  m_GameObject: {fileID: 4627668937623689617}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7951daf7713baef45b162066c21c9919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attribute: 2
+  attribute: 1
+  damage: 2
+--- !u!114 &8503348518900193958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4627668937623689617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7951daf7713baef45b162066c21c9919, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attribute: 3
   damage: 1
---- !u!1001 &711754725206007827
+--- !u!1001 &5481637579618120307
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -24,7 +38,7 @@ PrefabInstance:
     - target: {fileID: 876645245125307362, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: m_Name
-      value: AttackBapyFireArrow
+      value: AttackEnemyIceShard
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -34,62 +48,22 @@ PrefabInstance:
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: range.minRange
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: range.maxRange
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
-      propertyPath: targetPattern.maxReach.x
-      value: 0
+      propertyPath: range.max
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
-      propertyPath: targetPattern.maxReach.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[0].row
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[1].col
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[3].row
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[3].col
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[4].row
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[0].col
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[2].row
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[1].row
-      value: -1
+      propertyPath: range.min
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 876645245125307388, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -148,9 +122,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65afaea67fb0af4a84fe0702411019e, type: 3}
---- !u!1 &417375792446999537 stripped
+--- !u!1 &4627668937623689617 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 876645245125307362, guid: b65afaea67fb0af4a84fe0702411019e,
     type: 3}
-  m_PrefabInstance: {fileID: 711754725206007827}
+  m_PrefabInstance: {fileID: 5481637579618120307}
   m_PrefabAsset: {fileID: 0}

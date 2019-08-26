@@ -18,12 +18,12 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 8398718535774214671}
-          m_MethodName: SetAttack
+          m_MethodName: SetAction
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 8902642157473425592, guid: 1cab35a07c2ec0f4dae4414ce4b167c5,
               type: 3}
-            m_ObjectArgumentAssemblyTypeName: ActiveAbility, Assembly-CSharp
+            m_ObjectArgumentAssemblyTypeName: Action, Assembly-CSharp
             m_IntArgument: 1
             m_FloatArgument: 0
             m_StringArgument: 
@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beed36a54e459fe41acf0922cba14550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ability: {fileID: 8902642157473425592, guid: 1cab35a07c2ec0f4dae4414ce4b167c5, type: 3}
+  action: {fileID: 8902642157473425592, guid: 1cab35a07c2ec0f4dae4414ce4b167c5, type: 3}
   cursor: {fileID: 8398718535774214671}
 --- !u!1001 &7772349167455234738
 PrefabInstance:
@@ -143,7 +143,7 @@ PrefabInstance:
     - target: {fileID: 5997579284185976452, guid: 7dcb375d3cc89d344bc7d84d5aabc89f,
         type: 3}
       propertyPath: maxHp
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5997579284185976452, guid: 7dcb375d3cc89d344bc7d84d5aabc89f,
         type: 3}

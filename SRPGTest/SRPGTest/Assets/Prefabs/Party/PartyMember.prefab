@@ -189,7 +189,6 @@ GameObject:
   - component: {fileID: 5997579284133597951}
   - component: {fileID: 5997579284133597950}
   - component: {fileID: 1448604639055018012}
-  - component: {fileID: 2250719744688756942}
   m_Layer: 5
   m_Name: AttackButton
   m_TagString: Untagged
@@ -351,12 +350,12 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2257095481806516413}
-          m_MethodName: SetAttack
+          m_MethodName: SetAction
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 8954479606096020560, guid: bae7de17af9bbaf47be4d3769e739cd5,
               type: 3}
-            m_ObjectArgumentAssemblyTypeName: ActiveAbility, Assembly-CSharp
+            m_ObjectArgumentAssemblyTypeName: Action, Assembly-CSharp
             m_IntArgument: 1
             m_FloatArgument: 0
             m_StringArgument: 
@@ -392,20 +391,6 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &2250719744688756942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5997579284133597948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beed36a54e459fe41acf0922cba14550, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ability: {fileID: 8954479606096020560, guid: bae7de17af9bbaf47be4d3769e739cd5, type: 3}
-  cursor: {fileID: 2257095481806516413}
 --- !u!1 &5997579284185976457
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,6 +449,8 @@ MonoBehaviour:
   reactionToIce: 0
   hpText: {fileID: 190684656537670107}
   hpImage: {fileID: 8370856388754479543}
+  chargeUI: {fileID: 6093262912751427804}
+  chargeText: {fileID: 1736310339324779326}
   ActionMenu: {fileID: 4821603187498920911}
 --- !u!212 &5997579284185976459
 SpriteRenderer:
@@ -1114,6 +1101,22 @@ MonoBehaviour:
   attacker: {fileID: 5997579284185976452}
   attackSquarePrefab: {fileID: 1575776492372951534, guid: a4b55624b7aa3a94bbeb3e6b1c28fa89,
     type: 3}
+  OnCancel:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4821603187498920911}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &6999807629132042855
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,6 +1461,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3431d6ae042352547af2e878d2f2997f, type: 3}
+--- !u!224 &4275571912070136248 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2084926751139041126, guid: 3431d6ae042352547af2e878d2f2997f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2862820231708806878}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8370856388754479543 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6021741914440275817, guid: 3431d6ae042352547af2e878d2f2997f,
@@ -1468,6 +1477,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &6093262912751427804 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8301639898097675778, guid: 3431d6ae042352547af2e878d2f2997f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2862820231708806878}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1736310339324779326 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4585327257958258144, guid: 3431d6ae042352547af2e878d2f2997f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2862820231708806878}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &190684656537670107 stripped
@@ -1482,9 +1509,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &4275571912070136248 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2084926751139041126, guid: 3431d6ae042352547af2e878d2f2997f,
-    type: 3}
-  m_PrefabInstance: {fileID: 2862820231708806878}
-  m_PrefabAsset: {fileID: 0}

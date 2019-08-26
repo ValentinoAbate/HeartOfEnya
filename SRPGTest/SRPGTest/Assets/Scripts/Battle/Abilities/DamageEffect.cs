@@ -13,5 +13,6 @@ public class DamageEffect : ActiveAbilityEffect
         if (reaction == Reaction.Vulnerable)
             effectiveDamage *= 2;
         target.Damage(effectiveDamage);
+        Debug.Log(user.name + " dealt " + effectiveDamage + " damage to " + target.name);
     }
 }

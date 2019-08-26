@@ -7,7 +7,26 @@ public class PartyMember : Combatant
 {
     public override Team Allegiance => Team.Party;
     public ActionMenu ActionMenu;
-    public bool HasTurn { get; set; } = false;
+    public bool HasTurn
+    {
+        get => hasTurn;
+        set
+        {
+            hasTurn = value;
+            var spr = GetComponent<SpriteRenderer>();
+            if (spr == null)
+                return;
+            if (value)
+            {
+                spr.color = new Color(spr.color.r, spr.color.g, spr.color.b, 0.5f);
+            }
+            else
+            {
+                spr.color = new Color(spr.color.r, spr.color.g, spr.color.b, 1);
+            }
+        }
+    }
+    private bool hasTurn = false;
     private MoveCursor cursor;
 
     protected override void Initialize()
@@ -37,6 +56,7 @@ public class PartyMember : Combatant
     public void EndAction()
     {
         var phase = PhaseManager.main.ActivePhase as PartyPhase;
+        HasTurn = false;
         phase.EndAction(this);
     }
 
@@ -60,6 +80,13 @@ public class PartyMember : Combatant
     public override void OnPhaseStart()
     {
         HasTurn = true;
+    }
+
+    public override void OnPhaseEnd()
+    {
+        var spr = GetComponent<SpriteRenderer>();
+        if (spr != null)
+            spr.color = new Color(spr.color.r, spr.color.g, spr.color.b, 1);
     }
 
     public override void Highlight()

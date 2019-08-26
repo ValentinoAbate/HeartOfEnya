@@ -13,9 +13,4 @@ public class ActionConditionSingleTarget : ActionCondition
         cursor.CalculateTargets();
         return !cursor.Empty;
     }
-
-    private bool IsTarget(FieldObject obj)
-    {
-        return !(obj == null || obj == cursor.attacker || cursor.ignore.Any((t) => t == obj.Allegiance));
-    }
 }

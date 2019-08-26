@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class Enemy : Combatant
 {
     public override Team Allegiance => Team.Enemy;
@@ -17,7 +17,7 @@ public class Enemy : Combatant
 
     public override void Highlight()
     {
-        var traversable = BattleGrid.main.Reachable(Pos, move, CanMoveThrough);
+        var traversable = BattleGrid.main.Reachable(Pos, move, CanMoveThrough).Keys.ToList();
         traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
         traversable.Add(Pos);
         foreach (var spot in traversable)

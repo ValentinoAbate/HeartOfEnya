@@ -6,7 +6,7 @@ using System;
 [Serializable]
 public struct Pos : IEquatable<Pos>
 {
-    public static Pos Origin { get; } = new Pos(0, 0);
+    public static Pos Zero { get; } = new Pos(0, 0);
     public static Pos Right { get; } = new Pos(0, 1);
     public static Pos Left { get; } = new Pos(0, -1);
     public static Pos Up { get; } = new Pos(-1, 0);
@@ -43,6 +43,32 @@ public struct Pos : IEquatable<Pos>
             return rowComp;
         return p1.col.CompareTo(p2.col);
     }
+    /// <summary>
+    /// Rotates a point that is to the right of the center to another direction.
+    /// Pos direction should either be Pos.Up, Pos.Down, Pos.Left, or Pos.Right
+    /// Any other input for direction will return targetPos unmodified
+    /// </summary>
+    public static Pos Rotated(Pos center, Pos point, Pos startDirection, Pos goalDirection)
+    {
+        // Already in the proper direction
+        if (startDirection == goalDirection)
+            return point;
+        Pos difference = point - center;
+        Pos sumDirection = startDirection + goalDirection;
+        // Directions are colinear
+        if (sumDirection == Zero)
+            return center - difference;
+        // Directions are perpendicular
+        return center + PointwiseProduct(difference.AxesSwapped(), sumDirection);
+    }
+    /// <summary>
+    /// Return the Pointwise product of two Pos (considering them as 2D int vectors).
+    /// Returns new Pos(p1.row * p2.row, p1.col * p2.col);
+    /// </summary>
+    public static Pos PointwiseProduct(Pos p1, Pos p2)
+    {
+        return new Pos(p1.row * p2.row, p1.col * p2.col);
+    }
 
     public Pos(int row, int col)
     {
@@ -52,6 +78,10 @@ public struct Pos : IEquatable<Pos>
     public Pos Offset(int rowOff, int colOff)
     {
         return new Pos(row + rowOff, col + colOff);
+    }
+    public Pos AxesSwapped()
+    {
+        return new Pos(col, row);
     }
 
     public override bool Equals(object obj)

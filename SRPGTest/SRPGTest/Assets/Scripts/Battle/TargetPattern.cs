@@ -14,21 +14,22 @@ public class TargetPattern
 
     public Type type; 
     public Vector2Int maxReach = new Vector2Int(1,1);
-    public Pos Origin { get; private set; }
-    public IEnumerable<Pos> Positions { get => offsets.Select((p) => p + Origin); }
+    public Pos TargetPos { get; private set; }
+    private Pos UserPos { get; set; }
+    public IEnumerable<Pos> Positions { get => offsets.Select((p) => p + TargetPos); }
     [SerializeField]
     private List<Pos> offsets = new List<Pos>();
     private List<GameObject> visualizationObjs = new List<GameObject>();
 
     public TargetPattern(params Pos[] positions)
     {
-        Origin = Pos.Origin;
+        TargetPos = Pos.Zero;
         offsets.AddRange(positions);
     }
 
     public TargetPattern(Pos origin, Pos[] offsets)
     {
-        Origin = origin;
+        TargetPos = origin;
         this.offsets.AddRange(offsets);
     }
 
@@ -37,7 +38,14 @@ public class TargetPattern
         Hide();
         foreach(var pos in Positions)
         {
-            visualizationObjs.Add(GameObject.Instantiate(visualizationPrefab, BattleGrid.main.GetSpace(pos), Quaternion.identity));
+            var modPos = pos;
+            if(type == Type.Directional)
+            {
+                Pos direction = TargetPos - UserPos;
+                modPos = Pos.Rotated(UserPos, pos - direction, Pos.Right, direction);
+            }
+                 
+            visualizationObjs.Add(GameObject.Instantiate(visualizationPrefab, BattleGrid.main.GetSpace(modPos), Quaternion.identity));
         }
     }
 
@@ -52,7 +60,7 @@ public class TargetPattern
 
     public void Shift(Pos offset)
     {
-        Origin += offset;
+        TargetPos += offset;
         Vector3 offsetWorldPos = offset.AsVector2 * BattleGrid.main.cellSize;
         foreach (var obj in visualizationObjs)
         {
@@ -60,8 +68,9 @@ public class TargetPattern
         }
     }
 
-    public void Target(Pos targetPos)
+    public void Target(Pos userPos, Pos targetPos)
     {
-        Origin = targetPos;
+        TargetPos = targetPos;
+        UserPos = userPos;
     }
 }

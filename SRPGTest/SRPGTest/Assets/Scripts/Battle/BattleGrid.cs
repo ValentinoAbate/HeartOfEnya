@@ -82,7 +82,12 @@ public class BattleGrid : MonoBehaviour
     public FieldObject GetObject(Pos pos)
     {
         if (IsLegal(pos))
+        {
+            // Avoid references to destroyed GameObjects not working with the ?. operator
+            if (field.Get(pos) == null)
+                return null;
             return field.Get(pos);
+        }
         return null;
     }
 
@@ -157,7 +162,7 @@ public class BattleGrid : MonoBehaviour
 
     #region Pathing and Reachablilty
 
-    public List<Pos> Reachable(Pos startPos, int range, Predicate<FieldObject> canMoveThrough)
+    public Dictionary<Pos,int> Reachable(Pos startPos, int range, Predicate<FieldObject> canMoveThrough)
     {
         // Initialize distances with the startPosition
         var distances = new Dictionary<Pos, int> { { startPos, 0 } };
@@ -191,7 +196,7 @@ public class BattleGrid : MonoBehaviour
         }
         // Start Recursion
         ReachableRecursive(startPos, 0);
-        return distances.Keys.ToList();
+        return distances;
     }
 
     public List<Pos> Path(Pos start, Pos goal, Predicate<FieldObject> canMoveThrough)
@@ -224,7 +229,7 @@ public class BattleGrid : MonoBehaviour
 
     public FieldObject SearchArea(Pos p, int range, Predicate<FieldObject> canMoveThrough, Predicate<FieldObject> pred)
     {
-        foreach(var node in Reachable(p, range, canMoveThrough))
+        foreach(var node in Reachable(p, range, canMoveThrough).Keys)
         {
             var obj = field.Get(node);
             if (pred(obj))

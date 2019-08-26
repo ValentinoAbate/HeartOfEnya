@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [RequireComponent(typeof(PartyMember))]
 public class MoveCursor : GridCursor
@@ -31,7 +32,7 @@ public class MoveCursor : GridCursor
     public void CalculateTraversable()
     {
         lastPosition = Pos;
-        traversable = BattleGrid.main.Reachable(partyMember.Pos, partyMember.move, partyMember.CanMoveThrough);
+        traversable = BattleGrid.main.Reachable(partyMember.Pos, partyMember.move, partyMember.CanMoveThrough).Keys.ToList();
         traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
         traversable.Add(Pos);
     }

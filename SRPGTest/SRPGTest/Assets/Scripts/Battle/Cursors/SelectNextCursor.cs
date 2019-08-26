@@ -10,12 +10,6 @@ public class SelectNextCursor : Cursor
     public bool Empty => SelectionList.Count <= 0;
     protected List<FieldObject> SelectionList { get; set; } = new List<FieldObject>();
     protected int selectedInd = 0;
-    // Start is called before the first frame update
-    void Start()
-    {
-        transform.position = BattleGrid.main.GetSpace(Pos);
-        Highlight(Pos);
-    }
 
     public void SetSelected(IEnumerable<FieldObject> objects)
     {
@@ -63,6 +57,9 @@ public class SelectNextCursor : Cursor
 
     public void HighlightNext()
     {
+        if (Empty)
+            return;
+        SelectionList.RemoveAll((obj) => obj == null);
         if (++selectedInd >= SelectionList.Count)
             selectedInd = 0;
         Highlight(SelectionList[selectedInd].Pos);
@@ -70,15 +67,11 @@ public class SelectNextCursor : Cursor
 
     public void HighlightPrev()
     {
+        if (Empty)
+            return;
         if (--selectedInd < 0)
             selectedInd = SelectionList.Count - 1;
         Highlight(SelectionList[selectedInd].Pos);
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        ProcessInput();
     }
 
     public override void ProcessInput()

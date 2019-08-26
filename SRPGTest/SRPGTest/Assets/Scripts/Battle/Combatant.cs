@@ -10,7 +10,12 @@ public abstract class Combatant : FieldObject
     public TargetPattern preparedTarget;
     public int maxHp;  
     public int move;
-    public ActiveAbilityEffect.ReactionDict reactions = new ActiveAbilityEffect.ReactionDict();
+    public ActiveAbilityEffect.Reaction reactionToPhys;
+    public ActiveAbilityEffect.Reaction reactionToMagic;
+    public ActiveAbilityEffect.Reaction reactionToFire;
+    public ActiveAbilityEffect.Reaction reactionToIce;
+    [System.NonSerialized]
+    public ActiveAbilityEffect.ReactionDict reactions;
 
     public bool Dead { get => Hp == 0; }
     private int hp;
@@ -28,6 +33,13 @@ public abstract class Combatant : FieldObject
     protected override void Initialize()
     {
         base.Initialize();
+        reactions = new ActiveAbilityEffect.ReactionDict()
+        {
+            { ActiveAbilityEffect.Attribute.Physical, reactionToPhys  },
+            { ActiveAbilityEffect.Attribute.Magic,    reactionToMagic },
+            { ActiveAbilityEffect.Attribute.Fire,     reactionToFire  },
+            { ActiveAbilityEffect.Attribute.Ice,      reactionToIce   },
+        };
         Hp = maxHp; 
     }
 

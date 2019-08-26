@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class AttackCursor : SelectNextCursor
+public class AttackCursor : GridAndSelectNextCursor
 {
     public FieldObject.Team[] ignore;
     public Combatant attacker;
@@ -11,24 +11,36 @@ public class AttackCursor : SelectNextCursor
     [System.NonSerialized]
     public ActiveAbility attack;
     public GameObject attackSquarePrefab;
+    private readonly HashSet<Pos> inRange = new HashSet<Pos>();
 
     public override void SetActive(bool value)
     {
         base.SetActive(value);
-        if (value && !Empty)
-            HighlightFirst();
+        if (value)
+        {
+            if (Empty)
+                Highlight(inRange.First());
+            else
+                HighlightFirst();
+        }
+            
     }
 
     public override void Highlight(Pos newPos)
     {
-        if (newPos == Pos)
-            return;
-        if (!BattleGrid.main.IsLegal(newPos))
+        if (!BattleGrid.main.IsLegal(newPos) || !inRange.Contains(newPos))
             return;
         Pos = newPos;
-        transform.position = BattleGrid.main.GetSpace(Pos);
-        attack.targetPattern.Target(newPos);
+        transform.position = BattleGrid.main.GetSpace(newPos);
+        attack.targetPattern.Target(attacker.Pos, newPos);
         attack.targetPattern.Show(attackSquarePrefab);
+        var highlightedObj = BattleGrid.main.GetObject(newPos);
+        if (highlightedObj != null)
+        {
+            int index = SelectionList.IndexOf(highlightedObj);
+            if (index != -1)
+                selectedInd = index;
+        }
     }
 
     public void SetAttack(ActiveAbility ability)
@@ -38,28 +50,28 @@ public class AttackCursor : SelectNextCursor
 
     public void CalculateTargets()
     {
-        Pos = attacker.Pos;
         SelectionList.Clear();
-        var positions = BattleGrid.main.Reachable(Pos, attack.range.maxRange, CanMoveThrough);
-        foreach(var p in positions)
+        inRange.Clear();
+        var reachable = BattleGrid.main.Reachable(attacker.Pos, attack.range.maxRange, CanMoveThrough);
+        foreach(var kvp in reachable)
         {
-            var obj = BattleGrid.main.GetObject(p) as Combatant;
-            if (obj == null || ignore.Any((t) => t == obj.Allegiance))
+            if (kvp.Value < attack.range.minRange)
                 continue;
-            SelectionList.Add(obj);
+            var pos = kvp.Key;
+            inRange.Add(pos);
+            var obj = BattleGrid.main.GetObject(pos) as Combatant;
+            if (obj != null && !ignore.Any((t) => t == obj.Allegiance))
+                SelectionList.Add(obj);
         }
+        SelectionList.Sort((obj1, obj2) => obj1.Allegiance == FieldEntity.Team.Party ? 1 : -1);
     }
 
     public void ShowTargets()
     {
-        Pos = attacker.Pos;
-        var positions = BattleGrid.main.Reachable(Pos, attack.range.maxRange, CanMoveThrough);
-        foreach (var p in positions)
+        CalculateTargets();
+        foreach (var pos in inRange)
         {
-            var obj = BattleGrid.main.GetObject(p) as Combatant;
-            if (obj == null || ignore.Any((t) => t == obj.Allegiance))
-                continue;
-            targetGraphics.Add(BattleGrid.main.SpawnDebugSquare(p));
+            targetGraphics.Add(BattleGrid.main.SpawnDebugSquare(pos));
         }
     }
 
@@ -74,12 +86,48 @@ public class AttackCursor : SelectNextCursor
     {
         HideTargets();
         attack.targetPattern.Hide();
-        var target = Selected as Combatant;
         var atkClone = Instantiate(attack);
-        atkClone.Activate(attacker, target.Pos);
+        atkClone.Activate(attacker, Pos);
         SetActive(false);
         (attacker as PartyMember)?.EndAction();
         
+    }
+
+    public override void ProcessInput()
+    {
+        if(attack.targetPattern.type == TargetPattern.Type.Spread)
+            base.ProcessInput();
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                Highlight(attacker.Pos + Pos.Up);
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                Highlight(attacker.Pos + Pos.Down);
+            }
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                Highlight(attacker.Pos + Pos.Left);
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                Highlight(attacker.Pos + Pos.Right);
+            }
+            if (Input.GetKeyDown(nextKey))
+            {
+                HighlightNext();
+            }
+            else if (Input.GetKeyDown(lastKey))
+            {
+                HighlightPrev();
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Select();
+            }
+        }
     }
 
     public bool CanMoveThrough(FieldObject obj)

@@ -20,19 +20,19 @@ public class GridAndSelectNextCursor : SelectNextCursor
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Highlight(Pos.Offset(-1, 0));
+            Highlight(Pos + Pos.Up);
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            Highlight(Pos.Offset(1, 0));
+            Highlight(Pos + Pos.Down);
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
-            Highlight(Pos.Offset(0, -1));
+            Highlight(Pos + Pos.Left);
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            Highlight(Pos.Offset(0, 1));
+            Highlight(Pos + Pos.Right);
         }
         base.ProcessInput();
     }

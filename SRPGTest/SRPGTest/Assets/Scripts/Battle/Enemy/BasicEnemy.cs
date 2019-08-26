@@ -5,6 +5,7 @@ using System.Linq;
 
 public class BasicEnemy : Enemy
 {
+    public ActiveAbility attack;
     public override Coroutine StartTurn()
     {
         return StartCoroutine(TurnCR());
@@ -34,7 +35,7 @@ public class BasicEnemy : Enemy
             {
                 //PrepareAction(Attack, new TargetPattern(target.Pos, target.Pos.Offset(0, 1)));
                 Attack(target.Pos);
-                Debug.Log(name + " attacks " + target.name);
+                Debug.Log(name + " attacks " + target.name + " with " + attack.name);
                 yield return new WaitForSeconds(1);
             }
             
@@ -45,7 +46,11 @@ public class BasicEnemy : Enemy
     private Coroutine Attack(Pos p)
     {
         var target = BattleGrid.main.GetObject(p) as Combatant;
-        target?.Damage(1);
+        if(target != null)
+        {
+            var atkClone = Instantiate(attack.gameObject).GetComponent<ActiveAbility>();
+            atkClone.Activate(this, p);
+        }
         return null;
     }
 }

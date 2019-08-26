@@ -5,6 +5,19 @@ using UnityEngine;
 [RequireComponent(typeof(MoveCursor))]
 public class PartyMember : Combatant
 {
+    public override bool Stunned
+    {
+        get => stunned;
+        set
+        {
+            base.Stunned = value;
+            if (value)
+            {
+                if (HasTurn)
+                    HasTurn = false;
+            }
+        }
+    }
     public override Team Allegiance => Team.Party;
     public ActionMenu ActionMenu;
     public bool HasTurn
@@ -18,11 +31,11 @@ public class PartyMember : Combatant
                 return;
             if (value)
             {
-                spr.color = new Color(spr.color.r, spr.color.g, spr.color.b, 0.5f);
+                spr.color = new Color(spr.color.r, spr.color.g, spr.color.b, 1f);
             }
             else
             {
-                spr.color = new Color(spr.color.r, spr.color.g, spr.color.b, 1);
+                spr.color = new Color(spr.color.r, spr.color.g, spr.color.b, 0.5f);
             }
         }
     }
@@ -79,7 +92,7 @@ public class PartyMember : Combatant
 
     public override void OnPhaseStart()
     {
-        HasTurn = true;
+        HasTurn = !Stunned;
     }
 
     public override void OnPhaseEnd()
@@ -87,6 +100,8 @@ public class PartyMember : Combatant
         var spr = GetComponent<SpriteRenderer>();
         if (spr != null)
             spr.color = new Color(spr.color.r, spr.color.g, spr.color.b, 1);
+        if(Stunned)
+            Stunned = false;
     }
 
     public override void Highlight()

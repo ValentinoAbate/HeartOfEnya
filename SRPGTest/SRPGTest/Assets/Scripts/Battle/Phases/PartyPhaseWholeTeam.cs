@@ -12,6 +12,7 @@ public class PartyPhaseWholeTeam : PartyPhase
     public override Coroutine OnPhaseEnd()
     {
         selectNextCursor.gameObject.SetActive(false);
+        Party.ForEach((member) => member.OnPhaseEnd());
         return null;
     }
 
@@ -28,7 +29,8 @@ public class PartyPhaseWholeTeam : PartyPhase
 
     public override void EndAction(PartyMember p)
     {
-        selectNextCursor.RemovedCurrentSelection();
+        selectNextCursor.RemoveCurrentSelection();
+        selectNextCursor.RemoveAll((obj) => obj == null || !(obj as PartyMember).HasTurn);
         if (selectNextCursor.Empty)
             EndPhase();
         else

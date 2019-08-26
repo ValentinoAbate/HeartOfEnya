@@ -11,7 +11,12 @@ public class DamageEffect : ActiveAbilityEffect
             return;
         int effectiveDamage = damage;
         if (reaction == Reaction.Vulnerable)
-            effectiveDamage *= 2;
+        {
+            if (target.Stunned)
+                ++effectiveDamage;
+            else
+                target.Stunned = true;
+        }
         target.Damage(effectiveDamage);
         Debug.Log(user.name + " dealt " + effectiveDamage + " damage to " + target.name);
     }

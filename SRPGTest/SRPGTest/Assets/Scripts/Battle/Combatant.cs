@@ -16,9 +16,20 @@ public abstract class Combatant : FieldObject
     public ActiveAbilityEffect.Reaction reactionToIce;
     [System.NonSerialized]
     public ActiveAbilityEffect.ReactionDict reactions;
-
-    public bool Dead { get => Hp == 0; }
-    private int hp;
+    public virtual bool Stunned
+    {
+        get => stunned;
+        set
+        {
+            stunned = value;
+            if(value)
+            {
+                CancelPreparedAction();
+            }
+        }
+    }
+    protected bool stunned;
+    public bool Dead { get => Hp == 0; }  
     public int Hp
     {
         get => hp;
@@ -28,6 +39,7 @@ public abstract class Combatant : FieldObject
             hpText.text = hp.ToString();
         }
     }
+    private int hp;
     public Text hpText;
 
     protected override void Initialize()
@@ -63,10 +75,16 @@ public abstract class Combatant : FieldObject
     {
         if(preparedAction == null)
             return null;
-
         return StartCoroutine(DoPreparedAction());
     }
-
+    protected void CancelPreparedAction()
+    {
+        if (preparedAction == null)
+            return;
+        preparedTarget.Hide();
+        preparedTarget = null;
+        preparedAction = null;
+    }
     protected void PrepareAction(System.Func<Pos, Coroutine> action, TargetPattern targets)
     {
         preparedAction = action;

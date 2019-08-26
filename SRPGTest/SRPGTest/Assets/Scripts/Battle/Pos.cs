@@ -44,9 +44,8 @@ public struct Pos : IEquatable<Pos>
         return p1.col.CompareTo(p2.col);
     }
     /// <summary>
-    /// Rotates a point that is to the right of the center to another direction.
-    /// Pos direction should either be Pos.Up, Pos.Down, Pos.Left, or Pos.Right
-    /// Any other input for direction will return targetPos unmodified
+    /// Rotates a point around another point another point.
+    /// startDirection and goalDirection should either be Pos.Up, Pos.Down, Pos.Left, or Pos.Right
     /// </summary>
     public static Pos Rotated(Pos center, Pos point, Pos startDirection, Pos goalDirection)
     {

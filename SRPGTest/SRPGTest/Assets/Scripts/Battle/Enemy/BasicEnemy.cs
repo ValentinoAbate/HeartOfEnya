@@ -11,8 +11,16 @@ public class BasicEnemy : Enemy
         return StartCoroutine(TurnCR());
     }
 
+    public override void OnPhaseEnd()
+    {
+        if(Stunned)
+            Stunned = false;
+    }
+
     private IEnumerator TurnCR()
     {
+        if(Stunned)
+            yield break;
         yield return base.StartTurn();
         // Sort targets by distance
         var targetList = new List<PartyMember>(PhaseManager.main.PartyPhase.Party);

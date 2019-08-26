@@ -17,10 +17,22 @@ public class SelectNextCursor : Cursor
         SelectionList.AddRange(objects);
     }
 
-    public void RemovedCurrentSelection()
+    public void RemoveCurrentSelection()
     {
+        if (Empty)
+            return;
         SelectionList.RemoveAt(selectedInd);
         selectedInd--;
+    }
+
+    public void RemoveAll(System.Predicate<FieldObject> pred)
+    {
+        if (Empty || selectedInd < 0)
+            return;
+        var temp = Selected;
+        SelectionList.RemoveAll(pred);
+        int tempSelInd = SelectionList.IndexOf(temp);
+        selectedInd = tempSelInd == -1 ? 0 : tempSelInd;
     }
 
     public void HighlightFirst()
@@ -57,9 +69,9 @@ public class SelectNextCursor : Cursor
 
     public void HighlightNext()
     {
-        if (Empty)
-            return;
         SelectionList.RemoveAll((obj) => obj == null);
+        if (Empty)
+            return;       
         if (++selectedInd >= SelectionList.Count)
             selectedInd = 0;
         Highlight(SelectionList[selectedInd].Pos);
@@ -67,6 +79,7 @@ public class SelectNextCursor : Cursor
 
     public void HighlightPrev()
     {
+        SelectionList.RemoveAll((obj) => obj == null);
         if (Empty)
             return;
         if (--selectedInd < 0)

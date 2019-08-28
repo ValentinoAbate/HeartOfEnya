@@ -18,11 +18,15 @@ public class PartyPhaseWholeTeam : PartyPhase
 
     public override Coroutine OnPhaseStart()
     {
-        Party.RemoveAll((e) => e == null);
-        Party.Sort((p1, p2) => Pos.CompareLeftToRightTopToBottom(p1.Pos, p2.Pos));
-        selectNextCursor.SetSelected(Party);
+        // Remove all dead party members
+        Party.RemoveAll((p) => p == null);
         Party.ForEach((p) => p.OnPhaseStart());
-        selectNextCursor.RemoveAll((p) => !((p as PartyMember).HasTurn));
+        // The party members that can act this turn
+        var activeParty = new List<PartyMember>(Party);
+        // Remove party members that are stunned or otherwise don't have a turn
+        activeParty.RemoveAll((p) => p.Stunned || !p.HasTurn);
+        activeParty.Sort((p1, p2) => Pos.CompareLeftToRightTopToBottom(p1.Pos, p2.Pos));
+        selectNextCursor.SetSelected(activeParty);
         selectNextCursor.HighlightFirst();
         selectNextCursor.SetActive(true);
         return null;

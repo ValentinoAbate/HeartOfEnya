@@ -100,7 +100,7 @@ public abstract class Combatant : FieldObject
     }
 
     #region Action Charging
-    protected void CancelChargingAction()
+    public void CancelChargingAction()
     {
         if (!IsChargingAction)
             return;
@@ -109,7 +109,7 @@ public abstract class Combatant : FieldObject
         chargingAction = null;
     }
 
-    protected void ChargeChargingAction()
+    public void ChargeChargingAction()
     {
         if (!IsChargingAction)
             return;
@@ -117,7 +117,7 @@ public abstract class Combatant : FieldObject
         chargeText.text = chargingAction.TurnsLeft.ToString();
     }
 
-    protected void ActivateChargedAction()
+    public void ActivateChargedAction()
     {
         if (!IsChargingAction)
             return;

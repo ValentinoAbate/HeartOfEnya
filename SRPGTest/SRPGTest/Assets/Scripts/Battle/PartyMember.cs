@@ -62,7 +62,6 @@ public class PartyMember : Combatant
 
     public override Coroutine StartTurn()
     {
-        base.StartTurn();
         cursor.SetActive(true);
         return null;
     }
@@ -93,6 +92,12 @@ public class PartyMember : Combatant
 
     public override void OnPhaseStart()
     {
+        if (IsChargingAction && !ChargingActionReady)
+        {
+            ChargeChargingAction();
+            HasTurn = false;
+            return;
+        }
         HasTurn = !Stunned;
     }
 

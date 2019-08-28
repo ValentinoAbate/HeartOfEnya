@@ -22,6 +22,7 @@ public class PartyPhaseWholeTeam : PartyPhase
         Party.Sort((p1, p2) => Pos.CompareLeftToRightTopToBottom(p1.Pos, p2.Pos));
         selectNextCursor.SetSelected(Party);
         Party.ForEach((p) => p.OnPhaseStart());
+        selectNextCursor.RemoveAll((p) => !((p as PartyMember).HasTurn));
         selectNextCursor.HighlightFirst();
         selectNextCursor.SetActive(true);
         return null;
@@ -30,7 +31,7 @@ public class PartyPhaseWholeTeam : PartyPhase
     public override void EndAction(PartyMember p)
     {
         selectNextCursor.RemoveCurrentSelection();
-        selectNextCursor.RemoveAll((obj) => obj == null || !(obj as PartyMember).HasTurn);
+        selectNextCursor.RemoveAll((obj) => obj == null || !((obj as PartyMember).HasTurn));
         if (selectNextCursor.Empty)
             EndPhase();
         else

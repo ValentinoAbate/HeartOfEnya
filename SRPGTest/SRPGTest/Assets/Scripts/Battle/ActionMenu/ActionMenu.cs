@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
+[DisallowMultipleComponent]
 public class ActionMenu : MonoBehaviour
 {
+    public PartyMember user;
     private List<Button> buttons = null;
 
     private void Awake()
@@ -26,15 +29,23 @@ public class ActionMenu : MonoBehaviour
         {          
             foreach(var button in buttons)
             {
-                var condition = button.GetComponent<ActionCondition>();
-                button.interactable = condition == null || condition.CheckCondition();
+                var conditions = button.GetComponents<ActionCondition>();
+                // No conditions (button should be active)
+                if (conditions.Length <= 0)
+                {
+                    button.gameObject.SetActive(true);
+                    continue;
+                }
+                // If the button fails any of the conditions, disable it
+                button.gameObject.SetActive(conditions.All((c) => c.CheckCondition(user)));
             }
-            gameObject.SetActive(value);
-            buttons[0].Select();
+            gameObject.SetActive(true);
+            var first = buttons.FirstOrDefault((b) => b.gameObject.activeSelf);
+            first?.Select();
         }
         else
         {
-            gameObject.SetActive(value);
+            gameObject.SetActive(false);
         }
         
     }

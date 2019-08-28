@@ -88,8 +88,7 @@ public class AttackCursor : GridAndSelectNextCursor
     {
         HideTargets();
         action.targetPattern.Hide();
-        var atkClone = Instantiate(action);
-        atkClone.Activate(attacker, Pos);
+        attacker.UseAction(action, Pos);
         SetActive(false);
         (attacker as PartyMember)?.EndAction();
         

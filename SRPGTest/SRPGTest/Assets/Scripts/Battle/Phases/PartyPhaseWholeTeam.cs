@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PartyPhaseWholeTeam : PartyPhase
 {
-    public override Cursor Cursor { get => selectNextCursor; }
+    public override Cursor Cursor { get => cursor; }
     [SerializeField]
-    private SelectNextCursor selectNextCursor;
+    private SelectNextCursor cursor;
     protected int selected;
 
     public override Coroutine OnPhaseEnd()
     {
-        selectNextCursor.gameObject.SetActive(false);
+        cursor.gameObject.SetActive(false);
         Party.ForEach((member) => member.OnPhaseEnd());
         return null;
     }
@@ -26,22 +26,23 @@ public class PartyPhaseWholeTeam : PartyPhase
         // Remove party members that are stunned or otherwise don't have a turn
         activeParty.RemoveAll((p) => p.Stunned || !p.HasTurn);
         activeParty.Sort((p1, p2) => Pos.CompareLeftToRightTopToBottom(p1.Pos, p2.Pos));
-        selectNextCursor.SetSelected(activeParty);
-        selectNextCursor.HighlightFirst();
-        selectNextCursor.SetActive(true);
+        // Set the cursor's selection list to the party members with turns
+        cursor.SetSelected(activeParty);
+        cursor.HighlightFirst();
+        cursor.SetActive(true);
         return null;
     }
 
     public override void EndAction(PartyMember p)
     {
-        selectNextCursor.RemoveCurrentSelection();
-        selectNextCursor.RemoveAll((obj) => obj == null || !((obj as PartyMember).HasTurn));
-        if (selectNextCursor.Empty)
+        cursor.RemoveCurrentSelection();
+        cursor.RemoveAll((obj) => obj == null || !((obj as PartyMember).HasTurn));
+        if (cursor.Empty)
             EndPhase();
         else
         {
-            selectNextCursor.HighlightNext();
-            selectNextCursor.SetActive(true);
+            cursor.HighlightNext();
+            cursor.SetActive(true);
         }
     }
 

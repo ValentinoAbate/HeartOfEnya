@@ -32,7 +32,7 @@ public class ChargingAction
         if (action.targetPattern.type == TargetPattern.Type.Spread)
         {
             var obj = BattleGrid.main.GetObject(target);
-            if(target == null)
+            if(obj == null)
             {
                 TargetType = Type.TargetSquare;
                 targetSquare = target;

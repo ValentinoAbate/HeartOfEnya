@@ -5,6 +5,7 @@ using UnityEngine;
 public class PhaseManager : MonoBehaviour
 {
     public static PhaseManager main;
+    public int Turn { get; private set; }
     public Phase ActivePhase { get => phases[currPhase]; }
     public PartyPhase PartyPhase { get; set; }
     public EnemyPhase EnemyPhase { get; set; }
@@ -38,6 +39,7 @@ public class PhaseManager : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        Turn = 1;
         yield return StartCoroutine(StartBattle());
         yield return ActivePhase.OnPhaseStart();
         transitioning = false;        
@@ -66,7 +68,11 @@ public class PhaseManager : MonoBehaviour
     {
         yield return ActivePhase.OnPhaseEnd();
         if (++currPhase >= phases.Count)
+        {
             currPhase = 0;
+            ++Turn;
+            Debug.Log("It is turn " + Turn);
+        }          
         Debug.Log("Starting Phase: " + ActivePhase.displayName);
         yield return ActivePhase.OnPhaseStart();
         transitioning = false;

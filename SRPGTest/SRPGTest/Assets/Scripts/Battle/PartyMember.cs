@@ -120,4 +120,10 @@ public class PartyMember : Combatant
     {
         cursor.DisplayTraversable(false);
     }
+
+    public void Run()
+    {
+        EndAction();
+        Destroy(gameObject);
+    }
 }

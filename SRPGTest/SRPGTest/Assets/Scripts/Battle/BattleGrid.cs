@@ -115,10 +115,13 @@ public class BattleGrid : MonoBehaviour
         if (!IsEmpty(dest) || IsEmpty(src))
             return false;
         var obj = field.Get(src);
+        // Clean up any event tiles on the square left from
+        if (eventTiles.ContainsKey(src))
+            eventTiles[src].ForEach((et) => et.OnLeaveTile(obj));
         field.Set(dest, obj);
         field.Set(src, null);
         obj.Pos = dest;
-        // Activate any event tiles if present
+        // Activate any event tiles if present on the square moved to
         if (eventTiles.ContainsKey(dest))
             eventTiles[dest].ForEach((et) => et.OnSteppedOn(obj));
         return true;
@@ -139,9 +142,9 @@ public class BattleGrid : MonoBehaviour
         {
             var tiles = eventTiles[pos];
             // If the tile we are trying to add is a primary type
-            if (e.TileType == EventTile.TType.Primary)
+            if (e.TileType == EventTile.Type.Primary)
             {
-                var primaryTile = tiles.Find((et) => et.TileType == EventTile.TType.Primary);
+                var primaryTile = tiles.Find((et) => et.TileType == EventTile.Type.Primary);
                 if (primaryTile != null)
                     return;
             }

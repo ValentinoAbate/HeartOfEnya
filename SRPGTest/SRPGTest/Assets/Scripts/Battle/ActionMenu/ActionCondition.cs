@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class ActionCondition : MonoBehaviour
 {
-    public abstract bool CheckCondition(Combatant user);
+    public abstract bool CheckCondition(PartyMember user);
 }

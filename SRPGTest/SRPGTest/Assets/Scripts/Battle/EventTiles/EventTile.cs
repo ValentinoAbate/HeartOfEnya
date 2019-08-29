@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// An object that marks a tile as interactable with FieldObjects in some special way
@@ -13,7 +14,7 @@ public abstract class EventTile : FieldEntity
     /// Primary: there can only be one of these per Pos (usually displays graphics)
     /// Secondary: there can be as many of these per Pos as necessary (for cutscene triggers, etc)
     /// </summary>
-    public enum TType
+    public enum Type
     {
         Primary,
         Secondary,
@@ -22,21 +23,33 @@ public abstract class EventTile : FieldEntity
     private Team allegience = Team.Neutral;
     public override Team Allegiance => allegience;
     [SerializeField]
-    private TType tileType = TType.Primary;
-    public TType TileType { get => tileType; }
+    private Type tileType = Type.Primary;
+    public Type TileType { get => tileType; }
 
     protected override void Initialize()
     {
         BattleGrid.main.AddEventTile(Pos, this);
     }
 
-    public void OnSteppedOn(FieldObject steppedOn)
+    public void OnLeaveTile(FieldObject obj)
     {
-        if (Allegiance != Team.Neutral && Allegiance != steppedOn.Allegiance)
+        if (Allegiance != Team.Neutral && Allegiance != obj.Allegiance)
             return;
-        OnSteppedOnFn(steppedOn);
+        OnLeaveTileFn(obj);
+    }
+
+    public void OnSteppedOn(FieldObject obj)
+    {
+        if (Allegiance != Team.Neutral && Allegiance != obj.Allegiance)
+            return;
+        OnSteppedOnFn(obj);
     }
 
     protected virtual void OnSteppedOnFn(FieldObject steppedOn) { }
+
+    protected virtual void OnLeaveTileFn(FieldObject obj)
+    {
+
+    }
 
 }

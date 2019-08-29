@@ -7,13 +7,14 @@ using System.Linq;
 [DisallowMultipleComponent]
 public class ActionMenu : MonoBehaviour
 {
+    public enum SpecialAction
+    {
+        Run,
+    }
+
     public PartyMember user;
     private List<Button> buttons = null;
-
-    private void Awake()
-    {
-        
-    }
+    private HashSet<SpecialAction> specialActionsEnabled = new HashSet<SpecialAction>();
 
     private void FindButtons()
     {
@@ -48,5 +49,22 @@ public class ActionMenu : MonoBehaviour
             gameObject.SetActive(false);
         }
         
+    }
+
+    public bool IsSpecialActionEnabled(SpecialAction action)
+    {
+        return specialActionsEnabled.Contains(action);
+    }
+
+    public void EnableSpecialAction(SpecialAction action)
+    {
+        if(!specialActionsEnabled.Contains(action))
+            specialActionsEnabled.Add(action);
+    }
+
+    public void DisableSpecialAction(SpecialAction action)
+    {
+        if (specialActionsEnabled.Contains(action))
+            specialActionsEnabled.Remove(action);
     }
 }

@@ -12,6 +12,7 @@ public class PartyPhaseWholeTeam : PartyPhase
     public override Coroutine OnPhaseEnd()
     {
         cursor.gameObject.SetActive(false);
+        Party.RemoveAll((obj) => obj == null);
         Party.ForEach((member) => member.OnPhaseEnd());
         return null;
     }
@@ -20,6 +21,7 @@ public class PartyPhaseWholeTeam : PartyPhase
     {
         // Remove all dead party members
         Party.RemoveAll((p) => p == null);
+        // Call on phse start function for each party member (may need to wait later)
         Party.ForEach((p) => p.OnPhaseStart());
         // The party members that can act this turn
         var activeParty = new List<PartyMember>(Party);
@@ -34,7 +36,7 @@ public class PartyPhaseWholeTeam : PartyPhase
     }
 
     public override void EndAction(PartyMember p)
-    {
+    {       
         cursor.RemoveCurrentSelection();
         cursor.RemoveAll((obj) => obj == null || !((obj as PartyMember).HasTurn));
         if (cursor.Empty)

@@ -69,7 +69,7 @@ public abstract class Combatant : FieldObject
 
     public override bool CanMoveThrough(FieldObject other)
     {
-        return other == null || (other is Combatant && other.Allegiance == Allegiance);
+        return other == null;
     }
     public void Damage(int damage)
     {

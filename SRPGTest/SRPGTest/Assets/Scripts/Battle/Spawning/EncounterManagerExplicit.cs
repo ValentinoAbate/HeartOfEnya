@@ -18,7 +18,8 @@ public class EncounterManagerExplicit : EncounterManager
                 continue;
             var spawn = spawners[kvp.Key];
             foreach (var obj in kvp.Value.Objects)
-                spawn.SpawnFieldObject(obj);
+                if(obj != null)
+                    spawn.SpawnFieldObject(obj);
         }
     }
 }

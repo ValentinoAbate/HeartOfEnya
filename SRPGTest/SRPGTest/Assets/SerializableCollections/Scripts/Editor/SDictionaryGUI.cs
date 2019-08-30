@@ -13,6 +13,35 @@ namespace SerializableCollections.EditorGUIUtils
 
         #region AddGUI options
 
+        #region Int
+        public static void IntAddGUI<TValue>(this SDictionary<int, TValue> dict, ref int toAdd) where TValue : new()
+        {
+            IntAddGUI(dict, ref toAdd, () => new TValue());
+        }
+        /// <summary>
+        /// Extension method for String add GUI that initilizes new values with defualt
+        /// </summary>
+        public static void IntAddGUID<TValue>(this SDictionary<int, TValue> dict, ref int toAdd)
+        {
+            IntAddGUI(dict, ref toAdd, () => default);
+        }
+
+        public static void IntAddGUI<TValue>(this SDictionary<int, TValue> dict, ref int toAdd, GetNew<TValue> getNew)
+        {
+            EditorGUILayout.LabelField("New:", GUILayout.Width(45));
+            toAdd = EditorGUILayout.IntField(toAdd);
+            if (GUILayout.Button(new GUIContent("Add"), GUILayout.Width(45)))
+            {
+                if (!dict.ContainsKey(toAdd))
+                {
+                    dict.Add(toAdd, getNew());
+                }
+                toAdd = 0;
+                GUIUtility.keyboardControl = 0;
+            }
+        }
+        #endregion
+
         #region String
         public static void StringAddGUI<TValue>(this SDictionary<string, TValue> dict, ref string toAdd) where TValue : new()
         {

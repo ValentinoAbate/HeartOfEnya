@@ -34,6 +34,9 @@ public class SpawnArea : MonoBehaviour
             return false;
         var obj = Instantiate(objectPrefab.gameObject).GetComponent<FieldObject>();
         BattleGrid.main.SetObject(spawnPos, obj);
+        obj.Pos = spawnPos;
+        obj.transform.position = BattleGrid.main.GetSpace(spawnPos);
+        Debug.Log("Spawning reinfocements at: " + spawnPos.ToString());
         return true;    
     }
 }

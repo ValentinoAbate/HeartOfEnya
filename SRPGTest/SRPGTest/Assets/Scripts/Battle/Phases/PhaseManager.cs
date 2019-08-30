@@ -9,6 +9,7 @@ public class PhaseManager : MonoBehaviour
     public Phase ActivePhase { get => phases[currPhase]; }
     public PartyPhase PartyPhase { get; set; }
     public EnemyPhase EnemyPhase { get; set; }
+    public EncounterManager encounterManager;
     private List<Phase> phases;
     private int currPhase;
     private bool transitioning = true;
@@ -71,6 +72,7 @@ public class PhaseManager : MonoBehaviour
         {
             currPhase = 0;
             ++Turn;
+            encounterManager.ProcessTurn(Turn);
             Debug.Log("It is turn " + Turn);
         }          
         Debug.Log("Starting Phase: " + ActivePhase.displayName);

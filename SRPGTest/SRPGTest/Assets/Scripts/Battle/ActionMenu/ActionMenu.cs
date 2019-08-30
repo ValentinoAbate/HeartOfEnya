@@ -13,8 +13,20 @@ public class ActionMenu : MonoBehaviour
     }
 
     public PartyMember user;
+    public KeyCode cancelKey;
     private List<Button> buttons = null;
     private HashSet<SpecialAction> specialActionsEnabled = new HashSet<SpecialAction>();
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(cancelKey))
+        {
+            if(buttons.Count > 0)
+                buttons[buttons.Count - 1].Select();
+            user.CancelActionMenu();
+        }
+            
+    }
 
     private void FindButtons()
     {
@@ -35,12 +47,33 @@ public class ActionMenu : MonoBehaviour
                 if (conditions.Length <= 0)
                 {
                     button.gameObject.SetActive(true);
+                    button.interactable = true;
                     continue;
                 }
-                // If the button fails any of the conditions, disable it
-                button.gameObject.SetActive(conditions.All((c) => c.CheckCondition(user)));
+                // Find all the failed conditions
+                var failedConditions = conditions.Where((c) => !c.CheckCondition(user));
+                // If there are none, set the button to active and interactable
+                if(failedConditions.Count() <= 0)
+                {
+                    button.gameObject.SetActive(true);
+                    button.interactable = true;
+                }
+                // If a failed condition should hide the button, set it to be inactive
+                else if(failedConditions.Any((c) => c.onConditionFail == ActionCondition.OnConditionFail.Hide))
+                {
+                    button.gameObject.SetActive(false);
+                }
+                // Else, the button has failed a condition that should just make in uninteractable
+                // Set it to be active and disable interaction
+                else
+                {
+                    button.gameObject.SetActive(true);
+                    button.interactable = false;
+                }
             }
+            // Enable the action menu
             gameObject.SetActive(true);
+            // Select the first active button
             var first = buttons.FirstOrDefault((b) => b.gameObject.activeSelf);
             first?.Select();
         }

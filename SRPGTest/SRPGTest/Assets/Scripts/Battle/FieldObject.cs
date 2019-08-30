@@ -8,7 +8,14 @@ using UnityEngine;
 /// </summary>
 public class FieldObject : FieldEntity
 {
-    public virtual bool CanMoveThrough(FieldObject other) => true;
+    public Teams canMoveThrough;
+    public virtual bool CanMoveThrough(FieldObject other)
+    {
+        if (other == null)
+            return true;
+        return canMoveThrough.HasFlag(other.Team);
+    }
+
     protected override void Initialize()
     {
         BattleGrid.main.SetObject(Pos, this);

@@ -67,10 +67,6 @@ public abstract class Combatant : FieldObject
         Hp = maxHp; 
     }
 
-    public override bool CanMoveThrough(FieldObject other)
-    {
-        return other == null;
-    }
     public void Damage(int damage)
     {
         Hp = Mathf.Max(0, hp - damage);

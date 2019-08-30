@@ -8,13 +8,15 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public abstract class FieldEntity : MonoBehaviour
 {
-    public enum Team
+    [System.Flags]
+    public enum Teams
     {
-        Party,
-        Enemy,
-        Neutral,
+        None = 0,
+        Party = 1,
+        Enemy = 2,
+        Neutral = 4,
     }
-    public virtual Team Allegiance { get => Team.Neutral; }
+    public virtual Teams Team { get => Teams.Neutral; }
     public int Row { get => pos.row; set => pos.row = value; }
     public int Col { get => pos.col; set => pos.col = value; }
     [SerializeField]

@@ -6,7 +6,7 @@ using System.Linq;
 
 public class AttackCursor : GridAndSelectNextCursor
 {
-    public FieldObject.Team[] ignore;
+    public FieldObject.Teams[] ignore;
     public Combatant attacker;
     private readonly List<GameObject> targetGraphics = new List<GameObject>();
     [System.NonSerialized]
@@ -62,10 +62,10 @@ public class AttackCursor : GridAndSelectNextCursor
             var pos = kvp.Key;
             inRange.Add(pos);
             var obj = BattleGrid.main.GetObject(pos) as Combatant;
-            if (obj != null && !ignore.Any((t) => t == obj.Allegiance))
+            if (obj != null && !ignore.Any((t) => t == obj.Team))
                 SelectionList.Add(obj);
         }
-        SelectionList.Sort((obj1, obj2) => obj1.Allegiance == FieldEntity.Team.Party ? 1 : -1);
+        SelectionList.Sort((obj1, obj2) => obj1.Team == FieldEntity.Teams.Party ? 1 : -1);
     }
 
     public void ShowTargets()

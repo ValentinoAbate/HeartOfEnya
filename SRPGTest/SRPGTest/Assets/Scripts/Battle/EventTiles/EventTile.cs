@@ -20,8 +20,8 @@ public abstract class EventTile : FieldEntity
         Secondary,
     }
     [SerializeField]
-    private Team allegience = Team.Neutral;
-    public override Team Allegiance => allegience;
+    private Teams allegience = Teams.Neutral;
+    public override Teams Team => allegience;
     [SerializeField]
     private Type tileType = Type.Primary;
     public Type TileType { get => tileType; }
@@ -33,14 +33,14 @@ public abstract class EventTile : FieldEntity
 
     public void OnLeaveTile(FieldObject obj)
     {
-        if (Allegiance != Team.Neutral && Allegiance != obj.Allegiance)
+        if (Team != Teams.Neutral && Team != obj.Team)
             return;
         OnLeaveTileFn(obj);
     }
 
     public void OnSteppedOn(FieldObject obj)
     {
-        if (Allegiance != Team.Neutral && Allegiance != obj.Allegiance)
+        if (Team != Teams.Neutral && Team != obj.Team)
             return;
         OnSteppedOnFn(obj);
     }

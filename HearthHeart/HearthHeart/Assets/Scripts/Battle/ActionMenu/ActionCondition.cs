@@ -11,5 +11,5 @@ public abstract class ActionCondition : MonoBehaviour
     }
 
     public OnConditionFail onConditionFail;
-    public abstract bool CheckCondition(PartyMember user);
+    public abstract bool CheckCondition(ActionMenu menu, PartyMember user);
 }

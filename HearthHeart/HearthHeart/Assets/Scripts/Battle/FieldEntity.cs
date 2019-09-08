@@ -17,6 +17,9 @@ public abstract class FieldEntity : MonoBehaviour
         Neutral = 4,
     }
     public virtual Teams Team { get => Teams.Neutral; }
+    public string DisplayName => displayName;
+    [SerializeField]
+    private string displayName = string.Empty;
     public int Row { get => pos.row; set => pos.row = value; }
     public int Col { get => pos.col; set => pos.col = value; }
     [SerializeField]

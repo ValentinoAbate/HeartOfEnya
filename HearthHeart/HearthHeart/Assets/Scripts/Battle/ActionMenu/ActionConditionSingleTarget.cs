@@ -7,7 +7,7 @@ public class ActionConditionSingleTarget : ActionCondition
 {
     public Action action;
     public AttackCursor cursor;
-    public override bool CheckCondition(PartyMember user)
+    public override bool CheckCondition(ActionMenu menu, PartyMember user)
     {
         cursor.SetAction(action);
         cursor.CalculateTargets();

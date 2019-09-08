@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(MoveCursor))]
 public class PartyMember : Combatant
@@ -19,8 +20,22 @@ public class PartyMember : Combatant
         }
     }
     public override Teams Team => Teams.Party;
+    public int Fp
+    {
+        get => fp;
+        set
+        {
+            fp = value;
+            fpText.text = fp.ToString();
+        }
+    }
+    private int fp;
+    public Text fpText;
     [Header("Party Member Specific Fields")]
     public ActionMenu ActionMenu;
+    public int maxFp;
+    public int level;
+
     public bool HasTurn
     {
         get => hasTurn;
@@ -48,6 +63,7 @@ public class PartyMember : Combatant
         base.Initialize();
         cursor = GetComponent<MoveCursor>();
         PhaseManager.main?.PartyPhase.Party.Add(this);
+        Fp = maxFp;
     }
 
     public override bool Select()

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionConditionSpecialAction : ActionCondition
+public class ActionConditionCanEnterFlameMode : ActionCondition
 {
-    public ActionMenu.SpecialAction action;
     public override bool CheckCondition(ActionMenu menu, PartyMember user)
     {
-        return user.ActionMenu.IsSpecialActionEnabled(action);
+        return menu.allowFlameMode;
     }
 }

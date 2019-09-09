@@ -34,6 +34,7 @@ public class PartyMember : Combatant
     [Header("Party Member Specific Fields")]
     public ActionMenu ActionMenu;
     public int maxFp;
+    public int level;
 
     public bool HasTurn
     {

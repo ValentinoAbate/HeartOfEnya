@@ -30,5 +30,20 @@ public class FieldEntityInpector : Editor
                 EditorUtility.SetDirty(obj.transform);
             serializedObject.ApplyModifiedProperties();
         }
+        if (GUILayout.Button("Set World Position from Grid Pos"))
+        {
+            if (BattleGrid.main == null)
+            {
+                Debug.LogWarning("No detected battle grid. Please reload scene or add one");
+                return;
+            }
+            serializedObject.Update();
+            var newPos = BattleGrid.main.GetSpace(obj.Pos);
+            var oldPos = obj.transform.position;
+            obj.transform.position = newPos;
+            if (oldPos != obj.transform.position)
+                EditorUtility.SetDirty(obj.transform);
+            serializedObject.ApplyModifiedProperties();
+        }
     }
 }

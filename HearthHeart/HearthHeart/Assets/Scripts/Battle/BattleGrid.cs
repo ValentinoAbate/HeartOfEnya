@@ -59,15 +59,16 @@ public class BattleGrid : MonoBehaviour
 
     public Vector2 GetSpace(Pos pos)
     {
-        float y = transform.position.y - pos.row * (cellSize.y + skew.y + linewidth) + linewidth;
-        float x = transform.position.x + pos.col * (cellSize.x + skew.x + linewidth) + linewidth;
+        float y = transform.position.y - pos.row * (cellSize.y + linewidth) + linewidth;
+        float x = transform.position.x + pos.col * (cellSize.x + linewidth) + linewidth;
+        x += skew.x * pos.row;
         return new Vector2(x, y);
     }
 
     public Pos GetPos (Vector2 worldSpace)
     {
-        int row = Mathf.FloorToInt(transform.position.y + 0.5f - worldSpace.y / (cellSize.y + skew.y + linewidth * 2));
-        int col = Mathf.FloorToInt(worldSpace.x - transform.position.x / (cellSize.x + skew.x + linewidth * 2)) + 1;
+        int row = Mathf.FloorToInt(transform.position.y + 0.5f - worldSpace.y / (cellSize.y + linewidth * 2));
+        int col = Mathf.FloorToInt(worldSpace.x - transform.position.x - skew.x * row / (cellSize.x + linewidth * 2));
         return new Pos(row, col);
     }
 

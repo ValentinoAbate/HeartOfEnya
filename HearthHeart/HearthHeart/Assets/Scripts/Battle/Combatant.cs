@@ -82,7 +82,7 @@ public abstract class Combatant : FieldObject
         Destroy(gameObject);
     }
 
-    public void UseAction(Action action, Pos targetPos)
+    public virtual void UseAction(Action action, Pos targetPos)
     {
         if (action.chargeTurns <= 0)
         {

@@ -6,7 +6,7 @@ using System.Linq;
 
 public class AttackCursor : GridAndSelectNextCursor
 {
-    public FieldObject.Teams[] ignore;
+    public FieldEntity.Teams[] ignore;
     public Combatant attacker;
     private readonly List<GameObject> targetGraphics = new List<GameObject>();
     [System.NonSerialized]

@@ -108,13 +108,9 @@ public class PartyMember : Combatant
 
     public override void OnPhaseStart()
     {
-        if (IsChargingAction && !ChargingActionReady)
-        {
-            ChargeChargingAction();
-            HasTurn = false;
-            return;
-        }
         HasTurn = !Stunned;
+        if (HasTurn && !IsChargingAction && Fp < maxFp)
+            ++Fp;
     }
 
     public override void OnPhaseEnd()
@@ -141,5 +137,13 @@ public class PartyMember : Combatant
     {
         EndAction();
         Destroy(gameObject);
+    }
+
+    public override void UseAction(Action action, Pos targetPos)
+    {
+        base.UseAction(action, targetPos);
+        var fpCost = action.GetComponent<ActionFpCost>();
+        if(fpCost != null)
+            Fp -= fpCost.fpCost;
     }
 }

@@ -51,7 +51,7 @@ public class BasicEnemy : Enemy
                 BattleGrid.main.MoveAndSetPosition(this, path[i]);
                 yield return new WaitForSeconds(0.1f);
             }
-            if(Move >= path.Count - 1)
+            if(Move + action.range.max >= path.Count)
             {
                 if(action.chargeTurns > 0)
                     Debug.Log(name + " begins charging " + action.name);

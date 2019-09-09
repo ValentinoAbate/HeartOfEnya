@@ -17,7 +17,7 @@ public class Enemy : Combatant
 
     public override void Highlight()
     {
-        var traversable = BattleGrid.main.Reachable(Pos, move, CanMoveThrough).Keys.ToList();
+        var traversable = BattleGrid.main.Reachable(Pos, Move, CanMoveThrough).Keys.ToList();
         traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
         traversable.Add(Pos);
         foreach (var spot in traversable)

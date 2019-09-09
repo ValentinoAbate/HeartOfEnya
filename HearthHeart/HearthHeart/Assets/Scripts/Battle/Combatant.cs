@@ -6,8 +6,10 @@ using UnityEngine.UI;
 public abstract class Combatant : FieldObject
 {
     [Header("General Combatant Fields")]
-    public int maxHp;  
-    public int move;
+    public int maxHp;
+    public int Move => IsChargingAction ? 1 : move;
+    [SerializeField]
+    private int move;
     public ActionEffect.Reaction reactionToPhys;
     public ActionEffect.Reaction reactionToMagic;
     public ActionEffect.Reaction reactionToFire;

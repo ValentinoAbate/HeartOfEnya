@@ -32,7 +32,7 @@ public class MoveCursor : GridCursor
     public void CalculateTraversable()
     {
         lastPosition = Pos;
-        traversable = BattleGrid.main.Reachable(partyMember.Pos, partyMember.move, partyMember.CanMoveThrough).Keys.ToList();
+        traversable = BattleGrid.main.Reachable(partyMember.Pos, partyMember.Move, partyMember.CanMoveThrough).Keys.ToList();
         traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
         traversable.Add(Pos);
     }
@@ -59,7 +59,7 @@ public class MoveCursor : GridCursor
         if (!traversable.Contains(newPos))
         {
             Pos difference = newPos - Pos;
-            if (difference.SquareMagnitude > partyMember.move * partyMember.move)
+            if (difference.SquareMagnitude > partyMember.Move * partyMember.Move)
                 return;
             if (difference.col > 0)
                 ++difference.col;

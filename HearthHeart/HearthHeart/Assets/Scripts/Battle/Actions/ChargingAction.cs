@@ -32,24 +32,30 @@ public class ChargingAction
         if (action.targetPattern.type == TargetPattern.Type.Spread)
         {
             var obj = BattleGrid.main.GetObject(target);
-            if(obj == null)
-            {
-                TargetType = Type.TargetSquare;
-                targetSquare = target;
-                displayPattern.Show(BattleGrid.main.debugSquarePrefab);
-            }
-            else
-            {
-                TargetType = Type.TargetObject;
-                targetObj = obj;
-                displayPattern.Show(BattleGrid.main.debugSquarePrefab, obj.transform);
-            }
+            TargetType = Type.TargetSquare;
+            targetSquare = target;
+            displayPattern.Show(BattleGrid.main.debugSquarePrefab);
+
+            #region TargetObject code (commented out)
+            //if(obj == null)
+            //{
+            //TargetType = Type.TargetSquare;
+            //targetSquare = target;
+            //displayPattern.Show(BattleGrid.main.debugSquarePrefab);
+            //}
+            //else
+            //{
+            //    TargetType = Type.TargetObject;
+            //    targetObj = obj;
+            //    displayPattern.Show(BattleGrid.main.debugSquarePrefab, obj.transform);
+            //}
+            #endregion
         }
         else // Target pattern is directional
         {
             TargetType = Type.TargetDirection;
             targetDirection = target - user.Pos;
-            displayPattern.Show(BattleGrid.main.debugSquarePrefab);
+            displayPattern.Show(BattleGrid.main.debugSquarePrefab, user.transform);
         }
     }
     /// <summary>

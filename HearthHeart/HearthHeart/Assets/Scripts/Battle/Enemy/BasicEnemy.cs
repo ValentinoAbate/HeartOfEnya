@@ -46,12 +46,12 @@ public class BasicEnemy : Enemy
                 continue;
             path.RemoveAt(path.Count - 1);
             //Skip the first node (our current position)
-            for (int i = 1; i <= move && i < path.Count; ++i)
+            for (int i = 1; i <= Move && i < path.Count; ++i)
             {
                 BattleGrid.main.MoveAndSetPosition(this, path[i]);
                 yield return new WaitForSeconds(0.1f);
             }
-            if(move >= path.Count - 1)
+            if(Move >= path.Count - 1)
             {
                 if(action.chargeTurns > 0)
                     Debug.Log(name + " begins charging " + action.name);

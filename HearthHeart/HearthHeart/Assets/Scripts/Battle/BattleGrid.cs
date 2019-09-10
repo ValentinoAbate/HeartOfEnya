@@ -11,13 +11,40 @@ public class BattleGrid : MonoBehaviour
     public int Cols { get => field.Columns; }
 
     public static BattleGrid main;
-    public GameObject debugSquarePrefab;
-    public float linewidth;
+
+    [Header("Grid")]
     public Vector2Int dimensions;
     public Vector2 cellSize;
-    public Vector2 skew;
+    public float skewAngle;
+    private float skewXOffset;
+    [Header("Rendering")]
+    public GameObject gridLinePrefab;
+    public GameObject gridSquarePrefab;
+    public Material attackSquareMat;
+    public Material moveSquareMat;
+    public Material targetSquareMat;
     private Matrix field;
     private Dictionary<Pos, List<EventTile>> eventTiles;
+
+    private void OnDrawGizmos()
+    {
+        if (Application.isPlaying)
+            return;
+        Gizmos.color = Color.black;
+        Vector2 offset = new Vector2(cellSize.x * 0.75f, -cellSize.y / 2);
+        for(int row = 0; row <= Rows; ++row)
+        {
+            Vector2 point1 = GetSpace(new Pos(row, 0)) - offset;
+            Vector2 point2 = GetSpace(new Pos(row, Cols)) - offset;
+            Gizmos.DrawLine(point1, point2);
+        }
+        for (int col = 0; col <= Cols; ++col)
+        {
+            Vector2 point1 = GetSpace(new Pos(0, col)) - offset;
+            Vector2 point2 = GetSpace(new Pos(Rows, col)) - offset;
+            Gizmos.DrawLine(point1, point2);
+        }
+    }
 
     private void Awake()
     {
@@ -44,13 +71,55 @@ public class BattleGrid : MonoBehaviour
     {
         field = new Matrix(dimensions.y, dimensions.x);
         eventTiles = new Dictionary<Pos, List<EventTile>>();
+        InitializeSkew();
+        InitializeGridLines();
+    }
+
+    private void InitializeSkew()
+    {
+        float tan = Mathf.Tan(Mathf.Deg2Rad * skewAngle);
+        skewXOffset = cellSize.y * tan;
+    }
+
+    private void InitializeGridLines()
+    {
+        if (!Application.isPlaying)
+            return;
+        Vector2 offset = new Vector2(cellSize.x * 0.75f, -cellSize.y / 2);
+        for (int row = 0; row <= Rows; ++row)
+        {
+            var line = Instantiate(gridLinePrefab, transform).GetComponent<LineRenderer>();
+            Vector2 point1 = GetSpace(new Pos(row, 0)) - offset;
+            Vector2 point2 = GetSpace(new Pos(row, Cols)) - offset;
+            line.SetPositions(new Vector3[] { point1, point2 });
+        }
+        for (int col = 0; col <= Cols; ++col)
+        {
+            var line = Instantiate(gridLinePrefab, transform).GetComponent<LineRenderer>();
+            Vector2 point1 = GetSpace(new Pos(0, col)) - offset;
+            Vector2 point2 = GetSpace(new Pos(Rows, col)) - offset;
+            line.SetPositions(new Vector3[] { point1, point2 });
+        }
     }
 
     #region Debugging
 
-    public GameObject SpawnDebugSquare(Pos p)
+    public GameObject SpawnSquare(Pos p, Material mat = null)
     {
-        return Instantiate(debugSquarePrefab, GetSpace(p), Quaternion.identity);
+        var obj = Instantiate(gridSquarePrefab);
+        var qMesh = obj.GetComponent<QuadMesh>();
+        if(qMesh != null)
+        {
+            Vector2 offset = new Vector2(cellSize.x * 0.75f, -cellSize.y / 2);
+            var v1 = GetSpace(p) - offset;
+            var v2 = v1 + new Vector2(cellSize.x, 0);
+            var v3 = GetSpace(p + Pos.Down) - offset;
+            var v4 = v3 + new Vector2(cellSize.x, 0);
+            qMesh.SetMesh(v1, v2, v3, v4);
+            if (mat != null)
+                qMesh.SetMaterial(mat);
+        }
+        return obj;
     }
 
     #endregion
@@ -59,16 +128,19 @@ public class BattleGrid : MonoBehaviour
 
     public Vector2 GetSpace(Pos pos)
     {
-        float y = transform.position.y - pos.row * (cellSize.y + linewidth) + linewidth;
-        float x = transform.position.x + pos.col * (cellSize.x + linewidth) + linewidth;
-        x += skew.x * pos.row;
+        if (Application.isEditor && !Application.isPlaying)
+            InitializeSkew();
+        float y = transform.position.y - pos.row * (cellSize.y);
+        float x = transform.position.x + pos.col * (cellSize.x);
+        x += skewXOffset * pos.row;
         return new Vector2(x, y);
     }
 
     public Pos GetPos (Vector2 worldSpace)
     {
-        int row = Mathf.FloorToInt(transform.position.y + 0.5f - worldSpace.y / (cellSize.y + linewidth * 2));
-        int col = Mathf.FloorToInt(worldSpace.x - transform.position.x - skew.x * row / (cellSize.x + linewidth * 2));
+        float leniency = (cellSize.x / 2);
+        int row = Mathf.FloorToInt(transform.position.y + leniency - worldSpace.y / (cellSize.y));
+        int col = Mathf.FloorToInt((worldSpace.x + leniency - transform.position.x - (skewXOffset * row)) / (cellSize.x));
         return new Pos(row, col);
     }
 

@@ -6,7 +6,6 @@ using System.Linq;
 [RequireComponent(typeof(PartyMember))]
 public class MoveCursor : GridCursor
 {
-    public GameObject squarePrefab;
     private Pos lastPosition;
     private PartyMember partyMember;
     private List<Pos> traversable;
@@ -42,7 +41,7 @@ public class MoveCursor : GridCursor
         if(value)
         {
             foreach (var spot in traversable)
-                squares.Add(Instantiate(squarePrefab, BattleGrid.main.GetSpace(spot), Quaternion.identity));
+                squares.Add(BattleGrid.main.SpawnSquare(spot, BattleGrid.main.moveSquareMat));
         }
         else
         {

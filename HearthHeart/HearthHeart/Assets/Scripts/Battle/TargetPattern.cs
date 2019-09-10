@@ -43,7 +43,7 @@ public class TargetPattern
         return newT;
     }
 
-    public void Show(GameObject visualizationPrefab, Transform parent = null)
+    public void Show(Material squareMat, Transform parent = null)
     {
         Hide();
         foreach(var pos in Positions)
@@ -55,9 +55,14 @@ public class TargetPattern
                 modPos = Pos.Rotated(UserPos, pos - direction, Pos.Right, direction);
             }
             if(parent == null)
-                visualizationObjs.Add(GameObject.Instantiate(visualizationPrefab, BattleGrid.main.GetSpace(modPos), Quaternion.identity));
+                visualizationObjs.Add(BattleGrid.main.SpawnSquare(modPos, squareMat));
             else
-                visualizationObjs.Add(GameObject.Instantiate(visualizationPrefab, BattleGrid.main.GetSpace(modPos), Quaternion.identity, parent));
+            {
+                var obj = BattleGrid.main.SpawnSquare(modPos, squareMat);
+                obj.transform.SetParent(parent);
+                visualizationObjs.Add(obj);
+            }
+
         }
     }
 

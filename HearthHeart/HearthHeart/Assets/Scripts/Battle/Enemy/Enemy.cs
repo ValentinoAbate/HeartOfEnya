@@ -5,7 +5,6 @@ using System.Linq;
 public class Enemy : Combatant
 {
     public override Teams Team => Teams.Enemy;
-    public GameObject squarePrefab;
     private List<Pos> traversable;
     private readonly List<GameObject> squares = new List<GameObject>();
 
@@ -21,7 +20,7 @@ public class Enemy : Combatant
         traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
         traversable.Add(Pos);
         foreach (var spot in traversable)
-            squares.Add(Instantiate(squarePrefab, BattleGrid.main.GetSpace(spot), Quaternion.identity));
+            squares.Add(BattleGrid.main.SpawnSquare(spot, BattleGrid.main.moveSquareMat));
     }
 
     public override void UnHighlight()

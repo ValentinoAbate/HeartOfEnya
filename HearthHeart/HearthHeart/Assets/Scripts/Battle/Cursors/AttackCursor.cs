@@ -11,7 +11,6 @@ public class AttackCursor : GridAndSelectNextCursor
     private readonly List<GameObject> targetGraphics = new List<GameObject>();
     [System.NonSerialized]
     public Action action;
-    public GameObject attackSquarePrefab;
     private readonly HashSet<Pos> inRange = new HashSet<Pos>();
     public UnityEvent OnCancel = new UnityEvent();
 
@@ -35,7 +34,7 @@ public class AttackCursor : GridAndSelectNextCursor
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(newPos);
         action.targetPattern.Target(attacker.Pos, newPos);
-        action.targetPattern.Show(attackSquarePrefab);
+        action.targetPattern.Show(BattleGrid.main.attackSquareMat);
         var highlightedObj = BattleGrid.main.GetObject(newPos);
         if (highlightedObj != null)
         {
@@ -73,7 +72,7 @@ public class AttackCursor : GridAndSelectNextCursor
         CalculateTargets();
         foreach (var pos in inRange)
         {
-            targetGraphics.Add(BattleGrid.main.SpawnDebugSquare(pos));
+            targetGraphics.Add(BattleGrid.main.SpawnSquare(pos, BattleGrid.main.targetSquareMat));
         }
     }
 

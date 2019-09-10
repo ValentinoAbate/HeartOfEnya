@@ -34,7 +34,7 @@ public class ChargingAction
             var obj = BattleGrid.main.GetObject(target);
             TargetType = Type.TargetSquare;
             targetSquare = target;
-            displayPattern.Show(BattleGrid.main.debugSquarePrefab);
+            displayPattern.Show(BattleGrid.main.targetSquareMat);
 
             #region TargetObject code (commented out)
             //if(obj == null)
@@ -55,7 +55,7 @@ public class ChargingAction
         {
             TargetType = Type.TargetDirection;
             targetDirection = target - user.Pos;
-            displayPattern.Show(BattleGrid.main.debugSquarePrefab, user.transform);
+            displayPattern.Show(BattleGrid.main.targetSquareMat, user.transform);
         }
     }
     /// <summary>

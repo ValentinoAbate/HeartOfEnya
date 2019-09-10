@@ -31,7 +31,7 @@ public class BattleGrid : MonoBehaviour
         if (Application.isPlaying)
             return;
         Gizmos.color = Color.black;
-        Vector2 offset = new Vector2(cellSize.x * 0.75f, -cellSize.y / 2);
+        Vector2 offset = new Vector2((cellSize.x + skewXOffset) * 0.5f, -cellSize.y / 2);
         for(int row = 0; row <= Rows; ++row)
         {
             Vector2 point1 = GetSpace(new Pos(row, 0)) - offset;
@@ -85,7 +85,7 @@ public class BattleGrid : MonoBehaviour
     {
         if (!Application.isPlaying)
             return;
-        Vector2 offset = new Vector2(cellSize.x * 0.75f, -cellSize.y / 2);
+        Vector2 offset = new Vector2((cellSize.x + skewXOffset) * 0.5f, -cellSize.y / 2);
         for (int row = 0; row <= Rows; ++row)
         {
             var line = Instantiate(gridLinePrefab, transform).GetComponent<LineRenderer>();

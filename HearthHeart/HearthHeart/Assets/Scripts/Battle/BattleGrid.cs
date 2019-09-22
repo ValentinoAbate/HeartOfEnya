@@ -81,6 +81,8 @@ public class BattleGrid : MonoBehaviour
         skewXOffset = cellSize.y * tan;
     }
 
+    #region Rendering
+
     private void InitializeGridLines()
     {
         if (!Application.isPlaying)
@@ -102,15 +104,13 @@ public class BattleGrid : MonoBehaviour
         }
     }
 
-    #region Debugging
-
     public GameObject SpawnSquare(Pos p, Material mat = null)
     {
         var obj = Instantiate(gridSquarePrefab);
         var qMesh = obj.GetComponent<QuadMesh>();
         if(qMesh != null)
         {
-            Vector2 offset = new Vector2(cellSize.x * 0.75f, -cellSize.y / 2);
+            Vector2 offset = new Vector2((cellSize.x + skewXOffset) * 0.5f, -cellSize.y / 2);
             var v1 = GetSpace(p) - offset;
             var v2 = v1 + new Vector2(cellSize.x, 0);
             var v3 = GetSpace(p + Pos.Down) - offset;

@@ -32,11 +32,15 @@ public class EncounterManagerExplicitInspector : Editor
         {
             WaveData.SpawnSet ValGUI3(WaveData.SpawnSet set)
             {
-                //EditorGUILayout.BeginHorizontal();
-                set.obj1 = EditorUtils.ObjectField(set.obj1, false);
-                set.obj2 = EditorUtils.ObjectField(set.obj2, false);
-                set.obj3 = EditorUtils.ObjectField(set.obj3, false);
-                //EditorGUILayout.EndHorizontal();
+                set.numObjects = EditorGUILayout.IntSlider(new GUIContent("# of Objects"), set.numObjects, 0, 6);
+                while (set.numObjects > set.objects.Count)
+                    set.objects.Add(null);
+                while (set.numObjects < set.objects.Count)
+                    set.objects.RemoveAt(set.objects.Count - 1);
+                for(int i = 0; i < set.objects.Count; ++i)
+                {
+                    set.objects[i] = EditorUtils.ObjectField(set.objects[i], false);
+                }
                 return set;
             }
             data.spawnDict.DoGUILayout(ValGUI3, data.spawnDict.EnumAddGUI, "Wave Data", false);

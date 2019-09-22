@@ -6,13 +6,10 @@ public abstract class EncounterManager : MonoBehaviour
 {
     public enum SpawnerCode
     {
-        Left,
-        Up,
-        Up2,
-        Down,
-        Down2,
-        Right,
+        Normal,
         Special,
+        Special2,
+        Special3,
     }
 
     public abstract void ProcessTurn(int Turn);

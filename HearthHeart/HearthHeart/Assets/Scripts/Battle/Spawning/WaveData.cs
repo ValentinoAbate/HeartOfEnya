@@ -11,9 +11,7 @@ public class WaveData
     [System.Serializable]
     public class SpawnSet
     {
-        public List<FieldObject> Objects => new List<FieldObject> { obj1, obj2, obj3 };
-        public FieldObject obj1 = null;
-        public FieldObject obj2 = null;
-        public FieldObject obj3 = null;
+        public int numObjects = 0;
+        public List<FieldObject> objects = new List<FieldObject>();
     }
 }

@@ -17,7 +17,7 @@ public class EncounterManagerExplicit : EncounterManager
             if (!spawners.ContainsKey(kvp.Key))
                 continue;
             var spawn = spawners[kvp.Key];
-            foreach (var obj in kvp.Value.Objects)
+            foreach (var obj in kvp.Value.objects)
                 if(obj != null)
                     spawn.SpawnFieldObject(obj);
         }

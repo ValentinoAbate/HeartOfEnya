@@ -5,13 +5,14 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(SetRendererLayer))]
 public class QuadMesh : MonoBehaviour
 {
     private MeshRenderer meshRenderer;
     private MeshFilter meshFilter;
     private void Awake()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer = GetComponent<MeshRenderer>();        
         meshFilter = GetComponent<MeshFilter>();
     }
     public void SetMesh(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)

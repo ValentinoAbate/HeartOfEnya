@@ -10,14 +10,19 @@ namespace Dialog
 {
     public class DialogUI : DialogueUIBehaviour
     {
-        private static readonly Regex exprRegex = new Regex(@"\s*(.*)\s*:(.*)");
+        private static readonly Regex lineRegex = new Regex(@"\s*(\w)\s*(?:\((\w*)\))?\s*:\s*(.*)");
 
         public float scrollDelay;
         public Canvas dialogCanvas;
         public GameObject dialogBoxPrefab;
         /// The buttons that let the user choose an option
         public List<Button> optionButtons;
-
+        /// The characters currently in the scene
+        public List<Character> characters;
+        // The last character that spoke
+        private Character lastSpeaker;
+        // The currently active dialogbox
+        private DialogBox dialogBox;
 
         /// A delegate that we call to tell the dialogue system about what option
         /// the user selected
@@ -43,15 +48,38 @@ namespace Dialog
 
         public override IEnumerator RunLine(Line line)
         {
-            var match = exprRegex.Match(line.text);
+            // Correct the formatting
+            line.text = CorrectFormatting(line.text);
+            // Split speaker name, expression, and line text
+            var match = lineRegex.Match(line.text);
             if(!match.Success)
             {
                 Debug.LogError("Improperly Formatted Dialog. No \":\" character found to separate speaker and line.");
                 yield break;
             }
-            string speaker = match.Groups[1].Value;
-            string text = match.Groups[2].Value;
-            var dialogBox = Instantiate(dialogBoxPrefab, dialogCanvas.transform).GetComponent<DialogBox>();
+            string speaker = match.Groups[1].Value.ToLower();
+            string expr = match.Groups[2].Value.ToLower();
+            string text = match.Groups[3].Value;
+
+            // Find speaking character
+            var character = characters.Find((c) => c.Name.ToLower() == speaker);
+            if(character == default)
+            {
+                Debug.LogWarning("Character " + speaker + "not found in scene. Skipping line.");
+                yield break;
+            }
+            // Set the character's expression if necessary
+            if (!string.IsNullOrWhiteSpace(expr))
+                character.Expression = expr;
+            // Spawn a new dialogBox if necessary
+            if(character != lastSpeaker || dialogBox == null)
+            {
+                dialogBox = Instantiate(dialogBoxPrefab, Camera.main.WorldToScreenPoint(character.DialogSpawnPoint), 
+                                        Quaternion.identity, dialogCanvas.transform).GetComponent<DialogBox>();
+                lastSpeaker = character;
+            }
+            // Set the dialogBox's portrait
+            dialogBox.portrait.sprite = character.Portrait;
             yield return StartCoroutine(dialogBox.PlayLine(text, scrollDelay));
             Destroy(dialogBox.gameObject);
             
@@ -100,6 +128,13 @@ namespace Dialog
 
             // Now remove the delegate so that the loop in RunOptions will exit
             SetSelectedOption = null;
+        }
+        /// <summary>
+        /// Correct formatting issues introduced by Google Docs, etc.
+        /// </summary>
+        public string CorrectFormatting(string line)
+        {
+            return line.Replace("…", "...").Replace('“', '"').Replace('”', '"');
         }
     }
 }

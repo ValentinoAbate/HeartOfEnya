@@ -10,7 +10,7 @@ namespace Dialog
 {
     public class DialogUI : DialogueUIBehaviour
     {
-        private static readonly Regex lineRegex = new Regex(@"\s*(\w)\s*(?:\((\w*)\))?\s*:\s*(.*)");
+        private static readonly Regex lineRegex = new Regex(@"\s*(\w+)\s*(?:\((\w+)\))?\s*:\s*(.*)");
 
         public float scrollDelay;
         public Canvas dialogCanvas;

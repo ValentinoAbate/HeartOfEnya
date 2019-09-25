@@ -12,6 +12,8 @@ public struct Pos : IEquatable<Pos>
     public static Pos Left { get; } = new Pos(0, -1);
     public static Pos Up { get; } = new Pos(-1, 0);
     public static Pos Down { get; } = new Pos(1, 0);
+
+    public static Pos OutOfBounds { get; } = new Pos(-100, -100);
     public Vector2 AsVector2 { get => new Vector2(col, row); }
     public int row;
     public int col;
@@ -23,6 +25,22 @@ public struct Pos : IEquatable<Pos>
     public static int Distance(Pos p1, Pos p2)
     {
         return Math.Abs(p2.row - p1.row) + Math.Abs(p2.col - p1.col);
+    }
+    /// <summary>
+    /// If the two points are on the same column, returns the vertical direction from "from" to "to",
+    /// else returns the horizontal direction between the two points.
+    /// </summary>
+    /// <returns> Pos.Up, Pos.Down, Pos.Left, Pos.Right, or Pos.Zero (if points are the same) </returns>
+    public static Pos DirectionBasic(Pos from, Pos to)
+    {
+        if (from.col == to.col)
+        {
+            if (from.row == to.row)
+                return Zero;
+            return from.row > to.col ? Up : Down;
+        }          
+        else
+            return from.col > to.col ? Left : Right;
     }
     /// <summary>
     /// Compares two positions by their column and then by their row if their columns are equal
@@ -105,6 +123,11 @@ public struct Pos : IEquatable<Pos>
     public override string ToString()
     {
         return "row: " + row + " col: " + col;
+    }
+
+    public static Pos operator *(Pos vector, int scalar)
+    {
+        return new Pos(vector.row * scalar, vector.col * scalar);
     }
 
     public static Pos operator -(Pos pos1, Pos pos2)

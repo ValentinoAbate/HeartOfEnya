@@ -173,31 +173,56 @@ public class BattleGrid : MonoBehaviour
     public void RemoveObject(FieldObject obj)
     {
         field.Set(obj.Pos, null);
+        obj.Pos = Pos.OutOfBounds;
     }
 
     public bool MoveAndSetPosition(FieldObject obj, Pos dest)
     {
-        bool moveSuccess = Move(obj.Pos, dest);
+        bool moveSuccess = Move(obj, dest);
         if (moveSuccess)
             obj.transform.position = GetSpace(obj.Pos);
         return moveSuccess;
     }
 
-    public bool Move(Pos src, Pos dest)
+    public bool Move(FieldObject obj, Pos dest)
     {
-        if (!IsEmpty(dest) || IsEmpty(src))
+        if (!IsEmpty(dest))
             return false;
-        var obj = field.Get(src);
+        Pos src = obj.Pos;
         // Clean up any event tiles on the square left from
         if (eventTiles.ContainsKey(src))
             eventTiles[src].ForEach((et) => et.OnLeaveTile(obj));
-        field.Set(dest, obj);
         field.Set(src, null);
+        field.Set(dest, obj);
         obj.Pos = dest;
         // Activate any event tiles if present on the square moved to
         if (eventTiles.ContainsKey(dest))
             eventTiles[dest].ForEach((et) => et.OnSteppedOn(obj));
         return true;
+    }
+
+    public void Swap(FieldObject obj1, FieldObject obj2)
+    {
+        // Clean up any event tiles on the square left from
+        if (eventTiles.ContainsKey(obj1.Pos))
+            eventTiles[obj1.Pos].ForEach((et) => et.OnLeaveTile(obj1));
+        if (eventTiles.ContainsKey(obj2.Pos))
+            eventTiles[obj2.Pos].ForEach((et) => et.OnLeaveTile(obj2));
+        // Swap positions
+        Pos temp = obj1.Pos;
+        obj1.Pos = obj2.Pos;
+        obj2.Pos = temp;
+        // Reset the grid data
+        field.Set(obj1.Pos, obj1);       
+        field.Set(obj2.Pos, obj2);       
+        // Activate any event tiles if present on the square moved to
+        if (eventTiles.ContainsKey(obj1.Pos))
+            eventTiles[obj1.Pos].ForEach((et) => et.OnSteppedOn(obj1));
+        if (eventTiles.ContainsKey(obj2.Pos))
+            eventTiles[obj2.Pos].ForEach((et) => et.OnSteppedOn(obj2));
+        // Set the transforms
+        obj1.transform.position = GetSpace(obj1.Pos);
+        obj2.transform.position = GetSpace(obj2.Pos);
     }
 
     #endregion

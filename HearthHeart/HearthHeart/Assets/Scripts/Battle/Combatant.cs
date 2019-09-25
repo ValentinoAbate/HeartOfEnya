@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Combatant : FieldObject
+public class Combatant : FieldObject
 {
     [Header("General Combatant Fields")]
     public int maxHp;

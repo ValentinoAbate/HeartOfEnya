@@ -134,6 +134,7 @@ namespace Dialog
         /// </summary>
         public string CorrectFormatting(string line)
         {
+            // Correct google doc formatting
             return line.Replace("…", "...").Replace('“', '"').Replace('”', '"');
         }
     }

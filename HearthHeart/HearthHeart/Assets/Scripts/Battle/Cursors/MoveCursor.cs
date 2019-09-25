@@ -30,10 +30,11 @@ public class MoveCursor : GridCursor
 
     public void CalculateTraversable()
     {
-        lastPosition = Pos;
+        lastPosition = partyMember.Pos;
         traversable = BattleGrid.main.Reachable(partyMember.Pos, partyMember.Move, partyMember.CanMoveThrough).Keys.ToList();
         traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
-        traversable.Add(Pos);
+        traversable.Add(partyMember.Pos);
+        Pos = partyMember.Pos;
     }
 
     public void DisplayTraversable(bool value)
@@ -78,7 +79,7 @@ public class MoveCursor : GridCursor
     public override void Select()
     {
         lastPosition = partyMember.Pos;
-        BattleGrid.main.Move(partyMember.Pos, Pos);
+        BattleGrid.main.Move(partyMember, Pos);
         SetActive(false);
         partyMember.OpenActionMenu();
     }
@@ -86,7 +87,7 @@ public class MoveCursor : GridCursor
     public void ResetToLastPosition()
     {
         Highlight(lastPosition);
-        BattleGrid.main.Move(partyMember.Pos, Pos);
+        BattleGrid.main.Move(partyMember, Pos);
     }
 
     public override void ProcessInput()

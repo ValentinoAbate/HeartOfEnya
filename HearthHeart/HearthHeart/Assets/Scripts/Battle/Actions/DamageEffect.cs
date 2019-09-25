@@ -9,24 +9,14 @@ public class DamageEffect : ActionEffect
     {
         if (reaction == Reaction.Immune)
         {
-            Debug.Log(target.name + " blocked " + damage + " " + attribute.ToString() + " damage from " + user.name + "'s " + name);
+            Debug.Log(target.DisplayName + " blocked " + damage + " " + attribute.ToString() + " damage from " + user.DisplayName + "'s " + name);
             return;
         }
-
-        int effectiveDamage = damage;
-        if (reaction == Reaction.Vulnerable)
-        {
-            if (target.Stunned)
-            {
-                ++effectiveDamage;
-                Debug.Log(user.name + " dealt " + effectiveDamage + " " + attribute.ToString() + " damage to " + target.name + " with " + name);
-            }               
-            else
-            {
-                Debug.Log(user.name + " dealt " + effectiveDamage + " " + attribute.ToString() + " damage to " + target.name + " with " + name);
-                target.Stunned = true;
-            }             
+        if (reaction == Reaction.Vulnerable && !target.Stunned)
+        {              
+            target.Stunned = true;         
         }
-        target.Damage(effectiveDamage);
+        Debug.Log(user.name + " dealt " + damage + " " + attribute.ToString() + " damage to " + target.name + " with " + name);
+        target.Damage(damage);
     }
 }

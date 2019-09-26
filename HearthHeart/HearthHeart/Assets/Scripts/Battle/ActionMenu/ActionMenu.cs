@@ -5,19 +5,27 @@ using UnityEngine.UI;
 using System.Linq;
 
 [DisallowMultipleComponent]
-public class ActionMenu : MonoBehaviour
+public class ActionMenu : MonoBehaviour, IPausable
 {
     public enum SpecialAction
     {
         Run,
     }
 
+    public PauseHandle PauseHandle { get; set; }
+
     public PartyMember user;
     public KeyCode cancelKey;
     public bool allowFlameMode;
     public bool FlameMode { get; set; }
+
     private List<Button> buttons = null;
     private HashSet<SpecialAction> specialActionsEnabled = new HashSet<SpecialAction>();
+
+    private void Awake()
+    {
+        PauseHandle = new PauseHandle(OnPause);
+    }
 
     private void Update()
     {
@@ -28,6 +36,19 @@ public class ActionMenu : MonoBehaviour
             user.CancelActionMenu();
         }
             
+    }
+
+    private void OnPause(bool pause)
+    {
+        if (!isActiveAndEnabled)
+            return;
+        if (pause)
+        {
+            foreach (var button in buttons)
+                button.interactable = false;
+        }
+        else
+            InitializeMenu();
     }
 
     private void FindButtons()

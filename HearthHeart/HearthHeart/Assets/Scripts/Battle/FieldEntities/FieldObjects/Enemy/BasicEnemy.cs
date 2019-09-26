@@ -22,11 +22,13 @@ public class BasicEnemy : Enemy
     {
         if(Stunned)
         {
+            yield return new WaitWhile(() => PauseHandle.Paused);
             yield return new WaitForSeconds(1);
             yield break;
         }           
         if(IsChargingAction)
         {
+            yield return new WaitWhile(() => PauseHandle.Paused);
             yield return new WaitForSeconds(1);
             if (ChargingActionReady)
                 ActivateChargedAction();
@@ -48,19 +50,21 @@ public class BasicEnemy : Enemy
             //Skip the first node (our current position)
             for (int i = 1; i <= Move && i < path.Count; ++i)
             {
+                yield return new WaitWhile(() => PauseHandle.Paused);
                 BattleGrid.main.MoveAndSetPosition(this, path[i]);
                 yield return new WaitForSeconds(0.1f);
             }
             if(Move + action.range.max >= path.Count)
             {
-                if(action.chargeTurns > 0)
+                yield return new WaitWhile(() => PauseHandle.Paused);
+                if (action.chargeTurns > 0)
                     Debug.Log(name + " begins charging " + action.name);
                 else
                     Debug.Log(name + " attacks " + target.name + " with " + action.name);
                 Attack(target.Pos);              
                 yield return new WaitForSeconds(1);
             }
-            
+            yield return new WaitWhile(() => PauseHandle.Paused);
             break;
         }
     }

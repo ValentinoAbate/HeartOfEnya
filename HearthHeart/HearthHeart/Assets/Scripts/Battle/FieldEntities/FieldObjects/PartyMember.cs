@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(MoveCursor))]
-public class PartyMember : Combatant
+public class PartyMember : Combatant, IPausable
 {
+    public PauseHandle PauseHandle { get; set; }
     public override bool Stunned
     {
         get => stunned;
@@ -33,6 +34,7 @@ public class PartyMember : Combatant
     public Text fpText;
     [Header("Party Member Specific Fields")]
     public ActionMenu ActionMenu;
+    public AttackCursor attackCursor;
     public int maxFp;
     public int level;
 
@@ -55,22 +57,30 @@ public class PartyMember : Combatant
             }
         }
     }
+
     private bool hasTurn = false;
-    private MoveCursor cursor;
+    private MoveCursor moveCursor;
 
     protected override void Initialize()
     {
         base.Initialize();
-        cursor = GetComponent<MoveCursor>();
+        moveCursor = GetComponent<MoveCursor>();
         PhaseManager.main?.PartyPhase.Party.Add(this);
+        PhaseManager.main?.PartyPhase.PauseHandle.Dependents.Add(this);
         Fp = maxFp;
+        PauseHandle = new PauseHandle(null, moveCursor, attackCursor, ActionMenu);
+    }
+
+    private void OnDestroy()
+    {
+        PhaseManager.main?.PartyPhase.PauseHandle.Dependents.Remove(this);
     }
 
     public override bool Select()
     {
         if(HasTurn)
         {
-            cursor.SetActive(true);
+            moveCursor.SetActive(true);
             return true;
         }
         return false;
@@ -78,7 +88,7 @@ public class PartyMember : Combatant
 
     public override Coroutine StartTurn()
     {
-        cursor.SetActive(true);
+        moveCursor.SetActive(true);
         return null;
     }
 
@@ -102,8 +112,8 @@ public class PartyMember : Combatant
     public void CancelActionMenu()
     {
         ActionMenu.gameObject.SetActive(false);
-        cursor.ResetToLastPosition();
-        cursor.SetActive(true);
+        moveCursor.ResetToLastPosition();
+        moveCursor.SetActive(true);
     }
 
     public override void OnPhaseStart()
@@ -124,13 +134,13 @@ public class PartyMember : Combatant
 
     public override void Highlight()
     {
-        cursor.CalculateTraversable();
-        cursor.DisplayTraversable(true);
+        moveCursor.CalculateTraversable();
+        moveCursor.DisplayTraversable(true);
     }
 
     public override void UnHighlight()
     {
-        cursor.DisplayTraversable(false);
+        moveCursor.DisplayTraversable(false);
     }
 
     public void Run()

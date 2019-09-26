@@ -7,7 +7,7 @@ using UnityEngine.Experimental;
 using System;
 using UnityEngine.InputSystem;
 
-public class DialogBox : MonoBehaviour
+public class DialogBox : MonoBehaviour, IPausable
 {
     public enum State
     {
@@ -16,15 +16,17 @@ public class DialogBox : MonoBehaviour
         Cancel,
         Waiting,
     }
+    public PauseHandle PauseHandle { get; set; } = new PauseHandle();
     public TextMeshProUGUI text;
     public Image portrait;
 
     private State state = State.Inactive;
     private bool finishedWithStartAnimation = true;
 
-
     private void OnConfirm()
     {
+        if (PauseHandle.Paused)
+            return;
         if(state != State.Inactive)
             state = state.Next();
     }
@@ -34,6 +36,7 @@ public class DialogBox : MonoBehaviour
         // Set Portrait if desired
         if (portrait != null)
             this.portrait.sprite = portrait;
+        yield return new WaitWhile(() => PauseHandle.Paused);
         // If we are starting up, wait until finished starting
         yield return new WaitUntil(() => finishedWithStartAnimation);
         // Scroll if there is a scroll delay
@@ -43,6 +46,7 @@ public class DialogBox : MonoBehaviour
             text.text = string.Empty;
             for (int i = 0; state != State.Cancel && i < line.Length - 1; ++i)
             {
+                yield return new WaitWhile(() => PauseHandle.Paused);
                 text.text += line[i];
                 yield return new WaitForSeconds(scrollDelay);
             }

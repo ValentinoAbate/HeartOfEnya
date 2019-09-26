@@ -21,6 +21,6 @@ public class TestBattleInterrupt : MonoBehaviour
         PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
         runner.StartDialogue(startNode);
         yield return new WaitWhile(() => runner.isDialogueRunning);
-        PhaseManager.main.PauseHandle.UnPause(PauseHandle.PauseSource.BattleInterrupt);
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public abstract class PartyPhase : Phase
 {
@@ -10,19 +11,9 @@ public abstract class PartyPhase : Phase
 
     private void Awake()
     {
-        PauseHandle = new PauseHandle(OnPause);
+        PauseHandle = new PauseHandle(null, Cursor);
     }
-    public virtual void OnPause(bool pause)
-    {
-        if(pause)
-        {
-            Cursor.PauseHandle.Pause(PauseHandle.PauseSources);
-        }
-        else
-        {
-            Cursor.PauseHandle.UnPauseAll();
-        }       
-    }
+
     public abstract void EndAction(PartyMember member);
     public virtual void CancelAction(PartyMember p)
     {

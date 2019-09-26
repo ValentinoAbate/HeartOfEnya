@@ -2,16 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-public class Enemy : Combatant
+public class Enemy : Combatant, IPausable
 {
+    public PauseHandle PauseHandle { get; set; }
     public override Teams Team => Teams.Enemy;
+ 
     private List<Pos> traversable;
     private readonly List<GameObject> squares = new List<GameObject>();
 
     protected override void Initialize()
     {
         base.Initialize();
+        PauseHandle = new PauseHandle();
         PhaseManager.main?.EnemyPhase.Enemies.Add(this);
+        PhaseManager.main?.EnemyPhase.PauseHandle.Dependents.Add(this);
+    }
+
+    private void OnDestroy()
+    {
+        PhaseManager.main?.EnemyPhase.PauseHandle.Dependents.Remove(this);
     }
 
     public override void Highlight()

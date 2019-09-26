@@ -8,9 +8,11 @@ using System.Text.RegularExpressions;
 
 namespace Dialog
 {
-    public class DialogUI : DialogueUIBehaviour
+    public class DialogUI : DialogueUIBehaviour, IPausable
     {
         private static readonly Regex lineRegex = new Regex(@"\s*(\w+)\s*(?:\((\w+)\))?\s*:\s*(.*)");
+
+        public PauseHandle PauseHandle { get; set; }
 
         public float scrollDelay;
         public Canvas dialogCanvas;
@@ -38,7 +40,7 @@ namespace Dialog
             }
             else
                 Debug.LogError("No dialog box prefab set in DialogUI on object: " + name);
-
+            PauseHandle = new PauseHandle((pause) => dialogBox?.PauseHandle.SetPauseAll(pause));
         }
 
         public override IEnumerator RunCommand(Command command)

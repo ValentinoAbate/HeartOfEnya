@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class EnemyPhaseSingleTurn : EnemyPhase
 {
+    public override PauseHandle PauseHandle { get; set; }
     public GameObject nextToGo;
     public Queue<Enemy> EnemiesTurnOrder { get; private set; } = null;
+    
+
     private Enemy activeTurnMember;
     private void Initialize()
     {

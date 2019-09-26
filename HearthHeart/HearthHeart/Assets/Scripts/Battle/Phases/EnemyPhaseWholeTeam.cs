@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyPhaseWholeTeam : EnemyPhase
 {
+    public override PauseHandle PauseHandle { get; set; } = new PauseHandle(null);
+
     public override Coroutine OnPhaseEnd()
     {
         Enemies.ForEach((enemy) => enemy.OnPhaseEnd());
@@ -28,9 +30,9 @@ public class EnemyPhaseWholeTeam : EnemyPhase
     {
         foreach (var enemy in Enemies)
         {
+            yield return new WaitWhile(() => PauseHandle.Paused);
             yield return enemy.StartTurn();
-        }
-                 
+        }               
     }
 
 }

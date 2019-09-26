@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PartyPhaseWholeTeam : PartyPhase
 {
+    public override PauseHandle PauseHandle { get; set; }
     public override Cursor Cursor { get => cursor; }
+    
+
     [SerializeField]
     private SelectNextCursor cursor;
     protected int selected;

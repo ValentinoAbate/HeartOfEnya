@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Cursor : MonoBehaviour
+public abstract class Cursor : MonoBehaviour, IPausable
 {
+    public PauseHandle PauseHandle { get; set; } = new PauseHandle();
     public Pos Pos { get; set; }
 
     public virtual void SetActive(bool value)
@@ -27,6 +28,8 @@ public abstract class Cursor : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (PauseHandle.Paused)
+            return;
         ProcessInput();
     }
 }

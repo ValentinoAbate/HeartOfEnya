@@ -10,9 +10,17 @@ public class TestBattleInterrupt : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(testKey))
+        if (Input.GetKeyDown(testKey) && !runner.isDialogueRunning)
         {
-            runner.StartDialogue(startNode);
+            StartCoroutine(StartInterrupt());
         }
+    }
+
+    private IEnumerator StartInterrupt()
+    {
+        PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+        runner.StartDialogue(startNode);
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        PhaseManager.main.PauseHandle.UnPause(PauseHandle.PauseSource.BattleInterrupt);
     }
 }

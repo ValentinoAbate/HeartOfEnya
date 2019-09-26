@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Phase : MonoBehaviour
+public abstract class Phase : MonoBehaviour, IPausable
 {
+    public abstract PauseHandle PauseHandle { get; set; }
+
     public string displayName;
 
     public abstract Coroutine OnPhaseStart();

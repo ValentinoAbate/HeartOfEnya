@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhaseManager : MonoBehaviour
+public class PhaseManager : MonoBehaviour, IPausable
 {
     public static PhaseManager main;
+
+    public PauseHandle PauseHandle { get => ActivePhase.PauseHandle; set => ActivePhase.PauseHandle = value; }
     public int Turn { get; private set; }
     public Phase ActivePhase { get => phases[currPhase]; }
     public PartyPhase PartyPhase { get; set; }
     public EnemyPhase EnemyPhase { get; set; }
+    
     public EncounterManager encounterManager;
     private List<Phase> phases;
     private int currPhase;

@@ -35,12 +35,15 @@ public class GraphPosition
         }
         foreach (var obj in objs)
         {
-            var newPos = BattleGrid.main.GetPos(obj.transform.position);
-            obj.Pos = newPos;
+            var oldGridPos = obj.Pos;
+            var newGridPos = BattleGrid.main.GetPos(obj.transform.position);
+            obj.Pos = newGridPos;
             var oldPos = obj.transform.position;
-            obj.transform.position = BattleGrid.main.GetSpace(newPos);
-            if (oldPos != obj.transform.position)
+            obj.transform.position = BattleGrid.main.GetSpace(newGridPos);
+            if (oldPos != obj.transform.position || oldGridPos != newGridPos)
+            {
                 EditorUtility.SetDirty(obj.transform);
+            }
         }
     }
 }

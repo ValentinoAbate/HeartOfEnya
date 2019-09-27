@@ -119,8 +119,8 @@ public class PartyMember : Combatant, IPausable
     public override void OnPhaseStart()
     {
         HasTurn = !Stunned;
-        if (HasTurn && !IsChargingAction && Fp < maxFp)
-            ++Fp;
+        //if (HasTurn && !IsChargingAction && Fp < maxFp)
+        //    ++Fp;
     }
 
     public override void OnPhaseEnd()
@@ -134,6 +134,8 @@ public class PartyMember : Combatant, IPausable
 
     public override void Highlight()
     {
+        if (stunned || !hasTurn)
+            return;
         moveCursor.CalculateTraversable();
         moveCursor.DisplayTraversable(true);
     }

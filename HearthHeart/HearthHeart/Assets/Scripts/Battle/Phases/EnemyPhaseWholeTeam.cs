@@ -30,6 +30,8 @@ public class EnemyPhaseWholeTeam : EnemyPhase
     {
         foreach (var enemy in Enemies)
         {
+            if (enemy == null)
+                continue;
             yield return new WaitWhile(() => PauseHandle.Paused);
             yield return enemy.StartTurn();
         }               

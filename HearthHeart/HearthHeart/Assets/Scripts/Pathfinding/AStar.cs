@@ -8,7 +8,7 @@ public static class AStar
     /// A generic AStar Implementation that takes a heuristic and an adjacency function and returns a path if one is found.
     /// The adj function should return a list of all nodes adjacent to the given node
     /// The cost function should return the cost to traverse from the first argument to the second (assuming they are adjacent)
-    /// Heur should reuturn an estimation of the distance between two nodes. heur is admissable if it is always <= actual cost
+    /// Heur should return an estimation of the distance between two nodes. heur is admissable if it is always <= actual cost
     /// </summary>
     /// <returns> A list representing a path from start to goal if one is found. If not path is found, returns null </returns>
     public static List<T> Pathfind<T>(T start, T goal, Func<T,List<T>> adj, Func<T, T, float> cost, Func<T,T,float> heur) where T : IEquatable<T>

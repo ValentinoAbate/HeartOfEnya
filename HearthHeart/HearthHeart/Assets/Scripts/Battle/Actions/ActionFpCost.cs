@@ -5,5 +5,5 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class ActionFpCost : MonoBehaviour
 {
-    public int fpCost = 2;
+    public int fpCost = 1;
 }

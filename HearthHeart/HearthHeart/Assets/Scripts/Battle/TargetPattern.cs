@@ -68,6 +68,9 @@ public class TargetPattern
 
     public void Hide()
     {
+        if (visualizationObjs == null)
+            visualizationObjs = new List<GameObject>();
+        Debug.Log("Visualize: " + visualizationObjs);
         foreach(var obj in visualizationObjs)
         {
             GameObject.Destroy(obj);

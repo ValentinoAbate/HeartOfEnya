@@ -14,6 +14,7 @@ public abstract class Combatant : FieldObject
     public ActionEffect.Reaction reactionToMagic;
     public ActionEffect.Reaction reactionToFire;
     public ActionEffect.Reaction reactionToIce;
+    public ActionEffect.Reaction reactionToSuppport;
     [System.NonSerialized]
     public ActionEffect.ReactionDict reactions;
     public virtual bool Stunned
@@ -61,10 +62,11 @@ public abstract class Combatant : FieldObject
         base.Initialize();
         reactions = new ActionEffect.ReactionDict()
         {
-            { ActionEffect.Attribute.Physical, reactionToPhys  },
-            { ActionEffect.Attribute.Magic,    reactionToMagic },
-            { ActionEffect.Attribute.Fire,     reactionToFire  },
-            { ActionEffect.Attribute.Ice,      reactionToIce   },
+            { ActionEffect.Attribute.Physical, reactionToPhys      },
+            { ActionEffect.Attribute.Magic,    reactionToMagic     },
+            { ActionEffect.Attribute.Fire,     reactionToFire      },
+            { ActionEffect.Attribute.Ice,      reactionToIce       },
+            { ActionEffect.Attribute.Support,  reactionToSuppport  }
         };
         Hp = maxHp; 
     }
@@ -112,7 +114,7 @@ public abstract class Combatant : FieldObject
         if (!IsChargingAction)
             return;
         chargingAction.Charge();
-        chargeText.text = chargingAction.TurnsLeft.ToString();
+        chargeText.text = (chargingAction.TurnsLeft + 1).ToString();
     }
 
     public void ActivateChargedAction()

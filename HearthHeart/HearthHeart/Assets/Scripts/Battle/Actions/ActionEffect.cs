@@ -10,6 +10,7 @@ public abstract class ActionEffect : MonoBehaviour
         Magic,
         Fire,
         Ice,
+        Support,
     }
 
     public enum Reaction

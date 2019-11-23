@@ -70,7 +70,6 @@ public class TargetPattern
     {
         if (visualizationObjs == null)
             visualizationObjs = new List<GameObject>();
-        Debug.Log("Visualize: " + visualizationObjs);
         foreach(var obj in visualizationObjs)
         {
             GameObject.Destroy(obj);

@@ -32,11 +32,13 @@ public class PartyMember : Combatant, IPausable
     }
     private int fp;
     public Text fpText;
+    public SpriteRenderer sprite;
     [Header("Party Member Specific Fields")]
     public ActionMenu ActionMenu;
     public AttackCursor attackCursor;
     public int maxFp;
     public int level;
+    
 
     public bool HasTurn
     {
@@ -44,16 +46,13 @@ public class PartyMember : Combatant, IPausable
         set
         {
             hasTurn = value;
-            var spr = GetComponent<SpriteRenderer>();
-            if (spr == null)
-                return;
             if (value)
             {
-                spr.color = new Color(spr.color.r, spr.color.g, spr.color.b, 1f);
+                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1f);
             }
             else
             {
-                spr.color = new Color(spr.color.r, spr.color.g, spr.color.b, 0.5f);
+                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0.5f);
             }
         }
     }
@@ -125,9 +124,9 @@ public class PartyMember : Combatant, IPausable
 
     public override void OnPhaseEnd()
     {
-        var spr = GetComponent<SpriteRenderer>();
-        if (spr != null)
-            spr.color = new Color(spr.color.r, spr.color.g, spr.color.b, 1);
+        var sprite = GetComponent<SpriteRenderer>();
+        if (sprite != null)
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
         if(Stunned)
             Stunned = false;
     }

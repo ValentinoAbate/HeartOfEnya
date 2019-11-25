@@ -1,2 +1,2 @@
-# HearthHeart
-A repository for prototyping HearthHeart
+# Heart of Enya
+A repository for prototyping Heart of Enya

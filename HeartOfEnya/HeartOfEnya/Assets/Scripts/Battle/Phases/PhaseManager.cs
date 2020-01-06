@@ -2,8 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The PhaseManager is the top-level class responsible for managing battle flow.
+/// The PhaseManager manages a list of Phase classes which control individual phases of battle.
+/// Every battle must have a PartyPhase and an EnemyPhase, but other phases may be added modularly
+/// This class implements the public-reference singleton pattern. The singleton is accessible through PhaseManager.main
+/// </summary>
 public class PhaseManager : MonoBehaviour, IPausable
 {
+    /// <summary>
+    /// Static singleton reference
+    /// </summary>
     public static PhaseManager main;
 
     public PauseHandle PauseHandle { get => ActivePhase.PauseHandle; set => ActivePhase.PauseHandle = value; }
@@ -17,6 +26,9 @@ public class PhaseManager : MonoBehaviour, IPausable
     private int currPhase;
     private bool transitioning = true;
 
+    /// <summary>
+    /// Singleton pattern implementation
+    /// </summary>
     private void Awake()
     {
         if (main == null)
@@ -28,6 +40,10 @@ public class PhaseManager : MonoBehaviour, IPausable
             Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Get the list of phases from the child objects
+    /// Logs errors if valid party and enemy phases are not found
+    /// </summary>
     private void InitializePhases()
     {
         phases = new List<Phase>(); 
@@ -40,7 +56,10 @@ public class PhaseManager : MonoBehaviour, IPausable
             Debug.LogError("Improper Phase Manager Setup: No Enemy Phase Found");
     }
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Start is called before the first frame update
+    /// Initialize the turn count, run the battle start coroutine, and start the first phase
+    /// </summary>
     IEnumerator Start()
     {
         Turn = 1;
@@ -49,7 +68,10 @@ public class PhaseManager : MonoBehaviour, IPausable
         transitioning = false;        
     }
 
-    // Update is called once per frame
+    /// <summary> 
+    /// Update is called once per frame 
+    /// Simply calls the current phase's update method
+    /// </summary> 
     void Update()
     {
         if (!transitioning)
@@ -64,10 +86,19 @@ public class PhaseManager : MonoBehaviour, IPausable
         StartCoroutine(NextPhaseCr());
     }
 
+    /// <summary>
+    /// Do any logic and display any graphics needed to start the battle
+    /// Currently placeholder
+    /// </summary>
     private IEnumerator StartBattle()
     {
         yield break;
     }
+
+    /// <summary>
+    /// Go to the next phase, waiting for the phases to end and start
+    /// If the current phase is the last phase, go to the next turn
+    /// </summary>
     private IEnumerator NextPhaseCr()
     {
         yield return ActivePhase.OnPhaseEnd();

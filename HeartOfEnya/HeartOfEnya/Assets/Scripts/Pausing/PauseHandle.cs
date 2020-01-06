@@ -23,7 +23,6 @@ public class PauseHandle
     /// <summary>
     /// Consturct a new PauseHandle with the spefied action to call on pause.
     /// Pass null to have nothing called on pause.
-    /// Pass managed PauseHandles to have this PauseHandle manage others
     /// </summary>
     public PauseHandle(System.Action<bool> onPause = null)
     {
@@ -75,7 +74,7 @@ public class PauseHandle
             InternalPause(true);
     }
     /// <summary>
-    /// UnPause the handle from specific sources (flags).
+    /// Unpause the handle from specific sources (flags).
     /// Calls the onPause delegate with false if previously paused.
     /// </summary>
     public void Unpause(PauseSource sources)

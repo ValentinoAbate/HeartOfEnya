@@ -26,7 +26,7 @@ public class EnemyBasic : Enemy
             for (int i = 0; i < Move && i < path.Count; ++i)
             {
                 yield return new WaitWhile(() => PauseHandle.Paused);
-                BattleGrid.main.MoveAndSetPosition(this, path[i]);
+                BattleGrid.main.MoveAndSetWorldPos(this, path[i]);
                 yield return new WaitForSeconds(0.1f);
             }
             if (Move >= path.Count)

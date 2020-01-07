@@ -18,6 +18,6 @@ public class SwapEffect : ActionEffect
             if(user.Team != target.Team)
                 target.Stunned = true;
         }
-        BattleGrid.main.Swap(user, target);
+        BattleGrid.main.SwapAndSetWorldPos(user, target);
     }
 }

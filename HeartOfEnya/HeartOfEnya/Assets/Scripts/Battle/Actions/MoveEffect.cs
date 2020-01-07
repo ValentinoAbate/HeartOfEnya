@@ -26,6 +26,6 @@ public class MoveEffect : ActionEffect
         Pos direction = Pos.DirectionBasic(user.Pos, target.Pos);
         if (moveType == Direction.Toward)
             direction *= -1;
-        BattleGrid.main.MoveAndSetPosition(target, target.Pos + direction);
+        BattleGrid.main.MoveAndSetWorldPos(target, target.Pos + direction);
     }
 }

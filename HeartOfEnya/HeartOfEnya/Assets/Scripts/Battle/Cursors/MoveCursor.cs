@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// A cursor class responisible for displaying and enacting movement for party members.
+/// Enabled by the main party phase curor
+/// When a square is selected, passes control to the party member's action menu
+/// </summary>
 [RequireComponent(typeof(PartyMember))]
 public class MoveCursor : GridCursor
 {
@@ -28,12 +33,20 @@ public class MoveCursor : GridCursor
         DisplayTraversable(value);
     }
 
+    /// <summary>
+    /// Calculates which squares can be moved to by the cursor, based on the BattleGrid's reachability algorithm
+    /// </summary>
     public void CalculateTraversable()
     {
+        // Log the last position in case the move is canceled
         lastPosition = partyMember.Pos;
+        // Calculate the reachable squares given position, move range, and traverability function
         traversable = BattleGrid.main.Reachable(partyMember.Pos, partyMember.Move, partyMember.CanMoveThrough).Keys.ToList();
+        // Remove squares that were traversable but cannot be ended in (Squares with trasversable allies, etc.)
         traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
+        // Add the initial location back in (as it will be removed by the last line)
         traversable.Add(partyMember.Pos);
+        // Make sure the cursor's position is correct
         Pos = partyMember.Pos;
     }
 

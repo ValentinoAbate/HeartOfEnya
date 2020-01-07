@@ -10,7 +10,7 @@ public class EnemyAutoAct : Enemy
         yield return new WaitWhile(() => PauseHandle.Paused);
         if (!moved && BattleGrid.main.IsEmpty(Pos + Pos.Right))
         {
-            BattleGrid.main.MoveAndSetPosition(this, Pos + Pos.Right);
+            BattleGrid.main.MoveAndSetWorldPos(this, Pos + Pos.Right);
             moved = true;
             yield return new WaitWhile(() => PauseHandle.Paused);
             yield return new WaitForSeconds(0.1f);

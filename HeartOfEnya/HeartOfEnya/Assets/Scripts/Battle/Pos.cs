@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// A struct that signifies a position value in a BattleGrid
+/// </summary>
 [Serializable]
 public struct Pos : IEquatable<Pos>
 {
+    #region Static Symbolic Constants
+
     public static Pos Zero { get; } = new Pos(0, 0);
     public static Pos One { get; } = new Pos(1, 1);
     public static Pos Right { get; } = new Pos(0, 1);
     public static Pos Left { get; } = new Pos(0, -1);
     public static Pos Up { get; } = new Pos(-1, 0);
     public static Pos Down { get; } = new Pos(1, 0);
-
     public static Pos OutOfBounds { get; } = new Pos(-100, -100);
+
+    #endregion
+
     public Vector2 AsVector2 { get => new Vector2(col, row); }
     public int row;
     public int col;
@@ -21,6 +28,8 @@ public struct Pos : IEquatable<Pos>
     /// Returns the magnitude of this position considered as a Vector2Int squared
     /// </summary>
     public int SquareMagnitude { get => row * row + col * col; }
+
+    #region Static Utility Methods
 
     public static int Distance(Pos p1, Pos p2)
     {
@@ -88,11 +97,14 @@ public struct Pos : IEquatable<Pos>
         return new Pos(p1.row * p2.row, p1.col * p2.col);
     }
 
+    #endregion
+
     public Pos(int row, int col)
     {
         this.row = row;
         this.col = col;
     }
+
     public Pos Offset(int rowOff, int colOff)
     {
         return new Pos(row + rowOff, col + colOff);
@@ -125,6 +137,8 @@ public struct Pos : IEquatable<Pos>
         return "row: " + row + " col: " + col;
     }
 
+    #region Operator Overloads
+
     public static Pos operator *(Pos vector, int scalar)
     {
         return new Pos(vector.row * scalar, vector.col * scalar);
@@ -149,4 +163,6 @@ public struct Pos : IEquatable<Pos>
     {
         return !(pos1 == pos2);
     }
+
+    #endregion
 }

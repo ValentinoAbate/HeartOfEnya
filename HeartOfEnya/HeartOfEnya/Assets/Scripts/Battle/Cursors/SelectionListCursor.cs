@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectNextCursor : Cursor
+/// <summary>
+/// A cursor that cycles through targets from a list set using SetSelected
+/// </summary>
+public class SelectionListCursor : Cursor
 {
     public KeyCode nextKey;
     public KeyCode lastKey;

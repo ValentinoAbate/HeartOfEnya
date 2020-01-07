@@ -6,7 +6,7 @@ using System.Linq;
 /// <summary>
 /// A cursor class responisible for displaying and enacting movement for party members.
 /// Enabled by the main party phase curor
-/// When a square is selected, passes control to the party member's action menu
+/// When a square is selected, passes control to the party member's action menu.
 /// </summary>
 [RequireComponent(typeof(PartyMember))]
 public class MoveCursor : GridCursor
@@ -15,6 +15,7 @@ public class MoveCursor : GridCursor
     private PartyMember partyMember;
     private List<Pos> traversable;
     private readonly List<GameObject> squares = new List<GameObject>();
+
     private void Start()
     {
         partyMember = GetComponent<PartyMember>();
@@ -50,6 +51,9 @@ public class MoveCursor : GridCursor
         Pos = partyMember.Pos;
     }
 
+    /// <summary>
+    /// Display or hide the moveable range UI depending on the "value" argument
+    /// </summary>
     public void DisplayTraversable(bool value)
     {
         if(value)
@@ -69,9 +73,15 @@ public class MoveCursor : GridCursor
     {
         if (newPos == Pos)
             return;
+        // Code to allow movement cursor to teleport accross obstacles if there is a reachable space on the other side
+        // Essentially checks if the next square in the movement direction is reachable, and recurring
+        // Recursion ends if a traversable square is found or the difference between the new position and the start is
+        // Know to be greater than the movement range
         if (!traversable.Contains(newPos))
         {
             Pos difference = newPos - Pos;
+            // Return if different is breater than the movement range
+            // Square values used as an optimization to avoid forcing a square root evaluation
             if (difference.SquareMagnitude > partyMember.Move * partyMember.Move)
                 return;
             if (difference.col > 0)
@@ -89,6 +99,7 @@ public class MoveCursor : GridCursor
         transform.position = BattleGrid.main.GetSpace(Pos);
     }
 
+    // Finish the move and open the action menu
     public override void Select()
     {
         lastPosition = partyMember.Pos;
@@ -97,12 +108,18 @@ public class MoveCursor : GridCursor
         partyMember.OpenActionMenu();
     }
 
+    /// <summary>
+    /// Reset to the last postion. Used when Cancelling moves. or cancelling the action menu.
+    /// </summary>
     public void ResetToLastPosition()
     {
         Highlight(lastPosition);
         BattleGrid.main.Move(partyMember, Pos);
     }
 
+    /// <summary>
+    /// Base Grid Cursor functionality (see GridCursor.cs) with support for cancelling moves
+    /// </summary>
     public override void ProcessInput()
     {
         base.ProcessInput();

@@ -16,7 +16,7 @@ public class PartyPhase : Phase
 
 
     [SerializeField]
-    private SelectNextCursor cursor;
+    private SelectionListCursor cursor;
     private int selected;
 
     public override Coroutine OnPhaseStart()

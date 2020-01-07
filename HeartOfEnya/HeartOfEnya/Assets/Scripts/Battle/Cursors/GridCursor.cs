@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A cursor that can be moved around the grid.
+/// Current
+/// </summary>
 public class GridCursor : Cursor
 {
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = BattleGrid.main.GetSpace(Pos);
-        Highlight();
+        Highlight(Pos);
     }
 
     public override void Highlight(Pos newPos)
@@ -18,20 +21,10 @@ public class GridCursor : Cursor
         if (!BattleGrid.main.IsLegal(newPos))
             return;
 
-        UnHighlight();
+        BattleGrid.main.GetObject(Pos)?.Highlight();
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(Pos);
-        Highlight();
-    }
-
-    public override void Select()
-    {
-        var highlighted = BattleGrid.main.GetObject(Pos);
-        if (highlighted != null)
-        {
-            if (highlighted.Select())
-                gameObject.SetActive(false);
-        }
+        BattleGrid.main.GetObject(Pos)?.UnHighlight();
     }
 
     public override void ProcessInput()
@@ -56,15 +49,5 @@ public class GridCursor : Cursor
         {
             Select();
         }
-    }
-
-    public void Highlight()
-    {
-        BattleGrid.main.GetObject(Pos)?.Highlight();
-    }
-
-    public void UnHighlight()
-    {
-        BattleGrid.main.GetObject(Pos)?.UnHighlight();
     }
 }

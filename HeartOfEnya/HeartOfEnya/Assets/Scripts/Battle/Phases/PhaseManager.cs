@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// The PhaseManager is the top-level class responsible for managing battle flow.
+/// The PhaseManager is the top-level class responsible for managing battle flow. It is essentially a basic state machine.
 /// The PhaseManager manages a list of Phase classes which control individual phases of battle.
-/// Every battle must have a PartyPhase and an EnemyPhase, but other phases may be added modularly
-/// This class implements the public-reference singleton pattern. The singleton is accessible through PhaseManager.main
+/// Every battle must have a PartyPhase and an EnemyPhase, but other phases may be added modularly.
+/// This class implements the public-reference singleton pattern. The singleton is accessible through PhaseManager.main.
 /// </summary>
 public class PhaseManager : MonoBehaviour, IPausable
 {

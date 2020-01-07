@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Class responsible for calculating and displaying targeting patterns.
+/// </summary>
 [System.Serializable]
 public class TargetPattern
 {

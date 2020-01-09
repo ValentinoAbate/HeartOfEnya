@@ -1,14 +1,15 @@
 // GENERATED AUTOMATICALLY FROM 'Assets/Input/Controls.inputactions'
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public class Controls : IInputActionCollection
+public class @Controls : IInputActionCollection, IDisposable
 {
     private InputActionAsset asset;
-    public Controls()
+    public @Controls()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""Controls"",
@@ -44,7 +45,6 @@ public class Controls : IInputActionCollection
     ""controlSchemes"": [
         {
             ""name"": ""Keyboard"",
-            ""basedOn"": """",
             ""bindingGroup"": ""Keyboard"",
             ""devices"": [
                 {
@@ -57,11 +57,11 @@ public class Controls : IInputActionCollection
     ]
 }");
         // UI
-        m_UI = asset.GetActionMap("UI");
-        m_UI_Confirm = m_UI.GetAction("Confirm");
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Confirm = m_UI.FindAction("Confirm", throwIfNotFound: true);
     }
 
-    ~Controls()
+    public void Dispose()
     {
         UnityEngine.Object.Destroy(asset);
     }
@@ -111,8 +111,8 @@ public class Controls : IInputActionCollection
     private readonly InputAction m_UI_Confirm;
     public struct UIActions
     {
-        private Controls m_Wrapper;
-        public UIActions(Controls wrapper) { m_Wrapper = wrapper; }
+        private @Controls m_Wrapper;
+        public UIActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Confirm => m_Wrapper.m_UI_Confirm;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
@@ -123,16 +123,16 @@ public class Controls : IInputActionCollection
         {
             if (m_Wrapper.m_UIActionsCallbackInterface != null)
             {
-                Confirm.started -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirm;
-                Confirm.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirm;
-                Confirm.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirm;
+                @Confirm.started -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirm;
+                @Confirm.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirm;
+                @Confirm.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirm;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
             {
-                Confirm.started += instance.OnConfirm;
-                Confirm.performed += instance.OnConfirm;
-                Confirm.canceled += instance.OnConfirm;
+                @Confirm.started += instance.OnConfirm;
+                @Confirm.performed += instance.OnConfirm;
+                @Confirm.canceled += instance.OnConfirm;
             }
         }
     }
@@ -142,7 +142,7 @@ public class Controls : IInputActionCollection
     {
         get
         {
-            if (m_KeyboardSchemeIndex == -1) m_KeyboardSchemeIndex = asset.GetControlSchemeIndex("Keyboard");
+            if (m_KeyboardSchemeIndex == -1) m_KeyboardSchemeIndex = asset.FindControlSchemeIndex("Keyboard");
             return asset.controlSchemes[m_KeyboardSchemeIndex];
         }
     }

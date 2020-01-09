@@ -46,7 +46,7 @@ public struct Pos : IEquatable<Pos>
         {
             if (from.row == to.row)
                 return Zero;
-            return from.row > to.col ? Up : Down;
+            return from.row > to.row ? Up : Down;
         }          
         else
             return from.col > to.col ? Left : Right;

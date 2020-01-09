@@ -259,7 +259,7 @@ public class BattleGrid : MonoBehaviour
     public bool Move(FieldObject obj, Pos dest)
     {
         // If the destination is not legal and empty, return
-        if (!(IsLegal(dest) && !IsEmpty(dest)))
+        if (!(IsLegal(dest) && IsEmpty(dest)))
             return false;
         Pos src = obj.Pos;
         // Clean up any event tiles on the square left from

@@ -219,6 +219,22 @@ public class BattleGrid : MonoBehaviour
     }
 
     /// <summary>
+    /// Return all FieldObjects that match the given predicate
+    /// </summary>
+    public List<FieldObject> GetAllObjects(Predicate<FieldObject> pred)
+    {
+        var foundObjects = new List<FieldObject>();
+        //brute force foreach of field; might optimize later
+        foreach(var obj in field)
+        {
+            //if object matches the predicate, add it to the list
+            if(pred(obj))
+                foundObjects.Add(obj);
+        }
+        return foundObjects;
+    }
+
+    /// <summary>
     /// Set's the object at the given grid position to the given FieldObject reference (if pos is a legal Grid Position)
     /// </summary>
     public void SetObject(Pos pos, FieldObject value)

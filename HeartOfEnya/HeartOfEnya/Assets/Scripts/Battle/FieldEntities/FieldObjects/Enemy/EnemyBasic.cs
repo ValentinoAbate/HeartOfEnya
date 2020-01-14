@@ -7,9 +7,15 @@ public class EnemyBasic : Enemy
     protected override IEnumerator AICoroutine()
     {
         // Sort targets by distance
-        var targetList = new List<PartyMember>(PhaseManager.main.PartyPhase.Party);
+        var targetList = new List<FieldObject>(PhaseManager.main.PartyPhase.Party);
+        var lureList = new List<FieldObject>(BattleGrid.main.GetAllObjects((obj) => obj is Lure));   //get list of all lures
+        
         targetList.RemoveAll((t) => t == null);
         targetList.Sort((p, p2) => Pos.Distance(Pos, p.Pos).CompareTo(Pos.Distance(Pos, p2.Pos)));
+        lureList.RemoveAll((t) => t == null);
+        lureList.Sort((p, p2) => Pos.Distance(Pos, p.Pos).CompareTo(Pos.Distance(Pos, p2.Pos))); //sort by distance
+
+        targetList.InsertRange(0, lureList); //prioritize lures by inserting at front of targetList
 
         foreach (var target in targetList)
         {

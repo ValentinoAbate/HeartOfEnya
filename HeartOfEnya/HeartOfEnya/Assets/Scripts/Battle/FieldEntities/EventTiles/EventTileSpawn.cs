@@ -2,17 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// An event tile that should be on tiles where enemies spawn.
+/// </summary>
 public class EventTileSpawn : EventTile
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

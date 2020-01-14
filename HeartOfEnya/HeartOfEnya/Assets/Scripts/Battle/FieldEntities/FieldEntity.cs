@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Entity with a position on the Battle Grid and an Allegiance
+/// Entity with a position on the Battle Grid and an Allegiance (Team)
+/// This is the base class for anything that will go on the grid.
+/// For something that actually occupies a space, see FieldObject.
 /// </summary>
 [DisallowMultipleComponent]
 public abstract class FieldEntity : MonoBehaviour
@@ -16,7 +18,15 @@ public abstract class FieldEntity : MonoBehaviour
         Enemy = 2,
         Neutral = 4,
     }
+    /// <summary>
+    /// The team(s) this object is affiliated with.
+    /// Some objects (like units) should really only have one team.
+    /// However, some objects, like traps, make have multiple values for what teams they affect
+    /// </summary>
     public virtual Teams Team { get => Teams.Neutral; }
+    /// <summary>
+    /// The entity's name as it should be displayed to the player in the game.
+    /// </summary>
     public string DisplayName => displayName;
     [SerializeField]
     private string displayName = string.Empty;
@@ -30,7 +40,10 @@ public abstract class FieldEntity : MonoBehaviour
     {
         Initialize();
     }
-
+    /// <summary>
+    /// Should be called during the Start() function.
+    /// The class should inherit Start() from FieldEntity, but if Start() is overriden add a call to this function.
+    /// </summary>
     protected abstract void Initialize();
 
     public virtual bool Select() { return false; }
@@ -39,5 +52,4 @@ public abstract class FieldEntity : MonoBehaviour
     public virtual Coroutine StartTurn() { return null; }
     public virtual void OnPhaseStart() { }
     public virtual void OnPhaseEnd() { }
-
 }

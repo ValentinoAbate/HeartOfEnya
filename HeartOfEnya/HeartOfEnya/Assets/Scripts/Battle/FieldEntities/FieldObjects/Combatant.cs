@@ -3,13 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// A combatant is any field object that is can use Actions (see Action.cs) or be affected by them.
+/// Combatants have a movement stat, an HP stat, elemental reactions, and can be Stunned.
+/// </summary>
 public abstract class Combatant : FieldObject
 {
     [Header("General Combatant Fields")]
     public int maxHp;
+    /// <summary>
+    /// The units current movement range. Is only 1 sqaure when an action is being charged.
+    /// </summary>
     public int Move => IsChargingAction ? 1 : move;
     [SerializeField]
     private int move;
+
+    #region Elemental Reactions
+
     public ActionEffect.Reaction reactionToPhys;
     public ActionEffect.Reaction reactionToMagic;
     public ActionEffect.Reaction reactionToFire;
@@ -17,6 +27,9 @@ public abstract class Combatant : FieldObject
     public ActionEffect.Reaction reactionToSuppport;
     [System.NonSerialized]
     public ActionEffect.ReactionDict reactions;
+
+    #endregion
+
     public virtual bool Stunned
     {
         get => stunned;

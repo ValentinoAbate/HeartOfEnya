@@ -64,7 +64,6 @@ public class SelectionListCursor : Cursor
         {
             if(highlighted.Select())
             {
-                highlighted.StartTurn();
                 SetActive(false);
             }
         }

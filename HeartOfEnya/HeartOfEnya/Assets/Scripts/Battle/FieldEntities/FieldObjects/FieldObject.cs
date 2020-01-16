@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// An object with a position on the battlefield that other FieldObjects cannot end their movement on.
+/// An object with a position on the battlefield that other FieldObjects cannot share a square with.
 /// These are the main interactable object on the field (party members, obstacles, enemies, etc.)
 /// Can share a space with other FieldEntities, such as EventTiles.
 /// </summary>

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// A hostile combabatant (a.k.a an enemy unit).
+/// Currently, AI behavior is defined in the AICoroutine which must be defined in a child class.
+/// </summary>
 public abstract class Enemy : Combatant, IPausable
 {
     public PauseHandle PauseHandle { get; set; }
@@ -45,7 +49,7 @@ public abstract class Enemy : Combatant, IPausable
         squares.Clear();
     }
 
-    public override Coroutine StartTurn()
+    public virtual Coroutine StartTurn()
     {
         return StartCoroutine(TurnCR());
     }
@@ -80,6 +84,10 @@ public abstract class Enemy : Combatant, IPausable
 
     protected abstract IEnumerator AICoroutine();
 
+    /// <summary>
+    /// Attack a position. Basically a wrapper to UseAction, with some addional debugging.
+    /// Might be used later for displaying attacks
+    /// </summary>
     protected Coroutine Attack(Pos p)
     {
         var target = BattleGrid.main.GetObject(p) as Combatant;

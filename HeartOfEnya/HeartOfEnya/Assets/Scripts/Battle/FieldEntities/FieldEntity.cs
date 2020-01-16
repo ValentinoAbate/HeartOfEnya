@@ -46,10 +46,27 @@ public abstract class FieldEntity : MonoBehaviour
     /// </summary>
     protected abstract void Initialize();
 
+    /// <summary>
+    /// Called the player presses the conform control with the square containing this unit highlighted
+    /// </summary>
+    /// <returns></returns>
     public virtual bool Select() { return false; }
+    /// <summary>
+    /// Called when a cursor highlighting the square containing this unit
+    /// </summary>
     public virtual void Highlight() { }
+    /// <summary>
+    /// Called when a cursor that was highlighting the sqaure containing this unit moves to a different square
+    /// </summary>
     public virtual void UnHighlight() { }
-    public virtual Coroutine StartTurn() { return null; }
+    /// <summary>
+    /// Called at the begninning of the phase for each unit managed by that phase
+    /// Used to update timed effects and initialize UI.
+    /// </summary>
     public virtual void OnPhaseStart() { }
+    /// <summary>
+    /// Called at the end of the phase for each unit managed by that phase
+    /// Used to update timed effects and cleanup UI.
+    /// </summary>
     public virtual void OnPhaseEnd() { }
 }

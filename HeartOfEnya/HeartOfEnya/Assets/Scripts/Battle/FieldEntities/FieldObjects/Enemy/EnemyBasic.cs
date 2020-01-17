@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// An enemy with basic AI
+/// Atempts to move adjacent to the closest target and use its attack.
+/// Doesn't understand how to use ranged attacks.
+/// Doesn't know how to attack obstacles.
+/// Attacks the closest target with a path by graph distance not path distance
+/// </summary>
 public class EnemyBasic : Enemy
 {
     protected override IEnumerator AICoroutine()
@@ -10,7 +17,9 @@ public class EnemyBasic : Enemy
         var targetList = new List<FieldObject>(PhaseManager.main.PartyPhase.Party);
         var lureList = new List<FieldObject>(BattleGrid.main.GetAllObjects((obj) => obj is Lure));   //get list of all lures
         
+        // Remove all dead targets (just in case)
         targetList.RemoveAll((t) => t == null);
+        // Sort targets by grid distance, closest to farthest
         targetList.Sort((p, p2) => Pos.Distance(Pos, p.Pos).CompareTo(Pos.Distance(Pos, p2.Pos)));
         lureList.RemoveAll((t) => t == null);
         lureList.Sort((p, p2) => Pos.Distance(Pos, p.Pos).CompareTo(Pos.Distance(Pos, p2.Pos))); //sort by distance
@@ -21,7 +30,7 @@ public class EnemyBasic : Enemy
         {
             // Find path to target
             var path = BattleGrid.main.Path(Pos, target.Pos, (obj) => CanMoveThrough(obj) || obj == target);
-            // Mone on to next target if no path is found
+            // Move on to next target if no path is found
             if (path == null)
                 continue;
             // Remove the last node (the position of the target)
@@ -35,7 +44,7 @@ public class EnemyBasic : Enemy
                 BattleGrid.main.MoveAndSetWorldPos(this, path[i]);
                 yield return new WaitForSeconds(0.1f);
             }
-            if (Move >= path.Count)
+            if (Move >= path.Count) // Attack if close enough
             {
                 yield return new WaitWhile(() => PauseHandle.Paused);
                 Attack(target.Pos);

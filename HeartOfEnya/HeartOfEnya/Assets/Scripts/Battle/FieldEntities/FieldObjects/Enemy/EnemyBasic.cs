@@ -16,6 +16,7 @@ public class EnemyBasic : Enemy
         // Sort targets by distance
         var targetList = new List<FieldObject>(PhaseManager.main.PartyPhase.Party);
         var lureList = new List<FieldObject>(BattleGrid.main.GetAllObjects((obj) => obj is Lure));   //get list of all lures
+        var obstacleList = new List<FieldObject>(BattleGrid.main.GetAllObjects((obj) => obj is Obstacle));   //get list of all obstacles
         
         // Remove all dead targets (just in case)
         targetList.RemoveAll((t) => t == null);
@@ -23,8 +24,11 @@ public class EnemyBasic : Enemy
         targetList.Sort((p, p2) => Pos.Distance(Pos, p.Pos).CompareTo(Pos.Distance(Pos, p2.Pos)));
         lureList.RemoveAll((t) => t == null);
         lureList.Sort((p, p2) => Pos.Distance(Pos, p.Pos).CompareTo(Pos.Distance(Pos, p2.Pos))); //sort by distance
+        obstacleList.RemoveAll((t) => t == null);
+        obstacleList.Sort((p, p2) => Pos.Distance(Pos, p.Pos).CompareTo(Pos.Distance(Pos, p2.Pos))); //sort by distance
 
         targetList.InsertRange(0, lureList); //prioritize lures by inserting at front of targetList
+        targetList.AddRange(obstacleList); //de-prioritize obstacles by inserting at end of targetList
 
         foreach (var target in targetList)
         {

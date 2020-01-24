@@ -131,7 +131,7 @@ public class AttackCursor : GridAndSelectionListCursor
         action.targetPattern.Hide();
         attacker.UseAction(action, Pos);
         SetActive(false);
-        (attacker as PartyMember)?.EndAction();
+        (attacker as PartyMember)?.EndTurn();
         
     }
 

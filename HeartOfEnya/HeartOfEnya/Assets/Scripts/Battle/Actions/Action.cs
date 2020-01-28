@@ -5,11 +5,21 @@ using System.Linq;
 
 public class Action : MonoBehaviour
 {
+    public const float targetHighlightSeconds = 0.25f;
+    public const float cutInSeconds = 2f;
+
     public ActionRange range;
     public TargetPattern targetPattern;
     public int chargeTurns = 0;
+
+    #region VFX Fields
+
+    public GameObject cutInPrefab = null;
     public GameObject fxPrefab;
     public float delayAtEnd = 0.25f;
+
+    #endregion
+
     private ActionEffect[] effects;
 
     private void Awake()
@@ -33,10 +43,17 @@ public class Action : MonoBehaviour
         targetPositions.Sort((p1, p2) => Pos.CompareTopToBottomLeftToRight(p1, p2));
         var targets = new List<Combatant>();
 
+        //Play cut-in if applicable
+        if(cutInPrefab != null)
+        {
+            var cutIn = Instantiate(cutInPrefab);
+            yield return new WaitForSeconds(cutInSeconds);
+            Destroy(cutIn);
+        }
+
         // Highlight the targeted squares.
         targetPattern.Show(BattleGrid.main.attackSquareMat);
-        Debug.Log("Showing Pattern");
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(targetHighlightSeconds);
 
         // Iterate through positions and show VFX
         foreach (var position in targetPositions)
@@ -56,8 +73,8 @@ public class Action : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(delayAtEnd);
-
+        // Wait for the VFX to finish, wait for the highlight time again, then continue
+        yield return new WaitForSeconds(targetHighlightSeconds + delayAtEnd);
         targetPattern.Hide();
 
         // Apply actual effects to targets and display results

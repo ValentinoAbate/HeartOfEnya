@@ -10,6 +10,7 @@ public class ActionInspector : Editor
     {
         var action = target as Action;
         EditorGUILayout.LabelField(new GUIContent("VFX Fields"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("cutInPrefab"), new GUIContent("Cut-In Prefab"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("fxPrefab"), new GUIContent("Vfx Prefab"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("delayAtEnd"), new GUIContent("Delay At End"));
         EditorUtils.Separator();

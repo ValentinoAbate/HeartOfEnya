@@ -113,7 +113,6 @@ public abstract class Enemy : Combatant, IPausable
             Debug.Log(name + " begins charging " + action.name);
         else if (target != null)
             Debug.Log(name + " attacks " + target.name + " with " + action.name);
-        UseAction(action, p);
-        return null;
+        return UseAction(action, p);
     }
 }

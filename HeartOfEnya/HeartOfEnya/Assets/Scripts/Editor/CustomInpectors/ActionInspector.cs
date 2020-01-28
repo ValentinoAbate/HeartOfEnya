@@ -9,6 +9,10 @@ public class ActionInspector : Editor
     public override void OnInspectorGUI()
     {
         var action = target as Action;
+        EditorGUILayout.LabelField(new GUIContent("VFX Fields"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("fxPrefab"), new GUIContent("Vfx Prefab"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("delayAtEnd"), new GUIContent("Delay At End"));
+        EditorUtils.Separator();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("chargeTurns"), new GUIContent("Charge Turns"));
         EditorUtils.Separator();
         if(action.targetPattern.type == TargetPattern.Type.Directional)

@@ -186,11 +186,12 @@ public class PartyMember : Combatant, IPausable
     /// <summary>
     /// Use the action and reduce Fp if the action has an ActionFpCost component
     /// </summary>
-    public override void UseAction(Action action, Pos targetPos)
+    public override Coroutine UseAction(Action action, Pos targetPos)
     {
-        base.UseAction(action, targetPos);
+        var routine = base.UseAction(action, targetPos);
         var fpCost = action.GetComponent<ActionFpCost>();
         if(fpCost != null)
             Fp -= fpCost.fpCost;
+        return routine;
     }
 }

@@ -122,14 +122,14 @@ public abstract class Combatant : FieldObject
     /// </summary>
     /// <param name="action"></param>
     /// <param name="targetPos"></param>
-    public virtual void UseAction(Action action, Pos targetPos)
+    public virtual Coroutine UseAction(Action action, Pos targetPos)
     {
         // If the action is not a charged action
         if (action.chargeTurns <= 0)
         {
             // Instantiate a copy of the action object
             var actionClone = Instantiate(action.gameObject).GetComponent<Action>();
-            actionClone.Activate(this, targetPos);
+            return StartCoroutine(actionClone.Activate(this, targetPos));
         }
         else // The action is a charged action, start charging
         {
@@ -137,6 +137,7 @@ public abstract class Combatant : FieldObject
             ChargeChargingAction();
             chargeUI.SetActive(true);
         }
+        return null;
     }
 
     #region Action Charging

@@ -21,6 +21,11 @@ public static partial class EditorUtils
         get => new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold };
     }
 
+    public static GUIStyle Centered
+    {
+        get => new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter };
+    }
+
     public static T EnumPopup<T>(GUIContent label, T enumData, params GUILayoutOption[] options) where T : System.Enum
     {
         return (T)EditorGUILayout.EnumPopup(label, enumData, options);

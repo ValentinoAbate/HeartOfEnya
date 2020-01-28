@@ -30,7 +30,7 @@ public class TargetPatternDrawer : PropertyDrawer
         Rect UIRect = new Rect(position) { height = EditorGUIUtility.singleLineHeight };
 
         #region Actual GUI drawing
-        GUI.Label(UIRect, new GUIContent("Target Pattern", "TODO, tooltip"), EditorUtils.BoldCentered);
+        GUI.Label(UIRect, new GUIContent("Target Pattern", "TODO, tooltip"), EditorUtils.Centered);
         UIRect.y += lineHeight;
         EditorGUI.PrefixLabel(new Rect(UIRect) { width = labelWidth }, new GUIContent("Type"));
         EditorGUI.PropertyField(new Rect(UIRect) { x = UIRect.x + labelWidth, width = UIRect.width - labelWidth }, typeProp, GUIContent.none);

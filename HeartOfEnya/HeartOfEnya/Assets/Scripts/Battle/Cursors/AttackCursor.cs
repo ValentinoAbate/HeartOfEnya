@@ -129,10 +129,16 @@ public class AttackCursor : GridAndSelectionListCursor
     {
         HideTargets();
         action.targetPattern.Hide();
-        attacker.UseAction(action, Pos);
+        StartCoroutine(AttackCr());
+        
+    }
+
+    private IEnumerator AttackCr()
+    {
+        // Wait for the attack routine to finish
+        yield return attacker.UseAction(action, Pos);
         SetActive(false);
         (attacker as PartyMember)?.EndTurn();
-        
     }
 
     /// <summary>

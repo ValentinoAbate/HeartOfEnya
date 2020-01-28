@@ -130,7 +130,7 @@ namespace Dialog
         public override IEnumerator DialogueComplete()
         {
             if (endSceneOnComplete)
-                yield break;
+                SceneTransitionManager.main.TransitionScenes(sceneName);
             yield break;
         }
 

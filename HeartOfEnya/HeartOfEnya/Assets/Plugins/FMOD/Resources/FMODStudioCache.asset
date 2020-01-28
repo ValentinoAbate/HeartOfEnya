@@ -34,6 +34,23 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+  Exists: 0
+--- !u!114 &-7996516913051913280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Loading
+  m_EditorClassIdentifier: 
+  Name: Loading
+  Min: 0
+  Max: 1
+  Default: 1
   Exists: 1
 --- !u!114 &-6617626653947488930
 MonoBehaviour:
@@ -66,7 +83,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.strings.bank
   SubDir: 
-  lastModified: 637154732910000000
+  lastModified: 637158226311569558
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -224,16 +241,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: -6246965684595838257}
-  - {fileID: 3018573818287996664}
+  - {fileID: 6824469996452757685}
   EditorEvents:
   - {fileID: 1510093652434438684}
   EditorParameters: []
   MasterBanks:
-  - {fileID: 3018573818287996664}
+  - {fileID: 6824469996452757685}
   StringsBanks:
   - {fileID: -6246965684595838257}
-  stringsBankWriteTime: 637154732910000000
+  stringsBankWriteTime: 637158226311569558
   cacheVersion: 3
+--- !u!114 &1013691369027032001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Crisis
+  m_EditorClassIdentifier: 
+  Name: Crisis
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &1510093652434438684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,13 +283,13 @@ MonoBehaviour:
   Path: event:/Battle Theme
   guid: 34ce1126a9dfcf46a856be6b7d67badf
   Banks:
-  - {fileID: 3018573818287996664}
+  - {fileID: 6824469996452757685}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 5386479835525738394}
-  - {fileID: -8164522305320021791}
+  - {fileID: -7996516913051913280}
+  - {fileID: 1013691369027032001}
   MinDistance: 0
   MaxDistance: 0
   Length: 451516
@@ -294,7 +328,7 @@ MonoBehaviour:
   lastModified: 637154732910000000
   LoadResult: 0
   FileSizes: []
-  Exists: 1
+  Exists: 0
 --- !u!114 &5386479835525738394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,7 +345,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 1
-  Exists: 1
+  Exists: 0
 --- !u!114 &6448739638260002920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +363,24 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &6824469996452757685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637158226311539841
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &8295340185525196384
 MonoBehaviour:
   m_ObjectHideFlags: 0

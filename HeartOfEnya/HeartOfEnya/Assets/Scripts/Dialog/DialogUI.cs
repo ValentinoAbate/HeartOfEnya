@@ -14,6 +14,8 @@ namespace Dialog
 
         public PauseHandle PauseHandle { get; set; }
 
+
+        [Header("General Config")]
         public float scrollDelay;
         public Canvas dialogCanvas;
         public GameObject dialogBoxPrefab;
@@ -21,6 +23,11 @@ namespace Dialog
         public List<Button> optionButtons;
         /// The characters currently in the scene
         public List<Character> characters;
+
+        [Header("Scene Transition Fields")]
+        public bool endSceneOnComplete;
+        public string sceneName = string.Empty;
+
         // The last character that spoke
         private Character lastSpeaker;
         // The currently active dialogbox
@@ -118,6 +125,13 @@ namespace Dialog
             {
                 button.gameObject.SetActive(false);
             }
+        }
+
+        public override IEnumerator DialogueComplete()
+        {
+            if (endSceneOnComplete)
+                yield break;
+            yield break;
         }
 
         /// Called by buttons to make a selection.

@@ -1,5 +1,5 @@
 {
-    "name": "PlayerInput",
+    "name": "Controls",
     "maps": [
         {
             "name": "UI",
@@ -25,6 +25,17 @@
                     "action": "Confirm",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be7d830f-c088-4fb2-bbb6-e86a33b6b52d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard;Mouse",
+                    "action": "Confirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
@@ -32,11 +43,21 @@
     "controlSchemes": [
         {
             "name": "Keyboard",
-            "basedOn": "",
             "bindingGroup": "Keyboard",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Mouse",
+            "bindingGroup": "Mouse",
+            "devices": [
+                {
+                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }

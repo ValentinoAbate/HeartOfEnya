@@ -193,8 +193,9 @@ public abstract class Combatant : FieldObject
             return;
         Debug.Log(name + " uses charged action!");
         chargeUI.SetActive(false);
-        chargingAction.Activate();
+        StartCoroutine(chargingAction.Activate());
         chargingAction = null;
     }
+
     #endregion
 }

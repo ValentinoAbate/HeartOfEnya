@@ -9,13 +9,19 @@ using UnityEngine.UI;
 /// </summary>
 public abstract class Combatant : FieldObject
 {
+    public abstract Sprite DisplaySprite { get; }
+    public abstract Color DisplaySpriteColor { get; }
     [Header("Cheats")]
     [SerializeField]
     public bool godMode = false;
+    [Header("Combatant Display Fields")]
+    [TextArea(1, 2)]
+    public string description = "Combatant description";
+
     [Header("General Combatant Fields")]
     public int maxHp;
     /// <summary>
-    /// The units current movement range. Is only 1 sqaure when an action is being charged.
+    /// The units current movement range. Is only 1 square when an action is being charged.
     /// </summary>
     public int Move => IsChargingAction ? 1 : move;
     [SerializeField]
@@ -130,8 +136,7 @@ public abstract class Combatant : FieldObject
     /// </summary>
     public virtual void Immortal()
     {
-        Debug.Log(name + "'s god mode is unlocked.");
-      
+        Debug.Log(name + "'s god mode is unlocked.");      
     }
 
     /// <summary>
@@ -198,4 +203,14 @@ public abstract class Combatant : FieldObject
     }
 
     #endregion
+
+    public override void Highlight()
+    {
+        BattleUI.main.ShowInfoPanelGeneric(this);
+    }
+
+    public override void UnHighlight()
+    {
+        BattleUI.main.HideInfoPanel();
+    }
 }

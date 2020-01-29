@@ -9,5 +9,8 @@ using System.Linq;
 /// </summary>
 public class Obstacle : Combatant
 {
+    public SpriteRenderer sprite;
+    public override Sprite DisplaySprite => sprite.sprite;
+    public override Color DisplaySpriteColor => sprite.color;
     public override Teams Team => Teams.Neutral;
 }

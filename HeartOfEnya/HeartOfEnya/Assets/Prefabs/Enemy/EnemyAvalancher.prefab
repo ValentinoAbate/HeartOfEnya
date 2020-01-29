@@ -17,17 +17,21 @@ MonoBehaviour:
     row: 0
     col: 0
   canMoveThrough: 0
+  godMode: 0
+  description: Uses a big 'ol ice attack.
   maxHp: 3
   move: 1
   reactionToPhys: 0
   reactionToMagic: 0
   reactionToFire: 0
   reactionToIce: 1
+  reactionToSuppport: 0
   hpText: {fileID: 888582651532204155}
   hpImage: {fileID: 8852618988252319767}
   chargeUI: {fileID: 6520664480550037884}
   chargeText: {fileID: 1650866767232750238}
   action: {fileID: 8902642157473425592, guid: 3911de5ec9d172a4c8e1d5b48d828d11, type: 3}
+  sprite: {fileID: 1216168957178960090}
 --- !u!1001 &6016613264502088977
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40,42 +44,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyAvalancher
       objectReference: {fileID: 0}
-    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
+    - target: {fileID: 3774924428069235654, guid: 17f7430228c302c40a43d2e6db488893,
         type: 3}
-      propertyPath: def
-      value: 0
+      propertyPath: m_Color.r
+      value: 0.2783019
       objectReference: {fileID: 0}
-    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
+    - target: {fileID: 3774924428069235654, guid: 17f7430228c302c40a43d2e6db488893,
         type: 3}
-      propertyPath: reactionToFire
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
-        type: 3}
-      propertyPath: reactionToIce
+      propertyPath: m_Color.g
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
+    - target: {fileID: 3774924428069235654, guid: 17f7430228c302c40a43d2e6db488893,
         type: 3}
-      propertyPath: attack
-      value: 
-      objectReference: {fileID: 4503195748058479320, guid: fdbe2d6f19dc5b5448528244bdc695d4,
-        type: 3}
-    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
-        type: 3}
-      propertyPath: maxHp
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
-        type: 3}
-      propertyPath: action
-      value: 
-      objectReference: {fileID: 8902642157473425592, guid: 3911de5ec9d172a4c8e1d5b48d828d11,
-        type: 3}
-    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
-        type: 3}
-      propertyPath: displayName
-      value: 
+      propertyPath: m_Color.b
+      value: 0.97610635
       objectReference: {fileID: 0}
     - target: {fileID: 3774924428069235655, guid: 17f7430228c302c40a43d2e6db488893,
         type: 3}
@@ -132,20 +114,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3774924428069235654, guid: 17f7430228c302c40a43d2e6db488893,
+    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
         type: 3}
-      propertyPath: m_Color.r
-      value: 0.2783019
+      propertyPath: def
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3774924428069235654, guid: 17f7430228c302c40a43d2e6db488893,
+    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
         type: 3}
-      propertyPath: m_Color.g
+      propertyPath: reactionToFire
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
+        type: 3}
+      propertyPath: reactionToIce
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3774924428069235654, guid: 17f7430228c302c40a43d2e6db488893,
+    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
         type: 3}
-      propertyPath: m_Color.b
-      value: 0.97610635
+      propertyPath: attack
+      value: 
+      objectReference: {fileID: 4503195748058479320, guid: fdbe2d6f19dc5b5448528244bdc695d4,
+        type: 3}
+    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
+        type: 3}
+      propertyPath: maxHp
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
+        type: 3}
+      propertyPath: action
+      value: 
+      objectReference: {fileID: 8902642157473425592, guid: 3911de5ec9d172a4c8e1d5b48d828d11,
+        type: 3}
+    - target: {fileID: 3774924428069235656, guid: 17f7430228c302c40a43d2e6db488893,
+        type: 3}
+      propertyPath: displayName
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17f7430228c302c40a43d2e6db488893, type: 3}
@@ -197,3 +201,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!212 &1216168957178960090 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4872893542316293579, guid: 17f7430228c302c40a43d2e6db488893,
+    type: 3}
+  m_PrefabInstance: {fileID: 6016613264502088977}
+  m_PrefabAsset: {fileID: 0}

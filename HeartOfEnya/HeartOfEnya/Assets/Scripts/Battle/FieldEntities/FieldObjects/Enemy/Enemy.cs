@@ -14,6 +14,9 @@ public abstract class Enemy : Combatant, IPausable
 
     [Header("Enemy-Specific Fields")]
     public Action action;
+    public SpriteRenderer sprite;
+    public override Sprite DisplaySprite => sprite.sprite;
+    public override Color DisplaySpriteColor => sprite.color;
 
     private readonly List<GameObject> squares = new List<GameObject>();
 
@@ -34,14 +37,16 @@ public abstract class Enemy : Combatant, IPausable
     // TODO: show attack range, maybe intended action?
     public override void Highlight()
     {
-        if (stunned || IsChargingAction)
-            return;
-        // Calculate and display movement range
-        var traversable = BattleGrid.main.Reachable(Pos, Move, CanMoveThrough).Keys.ToList();
-        traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
-        traversable.Add(Pos);
-        foreach (var spot in traversable)
-            squares.Add(BattleGrid.main.SpawnSquare(spot, BattleGrid.main.moveSquareMat));
+        if(!Stunned && !IsChargingAction)
+        {
+            // Calculate and display movement range
+            var traversable = BattleGrid.main.Reachable(Pos, Move, CanMoveThrough).Keys.ToList();
+            traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
+            traversable.Add(Pos);
+            foreach (var spot in traversable)
+                squares.Add(BattleGrid.main.SpawnSquare(spot, BattleGrid.main.moveSquareMat));
+        }
+        BattleUI.main.ShowInfoPanelEnemy(this);
     }
 
     // Hide movement range
@@ -50,6 +55,7 @@ public abstract class Enemy : Combatant, IPausable
         foreach (var obj in squares)
             Destroy(obj);
         squares.Clear();
+        BattleUI.main.HideInfoPanel();
     }
 
     /// <summary>

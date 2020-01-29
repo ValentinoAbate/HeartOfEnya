@@ -42,6 +42,7 @@ public abstract class Enemy : Combatant, IPausable
         traversable.Add(Pos);
         foreach (var spot in traversable)
             squares.Add(BattleGrid.main.SpawnSquare(spot, BattleGrid.main.moveSquareMat));
+        BattleUI.main.ShowInfoPanelEnemy(this);
     }
 
     // Hide movement range
@@ -50,6 +51,7 @@ public abstract class Enemy : Combatant, IPausable
         foreach (var obj in squares)
             Destroy(obj);
         squares.Clear();
+        BattleUI.main.HideInfoPanel();
     }
 
     /// <summary>

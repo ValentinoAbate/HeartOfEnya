@@ -168,12 +168,14 @@ public class PartyMember : Combatant, IPausable
             return;
         moveCursor.CalculateTraversable();
         moveCursor.DisplayTraversable(true);
+        BattleUI.main.ShowInfoPanelParty(this);
     }
 
     // Hide the movement range display
     public override void UnHighlight()
     {
         moveCursor.DisplayTraversable(false);
+        BattleUI.main.HideInfoPanel();
     }
 
     /// <summary>

@@ -14,14 +14,19 @@ public class PauseManager : MonoBehaviour
     {
        if(Input.GetKeyDown(pauseKey))
        {
-            pause = !pause;
-            pauseUI.SetActive(pause);
-            foreach (var obj in toPause)
-            {
-                var pausables = obj.GetComponents<IPausable>();
-                foreach (var pausable in pausables)
-                    pausable.PauseHandle.SetPause(pause, PauseHandle.PauseSource.PauseMenu);
-            }
+            TogglePause();
        }
+    }
+
+    public void TogglePause()
+    {
+        pause = !pause;
+        pauseUI.SetActive(pause);
+        foreach (var obj in toPause)
+        {
+            var pausables = obj.GetComponents<IPausable>();
+            foreach (var pausable in pausables)
+                pausable.PauseHandle.SetPause(pause, PauseHandle.PauseSource.PauseMenu);
+        }
     }
 }

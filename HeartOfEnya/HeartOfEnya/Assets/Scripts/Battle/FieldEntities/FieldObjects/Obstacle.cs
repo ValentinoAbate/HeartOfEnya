@@ -10,4 +10,13 @@ using System.Linq;
 public class Obstacle : Combatant
 {
     public override Teams Team => Teams.Neutral;
+    public override void Highlight()
+    {
+        base.Highlight();
+    }
+
+    public override void UnHighlight()
+    {
+        base.UnHighlight();
+    }
 }

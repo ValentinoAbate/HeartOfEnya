@@ -15,11 +15,13 @@ public abstract class Combatant : FieldObject
     [Header("General Combatant Fields")]
     public int maxHp;
     /// <summary>
-    /// The units current movement range. Is only 1 sqaure when an action is being charged.
+    /// The units current movement range. Is only 1 square when an action is being charged.
     /// </summary>
     public int Move => IsChargingAction ? 1 : move;
     [SerializeField]
     private int move;
+    [TextArea(1,2)]
+    public string description = "Combatant description";
 
     #region Elemental Reactions
 
@@ -130,8 +132,7 @@ public abstract class Combatant : FieldObject
     /// </summary>
     public virtual void Immortal()
     {
-        Debug.Log(name + "'s god mode is unlocked.");
-      
+        Debug.Log(name + "'s god mode is unlocked.");      
     }
 
     /// <summary>

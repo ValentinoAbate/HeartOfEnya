@@ -95,6 +95,7 @@ public class BattleUI : MonoBehaviour
         InitializeInfoPanel(e);
         infoPanelEnemy.SetActive(true);
         enemyHpText.text = e.Hp.ToString();
+        enemyHpBarImage.fillAmount = e.Hp / (float)e.maxHp;
     }
 
     public void ShowInfoPanelParty(PartyMember p)
@@ -102,7 +103,9 @@ public class BattleUI : MonoBehaviour
         InitializeInfoPanel(p);
         infoPanelParty.SetActive(true);
         partyHpText.text = p.Hp.ToString();
+        partyHpBarImage.fillAmount = p.Hp / (float)p.maxHp;
         partyFpText.text = p.Fp.ToString();
+        partyFpBarImage.fillAmount = p.Fp / (float)p.maxFp;
     }
 
     public void ShowInfoPanelGeneric(Combatant c)
@@ -110,6 +113,7 @@ public class BattleUI : MonoBehaviour
         InitializeInfoPanel(c);
         infoPanelObstacle.SetActive(true);
         genericHpText.text = c.Hp.ToString();
+        genericHpBarImage.fillAmount = c.Hp / (float)c.maxHp; 
     }
 
     private void InitializeInfoPanel(Combatant c)
@@ -129,6 +133,9 @@ public class BattleUI : MonoBehaviour
         else if (c.Team == FieldEntity.Teams.Enemy)
             bgColor = enemyColor;
         infoPanelBg.color = bgColor;
+
+        #region Element Icons
+
         int immuneInd = 0;
         int vulnerableInd = 0;
         // Set Element Icons
@@ -144,5 +151,7 @@ public class BattleUI : MonoBehaviour
             immuneImages[i].sprite = iconNone;
         for (int i = vulnerableInd; i < vulnerableImages.Length; ++i)
             vulnerableImages[i].sprite = iconNone;
+
+        #endregion
     }
 }

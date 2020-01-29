@@ -9,9 +9,15 @@ using UnityEngine.UI;
 /// </summary>
 public abstract class Combatant : FieldObject
 {
+    public abstract Sprite DisplaySprite { get; }
+    public abstract Color DisplaySpriteColor { get; }
     [Header("Cheats")]
     [SerializeField]
     public bool godMode = false;
+    [Header("Combatant Display Fields")]
+    [TextArea(1, 2)]
+    public string description = "Combatant description";
+
     [Header("General Combatant Fields")]
     public int maxHp;
     /// <summary>
@@ -20,8 +26,6 @@ public abstract class Combatant : FieldObject
     public int Move => IsChargingAction ? 1 : move;
     [SerializeField]
     private int move;
-    [TextArea(1,2)]
-    public string description = "Combatant description";
 
     #region Elemental Reactions
 

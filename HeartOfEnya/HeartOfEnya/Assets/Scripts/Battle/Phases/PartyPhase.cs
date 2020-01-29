@@ -59,7 +59,11 @@ public class PartyPhase : Phase
         cursor.RemoveAll((obj) => obj == null || !((obj as PartyMember).HasTurn));
         // If there are no more party members with turns, end the phase
         if (cursor.Empty)
+        {
+            //Hide the info panel;
+            BattleUI.main.HideInfoPanel();
             EndPhase();
+        }
         else // Else, highlight the next member of the party
         {
             cursor.HighlightNext();

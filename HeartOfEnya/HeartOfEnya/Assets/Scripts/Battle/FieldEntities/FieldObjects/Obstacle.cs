@@ -9,14 +9,17 @@ using System.Linq;
 /// </summary>
 public class Obstacle : Combatant
 {
+    public SpriteRenderer sprite;
+    public override Sprite DisplaySprite => sprite.sprite;
+    public override Color DisplaySpriteColor => sprite.color;
     public override Teams Team => Teams.Neutral;
     public override void Highlight()
     {
-        base.Highlight();
+        BattleUI.main.ShowInfoPanelObstacle(this);
     }
 
     public override void UnHighlight()
     {
-        base.UnHighlight();
+        BattleUI.main.HideInfoPanel();
     }
 }

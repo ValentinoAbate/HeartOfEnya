@@ -14,6 +14,9 @@ public abstract class Enemy : Combatant, IPausable
 
     [Header("Enemy-Specific Fields")]
     public Action action;
+    public SpriteRenderer sprite;
+    public override Sprite DisplaySprite => sprite.sprite;
+    public override Color DisplaySpriteColor => sprite.color;
 
     private readonly List<GameObject> squares = new List<GameObject>();
 

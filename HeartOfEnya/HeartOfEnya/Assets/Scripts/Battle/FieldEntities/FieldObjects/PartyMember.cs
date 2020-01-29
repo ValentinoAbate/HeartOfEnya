@@ -47,6 +47,8 @@ public class PartyMember : Combatant, IPausable
     public AttackCursor attackCursor;
     public int maxFp;
     public int level;
+    public override Sprite DisplaySprite => sprite.sprite;
+    public override Color DisplaySpriteColor => sprite.color;
 
     /// <summary>
     /// Can this unit still take an action this turn?
@@ -193,6 +195,8 @@ public class PartyMember : Combatant, IPausable
     /// </summary>
     public override Coroutine UseAction(Action action, Pos targetPos)
     {
+        //Hide the info panel;
+        BattleUI.main.HideInfoPanel();
         var routine = base.UseAction(action, targetPos);
         var fpCost = action.GetComponent<ActionFpCost>();
         if(fpCost != null)

@@ -135,9 +135,10 @@ public class AttackCursor : GridAndSelectionListCursor
 
     private IEnumerator AttackCr()
     {
+        // Disable attacking again
+        SetActive(false);
         // Wait for the attack routine to finish
         yield return attacker.UseAction(action, Pos);
-        SetActive(false);
         (attacker as PartyMember)?.EndTurn();
     }
 

@@ -69,7 +69,7 @@ public class ChargingAction
     /// Should only be called if Ready == true or if early activation is intended.
     /// </summary>
     /// <returns></returns>
-    public void Activate()
+    public IEnumerator Activate()
     {
         displayPattern.Hide();
         Pos target;
@@ -80,7 +80,7 @@ public class ChargingAction
         else // Target is direction
             target = user.Pos + targetDirection;
         var actionClone = GameObject.Instantiate(action.gameObject).GetComponent<Action>();
-        actionClone.Activate(user, target);
+        return actionClone.Activate(user, target);
     }
 
     public void Cancel()

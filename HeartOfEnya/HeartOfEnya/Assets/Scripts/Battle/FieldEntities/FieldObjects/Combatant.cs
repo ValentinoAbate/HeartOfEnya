@@ -9,6 +9,9 @@ using UnityEngine.UI;
 /// </summary>
 public abstract class Combatant : FieldObject
 {
+    [Header("Cheats")]
+    [SerializeField]
+    public bool godMode = false;
     [Header("General Combatant Fields")]
     public int maxHp;
     /// <summary>
@@ -103,8 +106,13 @@ public abstract class Combatant : FieldObject
     public virtual void Damage(int damage)
     {
         Hp = Mathf.Max(0, hp - damage);
-        if (Dead)
+        if (Dead && !godMode)
+        {
             Kill();
+        }else if (godMode)
+        {
+            Immortal();
+        }
     }
 
     /// <summary>
@@ -115,6 +123,15 @@ public abstract class Combatant : FieldObject
         chargingAction?.Cancel();
         Debug.Log(name + " has died...");
         Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Implements the ability for characters to not die when hp is 0
+    /// </summary>
+    public virtual void Immortal()
+    {
+        Debug.Log(name + "'s god mode is unlocked.");
+      
     }
 
     /// <summary>
@@ -176,8 +193,9 @@ public abstract class Combatant : FieldObject
             return;
         Debug.Log(name + " uses charged action!");
         chargeUI.SetActive(false);
-        chargingAction.Activate();
+        StartCoroutine(chargingAction.Activate());
         chargingAction = null;
     }
+
     #endregion
 }

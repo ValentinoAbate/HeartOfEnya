@@ -90,6 +90,7 @@ public class Action : MonoBehaviour
             }
             yield return new WaitForSeconds(0.25f);
         }
+
         Destroy(gameObject);
     }
 }

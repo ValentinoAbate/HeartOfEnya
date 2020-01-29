@@ -23,6 +23,10 @@ public class BattleUI : MonoBehaviour
     public TextMeshProUGUI moveNumberText;
     public TextMeshProUGUI descriptionText;
 
+    [Header("Generic Combatant Info")]
+    public Image genericHpBarImage;
+    public TextMeshProUGUI genericHpText;
+
     [Header("Party-Specific Info")]
     public Image partyHpBarImage;
     public TextMeshProUGUI partyHpText;
@@ -32,10 +36,6 @@ public class BattleUI : MonoBehaviour
     [Header("Enemy-Specific Info")]
     public Image enemyHpBarImage;
     public TextMeshProUGUI enemyHpText;
-
-    [Header("Obstacle-Specific Info")]
-    public Image obstacleHpBarImage;
-    public TextMeshProUGUI obstacleHpText;
 
     [Header("Colors")]
     public Color partyColor;
@@ -97,19 +97,19 @@ public class BattleUI : MonoBehaviour
         enemyHpText.text = e.Hp.ToString();
     }
 
-    public void ShowInfoPanelParty(PartyMember e)
+    public void ShowInfoPanelParty(PartyMember p)
     {
-        InitializeInfoPanel(e);
+        InitializeInfoPanel(p);
         infoPanelParty.SetActive(true);
-        partyHpText.text = e.Hp.ToString();
-        partyFpText.text = e.Fp.ToString();
+        partyHpText.text = p.Hp.ToString();
+        partyFpText.text = p.Fp.ToString();
     }
 
-    public void ShowInfoPanelObstacle(Obstacle e)
+    public void ShowInfoPanelGeneric(Combatant c)
     {
-        InitializeInfoPanel(e);
+        InitializeInfoPanel(c);
         infoPanelObstacle.SetActive(true);
-        obstacleHpText.text = e.Hp.ToString();
+        genericHpText.text = c.Hp.ToString();
     }
 
     private void InitializeInfoPanel(Combatant c)

@@ -203,4 +203,14 @@ public abstract class Combatant : FieldObject
     }
 
     #endregion
+
+    public override void Highlight()
+    {
+        BattleUI.main.ShowInfoPanelGeneric(this);
+    }
+
+    public override void UnHighlight()
+    {
+        BattleUI.main.HideInfoPanel();
+    }
 }

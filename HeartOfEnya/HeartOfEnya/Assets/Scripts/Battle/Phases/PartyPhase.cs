@@ -14,15 +14,16 @@ public class PartyPhase : Phase
         PauseHandle = new PauseHandle(null, cursor);
     }
 
-
+    [SerializeField]
+    private string goToSceneOnEnd;
     [SerializeField]
     private SelectionListCursor cursor;
     private int selected;
 
     public override Coroutine OnPhaseStart()
     {
-        // Remove all dead party members
-        Party.RemoveAll((p) => p == null);
+        // Remove all dead and/or gone
+        CleanupParty();
         // Call on phse start function for each party member (may need to wait later for DOT effects, stunning, etc.)
         Party.ForEach((p) => p.OnPhaseStart());
         // The party members that can act this turn
@@ -41,9 +42,12 @@ public class PartyPhase : Phase
     public override Coroutine OnPhaseEnd()
     {
         cursor.gameObject.SetActive(false);
-        // Remove all dead party members
-        Party.RemoveAll((obj) => obj == null);
+        // Remove all dead and/or gone
+        CleanupParty();
         Party.ForEach((member) => member.OnPhaseEnd());
+        if (Party.Count <= 0)
+            SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
+        // TODO: visualize end of balle
         return null;
     }
 
@@ -72,4 +76,13 @@ public class PartyPhase : Phase
     }
 
     public override void OnPhaseUpdate() { }
+
+    /// <summary>
+    /// Clears dead an otherwise missing (ranaway, etc) members from the party
+    /// </summary>
+    private void CleanupParty()
+    {
+        // Remove all dead party members and ranaway members
+        Party.RemoveAll((obj) => obj == null || obj.RanAway);
+    }
 }

@@ -70,6 +70,8 @@ public class PartyMember : Combatant, IPausable
     }
     private bool hasTurn = false;
 
+    public bool RanAway { get; private set; }
+
     private MoveCursor moveCursor;
 
     protected override void Initialize()
@@ -179,6 +181,7 @@ public class PartyMember : Combatant, IPausable
     /// </summary>
     public void Run()
     {
+        RanAway = true;
         EndTurn();
         Destroy(gameObject);
     }

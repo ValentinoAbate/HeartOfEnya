@@ -94,7 +94,7 @@ public abstract class Enemy : Combatant, IPausable
             yield return new WaitForSeconds(1);
             yield return new WaitWhile(() => PauseHandle.Paused);
             if (ChargingActionReady)
-                ActivateChargedAction();
+                yield return ActivateChargedAction();
             else
                 ChargeChargingAction();
             yield break;

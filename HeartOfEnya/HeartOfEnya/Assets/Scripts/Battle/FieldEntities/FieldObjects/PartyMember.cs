@@ -115,9 +115,8 @@ public class PartyMember : Combatant, IPausable
     /// </summary>
     public void EndTurn()
     {
-        var phase = PhaseManager.main.ActivePhase as PartyPhase;
         HasTurn = false;
-        phase.EndAction(this);
+        PhaseManager.main.PartyPhase.EndAction(this);
     }
 
     public void OpenActionMenu()
@@ -140,6 +139,17 @@ public class PartyMember : Combatant, IPausable
         ActionMenu.gameObject.SetActive(false);
         moveCursor.ResetToLastPosition();
         moveCursor.SetActive(true);
+    }
+
+    new public void ActivateChargedAction()
+    {
+        StartCoroutine(ActivateChargedActionCr());
+    }
+
+    private IEnumerator ActivateChargedActionCr()
+    {
+        yield return base.ActivateChargedAction();
+        EndTurn();
     }
 
     /// <summary>

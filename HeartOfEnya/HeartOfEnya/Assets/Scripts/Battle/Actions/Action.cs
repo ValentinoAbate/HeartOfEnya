@@ -38,6 +38,8 @@ public class Action : MonoBehaviour
             Pos DirectionalMode(Pos pos) => Pos.Rotated(user.Pos, pos - direction, Pos.Right, direction);
             targetPositions = targetPositions.Select(DirectionalMode).ToList();
         }
+        // Remove all illegal positions from the list
+        targetPositions.RemoveAll((p) => !BattleGrid.main.IsLegal(p));
         // Process effects top to bottom, left to right
         // TODO: add custom sorting order.
         targetPositions.Sort((p1, p2) => Pos.CompareTopToBottomLeftToRight(p1, p2));

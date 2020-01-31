@@ -115,7 +115,7 @@ public abstract class Combatant : FieldObject
         if (Dead && !godMode)
         {
             Kill();
-        }else if (godMode)
+        }else if (Dead && godMode)
         {
             Immortal();
         }

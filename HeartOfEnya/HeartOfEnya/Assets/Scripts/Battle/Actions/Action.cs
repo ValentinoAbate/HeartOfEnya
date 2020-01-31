@@ -40,9 +40,7 @@ public class Action : MonoBehaviour
         }
         // Remove all illegal positions from the list
         targetPositions.RemoveAll((p) => !BattleGrid.main.IsLegal(p));
-        // Process effects top to bottom, left to right
-        // TODO: add custom sorting order.
-        targetPositions.Sort((p1, p2) => Pos.CompareTopToBottomLeftToRight(p1, p2));
+
         var targets = new List<Combatant>();
 
         //Play cut-in if applicable
@@ -57,23 +55,39 @@ public class Action : MonoBehaviour
         targetPattern.Show(BattleGrid.main.attackSquareMat);
         yield return new WaitForSeconds(targetHighlightSeconds);
 
-        // Iterate through positions and show VFX
-        foreach (var position in targetPositions)
+        var targetPositionBatches = new List<List<Pos>>() { targetPositions };
+        bool useBatches = false;
+
+        var customSortingOrder = GetComponent<VfxOrder>();
+        if (customSortingOrder == null)
+            targetPositions.Sort((p1, p2) => Pos.CompareTopToBottomLeftToRight(p1, p2));
+        else
         {
-            var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
-            if (target != null)
-            {
-                targets.Add(target);
-            }
-            if(fxPrefab != null)
-            {
-                var fx = Instantiate(fxPrefab, BattleGrid.main.GetSpace(position), Quaternion.identity).GetComponent<ActionVfx>();
-                if (fx != null)
-                    yield return fx.Play();
-                else
-                    Debug.LogError("fxPrefab: " + fxPrefab.name + " is missing ActionVFX component");
-            }
+            targetPositionBatches = customSortingOrder.GetPositions(targetPositions);
+            useBatches = customSortingOrder.UseBatches;
         }
+
+
+        foreach(var batch in targetPositionBatches)
+        {
+            Coroutine routine = null;
+            // Iterate through positions and show VFX
+            foreach (var position in batch)
+            {
+                // Check if a target is in this square
+                var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
+                if (target != null)
+                {
+                    targets.Add(target);
+                }
+                routine = PlayActionVfx(position);
+                if (!useBatches)
+                    yield return routine;
+            }
+            if (useBatches)
+                yield return routine;
+        }
+
 
         // Wait for the VFX to finish, wait for the highlight time again, then continue
         yield return new WaitForSeconds(targetHighlightSeconds + delayAtEnd);
@@ -94,5 +108,18 @@ public class Action : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private Coroutine PlayActionVfx(Pos position)
+    {
+        if (fxPrefab != null)
+        {
+            var fx = Instantiate(fxPrefab, BattleGrid.main.GetSpace(position), Quaternion.identity).GetComponent<ActionVfx>();
+            if (fx != null)
+                return fx.Play();
+            else
+                Debug.LogError("fxPrefab: " + fxPrefab.name + " is missing ActionVFX component");
+        }
+        return null;
     }
 }

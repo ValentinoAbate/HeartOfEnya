@@ -20,8 +20,7 @@ public class EnemyAutoAct : Enemy
             yield return new WaitWhile(() => PauseHandle.Paused);
             yield return new WaitForSeconds(0.1f);
         }
-        Attack(Pos + Pos.Right);
+        yield return Attack(Pos + Pos.Right);
         yield return new WaitWhile(() => PauseHandle.Paused);
-        yield return new WaitForSeconds(1);
     }
 }

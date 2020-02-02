@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Executes in edit mode so that editor positioning utilities can function properly.
+/// Buttons used to toggle ingredient options on/off.
 /// </summary>
 public class IngredientButton : MonoBehaviour
 {
     public Ingredient ingredient; //ingredient we're using
+    public Color selectedColor; //color when selected
+    public Color deselectedColor; //color when not selected
     
     private bool selected; //whether or not the button is selected
     private int myID; //what number button we are. Used to help SoupManager keep track of what ingredients are selected
@@ -64,7 +66,7 @@ public class IngredientButton : MonoBehaviour
     		//if already selected, tell the Soup Manager to remove us from the soup
     		SoupManager.main.DisableIngredient(myID);
     		//return to "disabled" color
-    		GetComponent<Image>().color = Color.white;
+    		GetComponent<Image>().color = deselectedColor;
     		//update selected
     		selected = false;
     	}
@@ -76,13 +78,13 @@ public class IngredientButton : MonoBehaviour
     		if (added)
     		{
     			//if successfully added, update selected & switch to "enabled" color
-    			GetComponent<Image>().color = Color.green;
+    			GetComponent<Image>().color = selectedColor;
     			selected = true;
     		}
     		else
     		{
     			//we weren't added, probably because soup is full
-    			GetComponent<Image>().color = Color.white;
+    			GetComponent<Image>().color = deselectedColor;
     			selected = false;
     		}
     	}

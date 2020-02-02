@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//controls all soup-related items & behaviors, including what buttons are active, what ingredients are selected, etc.
+/// <summary>
+/// controls all soup-related items & behaviors, including what buttons are active, what ingredients are selected, etc.
+/// </summary>
 [System.Serializable]
 public class SoupManager : MonoBehaviour
 {
@@ -10,9 +12,9 @@ public class SoupManager : MonoBehaviour
 	public static SoupManager main;
 
 	//editor-facing data about the ingredient list
-    public int totalIngredients; //how many ingredients we have
-    public int maxSoupIngredients;
-    public List<Ingredient> ingredients = new List<Ingredient>(); //what ingredients we have
+    public int totalIngredients; //how many ingredients we have available
+    public int ingredientsPerSoup; //how many ingredients are used per soup
+    public List<Ingredient> ingredients = new List<Ingredient>(); //list of all ingredients we have
     public List<bool> enabledIngredients = new List<bool>(); //bools controlling whether a specific ingredient is enabled
     
     //UI details
@@ -75,7 +77,6 @@ public class SoupManager : MonoBehaviour
     public void DisableIngredient(int ingID)
     {
     	activeIngredients.Remove(ingID);
-    	/***TODO: HAVE THE SOUP BUTTON UPDATE ITSELF***/
     	soupButton.UpdateRecipe(activeIngredients);
     }
 
@@ -92,7 +93,7 @@ public class SoupManager : MonoBehaviour
     		//fail if already enabled
     		return false;
     	}
-    	else if (activeIngredients.Count >= maxSoupIngredients)
+    	else if (activeIngredients.Count >= ingredientsPerSoup)
     	{
     		//fail if we've already filled all ingredient slots
     		return false;
@@ -101,7 +102,6 @@ public class SoupManager : MonoBehaviour
     	{
     		//add ingredients to soup and tell the soup button to update its images
     		activeIngredients.Add(ingID);
-    		/***TODO: HAVE THE SOUP BUTTON UPDATE ITSELF***/
     		soupButton.UpdateRecipe(activeIngredients);
     		return true; //report success
     	}

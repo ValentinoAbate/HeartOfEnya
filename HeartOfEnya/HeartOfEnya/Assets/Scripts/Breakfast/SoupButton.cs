@@ -4,11 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Executes in edit mode so that editor positioning utilities can function properly.
+/// The button used to confirm the selected soup recipe & exit the breakfast scene.
 /// </summary>
 public class SoupButton : MonoBehaviour
 {
-    public int recipeSize; //# of ingredients per recipe
     public Sprite emptyIcon; //icon to use for unfilled slot
     public Color disabledColor; //color when not enough ingredients for soup
     public Color enabledColor; //color when have enough ingredients for soup
@@ -20,7 +19,7 @@ public class SoupButton : MonoBehaviour
     {
     	//initialize variables
         enabled = false;
-        UpdateRecipe(new List<int>());
+        UpdateRecipe(new List<int>()); //pass UpdateRecipe an empty list to set all icons to the "empty" image
     }
 
     /// <summary>
@@ -32,7 +31,7 @@ public class SoupButton : MonoBehaviour
     	ingredientList = ingredients;
 
     	//update the image icons
-    	for (int i = 0; i < recipeSize; i++)
+    	for (int i = 0; i < SoupManager.main.ingredientsPerSoup; i++)
     	{
     		//get a reference to the current ingredient icon
     		string iconName = "IngredientIcon" + i;
@@ -53,8 +52,12 @@ public class SoupButton : MonoBehaviour
     		}
     	}
 
+    	//update the ingredient count text
+    	Text nameTxt = transform.Find("IngredientCountText").GetComponent<Text>();
+        nameTxt.text = "Selected Ingredients: " + ingredientList.Count + "/" + SoupManager.main.ingredientsPerSoup;
+
     	//check if we have enough ingredients for a full recipe, & enable/disable ourselves accordingly
-    	if (ingredientList.Count >= recipeSize)
+    	if (ingredientList.Count >= SoupManager.main.ingredientsPerSoup)
     	{
     		//we have enough ingredients - enable the button
     		enabled = true;

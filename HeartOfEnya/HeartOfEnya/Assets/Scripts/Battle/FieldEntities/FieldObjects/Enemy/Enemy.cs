@@ -91,12 +91,14 @@ public abstract class Enemy : Combatant, IPausable
         // Else process charge and exit if charging
         if (IsChargingAction)
         {
-            yield return new WaitForSeconds(1);
             yield return new WaitWhile(() => PauseHandle.Paused);
             if (ChargingActionReady)
-                ActivateChargedAction();
+                yield return ActivateChargedAction();
             else
+            {
+                yield return new WaitForSeconds(1);
                 ChargeChargingAction();
+            }
             yield break;
         }
         // Else let the AI coroutine play out the turn

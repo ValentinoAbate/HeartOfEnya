@@ -77,15 +77,13 @@ public class TargetPattern
                 Pos direction = TargetPos - UserPos;
                 modPos = Pos.Rotated(UserPos, pos - direction, Pos.Right, direction);
             }
-            if(parent == null)
-                visualizationObjs.Add(BattleGrid.main.SpawnSquare(modPos, squareMat));
-            else
-            {
-                var obj = BattleGrid.main.SpawnSquare(modPos, squareMat);
+            var obj = BattleGrid.main.SpawnSquare(modPos, squareMat);
+            // modPos wasn't in a legal square
+            if (obj == null)
+                continue;
+            if (parent == null)
                 obj.transform.SetParent(parent);
-                visualizationObjs.Add(obj);
-            }
-
+            visualizationObjs.Add(obj);
         }
     }
 

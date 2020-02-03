@@ -143,6 +143,8 @@ public class BattleGrid : MonoBehaviour
     /// <returns> Returns the created object </returns>
     public GameObject SpawnSquare(Pos p, Material mat = null)
     {
+        if (!IsLegal(p))
+            return null;
         var obj = Instantiate(gridSquarePrefab);
         var qMesh = obj.GetComponent<QuadMesh>();
         if(qMesh != null)

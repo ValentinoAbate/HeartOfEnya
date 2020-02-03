@@ -19,4 +19,9 @@ public class TempSoupSceneButton : MonoBehaviour
     {
     	var soup = Instantiate(soupType, new Vector3(0, 0, 0), Quaternion.identity);
     }
+
+    public void changeScene(string sceneName)
+    {
+        SceneTransitionManager.main.TransitionScenes(sceneName);
+    }
 }

@@ -115,7 +115,7 @@ public abstract class Combatant : FieldObject
         if (Dead && !godMode)
         {
             Kill();
-        }else if (godMode)
+        }else if (Dead && godMode)
         {
             Immortal();
         }
@@ -192,14 +192,15 @@ public abstract class Combatant : FieldObject
     /// The action being fully charged is not a prerequisite of this function working,
     /// But should likely be true.
     /// </summary>
-    public void ActivateChargedAction()
+    public Coroutine ActivateChargedAction()
     {
         if (!IsChargingAction)
-            return;
+            return null;
         Debug.Log(name + " uses charged action!");
         chargeUI.SetActive(false);
-        StartCoroutine(chargingAction.Activate());
+        var cr = StartCoroutine(chargingAction.Activate());
         chargingAction = null;
+        return cr;
     }
 
     #endregion

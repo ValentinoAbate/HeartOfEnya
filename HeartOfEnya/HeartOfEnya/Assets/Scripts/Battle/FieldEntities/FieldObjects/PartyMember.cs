@@ -50,6 +50,8 @@ public class PartyMember : Combatant, IPausable
     public override Sprite DisplaySprite => sprite.sprite;
     public override Color DisplaySpriteColor => sprite.color;
 
+    private FMODUnity.StudioEventEmitter battleTheme;
+
     /// <summary>
     /// Can this unit still take an action this turn?
     /// Updates the UI when set. Current effect just makes the unit semi-transparent.
@@ -88,6 +90,20 @@ public class PartyMember : Combatant, IPausable
         Fp = maxFp;
         // Initialize the pause handle with the cursors and action menu as dependents
         PauseHandle = new PauseHandle(null, moveCursor, attackCursor, ActionMenu);
+
+        // Find reference to FMOD event emitter
+        battleTheme = GameObject.Find("FMODEventEmitter").GetComponent<FMODUnity.StudioEventEmitter>();
+        battleTheme.SetParameter("Loading", 0);
+    }
+
+    /// <summary>
+    /// Override for Combatant.Immortal, adds FMOD integration to change
+    /// the battle theme when a unit's HP reaches 0
+    /// </summary>
+    public override void Immortal()
+    {
+        Debug.Log(name + "'s god mode is unlocked.");
+        battleTheme.SetParameter("Crisis", 1);
     }
 
     private void OnDestroy()
@@ -115,9 +131,8 @@ public class PartyMember : Combatant, IPausable
     /// </summary>
     public void EndTurn()
     {
-        var phase = PhaseManager.main.ActivePhase as PartyPhase;
         HasTurn = false;
-        phase.EndAction(this);
+        PhaseManager.main.PartyPhase.EndAction(this);
     }
 
     public void OpenActionMenu()
@@ -140,6 +155,17 @@ public class PartyMember : Combatant, IPausable
         ActionMenu.gameObject.SetActive(false);
         moveCursor.ResetToLastPosition();
         moveCursor.SetActive(true);
+    }
+
+    new public void ActivateChargedAction()
+    {
+        StartCoroutine(ActivateChargedActionCr());
+    }
+
+    private IEnumerator ActivateChargedActionCr()
+    {
+        yield return base.ActivateChargedAction();
+        EndTurn();
     }
 
     /// <summary>

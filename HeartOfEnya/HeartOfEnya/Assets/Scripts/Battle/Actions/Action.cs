@@ -20,6 +20,13 @@ public class Action : MonoBehaviour
 
     #endregion
 
+    public string Description => description;
+    [SerializeField]
+    private string description = "description";
+    public string DisplayName => displayName;
+    [SerializeField]
+    private string displayName = "display name";
+
     private ActionEffect[] effects;
 
     private void Awake()

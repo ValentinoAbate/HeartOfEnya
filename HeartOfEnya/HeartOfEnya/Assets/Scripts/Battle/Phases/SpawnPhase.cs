@@ -19,6 +19,17 @@ public class SpawnPhase : Phase
 
     public override Coroutine OnPhaseStart()
     {
+        // If it is the first turn just spawn the enemies
+        if (PhaseManager.main.Turn == 1)
+        {
+            foreach (var spawnData in CurrWave.data)
+            {
+                var enemy = Instantiate(spawnData.enemy).GetComponent<Enemy>();
+                enemy.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
+                BattleGrid.main.SetObject(spawnData.spawnPosition, enemy);
+            }
+            return null;
+        }
         return StartCoroutine(OnPhaseStartCr());
     }
     

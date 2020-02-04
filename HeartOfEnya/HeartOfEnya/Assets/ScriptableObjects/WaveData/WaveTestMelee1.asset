@@ -10,18 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3598241730af12444a4a80eea2012066, type: 3}
-  m_Name: WaveTest 2
+  m_Name: WaveTestMelee1
   m_EditorClassIdentifier: 
   spawnAfterTurns: 1
   numTurns: 3
   spawnWhenNumberOfEnemiesRemain: 1
-  numEnemies: 2
+  numEnemies: 1
   data:
-  - enemy: {fileID: 7429941194639937236, guid: eaee4d980f75c4d41ae84c18143ba4b6, type: 3}
+  - enemy: {fileID: 7429941194639937236, guid: 29544a9e4a0e40a428264a335fa8cb4c, type: 3}
     spawnPosition:
-      row: 0
-      col: 2
-  - enemy: {fileID: 7429941194639937236, guid: 693eac4f0d270be4893491349e4c4a41, type: 3}
-    spawnPosition:
-      row: 0
+      row: 1
       col: 3
+  - enemy: {fileID: 7429941194639937236, guid: 29544a9e4a0e40a428264a335fa8cb4c, type: 3}
+    spawnPosition:
+      row: 3
+      col: 3
+  - enemy: {fileID: 7429941194639937236, guid: 2900d6112a63c9845a0449df258c7e3c, type: 3}
+    spawnPosition:
+      row: 2
+      col: 2

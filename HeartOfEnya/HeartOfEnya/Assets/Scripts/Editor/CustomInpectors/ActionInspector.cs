@@ -9,6 +9,9 @@ public class ActionInspector : Editor
     public override void OnInspectorGUI()
     {
         var action = target as Action;
+        EditorGUILayout.LabelField(new GUIContent("Text"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("displayName"), new GUIContent("Display Name"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("description"), new GUIContent("Description"));
         EditorGUILayout.LabelField(new GUIContent("VFX Fields"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("cutInPrefab"), new GUIContent("Cut-In Prefab"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("fxPrefab"), new GUIContent("Vfx Prefab"));

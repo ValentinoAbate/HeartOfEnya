@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Holds values used for various ingredients.
+/// Data structure used to hold properties of various ingredients.
 /// </summary>
 [System.Serializable]
 public class Ingredient : MonoBehaviour
 {
+	//Enum for effect types
 	public enum Effect
     {
         heal,
@@ -15,8 +16,20 @@ public class Ingredient : MonoBehaviour
         obscured,
     }
 
+    //Enum for which character receives the ingredient's effect
+    public enum Character
+    {
+    	bapy,
+    	raina,
+    	soleil,
+    	lua,
+    }
+
     public string name; //name of ingredient
     public Effect effectType; //whether it affects HP, FP, etc.
+    public Character target; //which player if affects. HERE FOR FUTUREPROOFING ONLY.
+    public Sprite ingredientIcon; //icon of the ingredient
+    public Sprite characterIcon; //icon of the player the ingredient affects
     
     /// <summary>
     /// Converts the value of effectType to a string 

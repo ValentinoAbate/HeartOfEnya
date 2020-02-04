@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4288789010815849245}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4288789010301727607
 MonoBehaviour:
@@ -168,6 +168,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 7970445406901266749}
   - {fileID: 4288789010848414400}
   - {fileID: 4288789010301727600}
   m_Father: {fileID: 0}
@@ -185,7 +186,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6bbe4cb29b87846bb9151b428e33b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  encounterManager: {fileID: 0}
 --- !u!1 &4288789010848414401
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +216,7 @@ Transform:
   m_Children:
   - {fileID: 4288789010663768762}
   m_Father: {fileID: 4288789010815849245}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4288789010848414407
 MonoBehaviour:
@@ -233,3 +233,51 @@ MonoBehaviour:
   displayName: Party Phase
   goToSceneOnEnd: TestCamp
   cursor: {fileID: 4288789010663768760}
+--- !u!1 &4602298723748828298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7970445406901266749}
+  - component: {fileID: 5094910905103192779}
+  m_Layer: 0
+  m_Name: SpawnPhase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7970445406901266749
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4602298723748828298}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4288789010815849245}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5094910905103192779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4602298723748828298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06179818b99044e48beb5d9cf02831c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayName: Spawn Phase
+  encounter: {fileID: 11400000, guid: a9a83b5b6ef93ab41980adca0d861ee2, type: 2}
+  spawnTilePrefab: {fileID: 6271636570576552739, guid: cceb0010f87b9eb42ba2bd38d463505f,
+    type: 3}
+  spawnDamage: 2

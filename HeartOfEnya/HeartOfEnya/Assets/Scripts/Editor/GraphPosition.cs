@@ -17,11 +17,9 @@ public class GraphPosition
         }
         foreach (var obj in objs)
         {
+            Undo.RecordObject(obj, obj.name);
             var newPos = BattleGrid.main.GetSpace(obj.Pos);
-            var oldPos = obj.transform.position;
             obj.transform.position = newPos;
-            if (oldPos != obj.transform.position)
-                EditorUtility.SetDirty(obj.transform);
         }
     }
     [MenuItem("FieldObject/Set All Graph Positions")]
@@ -35,15 +33,10 @@ public class GraphPosition
         }
         foreach (var obj in objs)
         {
-            var oldGridPos = obj.Pos;
+            Undo.RecordObject(obj, obj.name);
             var newGridPos = BattleGrid.main.GetPos(obj.transform.position);
             obj.Pos = newGridPos;
-            var oldPos = obj.transform.position;
             obj.transform.position = BattleGrid.main.GetSpace(newGridPos);
-            if (oldPos != obj.transform.position || oldGridPos != newGridPos)
-            {
-                EditorUtility.SetDirty(obj.transform);
-            }
         }
     }
 }

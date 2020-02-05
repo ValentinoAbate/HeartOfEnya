@@ -17,8 +17,8 @@ public class PersistentData : MonoBehaviour
     public int dayNum;       // DayNum: The number of days spent on the current Phase
     
     [Header("Soup")]
-    public List<Ingredient> gatheredIngredients;  // List of gathered ingredients
-    // public List<Soup> soupPool;                // List of soups in inventory
+    public List<string> gatheredIngredients;  // List of gathered ingredients
+    // public List<Soup> soupPool;            // List of soups in inventory
 
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class PersistentData : MonoBehaviour
         wounds = new Dictionary<string, int>();
         listEnemiesLeft = new List<Enemy>();
         // buffStructures = new List<
-        gatheredIngredients = new List<Ingredient>();
+        gatheredIngredients = new List<string>();
         // soupPool = new List<Soup
     }
 }

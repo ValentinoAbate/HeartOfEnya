@@ -11,8 +11,7 @@ public class FieldEntityInpector : Editor
     public override void OnInspectorGUI()
     {
         var obj = target as FieldEntity;
-        base.OnInspectorGUI();
-        Undo.RecordObject(obj, obj.name);
+        base.OnInspectorGUI();      
         if (GUILayout.Button("Set Grid Position from World Pos"))
         {
             if (BattleGrid.main == null)
@@ -20,6 +19,7 @@ public class FieldEntityInpector : Editor
                 Debug.LogWarning("No detected battle grid. Please reload scene or add one");
                 return;
             }
+            Undo.RecordObject(obj, obj.name);
             obj.Pos = BattleGrid.main.GetPos(obj.transform.position);
             obj.transform.position = BattleGrid.main.GetSpace(obj.Pos);
         }
@@ -30,6 +30,7 @@ public class FieldEntityInpector : Editor
                 Debug.LogWarning("No detected battle grid. Please reload scene or add one");
                 return;
             }
+            Undo.RecordObject(obj, obj.name);
             obj.transform.position = BattleGrid.main.GetSpace(obj.Pos);
         }
     }

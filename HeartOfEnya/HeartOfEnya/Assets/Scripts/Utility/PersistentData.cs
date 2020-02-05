@@ -9,8 +9,8 @@ public class PersistentData : MonoBehaviour
     public Dictionary<string, int> wounds;  // number of times character was hit at 0 hp,
                                             // keys are character names e.g. wounds["Bapy"] 
     public int numEnemiesLeft;
-    public List<Enemy> listEnemiesLeft; // data of remaining enemies
-    // public List<buffs?> buffStructures;  // buffs characters are taking into battle (no type for soup yet?)
+    public List<Enemy> listEnemiesLeft;     // data of remaining enemies
+    // public List<buffs?> buffStructures;  // buffs characters are taking into battle
 
     [Header("Dialog")]
     public string gamePhase; // GamePhase: What “day” it is.
@@ -18,7 +18,7 @@ public class PersistentData : MonoBehaviour
     
     [Header("Soup")]
     public List<Ingredient> gatheredIngredients;  // List of gathered ingredients
-    // public List<Soup> soupPool;                   // Soup pool (no type for soup yet?)
+    // public List<Soup> soupPool;                // List of soups in inventory
 
     private void Awake()
     {

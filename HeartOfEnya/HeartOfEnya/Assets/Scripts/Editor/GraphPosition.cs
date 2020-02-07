@@ -7,7 +7,7 @@ using System.IO;
 public class GraphPosition
 {
     [MenuItem("FieldObject/Set All World Positions")]
-    static void PositionFieldObjectsWorldSpace()
+    public static void PositionFieldObjectsWorldSpace()
     {
         var objs = Object.FindObjectsOfType<FieldEntity>();
         if (BattleGrid.main == null)
@@ -23,7 +23,7 @@ public class GraphPosition
         }
     }
     [MenuItem("FieldObject/Set All Graph Positions")]
-    static void PositionFieldObjectsGraphSpace()
+    public static void PositionFieldObjectsGraphSpace()
     {
         var objs = Object.FindObjectsOfType<FieldEntity>();
         if (BattleGrid.main == null)

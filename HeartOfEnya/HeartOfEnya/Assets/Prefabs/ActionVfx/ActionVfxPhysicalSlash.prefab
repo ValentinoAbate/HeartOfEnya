@@ -86,7 +86,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: 7cb47cf27e974c444a8c4d25fd1c6168, type: 2}
     - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
         type: 3}
       propertyPath: VelocityModule.z.maxCurve.m_Curve.Array.size
@@ -105,7 +105,7 @@ PrefabInstance:
     - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
         type: 3}
       propertyPath: VelocityModule.speedModifier.maxCurve.m_Curve.Array.size
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
         type: 3}
@@ -150,7 +150,7 @@ PrefabInstance:
     - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
         type: 3}
       propertyPath: ColorModule.enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
         type: 3}
@@ -490,22 +490,22 @@ PrefabInstance:
     - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
         type: 3}
       propertyPath: VelocityModule.speedModifier.maxCurve.m_Curve.Array.data[4].time
-      value: 0.7763444
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
         type: 3}
       propertyPath: VelocityModule.speedModifier.maxCurve.m_Curve.Array.data[4].value
-      value: 0.056219347
+      value: 0.024919897
       objectReference: {fileID: 0}
     - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
         type: 3}
       propertyPath: VelocityModule.speedModifier.maxCurve.m_Curve.Array.data[4].inWeight
-      value: 0.33424717
+      value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
         type: 3}
       propertyPath: VelocityModule.speedModifier.maxCurve.m_Curve.Array.data[4].outWeight
-      value: 0.49812818
+      value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
         type: 3}
@@ -665,12 +665,12 @@ PrefabInstance:
     - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
         type: 3}
       propertyPath: VelocityModule.speedModifier.maxCurve.m_Curve.Array.data[4].inSlope
-      value: 0.028073292
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
         type: 3}
       propertyPath: VelocityModule.speedModifier.maxCurve.m_Curve.Array.data[4].outSlope
-      value: 0.028073292
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
         type: 3}
@@ -786,6 +786,26 @@ PrefabInstance:
         type: 3}
       propertyPath: TrailModule.colorOverTrail.maxGradient.ctime7
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime1
+      value: 39514
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432700419999427719, guid: fdf63634400904c46a1516b220ad34f4,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.m_NumAlphaKeys
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdf63634400904c46a1516b220ad34f4, type: 3}

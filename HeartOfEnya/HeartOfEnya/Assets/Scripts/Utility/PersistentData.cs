@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class that contains all the data that has to be saved between states
+/// </summary>
 public class PersistentData : MonoBehaviour
 {
     [Header("Battle")]

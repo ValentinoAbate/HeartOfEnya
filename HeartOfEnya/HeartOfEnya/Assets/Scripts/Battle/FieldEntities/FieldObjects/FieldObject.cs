@@ -14,6 +14,12 @@ public class FieldObject : FieldEntity
     /// </summary>
     public Teams canMoveThrough;
     /// <summary>
+    /// Where the vfx should spawn
+    /// </summary>
+    public Vector3 VfxSpawnPoint { get => vfxSpawnPoint.transform.position; }
+    [SerializeField]
+    private GameObject vfxSpawnPoint;
+    /// <summary>
     /// The default can move through predicate used for pathing and reachability
     /// </summary>
     public virtual bool CanMoveThrough(FieldObject other)

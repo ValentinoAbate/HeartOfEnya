@@ -103,6 +103,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 1
+--- !u!114 &-6569438506232498964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Crisis
+  m_EditorClassIdentifier: 
+  Name: Crisis
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-6548925334870477159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.strings.bank
   SubDir: 
-  lastModified: 637163719420358204
+  lastModified: 637154759435255575
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -200,24 +217,7 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 451516
---- !u!114 &-5775707291317148906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Battle Theme/Crisis
-  m_EditorClassIdentifier: 
-  Name: Crisis
-  Min: 0
-  Max: 1
-  Default: 0
-  Exists: 1
---- !u!114 &-5730718873024272981
+--- !u!114 &-5876294741537356137
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -234,6 +234,40 @@ MonoBehaviour:
   Max: 1
   Default: 1
   Exists: 1
+--- !u!114 &-5775707291317148906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Crisis
+  m_EditorClassIdentifier: 
+  Name: Crisis
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 0
+--- !u!114 &-5730718873024272981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Loading
+  m_EditorClassIdentifier: 
+  Name: Loading
+  Min: 0
+  Max: 1
+  Default: 1
+  Exists: 0
 --- !u!114 &-5315675117759862807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,7 +303,7 @@ MonoBehaviour:
   lastModified: 637163719420308350
   LoadResult: 0
   FileSizes: []
-  Exists: 1
+  Exists: 0
 --- !u!114 &-4504374195613658607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,6 +356,24 @@ MonoBehaviour:
   Max: 1
   Default: 1
   Exists: 0
+--- !u!114 &-2379477820302926854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637154759435225646
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &-2148829630669757050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,15 +501,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: -6246965684595838257}
-  - {fileID: -4711130333406587780}
+  - {fileID: -2379477820302926854}
   EditorEvents:
   - {fileID: 1510093652434438684}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -4711130333406587780}
+  - {fileID: -2379477820302926854}
   StringsBanks:
   - {fileID: -6246965684595838257}
-  stringsBankWriteTime: 637163719420358204
+  stringsBankWriteTime: 637154759435255575
   cacheVersion: 3
 --- !u!114 &753872261259922775
 MonoBehaviour:
@@ -508,13 +560,13 @@ MonoBehaviour:
   Path: event:/Battle Theme
   guid: 34ce1126a9dfcf46a856be6b7d67badf
   Banks:
-  - {fileID: -4711130333406587780}
+  - {fileID: -2379477820302926854}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -5730718873024272981}
-  - {fileID: -5775707291317148906}
+  - {fileID: -5876294741537356137}
+  - {fileID: -6569438506232498964}
   MinDistance: 0
   MaxDistance: 0
   Length: 451516

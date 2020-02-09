@@ -51,6 +51,52 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""BattleUI"",
+            ""id"": ""701d659b-ea23-4a4c-8ee7-ea127c619975"",
+            ""actions"": [
+                {
+                    ""name"": ""MousePos"",
+                    ""type"": ""Value"",
+                    ""id"": ""805c5e03-8b29-4ecc-8fdb-745ab04b4e16"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff558120-9800-45e7-ac33-316c8068f074"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c8d083de-a2fd-4d59-b035-e15116e79fdb"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""MousePos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76e71d45-702e-4184-9548-047676d15be4"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -81,6 +127,10 @@ public class @Controls : IInputActionCollection, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Confirm = m_UI.FindAction("Confirm", throwIfNotFound: true);
+        // BattleUI
+        m_BattleUI = asset.FindActionMap("BattleUI", throwIfNotFound: true);
+        m_BattleUI_MousePos = m_BattleUI.FindAction("MousePos", throwIfNotFound: true);
+        m_BattleUI_Select = m_BattleUI.FindAction("Select", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -159,6 +209,47 @@ public class @Controls : IInputActionCollection, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // BattleUI
+    private readonly InputActionMap m_BattleUI;
+    private IBattleUIActions m_BattleUIActionsCallbackInterface;
+    private readonly InputAction m_BattleUI_MousePos;
+    private readonly InputAction m_BattleUI_Select;
+    public struct BattleUIActions
+    {
+        private @Controls m_Wrapper;
+        public BattleUIActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MousePos => m_Wrapper.m_BattleUI_MousePos;
+        public InputAction @Select => m_Wrapper.m_BattleUI_Select;
+        public InputActionMap Get() { return m_Wrapper.m_BattleUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(BattleUIActions set) { return set.Get(); }
+        public void SetCallbacks(IBattleUIActions instance)
+        {
+            if (m_Wrapper.m_BattleUIActionsCallbackInterface != null)
+            {
+                @MousePos.started -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnMousePos;
+                @MousePos.performed -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnMousePos;
+                @MousePos.canceled -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnMousePos;
+                @Select.started -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnSelect;
+                @Select.performed -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnSelect;
+                @Select.canceled -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnSelect;
+            }
+            m_Wrapper.m_BattleUIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @MousePos.started += instance.OnMousePos;
+                @MousePos.performed += instance.OnMousePos;
+                @MousePos.canceled += instance.OnMousePos;
+                @Select.started += instance.OnSelect;
+                @Select.performed += instance.OnSelect;
+                @Select.canceled += instance.OnSelect;
+            }
+        }
+    }
+    public BattleUIActions @BattleUI => new BattleUIActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -180,5 +271,10 @@ public class @Controls : IInputActionCollection, IDisposable
     public interface IUIActions
     {
         void OnConfirm(InputAction.CallbackContext context);
+    }
+    public interface IBattleUIActions
+    {
+        void OnMousePos(InputAction.CallbackContext context);
+        void OnSelect(InputAction.CallbackContext context);
     }
 }

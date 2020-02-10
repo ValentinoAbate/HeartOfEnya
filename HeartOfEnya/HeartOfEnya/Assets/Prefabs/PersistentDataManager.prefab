@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2970507007368853690}
   - component: {fileID: 2970507007368853689}
   - component: {fileID: 3296149169747409232}
+  - component: {fileID: -6619775620016568397}
+  - component: {fileID: 7892402676634016641}
   m_Layer: 0
   m_Name: PersistentDataManager
   m_TagString: Untagged
@@ -45,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   persistentData: {fileID: 3296149169747409232}
+  playtestLogger: {fileID: -6619775620016568397}
 --- !u!114 &3296149169747409232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,3 +66,29 @@ MonoBehaviour:
   gamePhase: 
   dayNum: 0
   gatheredIngredients: []
+--- !u!114 &-6619775620016568397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2970507007368853688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04e7db9ddfebb760f9d53846449b89e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: Assets/Scripts/Utility/PlaytestLog.csv
+  testData: {fileID: 7892402676634016641}
+--- !u!114 &7892402676634016641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2970507007368853688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fa03532f4f19a8f38fba212224b5c7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

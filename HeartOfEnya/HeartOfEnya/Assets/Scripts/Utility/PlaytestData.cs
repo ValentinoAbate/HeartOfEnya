@@ -7,9 +7,26 @@ using UnityEngine;
 /// </summary>
 public class PlaytestData : MonoBehaviour
 {
-    // break protocol and use PascalCase here because thats how itll be written to the spreadsheet
-    private string Name;
-    private int AmountOfLoveForBapy;
+    private string name;
+    private uint amountOfLoveForBapy;
 
-    // Constructor
+    /// <summary>
+    /// Updates the internal playtest data with new values
+    /// </summary>
+    public void NewDataLog(string _name, uint _love)
+    {
+        name = _name;
+        amountOfLoveForBapy = _love;
+    }
+
+    public string FieldNames()
+    {
+        return "Name,Amount Of Love For Bapy";
+    }
+
+    public override string ToString()
+    {
+        string output = name + "," + amountOfLoveForBapy;
+        return output;
+    }
 }

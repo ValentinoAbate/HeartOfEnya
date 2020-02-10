@@ -86,8 +86,12 @@ public class Action : MonoBehaviour
                 if (target != null)
                 {
                     targets.Add(target);
+                    routine = PlayActionVfx(target.VfxSpawnPoint);
                 }
-                routine = PlayActionVfx(position);
+                else
+                {
+                    routine = PlayActionVfx(BattleGrid.main.GetSpace(position));
+                }
                 if (!useBatches)
                     yield return routine;
             }
@@ -117,11 +121,11 @@ public class Action : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private Coroutine PlayActionVfx(Pos position)
+    private Coroutine PlayActionVfx(Vector2 position)
     {
         if (fxPrefab != null)
         {
-            var fx = Instantiate(fxPrefab, BattleGrid.main.GetSpace(position), Quaternion.identity).GetComponent<ActionVfx>();
+            var fx = Instantiate(fxPrefab, position, Quaternion.identity).GetComponent<ActionVfx>();
             if (fx != null)
                 return fx.Play();
             else

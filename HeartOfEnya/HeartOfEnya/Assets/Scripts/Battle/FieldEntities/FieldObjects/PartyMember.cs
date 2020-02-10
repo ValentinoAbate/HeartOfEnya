@@ -140,12 +140,6 @@ public class PartyMember : Combatant, IPausable
         ActionMenu.SetActive(true);
     }
 
-    public void CloseActionMenu()
-    {
-        ActionMenu.SetActive(false);
-    }
-
-
     /// <summary>
     /// Close the action menu and return to the movement phase of a turn.
     /// Should only be called when the action menu is open

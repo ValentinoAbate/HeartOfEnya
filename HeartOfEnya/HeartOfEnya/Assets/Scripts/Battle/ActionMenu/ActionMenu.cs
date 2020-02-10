@@ -15,6 +15,7 @@ public class ActionMenu : MonoBehaviour, IPausable
     public PauseHandle PauseHandle { get; set; }
 
     public PartyMember user;
+    public AttackCursor cursor;
     public KeyCode cancelKey;
     public bool allowFlameMode;
     public bool FlameMode { get; set; }
@@ -56,6 +57,8 @@ public class ActionMenu : MonoBehaviour, IPausable
         buttons = new List<Button>();
         buttons.AddRange(GetComponentsInChildren<Button>());
     }
+
+    public void Close() => SetActive(false);
 
     public void SetActive(bool value)
     {
@@ -131,5 +134,36 @@ public class ActionMenu : MonoBehaviour, IPausable
     {
         if (specialActionsEnabled.Contains(action))
             specialActionsEnabled.Remove(action);
+    }
+
+    public void Wait()
+    {
+        user.EndTurn();
+        Close();
+    }
+
+    public void Run()
+    {
+        user.Run();
+    }
+
+    public void ActivateChargedAction()
+    {
+        user.ActivateChargedAction();
+        Close();
+    }
+
+    public void ChargeChargedAction()
+    {
+        user.ChargeChargingAction();
+        user.EndTurn();
+        Close();
+    }
+
+    public void CancelChargedAction()
+    {
+        user.CancelChargingAction();
+        user.EndTurn();
+        Close();
     }
 }

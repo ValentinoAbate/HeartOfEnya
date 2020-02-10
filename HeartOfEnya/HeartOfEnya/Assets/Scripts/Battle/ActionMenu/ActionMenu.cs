@@ -34,6 +34,11 @@ public class ActionMenu : MonoBehaviour, IPausable
         {
             if(buttons.Count > 0)
                 buttons[buttons.Count - 1].Select();
+            foreach(var button in buttons)
+            {
+                var actionComp = button.GetComponent<ActionButton>();
+                actionComp?.HideExtraInfoWindow();
+            }
             cursor.HideTargets();
             user.CancelActionMenu();
         }

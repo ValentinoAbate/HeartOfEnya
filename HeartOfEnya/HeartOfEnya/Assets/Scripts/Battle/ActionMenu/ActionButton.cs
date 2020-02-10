@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using TMPro;
 
+[RequireComponent(typeof(Button))]
 public class ActionButton : MonoBehaviour
 {
     [Header("Set to configure attack")]
@@ -16,20 +17,24 @@ public class ActionButton : MonoBehaviour
     public Button button;
     public EventTrigger trigger;
     public TextMeshProUGUI text;
+    public AttackDescriptionUI extraInfoWindow;
 
     private void Awake()
     {
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(menu.Close);
+        extraInfoWindow.ShowAttack(actionPrefab);
+        // Set up click listeners
+        button.onClick.RemoveAllListeners();        
         button.onClick.AddListener(menu.cursor.CalculateTargets);
+        button.onClick.AddListener(HideExtraInfoWindow);
+        button.onClick.AddListener(menu.Close);
         button.onClick.AddListener(() => menu.cursor.SetActive(true));
 
         // Set up select event triggers
         trigger.triggers.Clear();
         AddEntry(EventTriggerType.PointerEnter, OnSelect);
         AddEntry(EventTriggerType.PointerExit, OnDeselect);
-        AddEntry(EventTriggerType.Select, OnSelect);
-        AddEntry(EventTriggerType.Deselect, OnDeselect);
+        //AddEntry(EventTriggerType.Select, OnSelect);
+        //AddEntry(EventTriggerType.Deselect, OnDeselect);
 
         // Set button text
         text.text = actionPrefab.DisplayName;
@@ -47,17 +52,23 @@ public class ActionButton : MonoBehaviour
     {
         menu.cursor.SetAction(actionPrefab);
         menu.cursor.ShowTargets();
+        ShowExtraInfoWindow();
         eventData.Use();
     }
     public void OnDeselect(BaseEventData eventData)
     {       
         menu.cursor.HideTargets();
+        HideExtraInfoWindow();
         eventData.Use();
     }
 
-    public void OnPointerExit(PointerEventData data)
+    public void HideExtraInfoWindow()
     {
-        Debug.Log("OnPointerExit called.");
-        OnDeselect(data);
+        extraInfoWindow.gameObject.SetActive(false);
+    }
+
+    public void ShowExtraInfoWindow()
+    {
+        extraInfoWindow.gameObject.SetActive(true);
     }
 }

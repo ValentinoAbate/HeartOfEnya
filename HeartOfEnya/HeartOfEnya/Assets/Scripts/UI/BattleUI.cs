@@ -15,8 +15,6 @@ public class BattleUI : MonoBehaviour
     public GameObject infoPanelParty;
     public GameObject infoPanelEnemy;
     public GameObject infoPanelObstacle;
-    public GameObject infoPanelImmuneObj;
-    public GameObject infoPanelVulnerableObj;
     public Image infoPanelImage;
     public Image infoPanelBg;
     public TextMeshProUGUI nameText;
@@ -36,23 +34,12 @@ public class BattleUI : MonoBehaviour
     [Header("Enemy-Specific Info")]
     public Image enemyHpBarImage;
     public TextMeshProUGUI enemyHpText;
+    public AttackDescriptionUI enemyAttackUI;
 
     [Header("Colors")]
     public Color partyColor;
     public Color neutralColor;
     public Color enemyColor;
-
-    [Header("IconImages")]
-    public Sprite iconFire;
-    public Sprite iconIce;
-    public Sprite iconPhys;
-    public Sprite iconMag;
-    public Sprite iconSupport;
-    public Sprite iconNone;
-    public Dictionary<ActionEffect.Attribute, Sprite> iconSprites;
-
-    private Image[] immuneImages;
-    private Image[] vulnerableImages;
 
     private void Awake()
     {
@@ -69,16 +56,6 @@ public class BattleUI : MonoBehaviour
 
     private void Initialize()
     {
-        immuneImages = infoPanelImmuneObj.GetComponentsInChildren<Image>();
-        vulnerableImages = infoPanelVulnerableObj.GetComponentsInChildren<Image>();
-        iconSprites = new Dictionary<ActionEffect.Attribute, Sprite>
-        {
-            {ActionEffect.Attribute.Physical, iconPhys },
-            {ActionEffect.Attribute.Magic,    iconMag },
-            {ActionEffect.Attribute.Fire,     iconFire },
-            {ActionEffect.Attribute.Ice,      iconIce },
-            {ActionEffect.Attribute.Support,  iconSupport },
-        };
     }
 
     public void HideInfoPanel()
@@ -96,6 +73,7 @@ public class BattleUI : MonoBehaviour
         infoPanelEnemy.SetActive(true);
         enemyHpText.text = e.Hp.ToString();
         enemyHpBarImage.fillAmount = e.Hp / (float)e.maxHp;
+        enemyAttackUI.ShowAttack(e.action);
     }
 
     public void ShowInfoPanelParty(PartyMember p)
@@ -133,25 +111,5 @@ public class BattleUI : MonoBehaviour
         else if (c.Team == FieldEntity.Teams.Enemy)
             bgColor = enemyColor;
         infoPanelBg.color = bgColor;
-
-        #region Element Icons
-
-        int immuneInd = 0;
-        int vulnerableInd = 0;
-        // Set Element Icons
-        foreach(var element in iconSprites.Keys)
-        {
-            var reaction = c.reactions[element];
-            if(reaction == ActionEffect.Reaction.Immune)
-                immuneImages[immuneInd++].sprite = iconSprites[element];
-            else if(reaction == ActionEffect.Reaction.Vulnerable)
-                vulnerableImages[vulnerableInd++].sprite = iconSprites[element];
-        }
-        for (int i = immuneInd; i < immuneImages.Length; ++i)
-            immuneImages[i].sprite = iconNone;
-        for (int i = vulnerableInd; i < vulnerableImages.Length; ++i)
-            vulnerableImages[i].sprite = iconNone;
-
-        #endregion
     }
 }

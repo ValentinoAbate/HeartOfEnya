@@ -9,6 +9,7 @@ public class LevelEditor : EditorWindow
 {
     public const string folderPath = "Assets/ScriptableObjects/WaveData/";
     public const string assetSuffix = ".asset";
+    public const string levelEditorScenePath = "Assets/Scenes/LevelEditor/LevelEditor.unity";
     public WaveData loadedWave = null;
     public string newFileName = string.Empty;
     private Scene activeScene;
@@ -20,18 +21,22 @@ public class LevelEditor : EditorWindow
     private void OnGUI()
     {
         // If there is no grid, we aren't in a battle scene or this one is improperly configured
-        if (BattleGrid.main == null)
+        if(EditorSceneManager.GetActiveScene().name != "LevelEditor")
         {
-            loadedWave = null;
-            EditorGUILayout.HelpBox("No detected battle grid. If you aren't in a battle scene, go to one. If you are in a battle scene, please reload scene or add one", MessageType.Error);
+            EditorGUILayout.HelpBox("You are not in the LevelEditor scene!", MessageType.Error);
+            if(GUILayout.Button(new GUIContent("Go to Level Editor Scene")))
+            {
+                if(EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+                {
+                    EditorSceneManager.OpenScene(levelEditorScenePath);
+                }              
+            }
             return;
         }
-
-        // Null out loaded wave on scene change
-        var oldScene = activeScene;
-        activeScene = EditorSceneManager.GetActiveScene();
-        if (oldScene != activeScene)
-            loadedWave = null;
+        if (BattleGrid.main == null)
+        {
+            EditorGUILayout.HelpBox("No detected battle grid. Please reload scene or add one", MessageType.Error);           
+        }
 
         #region Saving / Loading
 

@@ -166,9 +166,17 @@ public class LevelEditor : EditorWindow
             }
             else
             {
+                int oldVal = startEncounterAtWave;
                 startEncounterAtWave = EditorGUILayout.IntSlider(new GUIContent("Start At Wave"), startEncounterAtWave, 1, encounterEditor.loadedEncounter.waveList.Length);
                 if (startEncounterAtWave > encounterEditor.loadedEncounter.waveList.Length)
                     startEncounterAtWave = 1;
+                if(startEncounterAtWave != oldVal)
+                {
+                    Undo.RecordObject(Spawner, "Set active encounter");
+                    Spawner.startAtWave = startEncounterAtWave;
+                    PrefabUtility.RecordPrefabInstancePropertyModifications(Spawner);
+                    EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+                }                   
             }
         }
         GUILayout.EndVertical();

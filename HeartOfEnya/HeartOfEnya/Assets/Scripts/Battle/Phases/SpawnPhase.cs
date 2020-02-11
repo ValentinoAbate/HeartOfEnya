@@ -11,6 +11,7 @@ public class SpawnPhase : Phase
     public GameObject spawnTileEnemyPrefab;
     public GameObject spawnTileObstaclePrefab;
     public int spawnDamage = 2;
+    public int startAtWave = 1;
 
     public WaveData CurrWave => waveNum < encounter.Waves.Length ? encounter.Waves[waveNum] : null;
     public WaveData NextWave => waveNum < encounter.Waves.Length - 1 ? encounter.Waves[waveNum + 1] : null;
@@ -24,6 +25,7 @@ public class SpawnPhase : Phase
         // If it is the first turn just spawn the enemies
         if (PhaseManager.main.Turn == 1)
         {
+            waveNum = startAtWave - 1;
             foreach (var spawnData in CurrWave.AllSpawns)
             {
                 var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();

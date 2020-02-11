@@ -17,8 +17,6 @@ public class ActionMenu : MonoBehaviour, IPausable
     public PartyMember user;
     public AttackCursor cursor;
     public KeyCode cancelKey;
-    public bool allowFlameMode;
-    public bool FlameMode { get; set; }
 
     private List<Button> buttons = null;
     private HashSet<SpecialAction> specialActionsEnabled = new HashSet<SpecialAction>();
@@ -72,7 +70,6 @@ public class ActionMenu : MonoBehaviour, IPausable
             FindButtons();
         if (value)
         {
-            FlameMode = false;
             InitializeMenu();
         }            
         else

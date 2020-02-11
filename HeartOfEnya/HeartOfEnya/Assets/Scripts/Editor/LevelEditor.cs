@@ -80,7 +80,7 @@ public class LevelEditor : EditorWindow
         {
             if (GUILayout.Button(new GUIContent("Save As New")))
             {
-                var newWave = CreateNew(newFileName);
+                var newWave = CreateNew(newFileName);              
                 SaveWave(newWave);
                 newFileName = string.Empty;
             }
@@ -94,6 +94,15 @@ public class LevelEditor : EditorWindow
 
         }
         GUILayout.EndVertical();
+
+        #endregion
+
+        #region Wave Property Editor
+
+        if(loadedWave != null)
+        {
+            EditWaveProperties(loadedWave);
+        }
 
         #endregion
 
@@ -116,6 +125,24 @@ public class LevelEditor : EditorWindow
         GUILayout.EndVertical();
 
         #endregion
+    }
+
+    void EditWaveProperties(WaveData wave)
+    {
+        GUILayout.BeginVertical("Box");
+        EditorGUILayout.LabelField(new GUIContent("Wave Properties"), EditorUtils.BoldCentered);
+        EditorGUI.BeginChangeCheck();
+        wave.spawnAfterTurns = EditorGUILayout.ToggleLeft(new GUIContent("Spawn After Turns"), wave.spawnAfterTurns);
+        if (wave.spawnAfterTurns)
+            wave.numTurns = EditorGUILayout.IntField(new GUIContent("Number of Turns"), wave.numTurns);
+        wave.spawnWhenNumberOfEnemiesRemain = EditorGUILayout.ToggleLeft(new GUIContent("Spawn When Number of Enemies Remain"), wave.spawnWhenNumberOfEnemiesRemain);
+        if (wave.spawnWhenNumberOfEnemiesRemain)
+            wave.numEnemies = EditorGUILayout.IntField(new GUIContent("Number of Enemies"), wave.numEnemies);
+        if (EditorGUI.EndChangeCheck())
+        {
+            EditorUtility.SetDirty(wave);
+        }          
+        GUILayout.EndVertical();
     }
 
     WaveData CreateNew(string name)

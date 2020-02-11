@@ -17,8 +17,8 @@ public class LevelEditor : EditorWindow
     public int startEncounterAtWave = 0;
     public WaveEditor waveEditor;
     public EncounterEditor encounterEditor;
-    private GameObject obstacleContainer;
-    private GameObject enemyContainer;
+    public GameObject obstacleContainer;
+    public GameObject enemyContainer;
     private bool initialized = false;
 
     public GameObject EnemyContainer 
@@ -39,7 +39,7 @@ public class LevelEditor : EditorWindow
             return obstacleContainer;
         }
     }
-    private SpawnPhase spawner;
+    public SpawnPhase spawner;
     public SpawnPhase Spawner
     {
         get
@@ -58,15 +58,13 @@ public class LevelEditor : EditorWindow
         var inspectorType = System.Type.GetType("UnityEditor.InspectorWindow,UnityEditor.dll");
         var window = GetWindow<LevelEditor>("Level Editor", inspectorType);
         window.RefreshReferences();
-        if(!window.initialized)
-            window.Initialize();
+        window.Initialize();
     }
 
     private void EnactPlayModeSettings(PlayModeStateChange state)
     {
         if(state == PlayModeStateChange.ExitingEditMode)
         {
-            Debug.Log("EnteringPlayMode");
             if(playMode == PlayMode.PlayEncounter)
             {
                 foreach (Transform enemy in EnemyContainer.transform)
@@ -86,7 +84,6 @@ public class LevelEditor : EditorWindow
         }
         else if(state == PlayModeStateChange.EnteredEditMode)
         {
-            Debug.Log("ExitingPlayMode");
             if (playMode == PlayMode.PlayEncounter)
             {
                 foreach (Transform enemy in EnemyContainer.transform)
@@ -102,8 +99,7 @@ public class LevelEditor : EditorWindow
             {
                 Spawner.enabled = true;
             }
-            if(!initialized)
-                Initialize();
+            Initialize();
         }
     }
 
@@ -111,21 +107,21 @@ public class LevelEditor : EditorWindow
     {        
         if(arg1.name == "LevelEditor")
         {
-            Debug.Log("Opened Level Editor");
             EditorApplication.playModeStateChanged += EnactPlayModeSettings;
         }
         else
         {
-            Debug.Log("Closed Level Editor");
             EditorApplication.playModeStateChanged -= EnactPlayModeSettings;
         }
     }
 
     public void Initialize()
     {
+        if (initialized)
+            return;
+        EditorSceneManager.activeSceneChangedInEditMode -= SetupListener;
         EditorSceneManager.activeSceneChangedInEditMode += SetupListener;
         EditorApplication.playModeStateChanged += EnactPlayModeSettings;
-        Debug.Log("Initializing");
         initialized = true;
     }
 
@@ -151,8 +147,7 @@ public class LevelEditor : EditorWindow
             }
             return;
         }
-        if (!initialized)
-            Initialize();
+        Initialize();
         if (waveEditor == null || encounterEditor == null)
             RefreshReferences();
         GUILayout.BeginVertical("Box");

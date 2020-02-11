@@ -21,6 +21,7 @@ public class EncounterEditor : EditorWindow
             return spawner;
         }
     }
+    public LevelEditor levelEditor;
 
     // Wave editing properties
     public Encounter loadedEncounter = null;
@@ -57,6 +58,7 @@ public class EncounterEditor : EditorWindow
             EditorGUILayout.HelpBox("No Spawn Phase. Please reload scene or add one", MessageType.Error);
             return;
         }
+        CheckLevelEditor();
 
         #region Save / Load
 
@@ -134,6 +136,15 @@ public class EncounterEditor : EditorWindow
 
         #endregion
 
+    }
+
+    public void CheckLevelEditor()
+    {
+        if (levelEditor == null)
+        {
+            levelEditor = GetWindow<LevelEditor>("Level Editor", typeof(EncounterEditor));
+        }
+        levelEditor.Initialize();
     }
 
     #region Helper Methods

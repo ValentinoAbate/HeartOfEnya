@@ -13,6 +13,7 @@ public class WaveEditor : EditorWindow
     // Wave editing properties
     public WaveData loadedWave = null;
     public string newFileName = string.Empty;
+    public LevelEditor levelEditor;
 
     [MenuItem("Window/Level Editor/Wave Editor")]
     public static void ShowWindow()
@@ -40,6 +41,7 @@ public class WaveEditor : EditorWindow
             EditorGUILayout.HelpBox("No detected battle grid. Please reload scene or add one", MessageType.Error);
             return;
         }
+        CheckLevelEditor();
 
         #region Wave Saving / Loading
 
@@ -129,6 +131,15 @@ public class WaveEditor : EditorWindow
 
         #endregion
 
+    }
+
+    public void CheckLevelEditor()
+    {
+        if(levelEditor == null)
+        {
+            levelEditor = GetWindow<LevelEditor>("Level Editor", typeof(WaveEditor));
+        }
+        levelEditor.Initialize();
     }
 
     #region Helper Methods

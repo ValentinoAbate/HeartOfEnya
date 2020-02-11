@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 
 public class EncounterEditor : EditorWindow
@@ -10,14 +9,28 @@ public class EncounterEditor : EditorWindow
     public const string encounterFolderPath = "Assets/ScriptableObjects/Encounters/";
     public const string assetSuffix = ".asset";
     public const string levelEditorScenePath = "Assets/Scenes/LevelEditor/LevelEditor.unity";
+    private SpawnPhase spawner = null;
+    public SpawnPhase Spawner
+    {
+        get
+        {
+            if (spawner == null)
+            {
+                spawner = Object.FindObjectOfType<SpawnPhase>();
+            }
+            return spawner;
+        }
+    }
+
     // Wave editing properties
     public Encounter loadedEncounter = null;
     public string newFileName = string.Empty;
 
-    [MenuItem("Window/Encounter Editor")]
+    [MenuItem("Window/Level Editor/Encounter Editor")]
     public static void ShowWindow()
     {
-        GetWindow(typeof(EncounterEditor));
+        var inspectorType = System.Type.GetType("UnityEditor.InspectorWindow,UnityEditor.dll");
+        GetWindow<EncounterEditor>("Encounter Editor", typeof(WaveEditor), typeof(LevelEditor), inspectorType);
     }
     private void OnGUI()
     {
@@ -37,6 +50,11 @@ public class EncounterEditor : EditorWindow
         if (BattleGrid.main == null)
         {
             EditorGUILayout.HelpBox("No detected battle grid. Please reload scene or add one", MessageType.Error);
+            return;
+        }
+        if(Spawner == null)
+        {
+            EditorGUILayout.HelpBox("No Spawn Phase. Please reload scene or add one", MessageType.Error);
             return;
         }
 
@@ -76,7 +94,7 @@ public class EncounterEditor : EditorWindow
         {
             EditorGUILayout.HelpBox("There is already a WaveData asset named " + newFileName + ". Please choose a different name.", MessageType.Warning);
         }
-        else if (loadedEncounter == null)
+        else
         {
             if (GUILayout.Button("Create New Encounter"))
             {
@@ -84,29 +102,30 @@ public class EncounterEditor : EditorWindow
                 loadedEncounter = newEncounter;
                 newFileName = string.Empty;
             }
-        }
-        else
-        {
-            if (GUILayout.Button(new GUIContent("Save as Copy")))
+            if(loadedEncounter != null)
             {
-                var newEncounter = CreateNewEncounter(newFileName);
-                SaveEncounter(newEncounter);
-                newFileName = string.Empty;
+                if (GUILayout.Button(new GUIContent("Save as Copy")))
+                {
+                    var newEncounter = CreateNewEncounter(newFileName);
+                    newEncounter.waveList.CopyFrom(loadedEncounter.waveList);
+                    EditorUtility.SetDirty(newEncounter);
+                    newFileName = string.Empty;
+                }
+                if (GUILayout.Button(new GUIContent("Save as Copy + Load")))
+                {
+                    var newEncounter = CreateNewEncounter(newFileName);
+                    newEncounter.waveList.CopyFrom(loadedEncounter.waveList);
+                    EditorUtility.SetDirty(newEncounter);
+                    loadedEncounter = newEncounter;
+                    newFileName = string.Empty;
+                }
             }
-            if (GUILayout.Button(new GUIContent("Save as Copy + Load")))
-            {
-                var newEncounter = CreateNewEncounter(newFileName);
-                SaveEncounter(newEncounter);
-                loadedEncounter = newEncounter;
-                newFileName = string.Empty;
-            }
-
         }
         GUILayout.EndVertical();
 
         #endregion
 
-        #region Wave Property Editor
+        #region Encounter Property Editor
 
         if (loadedEncounter != null)
         {
@@ -123,12 +142,8 @@ public class EncounterEditor : EditorWindow
     {
         GUILayout.BeginVertical("Box");
         EditorGUILayout.LabelField(new GUIContent("Encounter Properties"), EditorUtils.BoldCentered);
-        EditorGUI.BeginChangeCheck();
-
-        if (EditorGUI.EndChangeCheck())
-        {
-            EditorUtility.SetDirty(encounter);
-        }
+        var editor = Editor.CreateEditor(encounter);
+        editor.OnInspectorGUI();
         GUILayout.EndVertical();
     }
 
@@ -141,7 +156,10 @@ public class EncounterEditor : EditorWindow
 
     void LoadEncounter(Encounter encounter)
     {
-
+        Undo.RecordObject(Spawner, "Set active encounter");
+        Spawner.encounter = encounter;
+        PrefabUtility.RecordPrefabInstancePropertyModifications(Spawner);
+        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
     }
 
     void SaveEncounter(Encounter encounter)

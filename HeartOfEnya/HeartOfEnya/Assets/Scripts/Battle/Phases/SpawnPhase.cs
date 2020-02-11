@@ -12,8 +12,8 @@ public class SpawnPhase : Phase
     public GameObject spawnTileObstaclePrefab;
     public int spawnDamage = 2;
 
-    public WaveData CurrWave => waveNum < encounter.waves.Count ? encounter.waves[waveNum] : null;
-    public WaveData NextWave => waveNum < encounter.waves.Count - 1 ? encounter.waves[waveNum + 1] : null;
+    public WaveData CurrWave => waveNum < encounter.Waves.Length ? encounter.Waves[waveNum] : null;
+    public WaveData NextWave => waveNum < encounter.Waves.Length - 1 ? encounter.Waves[waveNum + 1] : null;
     private List<EventTileSpawn> spawners = new List<EventTileSpawn>();
     // Start at negative one to account for first turn
     private int turnsSinceLastSpawn = 0;

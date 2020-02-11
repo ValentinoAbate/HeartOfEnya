@@ -14,10 +14,11 @@ public class WaveEditor : EditorWindow
     public WaveData loadedWave = null;
     public string newFileName = string.Empty;
 
-    [MenuItem("Window/Wave Editor")]
+    [MenuItem("Window/Level Editor/Wave Editor")]
     public static void ShowWindow()
     {
-        GetWindow(typeof(WaveEditor));
+        var inspectorType = System.Type.GetType("UnityEditor.InspectorWindow,UnityEditor.dll");
+        GetWindow<WaveEditor>("Wave Editor", typeof(LevelEditor), inspectorType);
     }
     private void OnGUI()
     {

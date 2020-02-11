@@ -47,6 +47,7 @@ public class PhaseManager : MonoBehaviour, IPausable
     {
         phases = new List<Phase>(); 
         phases.AddRange(GetComponentsInChildren<Phase>());
+        phases.RemoveAll((p) => !p.enabled);
         PartyPhase = phases.Find((p) => p is PartyPhase) as PartyPhase;
         if (PartyPhase == null)
             Debug.LogError("Improper Phase Manager Setup: No Party Phase Found");

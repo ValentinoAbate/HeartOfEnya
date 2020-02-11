@@ -7,7 +7,7 @@ public class SpawnPhase : Phase
     public const float delaySeconds = 0.25f;
     public override PauseHandle PauseHandle { get; set; } = new PauseHandle(null);
 
-    public EncounterBank encounter;
+    public Encounter encounter;
     public GameObject spawnTileEnemyPrefab;
     public GameObject spawnTileObstaclePrefab;
     public int spawnDamage = 2;

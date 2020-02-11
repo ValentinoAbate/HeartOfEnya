@@ -5,18 +5,19 @@ using UnityEditor;
 using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 
-public class LevelEditor : EditorWindow
+public class WaveEditor : EditorWindow
 {
-    public const string folderPath = "Assets/ScriptableObjects/WaveData/";
+    public const string waveFolderPath = "Assets/ScriptableObjects/WaveData/";
     public const string assetSuffix = ".asset";
     public const string levelEditorScenePath = "Assets/Scenes/LevelEditor/LevelEditor.unity";
+    // Wave editing properties
     public WaveData loadedWave = null;
     public string newFileName = string.Empty;
-    private Scene activeScene;
-    [MenuItem("Window/Level Editor")]
+
+    [MenuItem("Window/Wave Editor")]
     public static void ShowWindow()
     {
-        GetWindow(typeof(LevelEditor));
+        GetWindow(typeof(WaveEditor));
     }
     private void OnGUI()
     {
@@ -35,15 +36,16 @@ public class LevelEditor : EditorWindow
         }
         if (BattleGrid.main == null)
         {
-            EditorGUILayout.HelpBox("No detected battle grid. Please reload scene or add one", MessageType.Error);           
+            EditorGUILayout.HelpBox("No detected battle grid. Please reload scene or add one", MessageType.Error);
+            return;
         }
 
-        #region Saving / Loading
+        #region Wave Saving / Loading
 
         GUILayout.BeginVertical("Box");
-        EditorGUILayout.LabelField(new GUIContent("Saving and Loading"), EditorUtils.BoldCentered);
+        EditorGUILayout.LabelField(new GUIContent("Save / Load Wave"), EditorUtils.BoldCentered);
         var oldWave = loadedWave;
-        loadedWave = EditorUtils.ObjectField(new GUIContent("Loaded Wave"), loadedWave, false);
+        loadedWave = EditorUtils.ObjectField(new GUIContent("Loaded Encounter"), loadedWave, false);
         if(oldWave != loadedWave)
         {
             if (loadedWave != null)
@@ -53,7 +55,7 @@ public class LevelEditor : EditorWindow
         }
         if(loadedWave == null)
         {
-            EditorGUILayout.HelpBox("No loaded wave. Set the loaded wave field or use Save As to create a new asset", MessageType.Info);
+            EditorGUILayout.HelpBox("No loaded wave. Set the loaded wave field or use Save as New to create a new asset", MessageType.Info);
         }
         else if(GUILayout.Button(new GUIContent("Save")))
         {
@@ -72,21 +74,21 @@ public class LevelEditor : EditorWindow
         {
             EditorGUILayout.HelpBox("New Filename is empty. To save as new wave asset set the New File Name field", MessageType.Info);
         }
-        else if(AssetDatabase.LoadAssetAtPath<WaveData>(folderPath + newFileName + assetSuffix) != null)
+        else if(AssetDatabase.LoadAssetAtPath<WaveData>(waveFolderPath + newFileName + assetSuffix) != null)
         {
             EditorGUILayout.HelpBox("There is already a WaveData asset named " + newFileName + ". Please choose a different name.", MessageType.Warning);
         }
         else
         {
-            if (GUILayout.Button(new GUIContent("Save As New")))
+            if (GUILayout.Button(new GUIContent("Save as New")))
             {
-                var newWave = CreateNew(newFileName);              
+                var newWave = CreateNewWave(newFileName);              
                 SaveWave(newWave);
                 newFileName = string.Empty;
             }
-            if (GUILayout.Button(new GUIContent("Save As New + Load")))
+            if (GUILayout.Button(new GUIContent("Save as New + Load")))
             {
-                var newWave = CreateNew(newFileName);
+                var newWave = CreateNewWave(newFileName);
                 SaveWave(newWave);
                 loadedWave = newWave;
                 newFileName = string.Empty;
@@ -125,30 +127,33 @@ public class LevelEditor : EditorWindow
         GUILayout.EndVertical();
 
         #endregion
+
     }
+
+    #region Helper Methods
 
     void EditWaveProperties(WaveData wave)
     {
         GUILayout.BeginVertical("Box");
         EditorGUILayout.LabelField(new GUIContent("Wave Properties"), EditorUtils.BoldCentered);
         EditorGUI.BeginChangeCheck();
-        wave.spawnAfterTurns = EditorGUILayout.ToggleLeft(new GUIContent("Spawn After Turns"), wave.spawnAfterTurns);
+        wave.spawnAfterTurns = EditorGUILayout.ToggleLeft(new GUIContent("Spawn Next Wave After Turns"), wave.spawnAfterTurns);
         if (wave.spawnAfterTurns)
             wave.numTurns = EditorGUILayout.IntField(new GUIContent("Number of Turns"), wave.numTurns);
-        wave.spawnWhenNumberOfEnemiesRemain = EditorGUILayout.ToggleLeft(new GUIContent("Spawn When Number of Enemies Remain"), wave.spawnWhenNumberOfEnemiesRemain);
+        wave.spawnWhenNumberOfEnemiesRemain = EditorGUILayout.ToggleLeft(new GUIContent("Spawn Next Wave When Number of Enemies Remain"), wave.spawnWhenNumberOfEnemiesRemain);
         if (wave.spawnWhenNumberOfEnemiesRemain)
             wave.numEnemies = EditorGUILayout.IntField(new GUIContent("Number of Enemies"), wave.numEnemies);
         if (EditorGUI.EndChangeCheck())
         {
             EditorUtility.SetDirty(wave);
-        }          
+        }
         GUILayout.EndVertical();
     }
 
-    WaveData CreateNew(string name)
+    WaveData CreateNewWave(string name)
     {
         var wave = ScriptableObject.CreateInstance<WaveData>();
-        AssetDatabase.CreateAsset(wave, folderPath + name + assetSuffix);
+        AssetDatabase.CreateAsset(wave, waveFolderPath + name + assetSuffix);
         return wave;
     }
 
@@ -221,4 +226,6 @@ public class LevelEditor : EditorWindow
             });
         }
     }
+
+    #endregion
 }

@@ -44,7 +44,7 @@ public class LevelEditor : EditorWindow
             if (loadedWave != null)
                 LoadWave(loadedWave);
             else
-                ClearEnemies();
+                ClearObjects();
         }
         if(loadedWave == null)
         {
@@ -104,9 +104,9 @@ public class LevelEditor : EditorWindow
         {
             GraphPosition.PositionFieldObjectsWorldSpace();
         }
-        if (GUILayout.Button(new GUIContent("Clear Enemies")))
+        if (GUILayout.Button(new GUIContent("Clear Objects")))
         {
-            ClearEnemies();
+            ClearObjects();
         }
         GUILayout.EndVertical();
 
@@ -122,49 +122,71 @@ public class LevelEditor : EditorWindow
 
     void LoadWave(WaveData wave)
     {
-        ClearEnemies();
+        ClearObjects();
         var parent = GameObject.Find("Enemies");
-        foreach (var spawn in wave.data)
+        LoadObjects(wave.enemies, parent);
+        parent = GameObject.Find("Obstacles");
+        LoadObjects(wave.obstacles, parent);
+    }
+
+    private void LoadObjects(List<WaveData.SpawnData> spawns, GameObject parent)
+    {
+        foreach (var spawn in spawns)
         {
             Object newObj;
             if (parent == null)
-                newObj = PrefabUtility.InstantiatePrefab(spawn.enemy);
+                newObj = PrefabUtility.InstantiatePrefab(spawn.spawnObject);
             else
-                newObj = PrefabUtility.InstantiatePrefab(spawn.enemy, parent.transform);
+                newObj = PrefabUtility.InstantiatePrefab(spawn.spawnObject, parent.transform);
             Undo.RegisterCreatedObjectUndo(newObj, "Created " + newObj.name);
-            var enemy = (newObj as GameObject).GetComponent<Enemy>();
-            Undo.RecordObject(enemy, enemy.name);
-            enemy.Pos = spawn.spawnPosition;
-            enemy.transform.position = BattleGrid.main.GetSpace(enemy.Pos);
+            var fieldObj = (newObj as GameObject).GetComponent<FieldObject>();
+            Undo.RecordObject(fieldObj, fieldObj.name);
+            fieldObj.Pos = spawn.spawnPosition;
+            fieldObj.transform.position = BattleGrid.main.GetSpace(fieldObj.Pos);
         }
     }
 
-    void ClearEnemies()
+    void ClearObjects()
     {
-        var enemies = Object.FindObjectsOfType<Enemy>();
-        Undo.RecordObjects(enemies, "Clear Enemies");
-        foreach (var obj in enemies)
+        ClearObjects<Enemy>();
+        ClearObjects<Obstacle>();
+        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+    }
+
+    private void ClearObjects<T>() where T : FieldObject
+    {
+        var objects = Object.FindObjectsOfType<T>();
+        Undo.RecordObjects(objects, "Clear Objects");
+        foreach (var obj in objects)
         {
             DestroyImmediate(obj.gameObject);
         }
-        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
     }
 
     void SaveWave(WaveData wave)
     {
         GraphPosition.PositionFieldObjectsGraphSpace();
-        var enemies = Object.FindObjectsOfType<Enemy>();
         Undo.RecordObject(wave, wave.name);
-        wave.data.Clear();
-        foreach (var obj in enemies)
+        SaveObjects<Enemy>(wave.enemies);
+        SaveObjects<Obstacle>(wave.obstacles);
+        EditorUtility.SetDirty(wave);
+    }
+    
+    /// <summary>
+    /// Helper method to record different types of field objects in a wave data
+    /// </summary>
+    private void SaveObjects<T>(List<WaveData.SpawnData> container) where T : FieldObject
+    {
+        container.Clear();
+        var objects = Object.FindObjectsOfType<T>();
+        foreach (var obj in objects)
         {
             string prefabPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(obj);
-            wave.data.Add(new WaveData.SpawnData
+            container.Add(new WaveData.SpawnData
             {
                 spawnPosition = obj.Pos,
-                enemy = AssetDatabase.LoadMainAssetAtPath(prefabPath) as GameObject
+                spawnObject = AssetDatabase.LoadMainAssetAtPath(prefabPath) as GameObject
             });
         }
-        EditorUtility.SetDirty(wave);
     }
 }

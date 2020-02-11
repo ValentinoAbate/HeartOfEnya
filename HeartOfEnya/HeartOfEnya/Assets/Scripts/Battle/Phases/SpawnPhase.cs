@@ -8,12 +8,14 @@ public class SpawnPhase : Phase
     public override PauseHandle PauseHandle { get; set; } = new PauseHandle(null);
 
     public EncounterBank encounter;
-    public GameObject spawnTilePrefab;
+    public GameObject spawnTileEnemyPrefab;
+    public GameObject spawnTileObstaclePrefab;
     public int spawnDamage = 2;
 
     public WaveData CurrWave => waveNum < encounter.waves.Count ? encounter.waves[waveNum] : null;
     public WaveData NextWave => waveNum < encounter.waves.Count - 1 ? encounter.waves[waveNum + 1] : null;
     private List<EventTileSpawn> spawners = new List<EventTileSpawn>();
+    // Start at negative one to account for first turn
     private int turnsSinceLastSpawn = 0;
     private int waveNum = 0;
 
@@ -22,11 +24,11 @@ public class SpawnPhase : Phase
         // If it is the first turn just spawn the enemies
         if (PhaseManager.main.Turn == 1)
         {
-            foreach (var spawnData in CurrWave.data)
+            foreach (var spawnData in CurrWave.AllSpawns)
             {
-                var enemy = Instantiate(spawnData.enemy).GetComponent<Enemy>();
-                enemy.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
-                BattleGrid.main.SetObject(spawnData.spawnPosition, enemy);
+                var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
+                obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
+                BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
             }
             return null;
         }
@@ -45,8 +47,8 @@ public class SpawnPhase : Phase
                 // The square is empty! Spawn the enemy.
                 if(objInSquare == null)
                 {
-                    var enemy = Instantiate(spawner.SpawnData.enemy, spawner.transform.position, Quaternion.identity).GetComponent<Enemy>();
-                    BattleGrid.main.SetObject(spawner.Pos, enemy);
+                    var fieldObject = Instantiate(spawner.SpawnData.spawnObject, spawner.transform.position, Quaternion.identity).GetComponent<FieldObject>();
+                    BattleGrid.main.SetObject(spawner.Pos, fieldObject);
                     BattleGrid.main.RemoveEventTile(spawner.Pos, spawner);
                     Destroy(spawner.gameObject);
                 }
@@ -74,13 +76,16 @@ public class SpawnPhase : Phase
         if (NextWaveReady())
         {
             // Declare next spawns
-            foreach (var spawnData in NextWave.data)
+            foreach (var spawnData in NextWave.enemies)
             {
-                var SpawnTile = Instantiate(spawnTilePrefab).GetComponent<EventTileSpawn>();
-                SpawnTile.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
-                SpawnTile.SpawnData = spawnData;
-                spawners.Add(SpawnTile);
-                BattleGrid.main.AddEventTile(spawnData.spawnPosition, SpawnTile);
+                var spawnTile = Instantiate(spawnTileEnemyPrefab).GetComponent<EventTileSpawn>();
+                LogEventTile(spawnData, spawnTile);
+                yield return new WaitForSeconds(delaySeconds);
+            }
+            foreach (var spawnData in NextWave.obstacles)
+            {
+                var spawnTile = Instantiate(spawnTileObstaclePrefab).GetComponent<EventTileSpawn>();
+                LogEventTile(spawnData, spawnTile);
                 yield return new WaitForSeconds(delaySeconds);
             }
             // Increment the wave counter
@@ -89,15 +94,23 @@ public class SpawnPhase : Phase
         yield break;
     }
 
+    private void LogEventTile(WaveData.SpawnData spawnData, EventTileSpawn spawnTile)
+    {
+        spawnTile.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
+        spawnTile.SpawnData = spawnData;
+        spawners.Add(spawnTile);
+        BattleGrid.main.AddEventTile(spawnData.spawnPosition, spawnTile);
+    }
+
     private bool NextWaveReady()
     {
-        if(NextWave.spawnWhenNumberOfEnemiesRemain &&
-            PhaseManager.main.EnemyPhase.Enemies.Count <= NextWave.numEnemies)
+        if(CurrWave.spawnWhenNumberOfEnemiesRemain &&
+            PhaseManager.main.EnemyPhase.Enemies.Count <= CurrWave.numEnemies)
         {
             return true;
         }
-        if(NextWave.spawnAfterTurns && 
-            turnsSinceLastSpawn >= NextWave.numTurns )
+        if(CurrWave.spawnAfterTurns && 
+            turnsSinceLastSpawn >= CurrWave.numTurns )
         {
             return true;
         }

@@ -17,6 +17,24 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &-8473137978172270866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637163719420308350
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &-8269990154749823978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.strings.bank
   SubDir: 
-  lastModified: 637158293986869821
+  lastModified: 637163719420358204
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -338,6 +356,23 @@ MonoBehaviour:
   Max: 1
   Default: 1
   Exists: 0
+--- !u!114 &-3497305137728587200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Crisis
+  m_EditorClassIdentifier: 
+  Name: Crisis
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-3289254941427043676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,7 +390,7 @@ MonoBehaviour:
   lastModified: 637158293986839924
   LoadResult: 0
   FileSizes: []
-  Exists: 1
+  Exists: 0
 --- !u!114 &-3091136574587741126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,15 +589,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: -6246965684595838257}
-  - {fileID: -3289254941427043676}
+  - {fileID: -8473137978172270866}
   EditorEvents:
   - {fileID: 1510093652434438684}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -3289254941427043676}
+  - {fileID: -8473137978172270866}
   StringsBanks:
   - {fileID: -6246965684595838257}
-  stringsBankWriteTime: 637158293986869821
+  stringsBankWriteTime: 637163719420358204
   cacheVersion: 3
 --- !u!114 &753872261259922775
 MonoBehaviour:
@@ -613,13 +648,13 @@ MonoBehaviour:
   Path: event:/Battle Theme
   guid: 34ce1126a9dfcf46a856be6b7d67badf
   Banks:
-  - {fileID: -3289254941427043676}
+  - {fileID: -8473137978172270866}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 8414059213687184575}
-  - {fileID: 3863394286144239435}
+  - {fileID: 1844056583803019689}
+  - {fileID: -3497305137728587200}
   MinDistance: 0
   MaxDistance: 0
   Length: 451516
@@ -658,6 +693,23 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 0
+--- !u!114 &1844056583803019689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Loading
+  m_EditorClassIdentifier: 
+  Name: Loading
+  Min: 0
+  Max: 1
+  Default: 1
+  Exists: 1
 --- !u!114 &1917509190463493312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -848,7 +900,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &4630524591792126482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,7 +1058,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 1
-  Exists: 1
+  Exists: 0
 --- !u!114 &8591091334125176903
 MonoBehaviour:
   m_ObjectHideFlags: 0

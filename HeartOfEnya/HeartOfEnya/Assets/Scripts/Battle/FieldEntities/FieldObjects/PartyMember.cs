@@ -223,7 +223,11 @@ public class PartyMember : Combatant, IPausable
         if (sprite != null)
             sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
         if(Stunned)
+        {
             Stunned = false;
+            if (stunIsBurn)
+                Damage(1);
+        }            
         if (DeathsDoor)
             --DeathsDoorCounter;
     }

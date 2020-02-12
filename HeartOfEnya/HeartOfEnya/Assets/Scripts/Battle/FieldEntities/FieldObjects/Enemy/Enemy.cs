@@ -67,13 +67,6 @@ public abstract class Enemy : Combatant, IPausable
         return StartCoroutine(TurnCR());
     }
 
-    // Unstun if necessary
-    public override void OnPhaseEnd()
-    {
-        if (Stunned)
-            Stunned = false;
-    }
-
     /// <summary>
     /// Enemy turn logic, handles stunning and charging if applicable, else allows AI to handle
     /// </summary>

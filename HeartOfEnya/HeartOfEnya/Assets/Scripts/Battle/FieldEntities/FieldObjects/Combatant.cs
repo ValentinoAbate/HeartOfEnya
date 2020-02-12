@@ -9,6 +9,7 @@ using UnityEngine.UI;
 /// </summary>
 public abstract class Combatant : FieldObject
 {
+    public const bool stunIsBurn = false;
     public abstract Sprite DisplaySprite { get; }
     public abstract Color DisplaySpriteColor { get; }
     [Header("Cheats")]
@@ -127,6 +128,18 @@ public abstract class Combatant : FieldObject
             chargeUI.SetActive(true);
         }
         return null;
+    }
+
+    public override void OnPhaseEnd()
+    {
+        if (Dead)
+            return;
+        if(Stunned)
+        {
+            Stunned = false;
+            if(stunIsBurn)
+                Damage(1);
+        }
     }
 
     #region Action Charging

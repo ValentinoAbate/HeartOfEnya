@@ -64,8 +64,9 @@ public class EncounterEditor : EditorWindow
 
         GUILayout.BeginVertical("Box");
         EditorGUILayout.LabelField(new GUIContent("Save / Load Encounter"), EditorUtils.BoldCentered);
-        var newEncounter = EditorUtils.ObjectField(new GUIContent("Loaded Encounter"), loadedEncounter, false);
-        if (loadedEncounter != newEncounter)
+        var oldEncounter = loadedEncounter;
+        loadedEncounter = EditorUtils.ObjectField(new GUIContent("Loaded Encounter"), loadedEncounter, false);
+        if (loadedEncounter != oldEncounter)
         {
             LoadEncounter(loadedEncounter);
         }

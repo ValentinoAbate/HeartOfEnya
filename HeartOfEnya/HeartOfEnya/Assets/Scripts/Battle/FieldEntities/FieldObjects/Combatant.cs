@@ -25,23 +25,6 @@ public abstract class Combatant : FieldObject
     [SerializeField]
     private int move;
 
-
-
-    #region Elemental Reactions
-
-    public ActionEffect.Reaction reactionToPhys;
-    public ActionEffect.Reaction reactionToMagic;
-    public ActionEffect.Reaction reactionToFire;
-    public ActionEffect.Reaction reactionToIce;
-    public ActionEffect.Reaction reactionToSuppport;
-    /// <summary>
-    /// The action dictionary to look up reactions by an element as a key.
-    /// Initialized in Initialize()
-    /// </summary>
-    [System.NonSerialized]
-    public ActionEffect.ReactionDict reactions;
-
-    #endregion
     /// <summary>
     /// Is this unit stunned?
     /// Setting this value will automatically update the unit's UI
@@ -95,14 +78,6 @@ public abstract class Combatant : FieldObject
     protected override void Initialize()
     {
         base.Initialize();
-        reactions = new ActionEffect.ReactionDict()
-        {
-            { ActionEffect.Attribute.Physical, reactionToPhys      },
-            { ActionEffect.Attribute.Magic,    reactionToMagic     },
-            { ActionEffect.Attribute.Fire,     reactionToFire      },
-            { ActionEffect.Attribute.Ice,      reactionToIce       },
-            { ActionEffect.Attribute.Support,  reactionToSuppport  }
-        };
         Hp = maxHp; 
     }
 

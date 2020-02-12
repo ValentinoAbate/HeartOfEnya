@@ -109,8 +109,7 @@ public class Action : MonoBehaviour
         {
             foreach (var effect in effects)
             {
-                ActionEffect.Reaction r = effect.CalculateReaction(target);
-                effect.ApplyEffect(user, target, r);
+                effect.ApplyEffect(user, target);
                 // If the target died from this effect
                 if (target == null)
                     break;

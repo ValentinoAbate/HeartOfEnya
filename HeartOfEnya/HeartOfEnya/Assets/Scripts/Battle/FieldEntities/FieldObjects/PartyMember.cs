@@ -10,6 +10,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(MoveCursor))]
 public class PartyMember : Combatant, IPausable
 {
+    public const int maxDeathsDoorCounter = 5;
     public PauseHandle PauseHandle { get; set; }
     public override bool Stunned
     {
@@ -41,6 +42,8 @@ public class PartyMember : Combatant, IPausable
     }
     private int fp;
     public Text fpText;
+    public GameObject deathsDoorUI;
+    public Text deathsDoorCounterText;
     public SpriteRenderer sprite;
     [Header("Party Member Specific Fields")]
     public ActionMenu ActionMenu;
@@ -51,6 +54,24 @@ public class PartyMember : Combatant, IPausable
     public override Color DisplaySpriteColor => sprite.color;
 
     private FMODUnity.StudioEventEmitter battleTheme;
+
+    public bool DeathsDoor { get; private set; }
+    
+    public int DeathsDoorCounter
+    {
+        get => deathsDoorCounter;
+        set
+        {
+            deathsDoorCounter = Mathf.Max(0,value);
+            deathsDoorCounterText.text = deathsDoorCounter.ToString();
+            if (deathsDoorCounter == 1)
+                deathsDoorUI.GetComponent<Image>().color = Color.red;
+            else if (deathsDoorCounter <= 0)
+                Kill();
+        }
+    }
+    private int deathsDoorCounter;
+
 
     /// <summary>
     /// Can this unit still take an action this turn?
@@ -88,6 +109,7 @@ public class PartyMember : Combatant, IPausable
         // Add this unit to the party phase's pause dependents, so this unit is paused when the party phase is paused
         PhaseManager.main?.PartyPhase.PauseHandle.Dependents.Add(this);
         Fp = maxFp;
+        DeathsDoorCounter = maxDeathsDoorCounter;
         // Initialize the pause handle with the cursors and action menu as dependents
         PauseHandle = new PauseHandle(null, moveCursor, attackCursor, ActionMenu);
 
@@ -96,14 +118,36 @@ public class PartyMember : Combatant, IPausable
         battleTheme.SetParameter("Loading", 0);
     }
 
+
+    public override void Damage(int damage)
+    {
+        Hp = Mathf.Max(0, Hp - damage);
+        if (damage > 0 && Dead)
+        {
+            if (!DeathsDoor)
+                EnterDeathsDoor();
+            else
+                --DeathsDoorCounter;
+        }
+    }
+
     /// <summary>
-    /// Override for Combatant.Immortal, adds FMOD integration to change
+    /// Changes a character to death's door. adds FMOD integration to change
     /// the battle theme when a unit's HP reaches 0
     /// </summary>
-    public override void Immortal()
+    public void EnterDeathsDoor()
     {
-        Debug.Log(name + "'s god mode is unlocked.");
+        DeathsDoor = true;
+        Debug.Log(DisplayName + "Has Enetered Death's Door");
         battleTheme.SetParameter("Crisis", 1);
+        deathsDoorUI.SetActive(true);
+    }
+
+    public override void Kill()
+    {
+        Debug.Log(DisplayName + " has died");
+        // Decide waht to do here but just do this for now.
+        SceneTransitionManager.main.TransitionScenes("testBreakfast");
     }
 
     private void OnDestroy()
@@ -179,6 +223,8 @@ public class PartyMember : Combatant, IPausable
             sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
         if(Stunned)
             Stunned = false;
+        if (DeathsDoor)
+            --DeathsDoorCounter;
     }
 
     /// <summary>

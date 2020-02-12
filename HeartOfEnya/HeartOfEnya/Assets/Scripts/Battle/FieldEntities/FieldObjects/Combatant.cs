@@ -12,12 +12,10 @@ public abstract class Combatant : FieldObject
     public abstract Sprite DisplaySprite { get; }
     public abstract Color DisplaySpriteColor { get; }
     [Header("Cheats")]
-    [SerializeField]
-    public bool godMode = false;
+
     [Header("Combatant Display Fields")]
     [TextArea(1, 2)]
     public string description = "Combatant description";
-
     [Header("General Combatant Fields")]
     public int maxHp;
     /// <summary>
@@ -26,6 +24,8 @@ public abstract class Combatant : FieldObject
     public int Move => IsChargingAction ? 1 : move;
     [SerializeField]
     private int move;
+
+
 
     #region Elemental Reactions
 
@@ -111,13 +111,13 @@ public abstract class Combatant : FieldObject
     /// </summary>
     public virtual void Damage(int damage)
     {
-        Hp = Mathf.Max(0, hp - damage);
-        if (Dead && !godMode)
+        if (damage > 0)
         {
-            Kill();
-        }else if (Dead && godMode)
-        {
-            Immortal();
+            Hp = Mathf.Max(0, hp - damage);
+            if (Dead)
+            {
+                Kill();
+            }
         }
     }
 
@@ -129,14 +129,6 @@ public abstract class Combatant : FieldObject
         chargingAction?.Cancel();
         Debug.Log(name + " has died...");
         Destroy(gameObject);
-    }
-
-    /// <summary>
-    /// Implements the ability for characters to not die when hp is 0
-    /// </summary>
-    public virtual void Immortal()
-    {
-        Debug.Log(name + "'s god mode is unlocked.");      
     }
 
     /// <summary>

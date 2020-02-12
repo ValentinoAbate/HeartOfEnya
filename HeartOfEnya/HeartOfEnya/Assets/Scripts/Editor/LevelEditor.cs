@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using Malee.Editor;
 
 public class LevelEditor : EditorWindow
 {
@@ -162,8 +161,8 @@ public class LevelEditor : EditorWindow
             else
             {
                 int oldVal = startEncounterAtWave;
-                startEncounterAtWave = EditorGUILayout.IntSlider(new GUIContent("Start At Wave"), startEncounterAtWave, 1, encounterEditor.loadedEncounter.waveList.Length);
-                if (startEncounterAtWave > encounterEditor.loadedEncounter.waveList.Length)
+                startEncounterAtWave = EditorGUILayout.IntSlider(new GUIContent("Start At Wave"), startEncounterAtWave, 1, encounterEditor.loadedEncounter.waveList.Count);
+                if (startEncounterAtWave > encounterEditor.loadedEncounter.waveList.Count)
                     startEncounterAtWave = 1;
                 if(startEncounterAtWave != oldVal)
                 {

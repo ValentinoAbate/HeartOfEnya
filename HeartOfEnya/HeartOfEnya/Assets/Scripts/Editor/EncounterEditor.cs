@@ -108,14 +108,14 @@ public class EncounterEditor : EditorWindow
                 if (GUILayout.Button(new GUIContent("Save as Copy")))
                 {
                     var createdEncounter = CreateNewEncounter(newFileName);
-                    createdEncounter.waveList.CopyFrom(loadedEncounter.waveList);
+                    createdEncounter.waveList = new List<WaveData>(loadedEncounter.waveList);
                     EditorUtility.SetDirty(createdEncounter);
                     newFileName = string.Empty;
                 }
                 if (GUILayout.Button(new GUIContent("Save as Copy + Load")))
                 {
                     var createdEncounter = CreateNewEncounter(newFileName);
-                    createdEncounter.waveList.CopyFrom(loadedEncounter.waveList);
+                    createdEncounter.waveList = new List<WaveData>(loadedEncounter.waveList);
                     EditorUtility.SetDirty(createdEncounter);
                     LoadEncounter(createdEncounter);
                     newFileName = string.Empty;

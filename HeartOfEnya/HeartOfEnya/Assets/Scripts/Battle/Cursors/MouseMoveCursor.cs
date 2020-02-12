@@ -5,14 +5,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
 /// <summary>
-/// A cursor that can be moved around the grid by the mouse.
+/// Cursor that moves selected units (now with mouse control)
 /// </summary>
-public class MouseCursor : Cursor
+public class MouseMoveCursor : MoveCursor
 {
-	//get a Controls object to access the input system
+    //get a Controls object to access the input system
 	public Controls controlSys;
 
-	//set up controlSys
+    //set up controlSys
 	void Awake()
 	{
 		controlSys = new Controls();
@@ -25,6 +25,8 @@ public class MouseCursor : Cursor
 		controlSys.BattleUI.MousePos.Enable();
 		controlSys.BattleUI.Select.performed += HandleSelect;
 		controlSys.BattleUI.Select.Enable();
+		controlSys.BattleUI.Deselect.performed += HandleDeselect;
+		controlSys.BattleUI.Deselect.Enable();
 	}
 
 	//clean up the actions once we're done (to avoid memory leaks)
@@ -34,15 +36,11 @@ public class MouseCursor : Cursor
 		controlSys.BattleUI.MousePos.Disable();
 		controlSys.BattleUI.Select.performed -= HandleSelect;
 		controlSys.BattleUI.Select.Disable();
+		controlSys.BattleUI.Deselect.performed -= HandleDeselect;
+		controlSys.BattleUI.Deselect.Disable();
 	}
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //Highlight(Pos);
-    }
-
-    public override void Highlight(Pos newPos)
+	public override void Highlight(Pos newPos)
     {
         if (newPos == Pos)
             return;
@@ -70,9 +68,15 @@ public class MouseCursor : Cursor
     	Select();
     }
 
-    // Now handled by the new input system
-    public override void ProcessInput()
+    private void HandleDeselect(InputAction.CallbackContext context)
     {
-
+    	ResetToLastPosition();
+        SetActive(false);
+        PhaseManager.main.PartyPhase.CancelAction(partyMember);
     }
+
+	public override void ProcessInput()
+	{
+
+	}
 }

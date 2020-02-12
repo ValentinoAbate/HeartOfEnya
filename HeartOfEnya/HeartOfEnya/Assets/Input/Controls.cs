@@ -25,6 +25,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""7f04b692-9109-4f6c-85b9-6b3aa772ebfb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -45,8 +53,30 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard;Mouse"",
+                    ""groups"": ""Mouse"",
                     ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da863091-a30e-4f8b-8447-e1b4252b6370"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1abaa696-7514-4de3-b479-40215c21b8ea"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -68,6 +98,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""name"": ""Select"",
                     ""type"": ""Button"",
                     ""id"": ""ff558120-9800-45e7-ac33-316c8068f074"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Deselect"",
+                    ""type"": ""Button"",
+                    ""id"": ""32731204-5fe0-42c0-adc3-2eb825c4968c"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -93,6 +131,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Mouse"",
                     ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""db5c0766-6c86-49ab-86f0-e831d8475f98"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Deselect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -127,10 +176,12 @@ public class @Controls : IInputActionCollection, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Confirm = m_UI.FindAction("Confirm", throwIfNotFound: true);
+        m_UI_Cancel = m_UI.FindAction("Cancel", throwIfNotFound: true);
         // BattleUI
         m_BattleUI = asset.FindActionMap("BattleUI", throwIfNotFound: true);
         m_BattleUI_MousePos = m_BattleUI.FindAction("MousePos", throwIfNotFound: true);
         m_BattleUI_Select = m_BattleUI.FindAction("Select", throwIfNotFound: true);
+        m_BattleUI_Deselect = m_BattleUI.FindAction("Deselect", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -181,11 +232,13 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputActionMap m_UI;
     private IUIActions m_UIActionsCallbackInterface;
     private readonly InputAction m_UI_Confirm;
+    private readonly InputAction m_UI_Cancel;
     public struct UIActions
     {
         private @Controls m_Wrapper;
         public UIActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Confirm => m_Wrapper.m_UI_Confirm;
+        public InputAction @Cancel => m_Wrapper.m_UI_Cancel;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -198,6 +251,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Confirm.started -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirm;
                 @Confirm.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirm;
                 @Confirm.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirm;
+                @Cancel.started -= m_Wrapper.m_UIActionsCallbackInterface.OnCancel;
+                @Cancel.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnCancel;
+                @Cancel.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnCancel;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -205,6 +261,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Confirm.started += instance.OnConfirm;
                 @Confirm.performed += instance.OnConfirm;
                 @Confirm.canceled += instance.OnConfirm;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
             }
         }
     }
@@ -215,12 +274,14 @@ public class @Controls : IInputActionCollection, IDisposable
     private IBattleUIActions m_BattleUIActionsCallbackInterface;
     private readonly InputAction m_BattleUI_MousePos;
     private readonly InputAction m_BattleUI_Select;
+    private readonly InputAction m_BattleUI_Deselect;
     public struct BattleUIActions
     {
         private @Controls m_Wrapper;
         public BattleUIActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MousePos => m_Wrapper.m_BattleUI_MousePos;
         public InputAction @Select => m_Wrapper.m_BattleUI_Select;
+        public InputAction @Deselect => m_Wrapper.m_BattleUI_Deselect;
         public InputActionMap Get() { return m_Wrapper.m_BattleUI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -236,6 +297,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Select.started -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnSelect;
                 @Select.performed -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnSelect;
                 @Select.canceled -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnSelect;
+                @Deselect.started -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnDeselect;
+                @Deselect.performed -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnDeselect;
+                @Deselect.canceled -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnDeselect;
             }
             m_Wrapper.m_BattleUIActionsCallbackInterface = instance;
             if (instance != null)
@@ -246,6 +310,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Select.started += instance.OnSelect;
                 @Select.performed += instance.OnSelect;
                 @Select.canceled += instance.OnSelect;
+                @Deselect.started += instance.OnDeselect;
+                @Deselect.performed += instance.OnDeselect;
+                @Deselect.canceled += instance.OnDeselect;
             }
         }
     }
@@ -271,10 +338,12 @@ public class @Controls : IInputActionCollection, IDisposable
     public interface IUIActions
     {
         void OnConfirm(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
     }
     public interface IBattleUIActions
     {
         void OnMousePos(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
+        void OnDeselect(InputAction.CallbackContext context);
     }
 }

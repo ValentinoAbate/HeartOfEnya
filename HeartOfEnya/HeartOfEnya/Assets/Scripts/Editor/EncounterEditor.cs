@@ -64,12 +64,10 @@ public class EncounterEditor : EditorWindow
 
         GUILayout.BeginVertical("Box");
         EditorGUILayout.LabelField(new GUIContent("Save / Load Encounter"), EditorUtils.BoldCentered);
-        var oldEncounter = loadedEncounter;
-        loadedEncounter = EditorUtils.ObjectField(new GUIContent("Loaded Encounter"), loadedEncounter, false);
-        if(oldEncounter != loadedEncounter)
+        var newEncounter = EditorUtils.ObjectField(new GUIContent("Loaded Encounter"), loadedEncounter, false);
+        if (loadedEncounter != newEncounter)
         {
-            if (loadedEncounter != null)
-                LoadEncounter(loadedEncounter);
+            LoadEncounter(loadedEncounter);
         }
         if(loadedEncounter == null)
         {
@@ -100,25 +98,25 @@ public class EncounterEditor : EditorWindow
         {
             if (GUILayout.Button("Create New Encounter"))
             {
-                var newEncounter = CreateNewEncounter(newFileName);
-                loadedEncounter = newEncounter;
+                var createdEncounter = CreateNewEncounter(newFileName);
+                LoadEncounter(createdEncounter);
                 newFileName = string.Empty;
             }
             if(loadedEncounter != null)
             {
                 if (GUILayout.Button(new GUIContent("Save as Copy")))
                 {
-                    var newEncounter = CreateNewEncounter(newFileName);
-                    newEncounter.waveList.CopyFrom(loadedEncounter.waveList);
-                    EditorUtility.SetDirty(newEncounter);
+                    var createdEncounter = CreateNewEncounter(newFileName);
+                    createdEncounter.waveList.CopyFrom(loadedEncounter.waveList);
+                    EditorUtility.SetDirty(createdEncounter);
                     newFileName = string.Empty;
                 }
                 if (GUILayout.Button(new GUIContent("Save as Copy + Load")))
                 {
-                    var newEncounter = CreateNewEncounter(newFileName);
-                    newEncounter.waveList.CopyFrom(loadedEncounter.waveList);
-                    EditorUtility.SetDirty(newEncounter);
-                    loadedEncounter = newEncounter;
+                    var createdEncounter = CreateNewEncounter(newFileName);
+                    createdEncounter.waveList.CopyFrom(loadedEncounter.waveList);
+                    EditorUtility.SetDirty(createdEncounter);
+                    LoadEncounter(createdEncounter);
                     newFileName = string.Empty;
                 }
             }
@@ -167,6 +165,7 @@ public class EncounterEditor : EditorWindow
 
     void LoadEncounter(Encounter encounter)
     {
+        loadedEncounter = encounter;
         Undo.RecordObject(Spawner, "Set active encounter");
         Spawner.encounter = encounter;
         PrefabUtility.RecordPrefabInstancePropertyModifications(Spawner);

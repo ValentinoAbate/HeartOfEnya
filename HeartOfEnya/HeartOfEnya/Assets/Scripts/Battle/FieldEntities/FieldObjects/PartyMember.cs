@@ -141,6 +141,7 @@ public class PartyMember : Combatant, IPausable
         Debug.Log(DisplayName + "Has Enetered Death's Door");
         battleTheme.SetParameter("Crisis", 1);
         deathsDoorUI.SetActive(true);
+        CancelChargingAction();
     }
 
     public override void Kill()

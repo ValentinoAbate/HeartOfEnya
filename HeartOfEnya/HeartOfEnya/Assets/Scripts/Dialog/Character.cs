@@ -33,6 +33,11 @@ public class Character : MonoBehaviour
     {
         Expression = defaultExpression;
     }
+
+    void OnMouseDown()
+    {
+    	Debug.Log("You've clicked on: " + Name);
+    }
 }
 
     

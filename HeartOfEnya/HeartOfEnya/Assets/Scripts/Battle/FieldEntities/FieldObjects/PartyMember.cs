@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// A Combatant that is a member of the party.
@@ -41,9 +42,9 @@ public class PartyMember : Combatant, IPausable
         }
     }
     private int fp;
-    public Text fpText;
+    public TextMeshProUGUI fpText;
     public GameObject deathsDoorUI;
-    public Text deathsDoorCounterText;
+    public TextMeshProUGUI deathsDoorCounterText;
     public SpriteRenderer sprite;
     [Header("Party Member Specific Fields")]
     public ActionMenu ActionMenu;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// A combatant is any FieldObject that is can use Actions (see Action.cs) or be affected by them.
@@ -68,10 +69,10 @@ public abstract class Combatant : FieldObject
     }
     private int hp;
     [Header("UI References")]
-    public Text hpText;
+    public TextMeshProUGUI hpText;
     public Image hpImage;
     public GameObject chargeUI;
-    public Text chargeText;
+    public TextMeshProUGUI chargeText;
     public bool IsChargingAction => chargingAction != null;
     public bool ChargingActionReady => IsChargingAction && chargingAction.Ready;
     private ChargingAction chargingAction;

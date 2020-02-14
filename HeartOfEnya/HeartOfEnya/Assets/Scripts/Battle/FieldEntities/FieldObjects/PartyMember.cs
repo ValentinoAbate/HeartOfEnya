@@ -77,19 +77,21 @@ public class PartyMember : Combatant, IPausable
     public bool RanAway { get; private set; }
 
     private MoveCursor moveCursor;
+    private MouseMoveCursor mouseMoveCursor;
 
     protected override void Initialize()
     {
         // Initialize base combatant logic
         base.Initialize();
         moveCursor = GetComponent<MoveCursor>();
+        mouseMoveCursor = GetComponent<MouseMoveCursor>();
         // Add this unit to the party phase
         PhaseManager.main?.PartyPhase.Party.Add(this);
         // Add this unit to the party phase's pause dependents, so this unit is paused when the party phase is paused
         PhaseManager.main?.PartyPhase.PauseHandle.Dependents.Add(this);
         Fp = maxFp;
         // Initialize the pause handle with the cursors and action menu as dependents
-        PauseHandle = new PauseHandle(null, moveCursor, attackCursor, ActionMenu);
+        PauseHandle = new PauseHandle(null, moveCursor, mouseMoveCursor, attackCursor, ActionMenu);
 
         // Find reference to FMOD event emitter
         battleTheme = GameObject.Find("FMODEventEmitter").GetComponent<FMODUnity.StudioEventEmitter>();
@@ -120,7 +122,9 @@ public class PartyMember : Combatant, IPausable
     {
         if(HasTurn)
         {
-            moveCursor.SetActive(true);
+            // moveCursor.SetActive(true);
+            mouseMoveCursor.SetActive(true);
+
             return true;
         }
         return false;
@@ -147,8 +151,10 @@ public class PartyMember : Combatant, IPausable
     public void CancelActionMenu()
     {
         ActionMenu.gameObject.SetActive(false);
-        moveCursor.ResetToLastPosition();
-        moveCursor.SetActive(true);
+        // moveCursor.ResetToLastPosition();
+        // moveCursor.SetActive(true);
+        mouseMoveCursor.ResetToLastPosition();
+        mouseMoveCursor.SetActive(true);
     }
 
     new public void ActivateChargedAction()
@@ -188,15 +194,18 @@ public class PartyMember : Combatant, IPausable
     {
         if (stunned || !hasTurn)
             return;
-        moveCursor.CalculateTraversable();
-        moveCursor.DisplayTraversable(true);
+        // moveCursor.CalculateTraversable();
+        // moveCursor.DisplayTraversable(true);
+        mouseMoveCursor.CalculateTraversable();
+        mouseMoveCursor.DisplayTraversable(true);
         BattleUI.main.ShowInfoPanelParty(this);
     }
 
     // Hide the movement range display
     public override void UnHighlight()
     {
-        moveCursor.DisplayTraversable(false);
+        // moveCursor.DisplayTraversable(false);
+        mouseMoveCursor.DisplayTraversable(false);
         BattleUI.main.HideInfoPanel();
     }
 

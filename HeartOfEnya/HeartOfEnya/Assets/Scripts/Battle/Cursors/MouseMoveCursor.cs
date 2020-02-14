@@ -43,14 +43,11 @@ public class MouseMoveCursor : MoveCursor
 	public override void Highlight(Pos newPos)
     {
         if (newPos == Pos)
+            return;      
+        if (!traversable.Contains(newPos))
             return;
-        if (!BattleGrid.main.IsLegal(newPos))
-            return;
-
-        BattleGrid.main.GetObject(Pos)?.UnHighlight();
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(Pos);
-        BattleGrid.main.GetObject(Pos)?.Highlight();
     }
 
     //highlight whichever square is currently moused over

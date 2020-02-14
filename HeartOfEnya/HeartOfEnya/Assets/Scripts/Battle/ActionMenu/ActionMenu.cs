@@ -28,7 +28,7 @@ public class ActionMenu : MonoBehaviour, IPausable
 
     private void Update()
     {
-        if (Input.GetKeyDown(cancelKey))
+        if (Input.GetKeyDown(cancelKey) || Input.GetMouseButtonDown(1))
         {
             if(buttons.Count > 0)
                 buttons[buttons.Count - 1].Select();

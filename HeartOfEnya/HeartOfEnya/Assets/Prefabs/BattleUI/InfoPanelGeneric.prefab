@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1232319573904178330
 RectTransform:
   m_ObjectHideFlags: 0
@@ -51,6 +51,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15591b932de224193b89e18bc1661f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameText: {fileID: 3263210165703590683}
+  unitImage: {fileID: 8734158634605777056}
+  descriptionText: {fileID: 7949638730678861368}
+  statusText: {fileID: 320007614236942351}
+  moveNumberText: {fileID: 6491195167712091833}
+  hpNumberText: {fileID: 7812622871736836921}
+  hpBarImage: {fileID: 6358308129206371546}
 --- !u!1 &643715922161032783
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.25705948, b: 0.25, a: 0.6156863}
+  m_Color: {r: 0.6792453, g: 0.61266613, b: 0.61196154, a: 0.6156863}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1086,7 +1093,7 @@ GameObject:
   - component: {fileID: 4350477574845263617}
   - component: {fileID: 8734158634605777056}
   m_Layer: 5
-  m_Name: FaceImage
+  m_Name: UnitImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1108,8 +1115,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 15}
-  m_SizeDelta: {x: 250, y: 225}
+  m_AnchoredPosition: {x: -0.000012398, y: -0.0015192}
+  m_SizeDelta: {x: 217.7, y: 151.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4350477574845263617
 CanvasRenderer:

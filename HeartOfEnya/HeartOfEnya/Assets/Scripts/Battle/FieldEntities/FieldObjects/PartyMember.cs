@@ -45,14 +45,17 @@ public class PartyMember : Combatant, IPausable
     public TextMeshProUGUI fpText;
     public GameObject deathsDoorUI;
     public TextMeshProUGUI deathsDoorCounterText;
-    public SpriteRenderer sprite;
+    [SerializeField]
+    private SpriteRenderer sprite;
+    [SerializeField]
+    private Character chara;
     [Header("Party Member Specific Fields")]
     public ActionMenu ActionMenu;
     public AttackCursor attackCursor;
     public int maxFp;
     public int level;
-    public override Sprite DisplaySprite => sprite.sprite;
-    public override Color DisplaySpriteColor => sprite.color;
+    public override Sprite DisplaySprite => chara.Portrait;
+    public override Color DisplaySpriteColor => Color.white;
 
     private FMODUnity.StudioEventEmitter battleTheme;
 
@@ -72,7 +75,6 @@ public class PartyMember : Combatant, IPausable
         }
     }
     private int deathsDoorCounter;
-
 
     /// <summary>
     /// Can this unit still take an action this turn?

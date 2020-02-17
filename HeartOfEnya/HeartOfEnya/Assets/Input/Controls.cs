@@ -71,6 +71,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""1ff82723-74d4-4c14-ad41-e5c1ad321806"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -93,6 +101,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Mouse"",
                     ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c0ae3e6-1016-4814-ab5c-776cc21e3231"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -131,6 +150,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_BattleUI = asset.FindActionMap("BattleUI", throwIfNotFound: true);
         m_BattleUI_MousePos = m_BattleUI.FindAction("MousePos", throwIfNotFound: true);
         m_BattleUI_Select = m_BattleUI.FindAction("Select", throwIfNotFound: true);
+        m_BattleUI_Cancel = m_BattleUI.FindAction("Cancel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -215,12 +235,14 @@ public class @Controls : IInputActionCollection, IDisposable
     private IBattleUIActions m_BattleUIActionsCallbackInterface;
     private readonly InputAction m_BattleUI_MousePos;
     private readonly InputAction m_BattleUI_Select;
+    private readonly InputAction m_BattleUI_Cancel;
     public struct BattleUIActions
     {
         private @Controls m_Wrapper;
         public BattleUIActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MousePos => m_Wrapper.m_BattleUI_MousePos;
         public InputAction @Select => m_Wrapper.m_BattleUI_Select;
+        public InputAction @Cancel => m_Wrapper.m_BattleUI_Cancel;
         public InputActionMap Get() { return m_Wrapper.m_BattleUI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -236,6 +258,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Select.started -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnSelect;
                 @Select.performed -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnSelect;
                 @Select.canceled -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnSelect;
+                @Cancel.started -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnCancel;
+                @Cancel.performed -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnCancel;
+                @Cancel.canceled -= m_Wrapper.m_BattleUIActionsCallbackInterface.OnCancel;
             }
             m_Wrapper.m_BattleUIActionsCallbackInterface = instance;
             if (instance != null)
@@ -246,6 +271,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Select.started += instance.OnSelect;
                 @Select.performed += instance.OnSelect;
                 @Select.canceled += instance.OnSelect;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
             }
         }
     }
@@ -276,5 +304,6 @@ public class @Controls : IInputActionCollection, IDisposable
     {
         void OnMousePos(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
     }
 }

@@ -44,6 +44,8 @@ public class AttackCursor : GridAndSelectionListCursor
         controlSys.BattleUI.MousePos.Enable();
         controlSys.BattleUI.Select.performed += HandleSelect;
         controlSys.BattleUI.Select.Enable();
+        controlSys.BattleUI.Cancel.performed += HandleCancel;
+        controlSys.BattleUI.Cancel.Enable();
     }
 
     /// <summary>
@@ -55,6 +57,8 @@ public class AttackCursor : GridAndSelectionListCursor
         controlSys.BattleUI.MousePos.Disable();
         controlSys.BattleUI.Select.performed -= HandleSelect;
         controlSys.BattleUI.Select.Disable();
+        controlSys.BattleUI.Cancel.performed += HandleCancel;
+        controlSys.BattleUI.Cancel.Disable();
     }
 
     /// <summary>
@@ -74,6 +78,14 @@ public class AttackCursor : GridAndSelectionListCursor
     private void HandleSelect(InputAction.CallbackContext context)
     {
         Select();
+    }
+
+    /// <summary>
+    /// Adds in right click doing a move functionality.
+    /// </summary>
+    private void HandleCancel(InputAction.CallbackContext context)
+    {
+        Cancel();
     }
 
     /// <summary>
@@ -184,6 +196,19 @@ public class AttackCursor : GridAndSelectionListCursor
         action.targetPattern.Hide();
         StartCoroutine(AttackCr());
         
+    }
+
+    /// <summary>
+    /// Cancels action when player right clicks during wheel
+    /// </summary>
+    public void Cancel()
+    {
+        Highlight(attacker.Pos);
+        HideTargets();
+        action.targetPattern.Hide();
+        SetActive(false);
+        OnCancel.Invoke();
+        return;
     }
 
     private IEnumerator AttackCr()

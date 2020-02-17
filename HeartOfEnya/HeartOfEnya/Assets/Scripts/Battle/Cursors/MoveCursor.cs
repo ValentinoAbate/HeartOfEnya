@@ -12,8 +12,8 @@ using System.Linq;
 public class MoveCursor : GridCursor
 {
     private Pos lastPosition;
-    private PartyMember partyMember;
-    private List<Pos> traversable;
+    protected PartyMember partyMember;
+    protected List<Pos> traversable;
     private readonly List<GameObject> squares = new List<GameObject>();
 
     private void Start()
@@ -123,7 +123,7 @@ public class MoveCursor : GridCursor
     public override void ProcessInput()
     {
         base.ProcessInput();
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
         {
             ResetToLastPosition();
             SetActive(false);

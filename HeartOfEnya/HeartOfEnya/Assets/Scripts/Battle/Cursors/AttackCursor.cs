@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 using System.Linq;
 
 /// <summary>
@@ -22,6 +24,69 @@ public class AttackCursor : GridAndSelectionListCursor
 
     private readonly HashSet<Pos> inRange = new HashSet<Pos>();
     private readonly List<GameObject> targetGraphics = new List<GameObject>();
+
+    public Controls controlSys;
+
+    /// <summary>
+    /// Copied From Mouse Cursor
+    /// </summary>
+    void Awake()
+    {
+        controlSys = new Controls();
+    }
+
+ /// <summary>
+ /// Copied from Mouse Cursor
+ /// </summary>
+    private void OnEnable()
+    {
+        controlSys.BattleUI.MousePos.performed += FollowMouse;
+        controlSys.BattleUI.MousePos.Enable();
+        controlSys.BattleUI.Select.performed += HandleSelect;
+        controlSys.BattleUI.Select.Enable();
+        controlSys.BattleUI.Cancel.performed += HandleCancel;
+        controlSys.BattleUI.Cancel.Enable();
+    }
+
+    /// <summary>
+    /// Copied from Mouse Cursor
+    /// </summary>
+    private void OnDisable()
+    {
+        controlSys.BattleUI.MousePos.performed -= FollowMouse;
+        controlSys.BattleUI.MousePos.Disable();
+        controlSys.BattleUI.Select.performed -= HandleSelect;
+        controlSys.BattleUI.Select.Disable();
+        controlSys.BattleUI.Cancel.performed += HandleCancel;
+        controlSys.BattleUI.Cancel.Disable();
+    }
+
+    /// <summary>
+    /// Copied from Mouse Cursor
+    /// </summary>
+    private void FollowMouse(InputAction.CallbackContext context)
+    {
+        //convert mouse coords from screenspace to worldspace to BattleGrid coords
+        Pos newPos = BattleGrid.main.GetPos(Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>()));
+        Highlight(newPos);
+        Debug.Log(Pos);
+    }
+
+    /// <summary>
+    /// Copied From Mouse Cursor
+    /// </summary>
+    private void HandleSelect(InputAction.CallbackContext context)
+    {
+        Select();
+    }
+
+    /// <summary>
+    /// Adds in right click doing a move functionality.
+    /// </summary>
+    private void HandleCancel(InputAction.CallbackContext context)
+    {
+        Cancel();
+    }
 
     /// <summary>
     /// Base functionality with the addition of start ing by selecting the closes target
@@ -131,6 +196,19 @@ public class AttackCursor : GridAndSelectionListCursor
         action.targetPattern.Hide();
         StartCoroutine(AttackCr());
         
+    }
+
+    /// <summary>
+    /// Cancels action when player right clicks during wheel
+    /// </summary>
+    public void Cancel()
+    {
+        Highlight(attacker.Pos);
+        HideTargets();
+        action.targetPattern.Hide();
+        SetActive(false);
+        OnCancel.Invoke();
+        return;
     }
 
     private IEnumerator AttackCr()

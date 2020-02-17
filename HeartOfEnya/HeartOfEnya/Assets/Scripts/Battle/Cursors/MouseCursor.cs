@@ -24,8 +24,8 @@ public class MouseCursor : Cursor
 		controlSys.BattleUI.MousePos.performed += FollowMouse;
 		controlSys.BattleUI.MousePos.Enable();
 		controlSys.BattleUI.Select.performed += HandleSelect;
-		controlSys.BattleUI.Select.Enable();
-	}
+        controlSys.BattleUI.Select.Enable();
+    }
 
 	//clean up the actions once we're done (to avoid memory leaks)
 	private void OnDisable()
@@ -33,8 +33,8 @@ public class MouseCursor : Cursor
 		controlSys.BattleUI.MousePos.performed -= FollowMouse;
 		controlSys.BattleUI.MousePos.Disable();
 		controlSys.BattleUI.Select.performed -= HandleSelect;
-		controlSys.BattleUI.Select.Disable();
-	}
+        controlSys.BattleUI.Select.Disable();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -67,8 +67,9 @@ public class MouseCursor : Cursor
     //gotta make a wrapper for Select so the input system can see it
     private void HandleSelect(InputAction.CallbackContext context)
     {
-    	Select();
+        Select();
     }
+
 
     // Now handled by the new input system
     public override void ProcessInput()

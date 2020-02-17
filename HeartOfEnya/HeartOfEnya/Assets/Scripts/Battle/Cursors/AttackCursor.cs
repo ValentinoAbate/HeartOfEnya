@@ -44,8 +44,8 @@ public class AttackCursor : GridAndSelectionListCursor
         controlSys.BattleUI.MousePos.Enable();
         controlSys.BattleUI.Select.performed += HandleSelect;
         controlSys.BattleUI.Select.Enable();
-        controlSys.BattleUI.Cancel.performed += HandleCancel;
-        controlSys.BattleUI.Cancel.Enable();
+        controlSys.BattleUI.Deselect.performed += HandleCancel;
+        controlSys.BattleUI.Deselect.Enable();
     }
 
     /// <summary>
@@ -57,8 +57,8 @@ public class AttackCursor : GridAndSelectionListCursor
         controlSys.BattleUI.MousePos.Disable();
         controlSys.BattleUI.Select.performed -= HandleSelect;
         controlSys.BattleUI.Select.Disable();
-        controlSys.BattleUI.Cancel.performed += HandleCancel;
-        controlSys.BattleUI.Cancel.Disable();
+        controlSys.BattleUI.Deselect.performed += HandleCancel;
+        controlSys.BattleUI.Deselect.Disable();
     }
 
     /// <summary>
@@ -227,48 +227,48 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public override void ProcessInput()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Highlight(attacker.Pos);
-            HideTargets();
-            action.targetPattern.Hide();
-            SetActive(false);
-            OnCancel.Invoke();
-            return;
-        }          
-        if(action.targetPattern.type == TargetPattern.Type.Spread)
-            base.ProcessInput();
-        else // Targeting pattern is directional, apply special controls
-        {
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                Highlight(attacker.Pos + Pos.Up);
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                Highlight(attacker.Pos + Pos.Down);
-            }
-            else if (Input.GetKeyDown(KeyCode.A))
-            {
-                Highlight(attacker.Pos + Pos.Left);
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                Highlight(attacker.Pos + Pos.Right);
-            }
-            if (Input.GetKeyDown(nextKey))
-            {
-                HighlightNext();
-            }
-            else if (Input.GetKeyDown(lastKey))
-            {
-                HighlightPrev();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Select();
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    Highlight(attacker.Pos);
+        //    HideTargets();
+        //    action.targetPattern.Hide();
+        //    SetActive(false);
+        //    OnCancel.Invoke();
+        //    return;
+        //}          
+        //if(action.targetPattern.type == TargetPattern.Type.Spread)
+        //    base.ProcessInput();
+        //else // Targeting pattern is directional, apply special controls
+        //{
+        //    if (Input.GetKeyDown(KeyCode.W))
+        //    {
+        //        Highlight(attacker.Pos + Pos.Up);
+        //    }
+        //    else if (Input.GetKeyDown(KeyCode.S))
+        //    {
+        //        Highlight(attacker.Pos + Pos.Down);
+        //    }
+        //    else if (Input.GetKeyDown(KeyCode.A))
+        //    {
+        //        Highlight(attacker.Pos + Pos.Left);
+        //    }
+        //    else if (Input.GetKeyDown(KeyCode.D))
+        //    {
+        //        Highlight(attacker.Pos + Pos.Right);
+        //    }
+        //    if (Input.GetKeyDown(nextKey))
+        //    {
+        //        HighlightNext();
+        //    }
+        //    else if (Input.GetKeyDown(lastKey))
+        //    {
+        //        HighlightPrev();
+        //    }
+        //    if (Input.GetKeyDown(KeyCode.Space))
+        //    {
+        //        Select();
+        //    }
+        //}
     }
 
     public bool CanMoveThrough(FieldObject obj)

@@ -7,14 +7,21 @@ public class SpawnPhase : Phase
     public const float delaySeconds = 0.25f;
     public override PauseHandle PauseHandle { get; set; } = new PauseHandle(null);
 
-    public Encounter encounter;
+    public Encounter mainEncounter;
+    [SerializeField]
+    private Encounter tutorialEncounter;
+    [SerializeField]
+    private Encounter luaEncounter;
+    [SerializeField]
+    private Encounter absoluteZeroEncounter;
+    public Encounter CurrEncounter { get; private set;}
     public GameObject spawnTileEnemyPrefab;
     public GameObject spawnTileObstaclePrefab;
     public int spawnDamage = 2;
     public int startAtWave = 1;
 
-    public WaveData CurrWave => waveNum < encounter.Waves.Length ? encounter.Waves[waveNum] : null;
-    public WaveData NextWave => waveNum < encounter.Waves.Length - 1 ? encounter.Waves[waveNum + 1] : null;
+    public WaveData CurrWave => waveNum < CurrEncounter.Waves.Length ? CurrEncounter.Waves[waveNum] : null;
+    public WaveData NextWave => waveNum < CurrEncounter.Waves.Length - 1 ? CurrEncounter.Waves[waveNum + 1] : null;
     private List<EventTileSpawn> spawners = new List<EventTileSpawn>();
     // Start at negative one to account for first turn
     private int turnsSinceLastSpawn = 0;

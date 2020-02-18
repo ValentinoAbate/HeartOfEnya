@@ -20,7 +20,10 @@ public class PhaseManager : MonoBehaviour, IPausable
     public Phase ActivePhase { get => phases[currPhase]; }
     public PartyPhase PartyPhase { get; set; }
     public EnemyPhase EnemyPhase { get; set; }
-    
+
+    [SerializeField]
+    private string goToSceneOnEnd;
+
     private List<Phase> phases;
     private int currPhase;
     private bool transitioning = true;
@@ -93,6 +96,11 @@ public class PhaseManager : MonoBehaviour, IPausable
     private IEnumerator StartBattle()
     {
         yield break;
+    }
+
+    public void EndBattle()
+    {
+        SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
     }
 
     /// <summary>

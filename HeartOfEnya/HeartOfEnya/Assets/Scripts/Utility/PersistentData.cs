@@ -4,20 +4,27 @@ using UnityEngine;
 
 /// <summary>
 /// Class that contains all the data that has to be saved between states
+/// GameState Legend:
+/// "A"
 /// </summary>
 public class PersistentData : MonoBehaviour
 {
+    public const string gamePhaseLuaBattle = "B";
+    public const string gamePhaseAbsoluteZeroBattle = "E";
+
     [Header("Battle")]
     public int partyLevel;
     public Dictionary<string, int> wounds;  // number of times character was hit at 0 hp,
-                                            // keys are character names e.g. wounds["Bapy"] 
+                                            // keys are character names e.g. wounds["Bapy"]
+    public bool luaBossDefeated;
+    public bool absoluteZeroDefeated;
     public int numEnemiesLeft;
     public List<Enemy> listEnemiesLeft;     // data of remaining enemies
     // public List<buffs?> buffStructures;  // buffs characters are taking into battle
 
     [Header("Dialog")]
-    public string gamePhase; // GamePhase: What “day” it is.
-    public int dayNum;       // DayNum: The number of days spent on the current Phase
+    public string gamePhase = "A"; // GamePhase: What “day” it is.
+    public int dayNum = 0;       // DayNum: The number of days spent on the current Phase
     
     [Header("Soup")]
     public List<string> gatheredIngredients;  // List of gathered ingredients

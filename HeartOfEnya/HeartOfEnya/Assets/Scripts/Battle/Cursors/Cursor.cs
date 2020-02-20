@@ -37,6 +37,7 @@ public abstract class Cursor : MonoBehaviour, IPausable
         }
     }
 
+
     /// <summary>
     /// Process any input. Called in update if the cursor is unpaused.
     /// </summary>

@@ -5,70 +5,97 @@ using UnityEngine;
 public class PartyPhase : Phase
 {
     public override PauseHandle PauseHandle { get; set; }
-    public Cursor Cursor { get => cursor; }
+    public Cursor Cursor { get => KeyboardMode ? keyboardCursor : mouseCursor as Cursor; }
 
     public List<PartyMember> Party { get; } = new List<PartyMember>();
-
-    private void Awake()
-    {
-        PauseHandle = new PauseHandle(null, cursor);
-    }
+    private bool KeyboardMode => keyboardMode;
+    [SerializeField]
+    private bool keyboardMode = false;
 
     [SerializeField]
     private string goToSceneOnEnd;
     [SerializeField]
-    private SelectionListCursor cursor;
-    private int selected;
+    private SelectionListCursor keyboardCursor;
+    [SerializeField]
+    private MouseCursor mouseCursor;
+
+    // the party members who still have a turn this phase
+    private List<PartyMember> activeParty = new List<PartyMember>();
+
+    private void Awake()
+    {
+        PauseHandle = new PauseHandle(null, keyboardCursor);
+    }
 
     public override Coroutine OnPhaseStart()
     {
         // Remove all dead and/or gone
         CleanupParty();
+        // If no party left, end the battle (just in case)
+        if (Party.Count <= 0)
+        {
+            SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
+            return null;
+        }         
         // Call on phse start function for each party member (may need to wait later for DOT effects, stunning, etc.)
         Party.ForEach((p) => p.OnPhaseStart());
-        // The party members that can act this turn
-        var activeParty = new List<PartyMember>(Party);
+        // Reset the active party
+        activeParty.Clear();
+        activeParty.AddRange(Party);
         // Remove party members that are stunned or otherwise don't have a turn
         activeParty.RemoveAll((p) => p.Stunned || !p.HasTurn);
         // Sort the selection order from left to right and top to bottom
         activeParty.Sort((p1, p2) => Pos.CompareLeftToRightTopToBottom(p1.Pos, p2.Pos));
-        // Set the cursor's selection list to the party members with turns
-        cursor.SetSelected(activeParty);
-        cursor.HighlightFirst();
-        cursor.SetActive(true);
+        // Set the cursor's selection list to the party members with turns (Only if keyboard controls)
+        if (KeyboardMode)
+        {
+            keyboardCursor.SetSelected(activeParty);
+            keyboardCursor.HighlightFirst();
+            mouseCursor.enabled = false;
+        }
+        else
+            keyboardCursor.enabled = false;
+        Cursor.SetActive(true);
         return null;
     }
 
     public override Coroutine OnPhaseEnd()
     {
-        cursor.gameObject.SetActive(false);
+        Cursor.SetActive(false);
         // Remove all dead and/or gone
         CleanupParty();
         Party.ForEach((member) => member.OnPhaseEnd());
+        // If the party is empty, yeet
         if (Party.Count <= 0)
             SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
-        // TODO: visualize end of balle
+        // TODO: visualize end of battle
         return null;
     }
 
     public void EndAction(PartyMember p)
     {
         // Remove the party member whose action ended
-        cursor.RemoveCurrentSelection();
+        activeParty.Remove(p);
         // Remove any members who were killed as a result of the action or otherwise no longer have a turn
-        cursor.RemoveAll((obj) => obj == null || !((obj as PartyMember).HasTurn));
+        activeParty.RemoveAll((obj) => obj == null || !obj.HasTurn);
         // If there are no more party members with turns, end the phase
-        if (cursor.Empty)
+        if (activeParty.Count <= 0)
         {
             //Hide the info panel;
             BattleUI.main.HideInfoPanel();
             EndPhase();
+            return;
         }
-        else // Else, highlight the next member of the party
+        if (KeyboardMode)
         {
-            cursor.HighlightNext();
-            cursor.SetActive(true);
+            // Remove the party member whose action ended
+            keyboardCursor.RemoveCurrentSelection();
+            // Remove any members who were killed as a result of the action or otherwise no longer have a turn
+            keyboardCursor.RemoveAll((obj) => obj == null || !((obj as PartyMember).HasTurn));
+            // Highlight the next member of the party
+            keyboardCursor.HighlightNext();
         }
+        Cursor.SetActive(true);
     }
 
     /// <summary>
@@ -76,7 +103,7 @@ public class PartyPhase : Phase
     /// </summary>
     public void CancelAction(PartyMember p)
     {
-        cursor.SetActive(true);
+        Cursor.SetActive(true);
     }
 
     public override void OnPhaseUpdate() { }

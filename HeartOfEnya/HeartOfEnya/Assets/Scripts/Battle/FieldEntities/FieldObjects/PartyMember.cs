@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// A Combatant that is a member of the party.
@@ -10,6 +11,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(MoveCursor))]
 public class PartyMember : Combatant, IPausable
 {
+    public const int maxDeathsDoorCounter = 5;
     public PauseHandle PauseHandle { get; set; }
     public override bool Stunned
     {
@@ -40,17 +42,39 @@ public class PartyMember : Combatant, IPausable
         }
     }
     private int fp;
-    public Text fpText;
-    public SpriteRenderer sprite;
+    public TextMeshProUGUI fpText;
+    public GameObject deathsDoorUI;
+    public TextMeshProUGUI deathsDoorCounterText;
+    [SerializeField]
+    private SpriteRenderer sprite;
+    [SerializeField]
+    private Character chara;
     [Header("Party Member Specific Fields")]
     public ActionMenu ActionMenu;
     public AttackCursor attackCursor;
     public int maxFp;
     public int level;
-    public override Sprite DisplaySprite => sprite.sprite;
-    public override Color DisplaySpriteColor => sprite.color;
+    public override Sprite DisplaySprite => chara.Portrait;
+    public override Color DisplaySpriteColor => Color.white;
 
     private FMODUnity.StudioEventEmitter battleTheme;
+
+    public bool DeathsDoor { get; private set; }
+    
+    public int DeathsDoorCounter
+    {
+        get => deathsDoorCounter;
+        set
+        {
+            deathsDoorCounter = Mathf.Max(0,value);
+            deathsDoorCounterText.text = deathsDoorCounter.ToString();
+            if (deathsDoorCounter == 1)
+                deathsDoorUI.GetComponent<Image>().color = Color.red;
+            else if (deathsDoorCounter <= 0)
+                Kill();
+        }
+    }
+    private int deathsDoorCounter;
 
     /// <summary>
     /// Can this unit still take an action this turn?
@@ -77,33 +101,59 @@ public class PartyMember : Combatant, IPausable
     public bool RanAway { get; private set; }
 
     private MoveCursor moveCursor;
+    private MouseMoveCursor mouseMoveCursor;
 
     protected override void Initialize()
     {
         // Initialize base combatant logic
         base.Initialize();
         moveCursor = GetComponent<MoveCursor>();
+        mouseMoveCursor = GetComponent<MouseMoveCursor>();
         // Add this unit to the party phase
         PhaseManager.main?.PartyPhase.Party.Add(this);
         // Add this unit to the party phase's pause dependents, so this unit is paused when the party phase is paused
         PhaseManager.main?.PartyPhase.PauseHandle.Dependents.Add(this);
         Fp = maxFp;
+        DeathsDoorCounter = maxDeathsDoorCounter;
         // Initialize the pause handle with the cursors and action menu as dependents
-        PauseHandle = new PauseHandle(null, moveCursor, attackCursor, ActionMenu);
+        PauseHandle = new PauseHandle(null, moveCursor, mouseMoveCursor, attackCursor, ActionMenu);
 
         // Find reference to FMOD event emitter
         battleTheme = GameObject.Find("FMODEventEmitter").GetComponent<FMODUnity.StudioEventEmitter>();
         battleTheme.SetParameter("Loading", 0);
     }
 
+
+    public override void Damage(int damage)
+    {
+        Hp = Mathf.Max(0, Hp - damage);
+        if (damage > 0 && Dead)
+        {
+            if (!DeathsDoor)
+                EnterDeathsDoor();
+            else
+                --DeathsDoorCounter;
+        }
+    }
+
     /// <summary>
-    /// Override for Combatant.Immortal, adds FMOD integration to change
+    /// Changes a character to death's door. adds FMOD integration to change
     /// the battle theme when a unit's HP reaches 0
     /// </summary>
-    public override void Immortal()
+    public void EnterDeathsDoor()
     {
-        Debug.Log(name + "'s god mode is unlocked.");
+        DeathsDoor = true;
+        Debug.Log(DisplayName + "Has Enetered Death's Door");
         battleTheme.SetParameter("Crisis", 1);
+        deathsDoorUI.SetActive(true);
+        CancelChargingAction();
+    }
+
+    public override void Kill()
+    {
+        Debug.Log(DisplayName + " has died");
+        // Decide waht to do here but just do this for now.
+        SceneTransitionManager.main.TransitionScenes("testBreakfast");
     }
 
     private void OnDestroy()
@@ -120,7 +170,9 @@ public class PartyMember : Combatant, IPausable
     {
         if(HasTurn)
         {
-            moveCursor.SetActive(true);
+            // moveCursor.SetActive(true);
+            mouseMoveCursor.SetActive(true);
+
             return true;
         }
         return false;
@@ -140,12 +192,6 @@ public class PartyMember : Combatant, IPausable
         ActionMenu.SetActive(true);
     }
 
-    public void CloseActionMenu()
-    {
-        ActionMenu.SetActive(false);
-    }
-
-
     /// <summary>
     /// Close the action menu and return to the movement phase of a turn.
     /// Should only be called when the action menu is open
@@ -153,8 +199,10 @@ public class PartyMember : Combatant, IPausable
     public void CancelActionMenu()
     {
         ActionMenu.gameObject.SetActive(false);
-        moveCursor.ResetToLastPosition();
-        moveCursor.SetActive(true);
+        // moveCursor.ResetToLastPosition();
+        // moveCursor.SetActive(true);
+        mouseMoveCursor.ResetToLastPosition();
+        mouseMoveCursor.SetActive(true);
     }
 
     new public void ActivateChargedAction()
@@ -184,7 +232,13 @@ public class PartyMember : Combatant, IPausable
         if (sprite != null)
             sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
         if(Stunned)
+        {
             Stunned = false;
+            if (stunIsBurn)
+                Damage(1);
+        }            
+        if (DeathsDoor)
+            --DeathsDoorCounter;
     }
 
     /// <summary>
@@ -194,15 +248,18 @@ public class PartyMember : Combatant, IPausable
     {
         if (stunned || !hasTurn)
             return;
-        moveCursor.CalculateTraversable();
-        moveCursor.DisplayTraversable(true);
+        // moveCursor.CalculateTraversable();
+        // moveCursor.DisplayTraversable(true);
+        mouseMoveCursor.CalculateTraversable();
+        mouseMoveCursor.DisplayTraversable(true);
         BattleUI.main.ShowInfoPanelParty(this);
     }
 
     // Hide the movement range display
     public override void UnHighlight()
     {
-        moveCursor.DisplayTraversable(false);
+        // moveCursor.DisplayTraversable(false);
+        mouseMoveCursor.DisplayTraversable(false);
         BattleUI.main.HideInfoPanel();
     }
 

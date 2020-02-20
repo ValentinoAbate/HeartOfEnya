@@ -7,5 +7,5 @@ using UnityEngine;
 /// </summary>
 public class EventTileSpawn : EventTile
 {
-
+    public WaveData.SpawnData SpawnData { get; set; }  
 }

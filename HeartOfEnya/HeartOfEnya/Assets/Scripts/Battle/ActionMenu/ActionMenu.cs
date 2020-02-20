@@ -15,9 +15,8 @@ public class ActionMenu : MonoBehaviour, IPausable
     public PauseHandle PauseHandle { get; set; }
 
     public PartyMember user;
+    public AttackCursor cursor;
     public KeyCode cancelKey;
-    public bool allowFlameMode;
-    public bool FlameMode { get; set; }
 
     private List<Button> buttons = null;
     private HashSet<SpecialAction> specialActionsEnabled = new HashSet<SpecialAction>();
@@ -29,10 +28,16 @@ public class ActionMenu : MonoBehaviour, IPausable
 
     private void Update()
     {
-        if (Input.GetKeyDown(cancelKey))
+        if (Input.GetKeyDown(cancelKey) || Input.GetMouseButtonDown(1))
         {
             if(buttons.Count > 0)
                 buttons[buttons.Count - 1].Select();
+            foreach(var button in buttons)
+            {
+                var actionComp = button.GetComponent<ActionButton>();
+                actionComp?.HideExtraInfoWindow();
+            }
+            cursor.HideTargets();
             user.CancelActionMenu();
         }
             
@@ -57,13 +62,14 @@ public class ActionMenu : MonoBehaviour, IPausable
         buttons.AddRange(GetComponentsInChildren<Button>());
     }
 
+    public void Close() => SetActive(false);
+
     public void SetActive(bool value)
     {
         if (buttons == null)
             FindButtons();
         if (value)
         {
-            FlameMode = false;
             InitializeMenu();
         }            
         else
@@ -131,5 +137,36 @@ public class ActionMenu : MonoBehaviour, IPausable
     {
         if (specialActionsEnabled.Contains(action))
             specialActionsEnabled.Remove(action);
+    }
+
+    public void Wait()
+    {
+        user.EndTurn();
+        Close();
+    }
+
+    public void Run()
+    {
+        user.Run();
+    }
+
+    public void ActivateChargedAction()
+    {
+        user.ActivateChargedAction();
+        Close();
+    }
+
+    public void ChargeChargedAction()
+    {
+        user.ChargeChargingAction();
+        user.EndTurn();
+        Close();
+    }
+
+    public void CancelChargedAction()
+    {
+        user.CancelChargingAction();
+        user.EndTurn();
+        Close();
     }
 }

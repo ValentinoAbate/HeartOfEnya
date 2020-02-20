@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//controls all soup-related items & behaviors, including what buttons are active, what ingredients are selected, etc.
+/// <summary>
+/// controls all soup-related items & behaviors, including what buttons are active, what ingredients are selected, etc.
+/// </summary>
 [System.Serializable]
 public class SoupManager : MonoBehaviour
 {
@@ -10,8 +12,9 @@ public class SoupManager : MonoBehaviour
 	public static SoupManager main;
 
 	//editor-facing data about the ingredient list
-    public int numIngredients; //how many ingredients we have
-    public List<Ingredient> ingredients = new List<Ingredient>(); //what ingredients we have
+    public int totalIngredients; //how many ingredients we have available
+    public int ingredientsPerSoup; //how many ingredients are used per soup
+    public List<Ingredient> ingredients = new List<Ingredient>(); //list of all ingredients we have
     public List<bool> enabledIngredients = new List<bool>(); //bools controlling whether a specific ingredient is enabled
     
     //UI details
@@ -20,6 +23,7 @@ public class SoupManager : MonoBehaviour
     public int buttonX; //x-coord of buttons
     public int buttonY; //max y-coord of buttons
     public int buttonOffset; //distance between buttons. Should be >= the size of the button (see the prefab)
+    public SoupButton soupButton; //reference to the "make soup" button
 
     //internal variables used for state tracking, etc.
     private List<int> activeIngredients = new List<int>(); //stores ID numbers of selected ingredients
@@ -47,7 +51,7 @@ public class SoupManager : MonoBehaviour
     {
     	//spawn all enabled buttons
     	int totalSpawned = 0; //how many buttons we've currently spawned
-    	for (int i = 0; i < numIngredients; i++)
+    	for (int i = 0; i < totalIngredients; i++)
     	{
     		if (enabledIngredients[i])
     		{
@@ -59,6 +63,7 @@ public class SoupManager : MonoBehaviour
     			//set its ingredient & ID
     			button.ingredient = ingredients[i];
     			button.SetID(i); //use i instead of totalSpawned so that we can use the ID as an index to retrieve its ingredient from the ingredients list
+    			button.UpdateData(); //tell the button to refresh its images with data from the new ingredient
 
     			totalSpawned++;
     		}
@@ -72,7 +77,33 @@ public class SoupManager : MonoBehaviour
     public void DisableIngredient(int ingID)
     {
     	activeIngredients.Remove(ingID);
-    	/***TODO: HAVE THE SOUP BUTTON UPDATE ITSELF***/
-    	//soupButton.updateState(activeIngredients, ingredients);
+    	soupButton.UpdateRecipe(activeIngredients);
+    }
+
+    /// <summary>
+    /// Called when the user selects an ingredient.
+    /// If there's still room in the soup, adds its ID from the list of active ingredients, tells the "make soup" button to update itself,
+    /// and returns true.
+    /// If there's no more room in the soup, returns false.
+    /// </summary>
+    public bool EnableIngredient(int ingID)
+    {
+    	if (activeIngredients.Contains(ingID))
+    	{
+    		//fail if already enabled
+    		return false;
+    	}
+    	else if (activeIngredients.Count >= ingredientsPerSoup)
+    	{
+    		//fail if we've already filled all ingredient slots
+    		return false;
+    	}
+    	else
+    	{
+    		//add ingredients to soup and tell the soup button to update its images
+    		activeIngredients.Add(ingID);
+    		soupButton.UpdateRecipe(activeIngredients);
+    		return true; //report success
+    	}
     }
 }

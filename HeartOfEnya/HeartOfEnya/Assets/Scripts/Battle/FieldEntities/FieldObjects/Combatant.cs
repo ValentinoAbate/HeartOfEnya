@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// A combatant is any FieldObject that is can use Actions (see Action.cs) or be affected by them.
@@ -9,15 +10,14 @@ using UnityEngine.UI;
 /// </summary>
 public abstract class Combatant : FieldObject
 {
+    public const bool stunIsBurn = false;
     public abstract Sprite DisplaySprite { get; }
     public abstract Color DisplaySpriteColor { get; }
     [Header("Cheats")]
-    [SerializeField]
-    public bool godMode = false;
+
     [Header("Combatant Display Fields")]
     [TextArea(1, 2)]
     public string description = "Combatant description";
-
     [Header("General Combatant Fields")]
     public int maxHp;
     /// <summary>
@@ -27,21 +27,6 @@ public abstract class Combatant : FieldObject
     [SerializeField]
     private int move;
 
-    #region Elemental Reactions
-
-    public ActionEffect.Reaction reactionToPhys;
-    public ActionEffect.Reaction reactionToMagic;
-    public ActionEffect.Reaction reactionToFire;
-    public ActionEffect.Reaction reactionToIce;
-    public ActionEffect.Reaction reactionToSuppport;
-    /// <summary>
-    /// The action dictionary to look up reactions by an element as a key.
-    /// Initialized in Initialize()
-    /// </summary>
-    [System.NonSerialized]
-    public ActionEffect.ReactionDict reactions;
-
-    #endregion
     /// <summary>
     /// Is this unit stunned?
     /// Setting this value will automatically update the unit's UI
@@ -84,10 +69,10 @@ public abstract class Combatant : FieldObject
     }
     private int hp;
     [Header("UI References")]
-    public Text hpText;
+    public TextMeshProUGUI hpText;
     public Image hpImage;
     public GameObject chargeUI;
-    public Text chargeText;
+    public TextMeshProUGUI chargeText;
     public bool IsChargingAction => chargingAction != null;
     public bool ChargingActionReady => IsChargingAction && chargingAction.Ready;
     private ChargingAction chargingAction;
@@ -95,14 +80,6 @@ public abstract class Combatant : FieldObject
     protected override void Initialize()
     {
         base.Initialize();
-        reactions = new ActionEffect.ReactionDict()
-        {
-            { ActionEffect.Attribute.Physical, reactionToPhys      },
-            { ActionEffect.Attribute.Magic,    reactionToMagic     },
-            { ActionEffect.Attribute.Fire,     reactionToFire      },
-            { ActionEffect.Attribute.Ice,      reactionToIce       },
-            { ActionEffect.Attribute.Support,  reactionToSuppport  }
-        };
         Hp = maxHp; 
     }
 
@@ -111,13 +88,13 @@ public abstract class Combatant : FieldObject
     /// </summary>
     public virtual void Damage(int damage)
     {
-        Hp = Mathf.Max(0, hp - damage);
-        if (Dead && !godMode)
+        if (damage > 0)
         {
-            Kill();
-        }else if (Dead && godMode)
-        {
-            Immortal();
+            Hp = Mathf.Max(0, hp - damage);
+            if (Dead)
+            {
+                Kill();
+            }
         }
     }
 
@@ -129,14 +106,6 @@ public abstract class Combatant : FieldObject
         chargingAction?.Cancel();
         Debug.Log(name + " has died...");
         Destroy(gameObject);
-    }
-
-    /// <summary>
-    /// Implements the ability for characters to not die when hp is 0
-    /// </summary>
-    public virtual void Immortal()
-    {
-        Debug.Log(name + "'s god mode is unlocked.");      
     }
 
     /// <summary>
@@ -160,6 +129,18 @@ public abstract class Combatant : FieldObject
             chargeUI.SetActive(true);
         }
         return null;
+    }
+
+    public override void OnPhaseEnd()
+    {
+        if (Dead)
+            return;
+        if(Stunned)
+        {
+            Stunned = false;
+            if(stunIsBurn)
+                Damage(1);
+        }
     }
 
     #region Action Charging

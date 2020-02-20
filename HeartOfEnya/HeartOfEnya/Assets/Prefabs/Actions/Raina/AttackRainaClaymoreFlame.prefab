@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3094366700976723135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8034678729559284260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7951daf7713baef45b162066c21c9919, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attribute: 2
-  damage: 1
 --- !u!114 &-568368019692409987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,6 +13,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fpCost: 1
+--- !u!114 &-1507884645196560147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034678729559284260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36bfc6b107e685545927a6495f380b04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7658996437369360853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34,11 +32,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 417375792446999537, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
-        type: 3}
-      propertyPath: m_Name
-      value: AttackRainaClaymoreFlame
-      objectReference: {fileID: 0}
     - target: {fileID: 417375792446999535, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -94,6 +87,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 417375792446999537, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
+        type: 3}
+      propertyPath: m_Name
+      value: AttackRainaClaymoreFlame
+      objectReference: {fileID: 0}
+    - target: {fileID: 8902642157473425592, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
+        type: 3}
+      propertyPath: fxPrefab
+      value: 
+      objectReference: {fileID: 2709230759481436863, guid: 18484fe37b3b3f34a95fdcaa42bdaada,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8731d7bcfdbd28e4aa394ef2a6284a77, type: 3}
 --- !u!1 &8034678729559284260 stripped

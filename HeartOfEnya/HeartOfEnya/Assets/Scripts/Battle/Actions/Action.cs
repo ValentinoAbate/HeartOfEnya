@@ -20,6 +20,13 @@ public class Action : MonoBehaviour
 
     #endregion
 
+    public string Description => description;
+    [SerializeField]
+    private string description = "description";
+    public string DisplayName => displayName;
+    [SerializeField]
+    private string displayName = "display name";
+
     private ActionEffect[] effects;
 
     private void Awake()
@@ -79,8 +86,12 @@ public class Action : MonoBehaviour
                 if (target != null)
                 {
                     targets.Add(target);
+                    routine = PlayActionVfx(target.VfxSpawnPoint);
                 }
-                routine = PlayActionVfx(position);
+                else
+                {
+                    routine = PlayActionVfx(BattleGrid.main.GetSpace(position));
+                }
                 if (!useBatches)
                     yield return routine;
             }
@@ -98,8 +109,7 @@ public class Action : MonoBehaviour
         {
             foreach (var effect in effects)
             {
-                ActionEffect.Reaction r = effect.CalculateReaction(target);
-                effect.ApplyEffect(user, target, r);
+                effect.ApplyEffect(user, target);
                 // If the target died from this effect
                 if (target == null)
                     break;
@@ -110,11 +120,11 @@ public class Action : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private Coroutine PlayActionVfx(Pos position)
+    private Coroutine PlayActionVfx(Vector2 position)
     {
         if (fxPrefab != null)
         {
-            var fx = Instantiate(fxPrefab, BattleGrid.main.GetSpace(position), Quaternion.identity).GetComponent<ActionVfx>();
+            var fx = Instantiate(fxPrefab, position, Quaternion.identity).GetComponent<ActionVfx>();
             if (fx != null)
                 return fx.Play();
             else

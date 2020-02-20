@@ -242,7 +242,11 @@ public class BattleGrid : MonoBehaviour
     public void SetObject(Pos pos, FieldObject value)
     {
         if(IsLegal(pos))
+        {
+            value.Pos = pos;
             field.Set(pos, value);
+        }
+
     }
     
     /// <summary>
@@ -342,6 +346,7 @@ public class BattleGrid : MonoBehaviour
     {
         if (!IsLegal(pos))
             return;
+        e.Pos = pos;
         if(!eventTiles.ContainsKey(pos))
         {
             eventTiles.Add(pos, new List<EventTile>() { e });

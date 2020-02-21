@@ -30,6 +30,8 @@ public class SpawnPhase : Phase
     private void Start()
     {
         CurrEncounter = mainEncounter;
+        if (DoNotDestroyOnLoad.Instance?.persistentData?.gamePhase == null)
+            return;
         // Go to next game phase, if applicable.
         string gamePhase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase.ToUpper();
         if (gamePhase == PersistentData.gamePhaseTutorial)

@@ -26,6 +26,7 @@ public class PhaseManager : MonoBehaviour, IPausable
 
     private List<Phase> phases;
     private int currPhase;
+    public bool Transitioning => transitioning;
     private bool transitioning = true;
 
     /// <summary>

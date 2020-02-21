@@ -63,5 +63,8 @@ public class UIInfoPanelParty : MonoBehaviour
         unitImage.color = p.DisplaySpriteColor;
         unitImageBg.sprite = spriteDict[p.DisplayName.ToLower()];
         unitImageBg.color = colorDict[p.DisplayName.ToLower()];
+        statusText.text = "Status: " + (p.DeathsDoor ? "Dying." : "Doing fine!");
+        if (p.Stunned)
+            statusText.text = "Status: " + "Stunned.";
     }
 }

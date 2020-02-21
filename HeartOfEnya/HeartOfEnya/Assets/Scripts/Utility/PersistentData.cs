@@ -9,6 +9,7 @@ using UnityEngine;
 /// </summary>
 public class PersistentData : MonoBehaviour
 {
+    public const string gamePhaseTutorial = "A";
     public const string gamePhaseLuaBattle = "B";
     public const string gamePhaseAbsoluteZeroBattle = "E";
 

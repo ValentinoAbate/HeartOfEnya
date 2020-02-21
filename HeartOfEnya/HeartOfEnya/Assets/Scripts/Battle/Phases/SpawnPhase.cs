@@ -27,6 +27,19 @@ public class SpawnPhase : Phase
     private int turnsSinceLastSpawn = 0;
     private int waveNum = 0;
 
+    private void Start()
+    {
+        CurrEncounter = mainEncounter;
+        // Go to next game phase, if applicable.
+        string gamePhase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase.ToUpper();
+        if (gamePhase == PersistentData.gamePhaseTutorial)
+            CurrEncounter = tutorialEncounter;
+        else if (gamePhase == PersistentData.gamePhaseLuaBattle)
+            CurrEncounter = luaEncounter;
+        else if (gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
+            CurrEncounter = absoluteZeroEncounter;
+    }
+
     public override Coroutine OnPhaseStart()
     {
         // If it is the first turn just spawn the enemies

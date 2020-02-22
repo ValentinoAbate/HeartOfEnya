@@ -27,6 +27,18 @@ public class SpawnPhase : Phase
     private int turnsSinceLastSpawn = 0;
     private int waveNum = 0;
 
+    // Party Member prefab references for each level
+    public List<GameObject> bapyLvl;
+    public List<GameObject> soleilLvl;
+    public List<GameObject> rainaLvl;
+    public List<GameObject> luaLvl;
+
+    // Party Member starting positions
+    public Pos bapyPos;
+    public Pos soleilPos;
+    public Pos rainaPos;
+    public Pos luaPos;
+
     private void Start()
     {
         CurrEncounter = mainEncounter;
@@ -47,6 +59,31 @@ public class SpawnPhase : Phase
         // If it is the first turn just spawn the enemies
         if (PhaseManager.main.Turn == 1)
         {
+            // Spawn party members
+            Vector2 bapyVec = BattleGrid.main.GetSpace(bapyPos);
+            GameObject bapy = Instantiate(bapyLvl[DoNotDestroyOnLoad.Instance.persistentData.partyLevel], 
+                                          new Vector3(bapyVec.x, bapyVec.y, 0), Quaternion.identity);
+            bapy.GetComponent<PartyMember>().Pos = bapyPos;
+
+            Vector2 soleilVec = BattleGrid.main.GetSpace(soleilPos);
+            GameObject soleil = Instantiate(soleilLvl[DoNotDestroyOnLoad.Instance.persistentData.partyLevel], 
+                                            new Vector3(soleilVec.x, soleilVec.y, 0), Quaternion.identity);
+            soleil.GetComponent<PartyMember>().Pos = soleilPos;
+            
+            Vector2 rainaVec = BattleGrid.main.GetSpace(rainaPos);
+            GameObject raina = Instantiate(rainaLvl[DoNotDestroyOnLoad.Instance.persistentData.partyLevel], 
+                                           new Vector3(rainaVec.x, rainaVec.y, 0), Quaternion.identity);
+            raina.GetComponent<PartyMember>().Pos = rainaPos;
+            
+            // Spawn Lua if the boss is defeated
+            if(DoNotDestroyOnLoad.Instance.persistentData.luaBossDefeated)
+            {
+                Vector2 luaVec = BattleGrid.main.GetSpace(luaPos);
+                GameObject lua = Instantiate(luaLvl[DoNotDestroyOnLoad.Instance.persistentData.partyLevel], 
+                                             new Vector3(luaVec.x, luaVec.y, 0), Quaternion.identity);
+                lua.GetComponent<PartyMember>().Pos = luaPos;
+            }
+
             waveNum = startAtWave - 1;
             foreach (var spawnData in CurrWave.AllSpawns)
             {

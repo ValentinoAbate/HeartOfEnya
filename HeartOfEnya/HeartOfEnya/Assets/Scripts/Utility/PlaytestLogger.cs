@@ -42,7 +42,7 @@ public class PlaytestLogger : MonoBehaviour
     // Start function for debugging only, shouldn't actually do anything
     public void Start()
     {
-        // InitializeLog(testData);
+        InitializeLog(testData);
 
         // testData.NewDataLog("hana", 4294967295);
         // LogData(testData);

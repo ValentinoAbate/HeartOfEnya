@@ -9,11 +9,11 @@ public class PlaytestData : MonoBehaviour
 {
     // private string name;
     // private uint amountOfLoveForBapy;
-    public int wave;       // which wave is it
-    public int day;        // which day is it
-    public int numEnemies; // number of enemies spawned in the wave
-    public string victory; // whether player won the wave or retreated
-    public int turns;      // how many turns it took to finish wave
+    private int wave;       // which wave is it
+    private int day;        // which day is it
+    private int numEnemies; // number of enemies spawned in the wave
+    private string victory; // whether player won the wave or retreated
+    private int turns;      // how many turns it took to finish wave
 
     public Dictionary<string, int> hp = new Dictionary<string, int>();      // how much hp/fp each char lost
     public Dictionary<string, int> fp = new Dictionary<string, int>();
@@ -32,11 +32,18 @@ public class PlaytestData : MonoBehaviour
     /// <summary>
     /// Updates the internal playtest data with new values
     /// </summary>
-    // public void NewDataLog(string _name, uint _love)
-    // {
-    //     // name = _name;
-    //     // amountOfLoveForBapy = _love;
-    // }
+    public void NewDataLog(int _wave, int _day, int enemies, string _victory)
+    {
+        wave = _wave;
+        day = _day;
+        numEnemies = enemies;
+        victory = _victory;
+    }
+
+    public void UpdateTurnCount(int turn)
+    {
+        turns = turn;
+    }
 
     public string FieldNames()
     {

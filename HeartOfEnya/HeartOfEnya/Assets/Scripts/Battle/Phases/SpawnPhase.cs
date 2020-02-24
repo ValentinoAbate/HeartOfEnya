@@ -88,6 +88,7 @@ public class SpawnPhase : Phase
             foreach (var spawnData in CurrWave.AllSpawns)
             {
                 var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
+                obj.PrefabOrigin = spawnData.spawnObject;
                 obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
                 BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
             }
@@ -110,6 +111,7 @@ public class SpawnPhase : Phase
                 {
                     var fieldObject = Instantiate(spawner.SpawnData.spawnObject, spawner.transform.position, Quaternion.identity).GetComponent<FieldObject>();
                     BattleGrid.main.SetObject(spawner.Pos, fieldObject);
+                    fieldObject.PrefabOrigin = spawner.SpawnData.spawnObject;
                     BattleGrid.main.RemoveEventTile(spawner.Pos, spawner);
                     Destroy(spawner.gameObject);
                 }

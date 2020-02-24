@@ -19,8 +19,9 @@ public class PersistentData : MonoBehaviour
                                             // keys are character names e.g. wounds["Bapy"]
     public bool luaBossDefeated;
     public bool absoluteZeroDefeated;
-    public int numEnemiesLeft;
-    public List<Enemy> listEnemiesLeft;     // data of remaining enemies
+    public int numEnemiesLeft; // Total in mainEncounter
+    public Encounter lastEncounter; // Used to determing if we are one a new encounter or returning to an old one
+    public List<SavedEnemy> listEnemiesLeft = new List<SavedEnemy>(); // data of remaining enemies
     // public List<buffs?> buffStructures;  // buffs characters are taking into battle
 
     [Header("Dialog")]
@@ -35,9 +36,16 @@ public class PersistentData : MonoBehaviour
     {
         // initialize variables
         wounds = new Dictionary<string, int>();
-        listEnemiesLeft = new List<Enemy>();
         // buffStructures = new List<
         gatheredIngredients = new List<string>();
         // soupPool = new List<Soup
+    }
+
+    [System.Serializable]
+    public class SavedEnemy
+    {
+        public GameObject prefabAsset;
+        public int remainingHP;
+        public Pos spawnPos;
     }
 }

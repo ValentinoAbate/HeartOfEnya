@@ -20,6 +20,7 @@ public class PersistentData : MonoBehaviour
     public bool luaBossDefeated;
     public bool absoluteZeroDefeated;
     public int numEnemiesLeft; // Total in mainEncounter
+    public int waveNum;
     public Encounter lastEncounter; // Used to determing if we are one a new encounter or returning to an old one
     public List<SavedEnemy> listEnemiesLeft = new List<SavedEnemy>(); // data of remaining enemies
     // public List<buffs?> buffStructures;  // buffs characters are taking into battle

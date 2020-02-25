@@ -58,8 +58,10 @@ public class Action : MonoBehaviour
             Destroy(cutIn);
         }
 
+        var tileType = user.Team == FieldEntity.Teams.Enemy ? TileUI.Type.TargetPreviewEnemy
+            : TileUI.Type.TargetPreviewParty;
         // Highlight the targeted squares.
-        targetPattern.Show(BattleGrid.main.attackSquareMat);
+        targetPattern.Show(tileType);
         yield return new WaitForSeconds(targetHighlightSeconds);
 
         var targetPositionBatches = new List<List<Pos>>() { targetPositions };

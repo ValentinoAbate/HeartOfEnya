@@ -18,8 +18,9 @@ public class PhaseManager : MonoBehaviour, IPausable
     public PauseHandle PauseHandle { get => ActivePhase.PauseHandle; set => ActivePhase.PauseHandle = value; }
     public int Turn { get; private set; }
     public Phase ActivePhase { get => phases[currPhase]; }
-    public PartyPhase PartyPhase { get; set; }
-    public EnemyPhase EnemyPhase { get; set; }
+    public PartyPhase PartyPhase { get; private set; }
+    public EnemyPhase EnemyPhase { get; private set; }
+    public SpawnPhase SpawnPhase { get; private set; }
 
     [SerializeField]
     private string goToSceneOnEnd;
@@ -61,6 +62,9 @@ public class PhaseManager : MonoBehaviour, IPausable
         EnemyPhase = phases.Find((p) => p is EnemyPhase) as EnemyPhase;
         if (EnemyPhase == null)
             Debug.LogError("Improper Phase Manager Setup: No Enemy Phase Found");
+        SpawnPhase = phases.Find((p) => p is SpawnPhase) as SpawnPhase;
+        if (SpawnPhase == null)
+            Debug.LogError("Improper Phase Manager Setup: No Spawn Phase Found");
     }
 
     /// <summary>
@@ -111,6 +115,18 @@ public class PhaseManager : MonoBehaviour, IPausable
             );
             logger.LogData(logger.testData);
 
+        //var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        //var enemyList = pData.listEnemiesLeft;
+        //enemyList.Clear();
+        //foreach(var enemy in EnemyPhase.Enemies)
+        //{
+        //    enemyList.Add(new PersistentData.SavedEnemy()
+        //    {
+        //        prefabAsset = enemy.PrefabOrigin,
+        //        remainingHP = enemy.Hp,
+        //        spawnPos = enemy.OriginalPos
+        //    });
+        //}
 
         SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
     }

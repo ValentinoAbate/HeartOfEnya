@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7951daf7713baef45b162066c21c9919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attribute: 1
   damage: 2
 --- !u!114 &8503348518900193958
 MonoBehaviour:
@@ -26,7 +25,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7951daf7713baef45b162066c21c9919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attribute: 3
   damage: 1
 --- !u!1001 &5481637579618120307
 PrefabInstance:
@@ -39,31 +37,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AttackEnemyIceShard
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: range.minRange
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: range.maxRange
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: range.max
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: range.min
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 876645245125307388, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -120,6 +93,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: targetPattern.offsets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: range.minRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: range.maxRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: range.max
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: range.min
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: fxPrefab
+      value: 
+      objectReference: {fileID: 6830531661545233957, guid: a753e91888ea16d429569a2bb8a0b91b,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65afaea67fb0af4a84fe0702411019e, type: 3}
 --- !u!1 &4627668937623689617 stripped

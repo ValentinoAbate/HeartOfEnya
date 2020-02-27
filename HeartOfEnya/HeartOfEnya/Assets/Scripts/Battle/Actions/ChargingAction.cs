@@ -34,7 +34,9 @@ public class ChargingAction
             var obj = BattleGrid.main.GetObject(target);
             TargetType = Type.TargetSquare;
             targetSquare = target;
-            displayPattern.Show(BattleGrid.main.targetSquareMat);
+            var type = user.Team == FieldEntity.Teams.Party ? TileUI.Type.ChargingAttackParty
+                : TileUI.Type.ChargingAttackEnemy;
+            displayPattern.Show(type);
 
             #region TargetObject code (commented out)
             //if(obj == null)
@@ -55,7 +57,9 @@ public class ChargingAction
         {
             TargetType = Type.TargetDirection;
             targetDirection = target - user.Pos;
-            displayPattern.Show(BattleGrid.main.targetSquareMat, user.transform);
+            var type = user.Team == FieldEntity.Teams.Party ? TileUI.Type.ChargingAttackParty
+    :           TileUI.Type.ChargingAttackEnemy;
+            displayPattern.Show(type, user.transform);
         }
     }
     /// <summary>

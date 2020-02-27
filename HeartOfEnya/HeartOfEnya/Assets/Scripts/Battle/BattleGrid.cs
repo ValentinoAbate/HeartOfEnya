@@ -28,10 +28,7 @@ public class BattleGrid : MonoBehaviour
     private float skewXOffset;
     [Header("Rendering")]
     public GameObject gridLinePrefab;
-    public GameObject gridSquarePrefab;
-    public Material attackSquareMat;
-    public Material moveSquareMat;
-    public Material targetSquareMat;
+    public TileUI tileUIManager;
 
     private Matrix field;
     private Dictionary<Pos, List<EventTile>> eventTiles;
@@ -141,24 +138,27 @@ public class BattleGrid : MonoBehaviour
     /// The material to apply. The grid contains several references to materials (e.g BattleGrid.main.moveSquareMat) 
     /// </param>
     /// <returns> Returns the created object </returns>
-    public GameObject SpawnSquare(Pos p, Material mat = null)
+    public TileUI.Entry SpawnTileUI(Pos p, TileUI.Type type)
     {
         if (!IsLegal(p))
-            return null;
-        var obj = Instantiate(gridSquarePrefab);
-        var qMesh = obj.GetComponent<QuadMesh>();
-        if(qMesh != null)
-        {
-            Vector2 offset = new Vector2((cellSize.x + skewXOffset) * 0.5f, -cellSize.y / 2);
-            var v1 = GetSpace(p) - offset;
-            var v2 = v1 + new Vector2(cellSize.x, 0);
-            var v3 = GetSpace(p + Pos.Down) - offset;
-            var v4 = v3 + new Vector2(cellSize.x, 0);
-            qMesh.SetMesh(v1, v2, v3, v4);
-            if (mat != null)
-                qMesh.SetMaterial(mat);
-        }
-        return obj;
+            return new TileUI.Entry() { pos = Pos.OutOfBounds, type = TileUI.Type.Empty };
+        // If there is already a tile, set the secondary type
+        if (tileUIManager.HasActiveTileUI(p))
+            return tileUIManager.SetSecondaryType(p, type);
+
+        // Calculate Vertices
+        Vector2 offset = new Vector2((cellSize.x + skewXOffset) * 0.5f, -cellSize.y / 2);
+        var v1 = GetSpace(p) - offset;
+        var v2 = v1 + new Vector2(cellSize.x, 0);
+        var v3 = GetSpace(p + Pos.Down) - offset;
+        var v4 = v3 + new Vector2(cellSize.x, 0);
+        // Else create a new tile
+        return tileUIManager.SpawnTileUI(p, type, v1, v2, v3, v4);
+    }
+
+    public void RemoveTileUI(TileUI.Entry entry)
+    {
+        tileUIManager.ClearTileUI(entry);
     }
 
     #endregion

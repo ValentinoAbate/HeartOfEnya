@@ -6,13 +6,16 @@ Shader "UI/Unlit/MulticolorTile"
     {
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         [Header(Colors and Textures)] [Space]
-		_Color1 ("Color 1", Color) = (1,1,1,1)
-		_DetailTex ("Texture 1", 2D) = "white" {}
+        [PerRendererData] _Color1 ("Color 1", Color) = (1,1,1,1)
+        [PerRendererData] _DetailTex ("Texture 1", 2D) = "white" {}
         _Strength ("Texture 1 Strength", Range(0.0, 1.0)) = 0.2
 
-		_Color2 ("Color 2", Color) = (1,1,1,1)
-		_DetailTex2 ("Texture 2", 2D) = "white" {}
+        [PerRendererData] _Color2 ("Color 2", Color) = (1,1,1,1)
+        [PerRendererData] _DetailTex2 ("Texture 2", 2D) = "white" {}
         _Strength2 ("Texture 2 Strength", Range(0.0, 1.0)) = 0.2
+
+        [Header(Animation Options)] [Space]
+        _ScrollSpeed ("Scroll Speed", Range(0.0,10.0)) = 0.0
 
 		[Header(View Options)] [Space]
 		[IntRange] _Divisions ("Divisions", Range(1.0, 10.0)) = 2.0
@@ -22,7 +25,7 @@ Shader "UI/Unlit/MulticolorTile"
 		[Header(Worldspace Options)] [Space]
 		[Toggle] _WorldSpace("Worldspace", Range(0.0, 1.0)) = 1.0
 		_WScale("Worldspace X Scale", Range(0.1, 10.0)) = 1.0
-		_Offset("Worldspace Scroll", Range(0.0, 10.0)) = 0.0
+		_Offset("Worldspace Offset", Range(0.0, 10.0)) = 0.0
 
 
 		[Header(Stencil Properties)] [Space]
@@ -110,6 +113,7 @@ Shader "UI/Unlit/MulticolorTile"
 			sampler2D _DetailTex2;
 			fixed _Strength2;
 			
+            float _ScrollSpeed;
 			float _Divisions;
 			float _Angle;
 			float _IScale;
@@ -159,7 +163,8 @@ Shader "UI/Unlit/MulticolorTile"
 
 				o.moduv = float2(newtex.x, newtex.y);
 
-                o.moduv = TRANSFORM_TEX(o.moduv, _MainTex);				
+                o.moduv = TRANSFORM_TEX(o.moduv, _MainTex);
+                o.moduv.x += _ScrollSpeed * _Time;
 
                 o.uv = TRANSFORM_TEX(v.texcoord, _DetailTex);
                 o.color = v.color * _Color1;

@@ -89,7 +89,7 @@ public class CharacterManager : MonoBehaviour
     			result = SearchDict(soleilDict, gamePhase, dayNum);
     			break;
     		default:
-    			Debug.Log("ERROR: Unknown Character: " + name);
+    			Debug.LogError("CharacterManager: Unknown Character: " + name);
     			break;
     	}
     	return result;

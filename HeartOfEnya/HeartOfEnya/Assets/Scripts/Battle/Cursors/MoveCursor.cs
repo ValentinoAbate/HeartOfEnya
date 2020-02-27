@@ -14,7 +14,7 @@ public class MoveCursor : GridCursor
     private Pos lastPosition;
     protected PartyMember partyMember;
     protected List<Pos> traversable;
-    private readonly List<GameObject> squares = new List<GameObject>();
+    private readonly List<TileUI.Entry> tileUIEntries = new List<TileUI.Entry>();
 
     private void Start()
     {
@@ -59,13 +59,13 @@ public class MoveCursor : GridCursor
         if(value)
         {
             foreach (var spot in traversable)
-                squares.Add(BattleGrid.main.SpawnSquare(spot, BattleGrid.main.moveSquareMat));
+                tileUIEntries.Add(BattleGrid.main.SpawnTileUI(spot, TileUI.Type.MoveRangeParty));
         }
         else
         {
-            foreach (var obj in squares)
-                Destroy(obj);
-            squares.Clear();
+            foreach (var entry in tileUIEntries)
+                BattleGrid.main.RemoveTileUI(entry);
+            tileUIEntries.Clear();
         }
     }
 

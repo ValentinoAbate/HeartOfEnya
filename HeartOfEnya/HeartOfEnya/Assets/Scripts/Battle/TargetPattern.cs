@@ -38,7 +38,7 @@ public class TargetPattern
     // the offsets from the target position that encode the target pattern
     [SerializeField]
     private List<Pos> offsets = new List<Pos>();
-    private List<GameObject> visualizationObjs = new List<GameObject>();
+    private List<TileUI.Entry> tileUIEntries = new List<TileUI.Entry>();
 
     public TargetPattern(params Pos[] offsets)
     {
@@ -63,9 +63,9 @@ public class TargetPattern
     }
 
     /// <summary>
-    /// Display a the targeting UI at the current target position
+    /// Display the targeting UI at the current target position
     /// </summary>
-    public void Show(Material squareMat, Transform parent = null)
+    public void Show(TileUI.Type tileType, Transform parent = null)
     {
         Hide();
         foreach(var pos in Positions)
@@ -77,13 +77,13 @@ public class TargetPattern
                 Pos direction = TargetPos - UserPos;
                 modPos = Pos.Rotated(UserPos, pos - direction, Pos.Right, direction);
             }
-            var obj = BattleGrid.main.SpawnSquare(modPos, squareMat);
+            var tileEntry = BattleGrid.main.SpawnTileUI(modPos, tileType);
             // modPos wasn't in a legal square
-            if (obj == null)
+            if (tileEntry.type == TileUI.Type.Empty)
                 continue;
-            if (parent == null)
-                obj.transform.SetParent(parent);
-            visualizationObjs.Add(obj);
+            if (parent != null)
+                tileEntry.mesh.transform.SetParent(parent);
+            tileUIEntries.Add(tileEntry);
         }
     }
 
@@ -92,26 +92,11 @@ public class TargetPattern
     /// </summary>
     public void Hide()
     {
-        if (visualizationObjs == null)
-            visualizationObjs = new List<GameObject>();
-        foreach(var obj in visualizationObjs)
-        {
-            GameObject.Destroy(obj);
-        }
-        visualizationObjs.Clear();
-    }
-
-    /// <summary>
-    /// Shift the target and UI position without destroying and recreating visualization objects
-    /// </summary>
-    public void Shift(Pos offset)
-    {
-        TargetPos += offset;
-        Vector3 offsetWorldPos = offset.AsVector2 * BattleGrid.main.cellSize;
-        foreach (var obj in visualizationObjs)
-        {
-            obj.transform.position += offsetWorldPos;
-        }
+        if (tileUIEntries == null)
+            tileUIEntries = new List<TileUI.Entry>();
+        foreach(var obj in tileUIEntries)
+            BattleGrid.main.RemoveTileUI(obj);
+        tileUIEntries.Clear();
     }
 
     /// <summary>

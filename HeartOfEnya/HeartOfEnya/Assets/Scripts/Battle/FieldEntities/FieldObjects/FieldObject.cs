@@ -19,6 +19,10 @@ public class FieldObject : FieldEntity
     public Vector3 VfxSpawnPoint { get => vfxSpawnPoint.transform.position; }
     [SerializeField]
     private GameObject vfxSpawnPoint;
+
+    public Pos OriginalPos { get; protected set; }
+    public GameObject PrefabOrigin { get; set; }
+
     /// <summary>
     /// The default can move through predicate used for pathing and reachability
     /// </summary>
@@ -40,6 +44,7 @@ public class FieldObject : FieldEntity
         }
         else
         {
+            OriginalPos = Pos;
             BattleGrid.main.SetObject(Pos, this);
         }      
     }

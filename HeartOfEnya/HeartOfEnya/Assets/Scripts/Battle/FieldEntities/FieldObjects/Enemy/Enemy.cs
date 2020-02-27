@@ -18,7 +18,7 @@ public abstract class Enemy : Combatant, IPausable
     public override Sprite DisplaySprite => sprite.sprite;
     public override Color DisplaySpriteColor => sprite.color;
 
-    private readonly List<GameObject> squares = new List<GameObject>();
+    private readonly List<TileUI.Entry> tileUIEntries = new List<TileUI.Entry>();
 
     protected override void Initialize()
     {
@@ -44,7 +44,7 @@ public abstract class Enemy : Combatant, IPausable
             traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
             traversable.Add(Pos);
             foreach (var spot in traversable)
-                squares.Add(BattleGrid.main.SpawnSquare(spot, BattleGrid.main.moveSquareMat));
+                tileUIEntries.Add(BattleGrid.main.SpawnTileUI(spot, TileUI.Type.MoveRangeEnemy));
         }
         BattleUI.main.ShowInfoPanelEnemy(this);
     }
@@ -52,9 +52,9 @@ public abstract class Enemy : Combatant, IPausable
     // Hide movement range
     public override void UnHighlight()
     {
-        foreach (var obj in squares)
-            Destroy(obj);
-        squares.Clear();
+        foreach (var entry in tileUIEntries)
+            BattleGrid.main.RemoveTileUI(entry);
+        tileUIEntries.Clear();
         BattleUI.main.HideInfoPanel();
     }
 

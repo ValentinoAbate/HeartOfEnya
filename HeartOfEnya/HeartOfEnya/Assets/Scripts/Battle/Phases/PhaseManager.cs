@@ -30,11 +30,14 @@ public class PhaseManager : MonoBehaviour, IPausable
     public bool Transitioning => transitioning;
     private bool transitioning = true;
 
+    public PlaytestLogger logger;
+
     /// <summary>
     /// Singleton pattern implementation
     /// </summary>
     private void Awake()
     {
+        logger = DoNotDestroyOnLoad.Instance.playtestLogger;
         if (main == null)
         {
             main = this;
@@ -50,7 +53,7 @@ public class PhaseManager : MonoBehaviour, IPausable
     /// </summary>
     private void InitializePhases()
     {
-        phases = new List<Phase>(); 
+        phases = new List<Phase>();
         phases.AddRange(GetComponentsInChildren<Phase>());
         phases.RemoveAll((p) => !p.enabled);
         PartyPhase = phases.Find((p) => p is PartyPhase) as PartyPhase;
@@ -71,15 +74,16 @@ public class PhaseManager : MonoBehaviour, IPausable
     IEnumerator Start()
     {
         Turn = 1;
+        logger.testData.UpdateTurnCount(Turn);
         yield return StartCoroutine(StartBattle());
         yield return ActivePhase.OnPhaseStart();
-        transitioning = false;        
+        transitioning = false;
     }
 
-    /// <summary> 
-    /// Update is called once per frame 
+    /// <summary>
+    /// Update is called once per frame
     /// Simply calls the current phase's update method
-    /// </summary> 
+    /// </summary>
     void Update()
     {
         if (!transitioning)
@@ -118,6 +122,12 @@ public class PhaseManager : MonoBehaviour, IPausable
             });
         }
         SpawnPhase.LogPersistantData();
+        // Log playtest data from previous wave
+        logger.testData.NewDataLog(
+          waveNum, DoNotDestroyOnLoad.Instance.persistentData.dayNum, CurrWave.numEnemies, "party retreated"
+        );
+        logger.LogData(logger.testData);
+
         SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
     }
 
@@ -132,8 +142,9 @@ public class PhaseManager : MonoBehaviour, IPausable
         {
             currPhase = 0;
             ++Turn;
+            logger.testData.UpdateTurnCount(Turn);
             Debug.Log("It is turn " + Turn);
-        }          
+        }
         Debug.Log("Starting Phase: " + ActivePhase.displayName);
         yield return ActivePhase.OnPhaseStart();
         transitioning = false;

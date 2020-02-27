@@ -27,7 +27,7 @@ public class PersistentData : MonoBehaviour
 
     [Header("Dialog")]
     public string gamePhase = "A"; // GamePhase: What “day” it is.
-    public int dayNum = 0;       // DayNum: The number of days spent on the current Phase
+    public int dayNum = 0;         // DayNum: The number of days spent on the current Phase
     
     [Header("Soup")]
     public List<string> gatheredIngredients;  // List of gathered ingredients

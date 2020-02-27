@@ -39,8 +39,13 @@ public class SpawnPhase : Phase
     public Pos rainaPos;
     public Pos luaPos;
 
+    // Playtest data logger reference
+    public PlaytestLogger logger;
+
     private void Start()
     {
+        logger = DoNotDestroyOnLoad.Instance.playtestLogger;
+
         CurrEncounter = mainEncounter;
         if (DoNotDestroyOnLoad.Instance?.persistentData?.gamePhase == null)
             return;
@@ -169,6 +174,13 @@ public class SpawnPhase : Phase
         // Spawn the next wave if ready
         if (NextWaveReady())
         {
+            // Log playtest data from previous wave
+            logger.testData.NewDataLog(
+                waveNum, DoNotDestroyOnLoad.Instance.persistentData.dayNum, CurrWave.numEnemies, "wave won"
+            );
+            logger.LogData(logger.testData);
+
+
             // Declare next spawns
             foreach (var spawnData in NextWave.enemies)
             {

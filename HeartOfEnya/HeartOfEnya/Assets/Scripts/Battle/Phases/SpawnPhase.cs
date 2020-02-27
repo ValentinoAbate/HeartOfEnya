@@ -235,5 +235,10 @@ public class SpawnPhase : Phase
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         pData.waveNum = waveNum;
         pData.lastEncounter = CurrEncounter;
+        // Log playtest data from previous wave
+        logger.testData.NewDataLog(
+          waveNum, DoNotDestroyOnLoad.Instance.persistentData.dayNum, CurrWave.numEnemies, "party retreated"
+        );
+        logger.LogData(logger.testData);
     }
 }

@@ -52,7 +52,7 @@ public class PhaseManager : MonoBehaviour, IPausable
     /// </summary>
     private void InitializePhases()
     {
-        phases = new List<Phase>(); 
+        phases = new List<Phase>();
         phases.AddRange(GetComponentsInChildren<Phase>());
         phases.RemoveAll((p) => !p.enabled);
         PartyPhase = phases.Find((p) => p is PartyPhase) as PartyPhase;
@@ -77,13 +77,13 @@ public class PhaseManager : MonoBehaviour, IPausable
         logger.testData.UpdateTurnCount(Turn);
         yield return StartCoroutine(StartBattle());
         yield return ActivePhase.OnPhaseStart();
-        transitioning = false;        
+        transitioning = false;
     }
 
-    /// <summary> 
-    /// Update is called once per frame 
+    /// <summary>
+    /// Update is called once per frame
     /// Simply calls the current phase's update method
-    /// </summary> 
+    /// </summary>
     void Update()
     {
         if (!transitioning)
@@ -116,18 +116,19 @@ public class PhaseManager : MonoBehaviour, IPausable
            );
         logger.LogData(logger.testData);
 
-        //var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        //var enemyList = pData.listEnemiesLeft;
-        //enemyList.Clear();
-        //foreach(var enemy in EnemyPhase.Enemies)
-        //{
-        //    enemyList.Add(new PersistentData.SavedEnemy()
-        //    {
-        //        prefabAsset = enemy.PrefabOrigin,
-        //        remainingHP = enemy.Hp,
-        //        spawnPos = enemy.OriginalPos
-        //    });
-        //}
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        var enemyList = pData.listEnemiesLeft;
+        enemyList.Clear();
+        foreach (var enemy in EnemyPhase.Enemies)
+        {
+            enemyList.Add(new PersistentData.SavedEnemy()
+            {
+                prefabAsset = enemy.PrefabOrigin,
+                remainingHP = enemy.Hp,
+                spawnPos = enemy.OriginalPos
+            });
+        }
+        SpawnPhase.LogPersistantData();
 
         SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
     }
@@ -145,7 +146,7 @@ public class PhaseManager : MonoBehaviour, IPausable
             ++Turn;
             logger.testData.UpdateTurnCount(Turn);
             Debug.Log("It is turn " + Turn);
-        }          
+        }
         Debug.Log("Starting Phase: " + ActivePhase.displayName);
         yield return ActivePhase.OnPhaseStart();
         transitioning = false;

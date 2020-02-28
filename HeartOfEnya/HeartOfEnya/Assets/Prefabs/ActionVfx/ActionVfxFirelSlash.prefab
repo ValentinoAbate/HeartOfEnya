@@ -41,12 +41,12 @@ ParticleSystem:
   m_GameObject: {fileID: 2861656447489604933}
   serializedVersion: 6
   lengthInSec: 1
-  simulationSpeed: 1
+  simulationSpeed: 0.5
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -115,7 +115,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.4
+      scalar: 0.6
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -220,22 +220,22 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 1
       minColor: {r: 1, g: 1, b: 1, a: 1}
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 0.0141509175, b: 0.0141509175, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 0}
+        key0: {r: 1, g: 0.86161906, b: 0.43867922, a: 0.7254902}
+        key1: {r: 0.78431374, g: 0.01654843, b: 0, a: 0.43137255}
+        key2: {r: 0.6981132, g: 0, b: 0.28203994, a: 0.7254902}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
-        ctime0: 0
-        ctime1: 65535
-        ctime2: 0
+        ctime0: 386
+        ctime1: 28334
+        ctime2: 42791
         ctime3: 0
         ctime4: 0
         ctime5: 0
@@ -243,14 +243,14 @@ ParticleSystem:
         ctime7: 0
         atime0: 0
         atime1: 65535
-        atime2: 0
+        atime2: 58789
         atime3: 0
         atime4: 0
         atime5: 0
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_NumColorKeys: 2
+        m_NumColorKeys: 3
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
@@ -283,21 +283,21 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     startSize:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0.5
-      minScalar: 1
+      minMaxState: 1
+      scalar: 0.9
+      minScalar: 0.3
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
+          value: 0.32499695
+          inSlope: 2
+          outSlope: 2
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         - serializedVersion: 3
           time: 1
           value: 1
@@ -305,8 +305,8 @@ ParticleSystem:
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -336,7 +336,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 1
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -389,7 +389,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 1
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -1047,7 +1047,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
   SizeModule:
-    enabled: 0
+    enabled: 1
     curve:
       serializedVersion: 2
       minMaxState: 1
@@ -1057,19 +1057,19 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.018749997
-          value: 0.27027023
-          inSlope: 2
-          outSlope: 2
+          time: 0
+          value: 0
+          inSlope: 5.3454556
+          outSlope: 5.3454556
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0
+          outWeight: 0.05612244
         - serializedVersion: 3
           time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
+          value: 0
+          inSlope: -2
+          outSlope: -2
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -1379,33 +1379,33 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.86161906, b: 0.43867922, a: 0}
-        key1: {r: 0.78431374, g: 0.01654843, b: 0, a: 0.7133795}
-        key2: {r: 0.6981132, g: 0, b: 0.28203994, a: 0.44175327}
-        key3: {r: 0, g: 0, b: 0, a: 0}
+        key0: {r: 1, g: 1, b: 1, a: 0.7254902}
+        key1: {r: 1, g: 1, b: 1, a: 1}
+        key2: {r: 1, g: 1, b: 1, a: 0}
+        key3: {r: 1, g: 1, b: 1, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
-        ctime0: 386
-        ctime1: 28334
+        ctime0: 0
+        ctime1: 65535
         ctime2: 42791
-        ctime3: 0
+        ctime3: 57054
         ctime4: 0
         ctime5: 0
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 2699
-        atime2: 63222
-        atime3: 65535
+        atime1: 7903
+        atime2: 43947
+        atime3: 47609
         atime4: 0
         atime5: 0
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_NumColorKeys: 3
-        m_NumAlphaKeys: 4
+        m_NumColorKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -2151,7 +2151,7 @@ ParticleSystem:
     m_Curve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -1
+      scalar: -2
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3238,11 +3238,11 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
   SizeBySpeedModule:
-    enabled: 1
+    enabled: 0
     curve:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 2
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4936,12 +4936,12 @@ ParticleSystem:
   m_GameObject: {fileID: 6307397165183310130}
   serializedVersion: 6
   lengthInSec: 1
-  simulationSpeed: 1
+  simulationSpeed: 1.75
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -5560,8 +5560,8 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 1, y: 1.25, z: 0}
-    m_Rotation: {x: 0, y: 0, z: 135}
+    m_Position: {x: 0.94, y: 1.13, z: 0}
+    m_Rotation: {x: 0, y: 0, z: 138}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -6273,8 +6273,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 55705
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -6282,7 +6282,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -6574,7 +6574,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -7007,7 +7007,7 @@ ParticleSystem:
     speedModifier:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 5
+      scalar: 4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -8958,12 +8958,12 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    minVertexDistance: 0.2
+    minVertexDistance: 0.07
     textureMode: 2
     ribbonCount: 1
     shadowBias: 0.5
     worldSpace: 0
-    dieWithParticles: 1
+    dieWithParticles: 0
     sizeAffectsWidth: 1
     sizeAffectsLifetime: 0
     inheritParticleColor: 1
@@ -8995,7 +8995,7 @@ ParticleSystem:
         ctime7: 0
         atime0: 0
         atime1: 6746
-        atime2: 57825
+        atime2: 29298
         atime3: 65535
         atime4: 0
         atime5: 0
@@ -9094,32 +9094,32 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 0, g: 0.20784314, b: 1, a: 1}
-        key2: {r: 0, g: 0.20784314, b: 1, a: 1}
-        key3: {r: 1, g: 1, b: 1, a: 0}
-        key4: {r: 1, g: 1, b: 1, a: 0}
-        key5: {r: 0, g: 0.20616484, b: 1, a: 0}
-        key6: {r: 0, g: 0.20784314, b: 1, a: 0}
+        key1: {r: 1, g: 0, b: 0.13618708, a: 1}
+        key2: {r: 1, g: 0.2646014, b: 0.015686274, a: 1}
+        key3: {r: 1, g: 0.96862745, b: 0.7137255, a: 1}
+        key4: {r: 1, g: 0.96932316, b: 0.7122642, a: 0}
+        key5: {r: 1, g: 0.76815236, b: 0, a: 0}
+        key6: {r: 1, g: 0, b: 0.2145834, a: 0}
         key7: {r: 1, g: 1, b: 1, a: 0}
         ctime0: 0
         ctime1: 6554
         ctime2: 13107
         ctime3: 29491
-        ctime4: 36044
-        ctime5: 52428
-        ctime6: 58982
+        ctime4: 32189
+        ctime5: 40285
+        ctime6: 54356
         ctime7: 65535
         atime0: 0
-        atime1: 65535
-        atime2: 65535
-        atime3: 0
+        atime1: 6746
+        atime2: 59174
+        atime3: 65535
         atime4: 0
         atime5: 0
         atime6: 0
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 8
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 4
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9722,6 +9722,236 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1839196561854937149, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1839196561854937149, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1839196561854937149, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: simulationSpeed
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key1.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key1.b
+      value: 0.13618708
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key2.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key2.g
+      value: 0.2646014
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key2.b
+      value: 0.015686274
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime1
+      value: 1157
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.m_NumColorKeys
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: ColorBySpeedModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.minMaxState
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key2.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key3.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key3.g
+      value: 0.96862745
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key3.b
+      value: 0.7137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key3.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key4.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key4.g
+      value: 0.96932316
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key4.b
+      value: 0.7122642
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key5.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key5.g
+      value: 0.76815236
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key6.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key6.b
+      value: 0.2145834
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key7.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key7.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key7.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime2
+      value: 13107
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime3
+      value: 35852
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime4
+      value: 45104
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime5
+      value: 52235
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime6
+      value: 61873
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime7
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.atime1
+      value: 6746
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.atime2
+      value: 59174
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.atime3
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.m_NumAlphaKeys
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551078860635147147, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key5.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029352929962367809, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4842508818842539273, guid: ef045a7ca61c6ec4380c335603ca108a,
         type: 3}
       propertyPath: SubModule.enabled
@@ -9806,6 +10036,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4842508818842539275, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4842508818842539275, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4842508818842539318, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: secondsToNext
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4842508818842539318, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+      propertyPath: totalDelay
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef045a7ca61c6ec4380c335603ca108a, type: 3}

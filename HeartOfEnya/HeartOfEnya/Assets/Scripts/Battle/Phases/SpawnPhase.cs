@@ -89,13 +89,44 @@ public class SpawnPhase : Phase
                 lua.GetComponent<PartyMember>().Pos = luaPos;
             }
 
-            waveNum = startAtWave - 1;
-            foreach (var spawnData in CurrWave.AllSpawns)
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
+            // This is a fresh encounter, just spawn everything
+            if (CurrEncounter != pData.lastEncounter)
             {
-                var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
-                obj.PrefabOrigin = spawnData.spawnObject;
-                obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
-                BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
+                waveNum = startAtWave - 1;
+                foreach (var spawnData in CurrWave.AllSpawns)
+                {
+                    var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
+                    obj.PrefabOrigin = spawnData.spawnObject;
+                    obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
+                    BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
+                }
+            }
+            else // This is a continuing encounter, spawn the backed-up enemies
+            {
+                waveNum = pData.waveNum;
+                // No Backed up enemies to spawn
+                if (pData.listEnemiesLeft.Count <= 0)
+                {                  
+                    foreach (var spawnData in CurrWave.AllSpawns)
+                    {
+                        var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
+                        obj.PrefabOrigin = spawnData.spawnObject;
+                        obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
+                        BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
+                    }
+                }
+                else
+                {
+                    foreach (var spawnData in pData.listEnemiesLeft)
+                    {
+                        var obj = Instantiate(spawnData.prefabAsset).GetComponent<Combatant>();
+                        obj.PrefabOrigin = spawnData.prefabAsset;
+                        obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPos);
+                        BattleGrid.main.SetObject(spawnData.spawnPos, obj);
+                        obj.Hp = spawnData.remainingHP;
+                    }
+                }
             }
             return null;
         }
@@ -198,4 +229,16 @@ public class SpawnPhase : Phase
     }
 
     public override void OnPhaseUpdate() => EndPhase();
+
+    public void LogPersistantData()
+    {
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        pData.waveNum = waveNum;
+        pData.lastEncounter = CurrEncounter;
+        // Log playtest data from previous wave
+        logger.testData.NewDataLog(
+          waveNum, DoNotDestroyOnLoad.Instance.persistentData.dayNum, CurrWave.numEnemies, "party retreated"
+        );
+        logger.LogData(logger.testData);
+    }
 }

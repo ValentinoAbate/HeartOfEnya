@@ -6,7 +6,7 @@ using System.Linq;
 public class Action : MonoBehaviour
 {
     public const float targetHighlightSeconds = 0.25f;
-    public const float cutInSeconds = 2f;
+    public const float cutInSeconds = 2.25f;
 
     public ActionRange range;
     public TargetPattern targetPattern;

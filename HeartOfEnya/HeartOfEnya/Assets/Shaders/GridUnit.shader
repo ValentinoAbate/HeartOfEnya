@@ -98,6 +98,10 @@ Shader "Universal Render Pipeline/2D/GridUnit"
             SHAPE_LIGHT(3)
             #endif
 
+			// function to add an outline.
+			// req: (_Charging || _Stunned) && !(_Charging && _Stunned)
+			// @param uv: 2d texture coordinate. currently in object space and not screen space because God hates me
+			// @param c: color from the currently sampled fragment + lighting calcs
 			half4 determineOutline(float2 uv, half4 c) {
 				float2 x_dist = float2 (_Outline, 0);
 				float2 y_dist = float2 (0, _Outline);

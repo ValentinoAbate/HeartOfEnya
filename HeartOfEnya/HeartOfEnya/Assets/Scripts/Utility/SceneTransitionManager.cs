@@ -31,4 +31,12 @@ public class SceneTransitionManager : MonoBehaviour
     {
     	SceneManager.LoadScene(sceneName);
     }
+
+    /// <summary>
+    /// Exit Functionality for Exit Button
+    /// </summary>
+    public void doExitGame()
+    {
+        Application.Quit();
+    }
 }

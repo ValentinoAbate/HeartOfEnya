@@ -20,6 +20,13 @@ public abstract class Enemy : Combatant, IPausable
 
     private readonly List<TileUI.Entry> tileUIEntries = new List<TileUI.Entry>();
 
+    string[] drops = { "Chicken", "Cabbage", "Potatoes", "Tomatoes", "Butter", "Noodles",
+                        "Ice Cream", "Carrots", "Walnuts", "Onions" };
+
+    int pVal;
+
+
+
     protected override void Initialize()
     {
         base.Initialize();
@@ -37,7 +44,7 @@ public abstract class Enemy : Combatant, IPausable
     // TODO: show attack range, maybe intended action?
     public override void Highlight()
     {
-        if(!Stunned && !IsChargingAction)
+        if (!Stunned && !IsChargingAction)
         {
             // Calculate and display movement range
             var traversable = BattleGrid.main.Reachable(Pos, Move, CanMoveThrough).Keys.ToList();
@@ -76,7 +83,7 @@ public abstract class Enemy : Combatant, IPausable
         yield return new WaitWhile(() => PauseHandle.Paused);
         // Apply stun an d exit if stunned
         if (Stunned)
-        {          
+        {
             yield return new WaitForSeconds(0.25f);
             yield return new WaitWhile(() => PauseHandle.Paused);
             yield break;
@@ -116,4 +123,31 @@ public abstract class Enemy : Combatant, IPausable
             Debug.Log(name + " attacks " + target.name + " with " + action.name);
         return UseAction(action, p);
     }
+    public override void Kill()
+    {
+        Debug.Log("Enemy arrived");
+        Debug.Log(name + " has died...");
+        Destroy(gameObject);
+       
+        int randomIndex = Random.Range(0, drops.Length);
+        if (DoNotDestroyOnLoad.Instance.persistentData.gatheredIngredients.Count <= 6)
+        {
+            DoNotDestroyOnLoad.Instance.persistentData.gatheredIngredients.Add(drops[randomInt(0, 9)]);
+        }
+
+    }
+
+    public int randomInt(int min, int max)
+    { 
+        int val = Random.Range(min, max);
+        while(pVal == val)
+        {
+            val = Random.Range(min, max);
+        }
+        pVal = val;
+        return val;
+    }
+   
+
+
 }

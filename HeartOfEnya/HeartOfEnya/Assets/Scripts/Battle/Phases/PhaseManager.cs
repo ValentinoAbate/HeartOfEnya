@@ -30,13 +30,13 @@ public class PhaseManager : MonoBehaviour, IPausable
     public bool Transitioning => transitioning;
     private bool transitioning = true;
 
-    public PlaytestLogger logger;
+    private PlaytestLogger logger;
 
     /// <summary>
     /// Singleton pattern implementation
     /// </summary>
     private void Awake()
-    {       
+    {
         if (main == null)
         {
             main = this;
@@ -121,8 +121,7 @@ public class PhaseManager : MonoBehaviour, IPausable
                 spawnPos = enemy.OriginalPos
             });
         }
-        SpawnPhase.LogPersistantData();
-
+        SpawnPhase.LogPersistentData();
 
         SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
     }

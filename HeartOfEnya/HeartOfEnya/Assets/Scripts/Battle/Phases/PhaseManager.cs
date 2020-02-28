@@ -30,14 +30,13 @@ public class PhaseManager : MonoBehaviour, IPausable
     public bool Transitioning => transitioning;
     private bool transitioning = true;
 
-    public PlaytestLogger logger;
+    private PlaytestLogger logger;
 
     /// <summary>
     /// Singleton pattern implementation
     /// </summary>
     private void Awake()
     {
-        logger = DoNotDestroyOnLoad.Instance.playtestLogger;
         if (main == null)
         {
             main = this;
@@ -74,6 +73,7 @@ public class PhaseManager : MonoBehaviour, IPausable
     IEnumerator Start()
     {
         Turn = 1;
+        logger = DoNotDestroyOnLoad.Instance.playtestLogger;
         logger.testData.UpdateTurnCount(Turn);
         yield return StartCoroutine(StartBattle());
         yield return ActivePhase.OnPhaseStart();
@@ -110,10 +110,11 @@ public class PhaseManager : MonoBehaviour, IPausable
     public void EndBattle()
     {
         // Log playtest data from previous wave
-            logger.testData.NewDataLog(
-                waveNum, DoNotDestroyOnLoad.Instance.persistentData.dayNum, CurrWave.numEnemies, "party retreated"
-            );
-            logger.LogData(logger.testData);
+        logger.testData.NewDataLog(
+               SpawnPhase.waveNum, DoNotDestroyOnLoad.Instance.persistentData.dayNum, SpawnPhase.CurrWave.enemies.Count, 
+               "party retreated"
+           );
+        logger.LogData(logger.testData);
 
         //var pData = DoNotDestroyOnLoad.Instance.persistentData;
         //var enemyList = pData.listEnemiesLeft;

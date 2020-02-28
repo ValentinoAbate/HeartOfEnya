@@ -25,7 +25,7 @@ public class SpawnPhase : Phase
     private List<EventTileSpawn> spawners = new List<EventTileSpawn>();
     // Start at negative one to account for first turn
     private int turnsSinceLastSpawn = 0;
-    private int waveNum = 0;
+    [HideInInspector] public int waveNum = 0;
 
     // Party Member prefab references for each level
     public List<GameObject> bapyLvl;
@@ -40,7 +40,7 @@ public class SpawnPhase : Phase
     public Pos luaPos;
 
     // Playtest data logger reference
-    public PlaytestLogger logger;
+    private PlaytestLogger logger;
 
     private void Start()
     {
@@ -145,7 +145,7 @@ public class SpawnPhase : Phase
         {
             // Log playtest data from previous wave
             logger.testData.NewDataLog(
-                waveNum, DoNotDestroyOnLoad.Instance.persistentData.dayNum, CurrWave.numEnemies, "wave won"
+                waveNum, DoNotDestroyOnLoad.Instance.persistentData.dayNum, CurrWave.enemies.Count, "wave won"
             );
             logger.LogData(logger.testData);
 

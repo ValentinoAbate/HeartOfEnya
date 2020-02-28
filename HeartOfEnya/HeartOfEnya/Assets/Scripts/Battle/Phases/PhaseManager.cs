@@ -109,13 +109,6 @@ public class PhaseManager : MonoBehaviour, IPausable
 
     public void EndBattle()
     {
-        // Log playtest data from previous wave
-        logger.testData.NewDataLog(
-               SpawnPhase.waveNum, DoNotDestroyOnLoad.Instance.persistentData.dayNum, SpawnPhase.CurrWave.enemies.Count, 
-               "party retreated"
-           );
-        logger.LogData(logger.testData);
-
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         var enemyList = pData.listEnemiesLeft;
         enemyList.Clear();
@@ -128,7 +121,7 @@ public class PhaseManager : MonoBehaviour, IPausable
                 spawnPos = enemy.OriginalPos
             });
         }
-        SpawnPhase.LogPersistantData();
+        SpawnPhase.LogPersistentData();
 
         SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
     }

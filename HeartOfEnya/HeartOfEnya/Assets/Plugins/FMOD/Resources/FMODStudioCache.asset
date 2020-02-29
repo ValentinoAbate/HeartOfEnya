@@ -17,6 +17,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &-9167578759886978041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Loading
+  m_EditorClassIdentifier: 
+  Name: Loading
+  Min: 0
+  Max: 1
+  Default: 1
+  Exists: 1
 --- !u!114 &-8871236238070712259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,6 +66,23 @@ MonoBehaviour:
   Name: Crisis
   Min: 0
   Max: 1
+  Default: 0
+  Exists: 0
+--- !u!114 &-8557527558250267650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Bapy Normal/Space
+  m_EditorClassIdentifier: 
+  Name: Space
+  Min: 0
+  Max: 2
   Default: 0
   Exists: 1
 --- !u!114 &-8269990154749823978
@@ -159,12 +193,12 @@ MonoBehaviour:
   Path: event:/SFX/Voices/Raina/Raina Normal
   guid: b15ed984ae98b1458469372a725d4601
   Banks:
-  - {fileID: 7329544146433908667}
+  - {fileID: -2921068994463180524}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 1105266152055368571}
+  - {fileID: -4411327314173988416}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
@@ -217,12 +251,12 @@ MonoBehaviour:
   Path: event:/SFX/Voices/Bapy/Bapy Angry
   guid: 7536d24792d9a34c86769459c95eb6d2
   Banks:
-  - {fileID: 7329544146433908667}
+  - {fileID: -2921068994463180524}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 2633289820551938583}
+  - {fileID: 8598957430511494394}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
@@ -248,6 +282,23 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 2000
+--- !u!114 &-6769928713116533914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Soleil Normal/Space
+  m_EditorClassIdentifier: 
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &-6617626653947488930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,7 +349,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 1
-  Exists: 1
+  Exists: 0
 --- !u!114 &-6246965684595838257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,11 +364,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.strings.bank
   SubDir: 
-  lastModified: 637175678106566268
+  lastModified: 637175733096337754
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1240
+    Value: 1300
   Exists: 1
 --- !u!114 &-6140351122499349085
 MonoBehaviour:
@@ -400,6 +451,40 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 93
+--- !u!114 &-5646111890889084689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Lua Normal/Space
+  m_EditorClassIdentifier: 
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
+--- !u!114 &-5287239996557556109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Text Playing
+  m_EditorClassIdentifier: 
+  Name: Text Playing
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-4803538281202424793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,6 +587,23 @@ MonoBehaviour:
   Max: 2
   Default: 0
   Exists: 0
+--- !u!114 &-4411327314173988416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Raina Normal/Space
+  m_EditorClassIdentifier: 
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &-3799912644243579096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,7 +676,7 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-3091136574587741126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -608,15 +710,33 @@ MonoBehaviour:
   Path: event:/SFX/Voices/Bapy/Bapy Normal
   guid: 375404193540074fa1d1915e870c79d1
   Banks:
-  - {fileID: 7329544146433908667}
+  - {fileID: -2921068994463180524}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -3124196613951386964}
+  - {fileID: -8557527558250267650}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
+--- !u!114 &-2921068994463180524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637175733095927438
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &-2873224450112288151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -686,6 +806,29 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &-2070774817950067199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Ambient/Snowstorm
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Ambient/Snowstorm
+  guid: 1bf7ffd967922e47a5c315791d0fd1b7
+  Banks:
+  - {fileID: -2921068994463180524}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 54000
 --- !u!114 &-1913942703369784140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -865,7 +1008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: -6246965684595838257}
-  - {fileID: 7329544146433908667}
+  - {fileID: -2921068994463180524}
   EditorEvents:
   - {fileID: 4663151369970568879}
   - {fileID: -7890145203716225085}
@@ -873,12 +1016,13 @@ MonoBehaviour:
   - {fileID: 7506038664490193274}
   - {fileID: 1066828611984857450}
   - {fileID: -8021053834815905360}
+  - {fileID: -2070774817950067199}
   EditorParameters: []
   MasterBanks:
-  - {fileID: 7329544146433908667}
+  - {fileID: -2921068994463180524}
   StringsBanks:
   - {fileID: -6246965684595838257}
-  stringsBankWriteTime: 637175678106566268
+  stringsBankWriteTime: 637175733096337754
   cacheVersion: 3
 --- !u!114 &115206875624402088
 MonoBehaviour:
@@ -931,7 +1075,7 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &1013691369027032001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -964,12 +1108,12 @@ MonoBehaviour:
   Path: event:/SFX/Voices/Soleil/Soleil Normal
   guid: a30e360095381d45a49a6e926e4e6c01
   Banks:
-  - {fileID: 7329544146433908667}
+  - {fileID: -2921068994463180524}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 5307907408250077251}
+  - {fileID: -6769928713116533914}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
@@ -989,7 +1133,7 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &1315366068941691017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1157,7 +1301,7 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &3018573818287996664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1283,6 +1427,23 @@ MonoBehaviour:
   Max: 2
   Default: 1
   Exists: 1
+--- !u!114 &4383857855157927043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Crisis
+  m_EditorClassIdentifier: 
+  Name: Crisis
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &4571571424457671193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1332,14 +1493,14 @@ MonoBehaviour:
   Path: event:/Music/Battle Theme
   guid: 34ce1126a9dfcf46a856be6b7d67badf
   Banks:
-  - {fileID: 7329544146433908667}
+  - {fileID: -2921068994463180524}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -6398504959683090678}
-  - {fileID: 6101200899810942709}
-  - {fileID: -8799128239384805298}
+  - {fileID: -9167578759886978041}
+  - {fileID: -5287239996557556109}
+  - {fileID: 4383857855157927043}
   MinDistance: 0
   MaxDistance: 0
   Length: 451516
@@ -1394,7 +1555,7 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &5317131663871915770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1496,7 +1657,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &6143216497075837906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1640,7 +1801,7 @@ MonoBehaviour:
   lastModified: 637175678106546266
   LoadResult: 0
   FileSizes: []
-  Exists: 1
+  Exists: 0
 --- !u!114 &7348535214042315522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1690,12 +1851,12 @@ MonoBehaviour:
   Path: event:/SFX/Voices/Lua/Lua Normal
   guid: 5e708cc22e80094a8084af455bc148e3
   Banks:
-  - {fileID: 7329544146433908667}
+  - {fileID: -2921068994463180524}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 624769580486122903}
+  - {fileID: -5646111890889084689}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
@@ -1843,6 +2004,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &8598957430511494394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Bapy Angry/Space
+  m_EditorClassIdentifier: 
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &8700982192122085213
 MonoBehaviour:
   m_ObjectHideFlags: 0

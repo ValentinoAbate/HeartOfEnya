@@ -60,10 +60,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9126cb4538e1b7d5c9c714eee8a0ec44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partyLevel: 0
+  partyLevel: 1
+  luaBossDefeated: 0
+  absoluteZeroDefeated: 0
   numEnemiesLeft: 0
   listEnemiesLeft: []
-  gamePhase: 
+  gamePhase: A
   dayNum: 0
   gatheredIngredients: []
 --- !u!114 &-6619775620016568397
@@ -78,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e7db9ddfebb760f9d53846449b89e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: Assets/Scripts/Utility/PlaytestLog.csv
+  fileName: Assets/PlaytestLog.csv
   testData: {fileID: 7892402676634016641}
 --- !u!114 &7892402676634016641
 MonoBehaviour:
@@ -92,3 +94,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa03532f4f19a8f38fba212224b5c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wave: 0
+  day: 0
+  numEnemies: 0
+  victory: 
+  turns: 0
+  obstaclesDestroyed: 0
+  obstacleTurns: 
+  avgEnemies: 0
+  stunnedEnemies: 0
+  avgPos: 0

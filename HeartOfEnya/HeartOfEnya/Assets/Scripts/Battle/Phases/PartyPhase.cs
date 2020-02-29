@@ -13,8 +13,6 @@ public class PartyPhase : Phase
     private bool keyboardMode = false;
 
     [SerializeField]
-    private string goToSceneOnEnd;
-    [SerializeField]
     private SelectionListCursor keyboardCursor;
     [SerializeField]
     private MouseCursor mouseCursor;
@@ -34,7 +32,7 @@ public class PartyPhase : Phase
         // If no party left, end the battle (just in case)
         if (Party.Count <= 0)
         {
-            SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
+            EndBattle();
             return null;
         }         
         // Call on phse start function for each party member (may need to wait later for DOT effects, stunning, etc.)
@@ -67,8 +65,8 @@ public class PartyPhase : Phase
         Party.ForEach((member) => member.OnPhaseEnd());
         // If the party is empty, yeet
         if (Party.Count <= 0)
-            SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
-        // TODO: visualize end of battle
+            EndBattle();
+        // TODO: visualize end of phase
         return null;
     }
 

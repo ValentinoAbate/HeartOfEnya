@@ -6,7 +6,7 @@ using System.Linq;
 public class Action : MonoBehaviour
 {
     public const float targetHighlightSeconds = 0.25f;
-    public const float cutInSeconds = 2f;
+    public const float cutInSeconds = 2.25f;
 
     public ActionRange range;
     public TargetPattern targetPattern;
@@ -58,8 +58,10 @@ public class Action : MonoBehaviour
             Destroy(cutIn);
         }
 
+        var tileType = user.Team == FieldEntity.Teams.Enemy ? TileUI.Type.TargetPreviewEnemy
+            : TileUI.Type.TargetPreviewParty;
         // Highlight the targeted squares.
-        targetPattern.Show(BattleGrid.main.attackSquareMat);
+        targetPattern.Show(tileType);
         yield return new WaitForSeconds(targetHighlightSeconds);
 
         var targetPositionBatches = new List<List<Pos>>() { targetPositions };

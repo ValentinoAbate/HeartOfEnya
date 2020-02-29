@@ -23,7 +23,7 @@ public class AttackCursor : GridAndSelectionListCursor
     public Action action;
 
     private readonly HashSet<Pos> inRange = new HashSet<Pos>();
-    private readonly List<GameObject> targetGraphics = new List<GameObject>();
+    private readonly List<TileUI.Entry> tileUIEntries = new List<TileUI.Entry>();
 
     public Controls controlSys;
 
@@ -119,7 +119,7 @@ public class AttackCursor : GridAndSelectionListCursor
         transform.position = BattleGrid.main.GetSpace(newPos);
         // Update and show target pattern
         action.targetPattern.Target(attacker.Pos, newPos);
-        action.targetPattern.Show(BattleGrid.main.attackSquareMat);
+        action.targetPattern.Show(TileUI.Type.TargetPreviewParty);
         // Find highlighted object, and apply applicable extra displays if one exists
         var highlightedObj = BattleGrid.main.GetObject(newPos);
         if (highlightedObj != null)
@@ -171,7 +171,7 @@ public class AttackCursor : GridAndSelectionListCursor
         CalculateTargets();
         foreach (var pos in inRange)
         {
-            targetGraphics.Add(BattleGrid.main.SpawnSquare(pos, BattleGrid.main.targetSquareMat));
+            tileUIEntries.Add(BattleGrid.main.SpawnTileUI(pos, TileUI.Type.TargetRangeParty));
         }
     }
 
@@ -181,9 +181,9 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public void HideTargets()
     {
-        foreach (var obj in targetGraphics)
-            Destroy(obj);
-        targetGraphics.Clear();
+        foreach (var entry in tileUIEntries)
+            BattleGrid.main.RemoveTileUI(entry);
+        tileUIEntries.Clear();
     }
 
     /// <summary>

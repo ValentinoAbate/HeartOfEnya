@@ -168,7 +168,7 @@ public class EncounterEditor : EditorWindow
     {
         loadedEncounter = encounter;
         Undo.RecordObject(Spawner, "Set active encounter");
-        Spawner.encounter = encounter;
+        Spawner.mainEncounter = encounter;
         PrefabUtility.RecordPrefabInstancePropertyModifications(Spawner);
         EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
     }

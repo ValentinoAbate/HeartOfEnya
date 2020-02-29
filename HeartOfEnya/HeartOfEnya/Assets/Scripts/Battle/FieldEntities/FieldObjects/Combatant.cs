@@ -67,7 +67,7 @@ public abstract class Combatant : FieldObject
             hpText.text = hp.ToString();
         }
     }
-    private int hp;
+    private int hp = 0;
     [Header("UI References")]
     public TextMeshProUGUI hpText;
     public Image hpImage;
@@ -80,7 +80,8 @@ public abstract class Combatant : FieldObject
     protected override void Initialize()
     {
         base.Initialize();
-        Hp = maxHp; 
+        if(Hp <= 0)
+            Hp = maxHp; 
     }
 
     /// <summary>

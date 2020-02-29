@@ -16,4 +16,9 @@ public abstract class Phase : MonoBehaviour, IPausable
     {
         PhaseManager.main.NextPhase();
     }
+
+    protected void EndBattle()
+    {
+        PhaseManager.main.EndBattle();
+    }
 }

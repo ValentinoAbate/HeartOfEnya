@@ -7,30 +7,126 @@ public class SpawnPhase : Phase
     public const float delaySeconds = 0.25f;
     public override PauseHandle PauseHandle { get; set; } = new PauseHandle(null);
 
-    public Encounter encounter;
+    public Encounter mainEncounter;
+    [SerializeField]
+    private Encounter tutorialEncounter;
+    [SerializeField]
+    private Encounter luaEncounter;
+    [SerializeField]
+    private Encounter absoluteZeroEncounter;
+    public Encounter CurrEncounter { get; private set;}
     public GameObject spawnTileEnemyPrefab;
     public GameObject spawnTileObstaclePrefab;
     public int spawnDamage = 2;
     public int startAtWave = 1;
 
-    public WaveData CurrWave => waveNum < encounter.Waves.Length ? encounter.Waves[waveNum] : null;
-    public WaveData NextWave => waveNum < encounter.Waves.Length - 1 ? encounter.Waves[waveNum + 1] : null;
+    public WaveData CurrWave => waveNum < CurrEncounter.Waves.Length ? CurrEncounter.Waves[waveNum] : null;
+    public WaveData NextWave => waveNum < CurrEncounter.Waves.Length - 1 ? CurrEncounter.Waves[waveNum + 1] : null;
     private List<EventTileSpawn> spawners = new List<EventTileSpawn>();
     // Start at negative one to account for first turn
     private int turnsSinceLastSpawn = 0;
-    private int waveNum = 0;
+    [HideInInspector] public int waveNum = 0;
+
+    // Party Member prefab references for each level
+    public List<GameObject> bapyLvl;
+    public List<GameObject> soleilLvl;
+    public List<GameObject> rainaLvl;
+    public List<GameObject> luaLvl;
+
+    // Party Member starting positions
+    public Pos bapyPos;
+    public Pos soleilPos;
+    public Pos rainaPos;
+    public Pos luaPos;
+
+    // Playtest data logger reference
+    private PlaytestLogger logger;
+
+    private void Start()
+    {
+        logger = DoNotDestroyOnLoad.Instance.playtestLogger;
+
+        CurrEncounter = mainEncounter;
+        if (DoNotDestroyOnLoad.Instance?.persistentData?.gamePhase == null)
+            return;
+        // Go to next game phase, if applicable.
+        string gamePhase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase.ToUpper();
+        if (gamePhase == PersistentData.gamePhaseTutorial)
+            CurrEncounter = tutorialEncounter;
+        else if (gamePhase == PersistentData.gamePhaseLuaBattle)
+            CurrEncounter = luaEncounter;
+        else if (gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
+            CurrEncounter = absoluteZeroEncounter;
+    }
 
     public override Coroutine OnPhaseStart()
     {
         // If it is the first turn just spawn the enemies
         if (PhaseManager.main.Turn == 1)
         {
-            waveNum = startAtWave - 1;
-            foreach (var spawnData in CurrWave.AllSpawns)
+            // Spawn party members
+            Vector2 bapyVec = BattleGrid.main.GetSpace(bapyPos);
+            GameObject bapy = Instantiate(bapyLvl[DoNotDestroyOnLoad.Instance.persistentData.partyLevel], 
+                                          new Vector3(bapyVec.x, bapyVec.y, 0), Quaternion.identity);
+            bapy.GetComponent<PartyMember>().Pos = bapyPos;
+
+            Vector2 soleilVec = BattleGrid.main.GetSpace(soleilPos);
+            GameObject soleil = Instantiate(soleilLvl[DoNotDestroyOnLoad.Instance.persistentData.partyLevel], 
+                                            new Vector3(soleilVec.x, soleilVec.y, 0), Quaternion.identity);
+            soleil.GetComponent<PartyMember>().Pos = soleilPos;
+            
+            Vector2 rainaVec = BattleGrid.main.GetSpace(rainaPos);
+            GameObject raina = Instantiate(rainaLvl[DoNotDestroyOnLoad.Instance.persistentData.partyLevel], 
+                                           new Vector3(rainaVec.x, rainaVec.y, 0), Quaternion.identity);
+            raina.GetComponent<PartyMember>().Pos = rainaPos;
+            
+            // Spawn Lua if the boss is defeated
+            if(DoNotDestroyOnLoad.Instance.persistentData.luaBossDefeated)
             {
-                var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
-                obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
-                BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
+                Vector2 luaVec = BattleGrid.main.GetSpace(luaPos);
+                GameObject lua = Instantiate(luaLvl[DoNotDestroyOnLoad.Instance.persistentData.partyLevel], 
+                                             new Vector3(luaVec.x, luaVec.y, 0), Quaternion.identity);
+                lua.GetComponent<PartyMember>().Pos = luaPos;
+            }
+
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
+            // This is a fresh encounter, just spawn everything
+            if (CurrEncounter != pData.lastEncounter)
+            {
+                waveNum = startAtWave - 1;
+                foreach (var spawnData in CurrWave.AllSpawns)
+                {
+                    var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
+                    obj.PrefabOrigin = spawnData.spawnObject;
+                    obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
+                    BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
+                }
+            }
+            else // This is a continuing encounter, spawn the backed-up enemies
+            {
+                waveNum = pData.waveNum;
+                // No Backed up enemies to spawn
+                if (pData.listEnemiesLeft.Count <= 0)
+                {                  
+                    foreach (var spawnData in CurrWave.AllSpawns)
+                    {
+                        var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
+                        obj.PrefabOrigin = spawnData.spawnObject;
+                        obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
+                        BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
+                    }
+                }
+                else
+                {
+                    foreach (var spawnData in pData.listEnemiesLeft)
+                    {
+                        var obj = Instantiate(spawnData.prefabAsset).GetComponent<Combatant>();
+                        obj.PrefabOrigin = spawnData.prefabAsset;
+                        obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPos);
+                        BattleGrid.main.SetObject(spawnData.spawnPos, obj);
+                        obj.Hp = spawnData.remainingHP;
+                    }
+                }
             }
             return null;
         }
@@ -51,6 +147,7 @@ public class SpawnPhase : Phase
                 {
                     var fieldObject = Instantiate(spawner.SpawnData.spawnObject, spawner.transform.position, Quaternion.identity).GetComponent<FieldObject>();
                     BattleGrid.main.SetObject(spawner.Pos, fieldObject);
+                    fieldObject.PrefabOrigin = spawner.SpawnData.spawnObject;
                     BattleGrid.main.RemoveEventTile(spawner.Pos, spawner);
                     Destroy(spawner.gameObject);
                 }
@@ -77,6 +174,13 @@ public class SpawnPhase : Phase
         // Spawn the next wave if ready
         if (NextWaveReady())
         {
+            // Log playtest data from previous wave
+            logger.testData.NewDataLog(
+                waveNum, DoNotDestroyOnLoad.Instance.persistentData.dayNum, CurrWave.enemies.Count, "wave won"
+            );
+            logger.LogData(logger.testData);
+
+
             // Declare next spawns
             foreach (var spawnData in NextWave.enemies)
             {
@@ -125,4 +229,17 @@ public class SpawnPhase : Phase
     }
 
     public override void OnPhaseUpdate() => EndPhase();
+
+    public void LogPersistentData()
+    {
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        pData.waveNum = waveNum;
+        pData.lastEncounter = CurrEncounter;
+
+        // Log playtest data from previous wave
+        logger.testData.NewDataLog(
+          waveNum, pData.dayNum, CurrWave.enemies.Count, "party retreated"
+        );
+        logger.LogData(logger.testData);
+    }
 }

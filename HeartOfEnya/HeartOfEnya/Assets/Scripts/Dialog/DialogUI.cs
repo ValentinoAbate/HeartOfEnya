@@ -130,8 +130,32 @@ namespace Dialog
         public override IEnumerator DialogueComplete()
         {
             if (endSceneOnComplete)
+            {
+                // Go to next game phase, if applicable.
+                string gamePhase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase.ToUpper();
+                if (gamePhase == PersistentData.gamePhaseLuaBattle)
+                {
+                    if (DoNotDestroyOnLoad.Instance.persistentData.luaBossDefeated)
+                        GoToNextGamePhase();                       
+                }
+                else if(gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
+                {
+                    if (DoNotDestroyOnLoad.Instance.persistentData.absoluteZeroDefeated)
+                        GoToNextGamePhase();
+                }
+                else
+                {
+                    GoToNextGamePhase();
+                }
                 SceneTransitionManager.main.TransitionScenes(sceneName);
+            }             
             yield break;
+        }
+
+        private void GoToNextGamePhase()
+        {
+            string gamePhase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
+            DoNotDestroyOnLoad.Instance.persistentData.gamePhase = ((char)(gamePhase[0] + 1)).ToString();
         }
 
         /// Called by buttons to make a selection.

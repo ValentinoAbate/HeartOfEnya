@@ -21,15 +21,23 @@ public class ActionMenu : MonoBehaviour, IPausable
     private List<Button> buttons = null;
     private HashSet<SpecialAction> specialActionsEnabled = new HashSet<SpecialAction>();
 
+    protected FMODUnity.StudioEventEmitter sfxCancel;
+
     private void Awake()
     {
         PauseHandle = new PauseHandle(OnPause);
+    }
+
+    private void Start()
+    {
+        sfxCancel = GameObject.Find("UICancel").GetComponent<FMODUnity.StudioEventEmitter>();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(cancelKey) || Input.GetMouseButtonDown(1))
         {
+            sfxCancel.Play();
             if(buttons.Count > 0)
                 buttons[buttons.Count - 1].Select();
             foreach(var button in buttons)

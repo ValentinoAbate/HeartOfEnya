@@ -19,11 +19,18 @@ public class ActionButton : MonoBehaviour
     public TextMeshProUGUI text;
     public AttackDescriptionUI extraInfoWindow;
 
+    private FMODUnity.StudioEventEmitter sfxSelect;
+    private FMODUnity.StudioEventEmitter sfxHighlight;
+
     private void Awake()
     {
+        sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxHighlight = GameObject.Find("UIHighlight").GetComponent<FMODUnity.StudioEventEmitter>();
+        
         extraInfoWindow.ShowAttack(actionPrefab);
         // Set up click listeners
-        button.onClick.RemoveAllListeners();        
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(sfxSelect.Play);        
         button.onClick.AddListener(menu.cursor.CalculateTargets);
         button.onClick.AddListener(HideExtraInfoWindow);
         button.onClick.AddListener(menu.Close);
@@ -40,6 +47,11 @@ public class ActionButton : MonoBehaviour
         text.text = actionPrefab.DisplayName;
     }
 
+    private void Start()
+    {
+        
+    }
+
     private void AddEntry(EventTriggerType type, UnityAction<BaseEventData> action)
     {
         var entry = new EventTrigger.Entry();
@@ -50,6 +62,7 @@ public class ActionButton : MonoBehaviour
 
     public void OnSelect(BaseEventData eventData)
     {
+        sfxHighlight.Play();
         menu.cursor.SetAction(actionPrefab);
         menu.cursor.ShowTargets();
         ShowExtraInfoWindow();

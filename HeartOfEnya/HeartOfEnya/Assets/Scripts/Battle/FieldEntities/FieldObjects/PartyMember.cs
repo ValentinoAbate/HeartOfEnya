@@ -58,6 +58,7 @@ public class PartyMember : Combatant, IPausable
     public override Color DisplaySpriteColor => Color.white;
 
     private FMODUnity.StudioEventEmitter battleTheme;
+    private FMODUnity.StudioEventEmitter sfxHighlight;
 
     public bool DeathsDoor { get; private set; }
     
@@ -119,10 +120,15 @@ public class PartyMember : Combatant, IPausable
         PauseHandle = new PauseHandle(null, moveCursor, mouseMoveCursor, attackCursor, ActionMenu);
 
         // Find reference to FMOD event emitter
-        battleTheme = GameObject.Find("FMODEventEmitter").GetComponent<FMODUnity.StudioEventEmitter>();
+        battleTheme = GameObject.Find("BattleTheme").GetComponent<FMODUnity.StudioEventEmitter>();
+        // sfxHighlight = GameObject.Find("UIHighlight").GetComponent<FMODUnity.StudioEventEmitter>();
         battleTheme.SetParameter("Loading", 0);
     }
 
+    public string GetName()
+    {
+        return chara.Name;
+    }
 
     public override void Damage(int damage)
     {
@@ -250,6 +256,7 @@ public class PartyMember : Combatant, IPausable
             return;
         // moveCursor.CalculateTraversable();
         // moveCursor.DisplayTraversable(true);
+        // sfxHighlight.Play();
         mouseMoveCursor.CalculateTraversable();
         mouseMoveCursor.DisplayTraversable(true);
         BattleUI.main.ShowInfoPanelParty(this);

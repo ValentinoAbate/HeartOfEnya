@@ -114,6 +114,8 @@ public class AttackCursor : GridAndSelectionListCursor
     {
         if (!BattleGrid.main.IsLegal(newPos) || !inRange.Contains(newPos))
             return;
+        
+        sfxHighlight.Play();
         // Update grid and world position
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(newPos);
@@ -192,6 +194,7 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public override void Select()
     {
+        sfxSelect.Play();
         HideTargets();
         action.targetPattern.Hide();
         StartCoroutine(AttackCr());
@@ -203,6 +206,7 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public void Cancel()
     {
+        sfxCancel.Play();
         Highlight(attacker.Pos);
         HideTargets();
         action.targetPattern.Hide();

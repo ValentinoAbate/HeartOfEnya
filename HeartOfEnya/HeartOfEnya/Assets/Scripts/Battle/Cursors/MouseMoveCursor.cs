@@ -46,6 +46,8 @@ public class MouseMoveCursor : MoveCursor
             return;      
         if (!traversable.Contains(newPos))
             return;
+            
+        sfxHighlight.Play();
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(Pos);
     }
@@ -67,6 +69,7 @@ public class MouseMoveCursor : MoveCursor
 
     private void HandleDeselect(InputAction.CallbackContext context)
     {
+    	sfxCancel.Play();
     	ResetToLastPosition();
         SetActive(false);
         PhaseManager.main.PartyPhase.CancelAction(partyMember);

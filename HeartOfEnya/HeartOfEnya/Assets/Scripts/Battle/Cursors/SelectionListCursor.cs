@@ -57,17 +57,17 @@ public class SelectionListCursor : Cursor
         BattleGrid.main.GetObject(Pos)?.Highlight();
     }
 
-    public override void Select()
-    {
-        var highlighted = BattleGrid.main.GetObject(Pos);
-        if (highlighted != null)
-        {
-            if(highlighted.Select())
-            {
-                SetActive(false);
-            }
-        }
-    }
+    // public override void Select()
+    // {
+    //     var highlighted = BattleGrid.main.GetObject(Pos);
+    //     if (highlighted != null)
+    //     {
+    //         if(highlighted.Select())
+    //         {
+    //             SetActive(false);
+    //         }
+    //     }
+    // }
 
     public void HighlightNext()
     {

@@ -36,12 +36,6 @@ public class MouseCursor : Cursor
         controlSys.BattleUI.Select.Disable();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //Highlight(Pos);
-    }
-
     public override void Highlight(Pos newPos)
     {
         if (newPos == Pos)
@@ -49,6 +43,7 @@ public class MouseCursor : Cursor
         if (!BattleGrid.main.IsLegal(newPos))
             return;
 
+        sfxHighlight.Play();
         BattleGrid.main.GetObject(Pos)?.UnHighlight();
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(Pos);

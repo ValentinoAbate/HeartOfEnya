@@ -18,6 +18,7 @@ public class MoveCursor : GridCursor
 
     private void Start()
     {
+        base.Start();
         partyMember = GetComponent<PartyMember>();
         Pos = partyMember.Pos;
         lastPosition = Pos;
@@ -102,6 +103,26 @@ public class MoveCursor : GridCursor
     // Finish the move and open the action menu
     public override void Select()
     {
+        // play Place Character sfx based on which character
+        name = partyMember.GetName();
+        switch(name)
+        {
+            case "Bapy":
+                placeBapy.Play();
+                break;
+            case "Soleil":
+                placeSoleil.Play();
+                break;
+            case "Raina":
+                placeRaina.Play();
+                break;
+            case "Lua":
+                placeLua.Play();
+                break;
+            default:
+                break;
+        }
+
         lastPosition = partyMember.Pos;
         BattleGrid.main.Move(partyMember, Pos);
         SetActive(false);

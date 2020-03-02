@@ -66,35 +66,66 @@ public class SpawnPhase : Phase
         // If it is the first turn just spawn the enemies
         if (PhaseManager.main.Turn == 1)
         {
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
             // Spawn party members
             Vector2 bapyVec = BattleGrid.main.GetSpace(bapyPos);
-            GameObject bapy = Instantiate(bapyLvl[DoNotDestroyOnLoad.Instance.persistentData.partyLevel], 
-                                          new Vector3(bapyVec.x, bapyVec.y, 0), Quaternion.identity);
-            bapy.GetComponent<PartyMember>().Pos = bapyPos;
+            var bapy = Instantiate(bapyLvl[pData.partyLevel], bapyVec, 
+                                        Quaternion.identity).GetComponent<PartyMember>();
+            bapy.Pos = bapyPos;
 
             Vector2 soleilVec = BattleGrid.main.GetSpace(soleilPos);
-            GameObject soleil = Instantiate(soleilLvl[DoNotDestroyOnLoad.Instance.persistentData.partyLevel], 
-                                            new Vector3(soleilVec.x, soleilVec.y, 0), Quaternion.identity);
-            soleil.GetComponent<PartyMember>().Pos = soleilPos;
+            var soleil = Instantiate(soleilLvl[pData.partyLevel], soleilVec, 
+                                        Quaternion.identity).GetComponent<PartyMember>();
+            soleil.Pos = soleilPos;
             
             Vector2 rainaVec = BattleGrid.main.GetSpace(rainaPos);
-            GameObject raina = Instantiate(rainaLvl[DoNotDestroyOnLoad.Instance.persistentData.partyLevel], 
-                                           new Vector3(rainaVec.x, rainaVec.y, 0), Quaternion.identity);
-            raina.GetComponent<PartyMember>().Pos = rainaPos;
-            
-            // Spawn Lua if the boss is defeated
-            if(DoNotDestroyOnLoad.Instance.persistentData.luaBossDefeated)
+            var raina = Instantiate(rainaLvl[pData.partyLevel], rainaVec, 
+                                        Quaternion.identity).GetComponent<PartyMember>();
+            raina.Pos = rainaPos;
+
+            bool enableLua = pData.luaBossDefeated;
+            PartyMember lua = null;
+
+            // Spawn Lua if enabled
+            if (enableLua)
             {
                 Vector2 luaVec = BattleGrid.main.GetSpace(luaPos);
-                GameObject lua = Instantiate(luaLvl[DoNotDestroyOnLoad.Instance.persistentData.partyLevel], 
-                                             new Vector3(luaVec.x, luaVec.y, 0), Quaternion.identity);
-                lua.GetComponent<PartyMember>().Pos = luaPos;
+                lua = Instantiate(luaLvl[pData.partyLevel], luaVec, 
+                                    Quaternion.identity).GetComponent<PartyMember>();
+                lua.Pos = luaPos;
             }
+
+            foreach (var buff in pData.buffStructures)
+            {
+                // Default to bapy
+                PartyMember chara;
+                if (buff.targetCharacter == BuffStruct.Target.lua)
+                {
+                    if (!enableLua)
+                        continue;
+                    chara = lua;
+                }
+                else if (buff.targetCharacter == BuffStruct.Target.soleil)
+                    chara = soleil;
+                else if (buff.targetCharacter == BuffStruct.Target.raina)
+                    chara = raina;
+                else
+                    chara = bapy;
+                if (buff.effectType == BuffStruct.Effect.heal)
+                {
+                    chara.maxHp += 2;
+                }
+                else if(buff.effectType == BuffStruct.Effect.restore)
+                {
+                    chara.maxFp += 2;
+                }
+                    
+            }
+
             // Don't spawn enemies
             if (!spawnEnemies)
                 return null;
 
-            var pData = DoNotDestroyOnLoad.Instance.persistentData;
             // This is a fresh encounter, just spawn everything
             if (CurrEncounter != pData.lastEncounter)
             {

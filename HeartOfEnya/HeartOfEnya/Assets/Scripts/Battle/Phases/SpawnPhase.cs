@@ -19,6 +19,8 @@ public class SpawnPhase : Phase
     public GameObject spawnTileObstaclePrefab;
     public int spawnDamage = 2;
     public int startAtWave = 1;
+    // Should we spawn enemies (used for the level editor)
+    public bool spawnEnemies = true;
 
     public WaveData CurrWave => waveNum < CurrEncounter.Waves.Length ? CurrEncounter.Waves[waveNum] : null;
     public WaveData NextWave => waveNum < CurrEncounter.Waves.Length - 1 ? CurrEncounter.Waves[waveNum + 1] : null;
@@ -88,6 +90,9 @@ public class SpawnPhase : Phase
                                              new Vector3(luaVec.x, luaVec.y, 0), Quaternion.identity);
                 lua.GetComponent<PartyMember>().Pos = luaPos;
             }
+            // Don't spawn enemies
+            if (!spawnEnemies)
+                return null;
 
             var pData = DoNotDestroyOnLoad.Instance.persistentData;
             // This is a fresh encounter, just spawn everything
@@ -130,6 +135,8 @@ public class SpawnPhase : Phase
             }
             return null;
         }
+        if (!spawnEnemies)
+            return null;
         return StartCoroutine(OnPhaseStartCr());
     }
     

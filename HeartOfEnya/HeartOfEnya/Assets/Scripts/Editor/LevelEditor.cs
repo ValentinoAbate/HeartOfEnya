@@ -74,11 +74,11 @@ public class LevelEditor : EditorWindow
                 {
                     obstacle.gameObject.SetActive(false);
                 }
-                Spawner.enabled = true;
+                Spawner.spawnEnemies = true;
             }
             else
             {
-                Spawner.enabled = false;
+                Spawner.spawnEnemies = false;
             }
         }
         else if(state == PlayModeStateChange.EnteredEditMode)
@@ -96,7 +96,7 @@ public class LevelEditor : EditorWindow
             }
             else
             {
-                Spawner.enabled = true;
+                Spawner.spawnEnemies = true;
             }
             Initialize();
         }
@@ -121,6 +121,7 @@ public class LevelEditor : EditorWindow
         EditorSceneManager.activeSceneChangedInEditMode -= SetupListener;
         EditorSceneManager.activeSceneChangedInEditMode += SetupListener;
         EditorApplication.playModeStateChanged += EnactPlayModeSettings;
+        
         initialized = true;
     }
 
@@ -151,7 +152,15 @@ public class LevelEditor : EditorWindow
             RefreshReferences();
         GUILayout.BeginVertical("Box");
         EditorGUILayout.LabelField(new GUIContent("Player Properties"), EditorUtils.BoldCentered);
+        var oldPlayMode = playMode;
         playMode = EditorUtils.EnumPopup(new GUIContent("Play Mode"), playMode);
+        if(playMode != oldPlayMode)
+        {
+            Undo.RecordObject(Spawner, "Set playMode");
+            Spawner.spawnEnemies = playMode == PlayMode.PlayEncounter;
+            PrefabUtility.RecordPrefabInstancePropertyModifications(Spawner);
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        }
         if(playMode == PlayMode.PlayEncounter)
         {           
             if(encounterEditor.loadedEncounter == null)

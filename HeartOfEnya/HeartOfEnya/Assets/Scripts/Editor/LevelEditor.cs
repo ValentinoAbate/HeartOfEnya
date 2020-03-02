@@ -14,6 +14,8 @@ public class LevelEditor : EditorWindow
     }
     public PlayMode playMode;
     public int startEncounterAtWave = 0;
+    public int partyLevel = 1;
+    public bool enableLua = false;
     public WaveEditor waveEditor;
     public EncounterEditor encounterEditor;
     public GameObject obstacleContainer;
@@ -50,6 +52,19 @@ public class LevelEditor : EditorWindow
             return spawner;
         }
     }
+    public PersistentData persistentData;
+    public PersistentData PersistantData
+    {
+        get
+        {
+            if (persistentData == null)
+            {
+                persistentData = Object.FindObjectOfType<PersistentData>();
+            }
+            return persistentData;
+        }
+    }
+
 
     [MenuItem("Window/Level Editor/Level Editor")]
     public static void ShowWindow()
@@ -169,11 +184,11 @@ public class LevelEditor : EditorWindow
             }
             else
             {
-                int oldVal = startEncounterAtWave;
+                int oldWaveStart = startEncounterAtWave;
                 startEncounterAtWave = EditorGUILayout.IntSlider(new GUIContent("Start At Wave"), startEncounterAtWave, 1, encounterEditor.loadedEncounter.waveList.Count);
                 if (startEncounterAtWave > encounterEditor.loadedEncounter.waveList.Count)
                     startEncounterAtWave = 1;
-                if(startEncounterAtWave != oldVal)
+                if(startEncounterAtWave != oldWaveStart)
                 {
                     Undo.RecordObject(Spawner, "Set active encounter");
                     Spawner.startAtWave = startEncounterAtWave;
@@ -181,6 +196,27 @@ public class LevelEditor : EditorWindow
                     EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
                 }                   
             }
+        }
+        GUILayout.EndVertical();
+        GUILayout.BeginVertical("Box");
+        EditorGUILayout.LabelField(new GUIContent("Party Properties"), EditorUtils.BoldCentered);
+        int oldPartyLevel = partyLevel;
+        partyLevel = EditorGUILayout.IntSlider(new GUIContent("Party Level"), partyLevel, 1, 4);
+        if (partyLevel != oldPartyLevel)
+        {
+            Undo.RecordObject(PersistantData, "Set party level");
+            PersistantData.partyLevel = partyLevel;
+            PrefabUtility.RecordPrefabInstancePropertyModifications(PersistantData);
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        }
+        bool oldLuaEnabled = enableLua;
+        enableLua = EditorGUILayout.Toggle(new GUIContent("Enable Lua"), enableLua);
+        if (enableLua != oldLuaEnabled)
+        {
+            Undo.RecordObject(PersistantData, "Set party level");
+            PersistantData.luaBossDefeated = enableLua;
+            PrefabUtility.RecordPrefabInstancePropertyModifications(PersistantData);
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
         GUILayout.EndVertical();
     }

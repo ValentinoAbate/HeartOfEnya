@@ -95,6 +95,7 @@ public class SpawnPhase : Phase
                 lua.Pos = luaPos;
             }
 
+            //Apply Soup Buffs
             foreach (var buff in pData.buffStructures)
             {
                 // Default to bapy
@@ -117,7 +118,7 @@ public class SpawnPhase : Phase
                 }
                 else if(buff.effectType == BuffStruct.Effect.restore)
                 {
-                    chara.maxFp += 2;
+                    chara.maxFp += 1;
                 }
                     
             }

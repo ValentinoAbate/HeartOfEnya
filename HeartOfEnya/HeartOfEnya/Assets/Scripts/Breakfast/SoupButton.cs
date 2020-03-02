@@ -80,7 +80,18 @@ public class SoupButton : MonoBehaviour
     	if (enabled)
     	{
     		//if the recipe is valid, perform any final actions and load the next level
-    		/***PERSISTANT DATA STORAGE & OTHER END-OF-SCENE JUNK GOES HERE***/
+    		
+            //convert the ingredients into buff structures & write them to persistent data
+            List<BuffStruct> buffs = new List<BuffStruct>(); //stores the buff structures used in persistent data
+            for(int i = 0; i < ingredientList.Count; i++)
+            {
+                int ingID = ingredientList[i]; //get the target ingredient's index in the Soup Manager's master ingredient list
+                Ingredient tgtIng = SoupManager.main.ingredients[ingID]; //grab a reference to the target ingredient
+                buffs.Add(new BuffStruct(tgtIng)); //convert the ingredient to a BuffStruct & add it to the buff list
+            }
+            DoNotDestroyOnLoad.Instance.persistentData.buffStructures = buffs; //write to persistent data
+
+            //load the next level
     		SceneTransitionManager.main.TransitionScenes(nextSceneName);
     	}
     	else

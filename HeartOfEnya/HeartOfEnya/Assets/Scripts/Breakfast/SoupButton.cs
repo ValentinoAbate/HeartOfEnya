@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 /// <summary>
 /// The button used to confirm the selected soup recipe & exit the breakfast scene.
@@ -15,11 +17,22 @@ public class SoupButton : MonoBehaviour
     private bool enabled; //whether we're active (i.e. have a valid recipe)
     private List<int> ingredientList = new List<int>(); //contains ID numbers of all currently selected ingredients
 
+    public EventTrigger trigger;
+    private FMODUnity.StudioEventEmitter sfxSelect;
+    private FMODUnity.StudioEventEmitter sfxHighlight;
+    private FMODUnity.StudioEventEmitter sfxCancel;
+
     private void Awake()
     {
     	//initialize variables
         enabled = false;
         UpdateRecipe(new List<int>()); //pass UpdateRecipe an empty list to set all icons to the "empty" image
+
+        sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxHighlight = GameObject.Find("UIHighlight").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxCancel = GameObject.Find("UICancel").GetComponent<FMODUnity.StudioEventEmitter>();
+
+        AddEntry(EventTriggerType.PointerEnter, OnSelect);
     }
 
     /// <summary>
@@ -81,12 +94,28 @@ public class SoupButton : MonoBehaviour
     	{
     		//if the recipe is valid, perform any final actions and load the next level
     		/***PERSISTANT DATA STORAGE & OTHER END-OF-SCENE JUNK GOES HERE***/
-    		SceneTransitionManager.main.TransitionScenes(nextSceneName);
+    		sfxSelect.Play();
+            SceneTransitionManager.main.TransitionScenes(nextSceneName);
     	}
     	else
     	{
     		//if the button should do anything special when clicked with an incomplete recipe, put it here
-    		Debug.Log("Invalid Recipe - soup failed.");
+    		sfxCancel.Play();
+            Debug.Log("Invalid Recipe - soup failed.");
     	}
+    }
+
+    private void AddEntry(EventTriggerType type, UnityAction<BaseEventData> action)
+    {
+        var entry = new EventTrigger.Entry();
+        entry.eventID = type;
+        entry.callback.AddListener(action);
+        trigger.triggers.Add(entry);
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        sfxHighlight.Play();
+        eventData.Use();
     }
 }

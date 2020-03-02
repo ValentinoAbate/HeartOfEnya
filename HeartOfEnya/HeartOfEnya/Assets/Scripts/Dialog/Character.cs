@@ -13,6 +13,9 @@ public class Character : MonoBehaviour
     [SerializeField] private Transform dialogSpawnPoint;
     [SerializeField] private CharacterData data;
     [SerializeField] private DialogueRunner dialogManager;
+
+    private FMODUnity.StudioEventEmitter sfxSelect;
+
     public string Expression
     {
         get => expression;
@@ -34,6 +37,7 @@ public class Character : MonoBehaviour
     private void Awake()
     {
         Expression = defaultExpression;
+        sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
     }
 
     //runs whenever the character gets clicked on
@@ -49,7 +53,9 @@ public class Character : MonoBehaviour
     	}
     	else
     	{
-    		//retrieve date from persistent data
+    		sfxSelect.Play();
+            
+            //retrieve date from persistent data
     		string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
     		int day = DoNotDestroyOnLoad.Instance.persistentData.dayNum;
 

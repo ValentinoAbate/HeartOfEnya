@@ -10,7 +10,20 @@ using UnityEngine;
 /// </summary>
 public class PlaytestLogger : MonoBehaviour
 {
-    public string fileName;
+    public string FileName
+    {
+        get
+        {
+            if (Application.isEditor)
+                return fileNameEditor;
+            else
+                return Application.persistentDataPath + fileNamePlayer;
+        }
+    }
+    [SerializeField]
+    private string fileNameEditor = "Assets/PlaytestLog.csv";
+    [SerializeField]
+    private string fileNamePlayer = "PlaytestLog.csv";
     public PlaytestData testData;
 
     /// <summary>
@@ -19,8 +32,8 @@ public class PlaytestLogger : MonoBehaviour
     ///       delete all previous contents from the file
     /// </summary>
     public void InitializeLog(PlaytestData entry)
-    {
-        using(StreamWriter writer = File.CreateText(fileName))
+    {        
+        using(StreamWriter writer = File.CreateText(FileName))
         {
             writer.WriteLine(testData.FieldNames());
             Debug.Log("Playtest log file initialized");
@@ -32,7 +45,9 @@ public class PlaytestLogger : MonoBehaviour
     /// </summary>
     public void LogData(PlaytestData entry)
     {
-        using(StreamWriter writer = File.AppendText(fileName))
+        if (!File.Exists(FileName))
+            InitializeLog(entry);
+        using(StreamWriter writer = File.AppendText(FileName))
         {
             writer.WriteLine(testData.ToString());
             Debug.Log("New playtest data entry logged: " + testData.ToString());

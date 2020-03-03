@@ -180,8 +180,7 @@ public class AttackCursor : GridAndSelectionListCursor
         sfxSelect.Play();
         HideTargets();
         action.targetPattern.Hide();
-        StartCoroutine(AttackCr());
-        
+        StartCoroutine(AttackCr());     
     }
 
     /// <summary>

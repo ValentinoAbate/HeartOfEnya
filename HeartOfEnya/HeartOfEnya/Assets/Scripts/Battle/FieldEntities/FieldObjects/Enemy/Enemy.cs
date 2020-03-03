@@ -20,13 +20,6 @@ public abstract class Enemy : Combatant, IPausable
 
     private readonly List<TileUI.Entry> tileUIEntries = new List<TileUI.Entry>();
 
-    string[] drops = { "Chicken", "Cabbage", "Potatoes", "Tomatoes", "Butter", "Noodles",
-                        "Ice Cream", "Carrots", "Walnuts", "Onions" };
-
-    int pVal;
-
-
-
     protected override void Initialize()
     {
         base.Initialize();
@@ -126,29 +119,12 @@ public abstract class Enemy : Combatant, IPausable
     public override void Kill()
     {
         Debug.Log("Enemy arrived");
-        Debug.Log(name + " has died...");
+        Debug.Log(DisplayName + " has died...");
 
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        if (pData.gatheredIngredients.Count <= 5)
-        {
-            pData.gatheredIngredients.Add(drops[randomInt(0, 9)]);
-        }
+        pData.numEnemiesDefeatedThisEncounter++;
         pData.numEnemiesLeft--;
         BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft);
         Destroy(gameObject);
     }
-
-    public int randomInt(int min, int max)
-    { 
-        int val = Random.Range(min, max);
-        while(pVal == val)
-        {
-            val = Random.Range(min, max);
-        }
-        pVal = val;
-        return val;
-    }
-   
-
-
 }

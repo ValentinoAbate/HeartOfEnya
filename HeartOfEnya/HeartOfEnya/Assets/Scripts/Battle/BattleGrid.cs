@@ -187,7 +187,8 @@ public class BattleGrid : MonoBehaviour
     public Pos GetPos (Vector2 worldSpace)
     {
         float leniency = (cellSize.x / 2);
-        int row = Mathf.FloorToInt(transform.position.y - worldSpace.y / (cellSize.y));
+        float yleniency = cellSize.y / 2;
+        int row = Mathf.FloorToInt(transform.position.y + yleniency - worldSpace.y / (cellSize.y));
         int col = Mathf.FloorToInt((worldSpace.x + leniency - transform.position.x - (skewXOffset * row)) / (cellSize.x));
         return new Pos(row, col);
     }

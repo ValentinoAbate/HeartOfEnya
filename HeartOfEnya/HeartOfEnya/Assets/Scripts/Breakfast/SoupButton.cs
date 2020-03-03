@@ -14,7 +14,7 @@ public class SoupButton : MonoBehaviour
     public Color disabledColor; //color when not enough ingredients for soup
     public Color enabledColor; //color when have enough ingredients for soup
 
-    private bool enabled; //whether we're active (i.e. have a valid recipe)
+    private bool clickEnabled = false; //whether we're active (i.e. have a valid recipe)
     private List<int> ingredientList = new List<int>(); //contains ID numbers of all currently selected ingredients
 
     public EventTrigger trigger;
@@ -22,10 +22,10 @@ public class SoupButton : MonoBehaviour
     private FMODUnity.StudioEventEmitter sfxHighlight;
     private FMODUnity.StudioEventEmitter sfxCancel;
 
-    private void Awake()
+    private void Start()
     {
     	//initialize variables
-        enabled = false;
+        clickEnabled = false;
         UpdateRecipe(new List<int>()); //pass UpdateRecipe an empty list to set all icons to the "empty" image
 
         sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
@@ -73,13 +73,13 @@ public class SoupButton : MonoBehaviour
     	if (ingredientList.Count >= SoupManager.main.ingredientsPerSoup)
     	{
     		//we have enough ingredients - enable the button
-    		enabled = true;
+    		clickEnabled = true;
     		GetComponent<Image>().color = enabledColor;
     	}
     	else
     	{
     		//we don't have enough ingredients - disable the button
-    		enabled = false;
+    		clickEnabled = false;
     		GetComponent<Image>().color = disabledColor;
     	}
     }
@@ -90,11 +90,10 @@ public class SoupButton : MonoBehaviour
     /// </summary>
     public void MakeSoup(string nextSceneName)
     {
-        if (enabled)
+        if (clickEnabled)
         {
             //if the recipe is valid, perform any final actions and load the next level
             /***PERSISTANT DATA STORAGE & OTHER END-OF-SCENE JUNK GOES HERE***/
-            sfxSelect.Play();
 
             //convert the ingredients into buff structures & write them to persistent data
             List<BuffStruct> buffs = new List<BuffStruct>(); //stores the buff structures used in persistent data
@@ -112,6 +111,9 @@ public class SoupButton : MonoBehaviour
                 }
             }
             DoNotDestroyOnLoad.Instance.persistentData.buffStructures = buffs; //write to persistent data
+
+            if(sfxSelect != null)
+                sfxSelect.Play();
 
             //load the next level
             SceneTransitionManager.main.TransitionScenes(nextSceneName);

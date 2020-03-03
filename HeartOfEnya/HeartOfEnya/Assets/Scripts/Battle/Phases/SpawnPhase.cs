@@ -150,7 +150,6 @@ public class SpawnPhase : Phase
                     totalEnemies += wave.enemies.Count;
                 }
                 pData.numEnemiesLeft = totalEnemies;
-                BattleUI.main.UpdateEnemiesRemaining(totalEnemies);
             }
             else // This is a continuing encounter, spawn the backed-up enemies
             {
@@ -178,6 +177,7 @@ public class SpawnPhase : Phase
                     }
                 }
             }
+            BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft);
             return null;
         }
         if (!spawnEnemies)

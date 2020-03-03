@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// The PhaseManager is the top-level class responsible for managing battle flow. It is essentially a basic state machine.
@@ -111,6 +112,9 @@ public class PhaseManager : MonoBehaviour, IPausable
         yield break;
     }
 
+    string[] drops = { "Chicken", "Cabbage", "Potatoes", "Tomatoes", "Butter", "Noodles",
+                        "Ice Cream", "Carrots", "Walnuts", "Onions" };
+
     public void EndBattle()
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
@@ -126,7 +130,12 @@ public class PhaseManager : MonoBehaviour, IPausable
             });
         }
         SpawnPhase.LogPersistentData();
-        if(pData.gamePhase == specialPhase)
+        for(int i = 0; i < pData.numEnemiesDefeatedThisEncounter && i <= 5; ++i)
+        {
+            var uniqueDrops = drops.Where((d) => !pData.gatheredIngredients.Contains(d)).ToArray();
+            pData.gatheredIngredients.Add(uniqueDrops[Random.Range(0, uniqueDrops.Length)]);
+        }
+        if (pData.gamePhase == specialPhase)
             SceneTransitionManager.main?.TransitionScenes(goToSceneOnEndSpecial);
         else
             SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);

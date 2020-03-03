@@ -28,11 +28,29 @@ public class TileUI : MonoBehaviour
     private Dictionary<Pos, QuadMesh> tiles = new Dictionary<Pos, QuadMesh>();
     private Dictionary<Pos, System.Tuple<Type,Type>> tilesTypes = new Dictionary<Pos, System.Tuple<Type, Type>>();
 
-    public bool HasActiveTileUI(Pos p) => tiles.ContainsKey(p);
+    public bool HasActiveTileUI(Pos p)
+    {
+        if(tiles.ContainsKey(p))
+        {
+            var tile = tiles[p];
+            if(tile == null)
+            {
+                ClearNullTile(p);
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
 
     public Entry SetPrimaryType(Pos p, Type t)
     {
         var qMesh = tiles[p];
+        if (qMesh == null)
+        {
+            ClearNullTile(p);
+            return new Entry();
+        }
         var pBlock = qMesh.PropertyBlock;
         var color2 = pBlock.GetColor(colorProp2);
         var color1 = tileColors[t];
@@ -48,6 +66,11 @@ public class TileUI : MonoBehaviour
     public Entry SetSecondaryType(Pos p, Type t)
     {
         var qMesh = tiles[p];
+        if(qMesh == null)
+        {
+            ClearNullTile(p);
+            return new Entry();
+        }
         var pBlock = qMesh.PropertyBlock;
         var color1 = pBlock.GetColor(colorProp1);
         var color2 = tileColors[t];
@@ -122,6 +145,12 @@ public class TileUI : MonoBehaviour
             SetSecondaryType(key, tilesTypes[key].Item1);
         }
         // Else neither of the colors is actually that type. return.
+    }
+
+    private void ClearNullTile(Pos p)
+    {
+        tiles.Remove(p);
+        tilesTypes.Remove(p);
     }
 
     public struct Entry

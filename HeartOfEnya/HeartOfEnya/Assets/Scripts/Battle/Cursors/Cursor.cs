@@ -55,8 +55,10 @@ public abstract class Cursor : MonoBehaviour, IPausable
         if (highlighted != null)
         {
             if (highlighted.Select())
+            {
                 sfxSelect.Play();
                 gameObject.SetActive(false);
+            }
         }
     }
 

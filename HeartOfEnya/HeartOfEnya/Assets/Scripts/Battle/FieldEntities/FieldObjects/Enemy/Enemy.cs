@@ -130,7 +130,7 @@ public abstract class Enemy : Combatant, IPausable
         Destroy(gameObject);
        
         int randomIndex = Random.Range(0, drops.Length);
-        if (DoNotDestroyOnLoad.Instance.persistentData.gatheredIngredients.Count <= 6)
+        if (DoNotDestroyOnLoad.Instance.persistentData.gatheredIngredients.Count <= 5)
         {
             DoNotDestroyOnLoad.Instance.persistentData.gatheredIngredients.Add(drops[randomInt(0, 9)]);
         }

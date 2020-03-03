@@ -120,7 +120,7 @@ public abstract class Enemy : Combatant, IPausable
     {
         Debug.Log("Enemy arrived");
         Debug.Log(DisplayName + " has died...");
-
+        CancelChargingAction();
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         pData.numEnemiesDefeatedThisEncounter++;
         pData.numEnemiesLeft--;

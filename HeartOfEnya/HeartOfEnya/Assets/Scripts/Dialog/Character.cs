@@ -32,7 +32,7 @@ public class Character : MonoBehaviour
     }
     private string expression;
     public Sprite Portrait { get; private set; }
-    public AudioClip TextBlip { get => data.textScrollSfx; }
+    public string VoiceEvent { get => data.voiceEvent; }
     
     private void Awake()
     {
@@ -58,25 +58,26 @@ public class Character : MonoBehaviour
             //retrieve date from persistent data
     		string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
     		int day = DoNotDestroyOnLoad.Instance.persistentData.dayNum;
+            var phaseData = CharacterManager.main.GetPhaseData(phase);
 
-    		//See if we have a script for today, and if so run it
-    		string scriptName = CharacterManager.main.GetScript(Name, phase, day);
-    		if (scriptName == null)
-    		{
-    			//If characters should do anything if they don't have a script, put it here
-    			//(e.g. run a default script, play a "Willow noticed me" animation, etc.)
-    			Debug.Log(Name + " has no script for phase " + phase + ", day " + day);
-    		}
-    		else
-    		{
-    			//character has an appropriate script - run it
-    			Debug.Log(Name + " launches script " + scriptName);
-    			//dialogManager.StartDialogue(scriptname); //disabled for now because we only have the one script
-    		}
-
-    		/***TEMP CODE***/
-    		//launches the default script. SHOULD BE DELETED ONCE THE ABOVE CODE IS FINALIZED.
-    		dialogManager.StartDialogue(); //only exists to preserve gameplay progression
+            if(phaseData.monologCharacter.ToLower() == Name.ToLower())
+            {
+                dialogManager.StartCampMonolog(phaseData);
+            }
+            else if(phaseData.extraScenes.ContainsKey(Name))
+            {
+                string scriptName = phaseData.extraScenes[Name];
+                //character has an appropriate script - run it
+                Debug.Log(Name + " launches script " + scriptName);
+                dialogManager.StartDialogue(scriptName);
+            }
+            else if(phaseData.extraScenes.ContainsKey(Name + day))
+            {
+                string scriptName = phaseData.extraScenes[Name + day];
+                //character has an appropriate script - run it
+                Debug.Log(Name + " launches script " + scriptName);
+                dialogManager.StartDialogue(scriptName);
+            }
     	}
     }
 }

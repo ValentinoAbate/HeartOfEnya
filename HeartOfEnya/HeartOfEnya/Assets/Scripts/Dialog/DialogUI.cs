@@ -10,12 +10,20 @@ namespace Dialog
 {
     public class DialogUI : DialogueUIBehaviour, IPausable
     {
+        public enum EndAction
+        {
+            DoNothing,
+            EndScene,
+            GoToCampfireScene,
+        }
+
         private static readonly Regex lineRegex = new Regex(@"\s*(\w+)\s*(?:\((\w+)\))?\s*:\s*(.*)");
 
         public PauseHandle PauseHandle { get; set; }
 
 
         [Header("General Config")]
+        public DialogueRunner runner;
         public float scrollDelay;
         public Canvas dialogCanvas;
         public GameObject dialogBoxPrefab;
@@ -23,9 +31,11 @@ namespace Dialog
         public List<Button> optionButtons;
         /// The characters currently in the scene
         public List<Character> characters;
+        [HideInInspector]
+        public CharacterManager.PhaseData phaseData;
 
         [Header("Scene Transition Fields")]
-        public bool endSceneOnComplete;
+        public EndAction endAction = EndAction.DoNothing;
         public string sceneName = string.Empty;
 
         // The last character that spoke
@@ -83,15 +93,16 @@ namespace Dialog
             // Spawn a new dialogBox if necessary
             if(character != lastSpeaker || dialogBox == null)
             {
+                if(dialogBox != null)
+                    Destroy(dialogBox.gameObject);
                 dialogBox = Instantiate(dialogBoxPrefab, Camera.main.WorldToScreenPoint(character.DialogSpawnPoint), 
                                         Quaternion.identity, dialogCanvas.transform).GetComponent<DialogBox>();
                 lastSpeaker = character;
+                dialogBox.VoiceEvent = character.VoiceEvent;
             }
             // Set the dialogBox's portrait
             dialogBox.portrait.sprite = character.Portrait;
-            yield return StartCoroutine(dialogBox.PlayLine(text, scrollDelay));
-            Destroy(dialogBox.gameObject);
-            
+            yield return StartCoroutine(dialogBox.PlayLine(text, scrollDelay));            
         }
 
         /// Show a list of options, and wait for the player to make a selection.
@@ -129,7 +140,9 @@ namespace Dialog
 
         public override IEnumerator DialogueComplete()
         {
-            if (endSceneOnComplete)
+            if (dialogBox != null)
+                Destroy(dialogBox.gameObject);
+            if (endAction == EndAction.EndScene)
             {
                 // Go to next game phase, if applicable.
                 string gamePhase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase.ToUpper();
@@ -148,7 +161,11 @@ namespace Dialog
                     GoToNextGamePhase();
                 }
                 SceneTransitionManager.main.TransitionScenes(sceneName);
-            }             
+            }
+            else if(endAction == EndAction.GoToCampfireScene)
+            {
+                runner.StartCampPartyScene(phaseData);
+            }
             yield break;
         }
 
@@ -174,6 +191,7 @@ namespace Dialog
         /// </summary>
         public string CorrectFormatting(string line)
         {
+            line = Regex.Replace(line, @"\[\w*\]" , string.Empty);
             // Correct google doc formatting
             return line.Replace("…", "...").Replace('“', '"').Replace('”', '"');
         }

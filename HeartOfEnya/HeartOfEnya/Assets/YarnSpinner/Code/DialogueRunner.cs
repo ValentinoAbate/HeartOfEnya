@@ -206,6 +206,43 @@ namespace Yarn.Unity
             StartCoroutine (RunDialogue (startNode));
         }
 
+        private FMODUnity.StudioEventEmitter monologMusic;
+        private FMODUnity.StudioEventEmitter campfireMusic;
+
+        public void StartCampMonolog(CharacterManager.PhaseData data)
+        {
+            var ui = dialogueUI as Dialog.DialogUI;
+            if(ui == null)
+            {
+                Debug.LogError("Attempting to start a camp dialog from an improper dialogUI");
+                return;
+            }
+            ui.endAction = Dialog.DialogUI.EndAction.GoToCampfireScene;
+            ui.phaseData = data;
+            monologMusic = GameObject.Find(data.monologMusic).GetComponent<FMODUnity.StudioEventEmitter>();
+            monologMusic.Play();
+            StartDialogue(data.monologNode);
+        }
+
+        public void StartCampPartyScene(CharacterManager.PhaseData data)
+        {
+            var ui = dialogueUI as Dialog.DialogUI;
+            if (ui == null)
+            {
+                Debug.LogError("Attempting to start a camp dialog from an improper dialogUI");
+                return;
+            }
+            ui.endAction = Dialog.DialogUI.EndAction.EndScene;
+            ui.phaseData = data;
+            if(monologMusic != null)
+            {
+                monologMusic.EventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            }
+            campfireMusic = GameObject.Find(data.campfireMusic).GetComponent<FMODUnity.StudioEventEmitter>();
+            campfireMusic.Play();
+            StartDialogue(data.campfireNode);
+        }
+
         IEnumerator RunDialogue (string startNode = "Start")
         {
             // Mark that we're in conversation.

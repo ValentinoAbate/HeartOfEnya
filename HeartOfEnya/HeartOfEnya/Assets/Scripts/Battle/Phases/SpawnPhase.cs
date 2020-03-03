@@ -95,32 +95,35 @@ public class SpawnPhase : Phase
                 lua.Pos = luaPos;
             }
 
-            //Apply Soup Buffs
-            foreach (var buff in pData.buffStructures)
+            // Safety check for null buff list
+            if(pData.buffStructures != null)
             {
-                // Default to bapy
-                PartyMember chara;
-                if (buff.targetCharacter == BuffStruct.Target.lua)
+                //Apply Soup Buffs
+                foreach (var buff in pData.buffStructures)
                 {
-                    if (!enableLua)
-                        continue;
-                    chara = lua;
+                    // Default to bapy
+                    PartyMember chara;
+                    if (buff.targetCharacter == BuffStruct.Target.lua)
+                    {
+                        if (!enableLua)
+                            continue;
+                        chara = lua;
+                    }
+                    else if (buff.targetCharacter == BuffStruct.Target.soleil)
+                        chara = soleil;
+                    else if (buff.targetCharacter == BuffStruct.Target.raina)
+                        chara = raina;
+                    else
+                        chara = bapy;
+                    if (buff.effectType == BuffStruct.Effect.heal)
+                    {
+                        chara.maxHp += 2;
+                    }
+                    else if (buff.effectType == BuffStruct.Effect.restore)
+                    {
+                        chara.maxFp += 1;
+                    }
                 }
-                else if (buff.targetCharacter == BuffStruct.Target.soleil)
-                    chara = soleil;
-                else if (buff.targetCharacter == BuffStruct.Target.raina)
-                    chara = raina;
-                else
-                    chara = bapy;
-                if (buff.effectType == BuffStruct.Effect.heal)
-                {
-                    chara.maxHp += 2;
-                }
-                else if(buff.effectType == BuffStruct.Effect.restore)
-                {
-                    chara.maxFp += 1;
-                }
-                    
             }
 
             // Don't spawn enemies

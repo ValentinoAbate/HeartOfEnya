@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &4362507590128544397
+--- !u!114 &4259270724717145825
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 417375792446999537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7951daf7713baef45b162066c21c9919, type: 3}
+  m_Script: {fileID: 11500000, guid: 38f71b9acdd157e48b53528355f8a477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 3
---- !u!1 &1292775969626251150
+  target: 2
+  objPrefab: {fileID: 5773849800805996761, guid: 43cd8725353fbb64f80cc2c6bb6f0ea4,
+    type: 3}
+--- !u!1 &8222393600899925527
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21,22 +23,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2184999186053955287}
-  - component: {fileID: 5243181925685880599}
+  - component: {fileID: 8287154024400012309}
+  - component: {fileID: 2558935235520722192}
   m_Layer: 0
-  m_Name: Raina Vertical No Fire
+  m_Name: Bapy Push No Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2184999186053955287
+--- !u!4 &8287154024400012309
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1292775969626251150}
+  m_GameObject: {fileID: 8222393600899925527}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -44,17 +46,17 @@ Transform:
   m_Father: {fileID: 417375792446999535}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &5243181925685880599
+--- !u!82 &2558935235520722192
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1292775969626251150}
+  m_GameObject: {fileID: 8222393600899925527}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 7b53d3cebde0a5b43bab30cab9e45c36, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ea799bad3cb9de048a3201a9b12746e2, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -150,7 +152,7 @@ PrefabInstance:
     - target: {fileID: 876645245125307362, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: m_Name
-      value: AttackRainaCrossCleave
+      value: AttackBapyScarecrow
       objectReference: {fileID: 0}
     - target: {fileID: 876645245125307388, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -210,47 +212,47 @@ PrefabInstance:
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: targetPattern.offsets.Array.size
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: range.minRange
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: range.maxRange
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: targetPattern.maxReach.x
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: targetPattern.maxReach.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[0].row
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[1].col
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[3].row
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
-      propertyPath: targetPattern.offsets.Array.data[3].col
+      propertyPath: targetPattern.offsets.Array.data[0].row
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: targetPattern.offsets.Array.data[1].col
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: targetPattern.offsets.Array.data[3].row
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: targetPattern.offsets.Array.data[3].col
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -259,18 +261,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
-      propertyPath: targetPattern.type
+      propertyPath: targetPattern.offsets.Array.data[0].col
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: targetPattern.offsets.Array.data[2].row
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[0].col
-      value: 1
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -279,8 +276,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
-      propertyPath: targetPattern.offsets.Array.data[2].col
-      value: 2
+      propertyPath: range.max
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -289,36 +286,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
-      propertyPath: range.max
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[4].col
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: chargeTurns
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: displayName
-      value: CrossCleave
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
       propertyPath: cutInPrefab
       value: 
-      objectReference: {fileID: 7869046948155591850, guid: fd8efb70ec7d8184e81659fdfc9e8db6,
+      objectReference: {fileID: 5542415893087554733, guid: 4a49f817d73d43b4c8f77eaf208a7415,
         type: 3}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: fxPrefab
       value: 
-      objectReference: {fileID: 4842508818842539274, guid: 145ea664703ebfc46a67fe3a9c7b461d,
+      objectReference: {fileID: 4842508818842539274, guid: ef045a7ca61c6ec4380c335603ca108a,
         type: 3}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: displayName
+      value: Lure
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: description
+      value: Drop a scarecrow that distracts enemies
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: targetPattern.type
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65afaea67fb0af4a84fe0702411019e, type: 3}
 --- !u!1 &417375792446999537 stripped

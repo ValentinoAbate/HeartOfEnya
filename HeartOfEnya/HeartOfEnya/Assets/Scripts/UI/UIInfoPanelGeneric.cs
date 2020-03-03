@@ -17,7 +17,9 @@ public class UIInfoPanelGeneric : MonoBehaviour
     {
         nameText.text = c.DisplayName;
         descriptionText.text = c.description;
-        statusText.text = "status";
+        statusText.text = c.IsChargingAction ? "Status: Charging" : "Status: Normal";
+        if (c.Stunned)
+            statusText.text = "Status: Stunned";
         moveNumberText.text = c.Move.ToString();
         hpNumberText.text = c.Hp.ToString();
         hpBarImage.fillAmount = c.Hp / (float)c.maxHp;

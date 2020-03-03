@@ -35,6 +35,8 @@ public class ActionMenu : MonoBehaviour, IPausable
 
     private void Update()
     {
+        if (PauseHandle.Paused)
+            return;
         if (Input.GetKeyDown(cancelKey) || Input.GetMouseButtonDown(1))
         {
             sfxCancel.Play();

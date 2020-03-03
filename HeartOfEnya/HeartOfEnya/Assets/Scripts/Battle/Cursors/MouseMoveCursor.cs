@@ -55,6 +55,8 @@ public class MouseMoveCursor : MoveCursor
     //highlight whichever square is currently moused over
     private void FollowMouse(InputAction.CallbackContext context)
     {
+        if (PauseHandle.Paused)
+            return;
     	//convert mouse coords from screenspace to worldspace to BattleGrid coords
     	Pos newPos = BattleGrid.main.GetPos(Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>()));
     	Highlight(newPos);
@@ -64,12 +66,16 @@ public class MouseMoveCursor : MoveCursor
     //gotta make a wrapper for Select so the input system can see it
     private void HandleSelect(InputAction.CallbackContext context)
     {
-    	Select();
+        if (PauseHandle.Paused)
+            return;
+        Select();
     }
 
     private void HandleDeselect(InputAction.CallbackContext context)
     {
-    	sfxCancel.Play();
+        if (PauseHandle.Paused)
+            return;
+        sfxCancel.Play();
     	ResetToLastPosition();
         SetActive(false);
         PhaseManager.main.PartyPhase.CancelAction(partyMember);

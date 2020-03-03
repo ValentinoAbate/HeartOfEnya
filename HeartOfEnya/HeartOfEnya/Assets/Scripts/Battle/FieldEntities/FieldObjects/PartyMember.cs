@@ -166,7 +166,7 @@ public class PartyMember : Combatant, IPausable
     {
         Debug.Log(DisplayName + " has died");
         // Decide waht to do here but just do this for now.
-        SceneTransitionManager.main.TransitionScenes("testBreakfast");
+        SceneTransitionManager.main.TransitionScenes("Breakfast");
     }
 
     private void OnDestroy()

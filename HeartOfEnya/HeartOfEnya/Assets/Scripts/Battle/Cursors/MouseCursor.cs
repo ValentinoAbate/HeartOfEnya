@@ -53,8 +53,10 @@ public class MouseCursor : Cursor
     //highlight whichever square is currently moused over
     private void FollowMouse(InputAction.CallbackContext context)
     {
-    	//convert mouse coords from screenspace to worldspace to BattleGrid coords
-    	Pos newPos = BattleGrid.main.GetPos(Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>()));
+        if (PauseHandle.Paused)
+            return;
+        //convert mouse coords from screenspace to worldspace to BattleGrid coords
+        Pos newPos = BattleGrid.main.GetPos(Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>()));
     	Highlight(newPos);
     	// Debug.Log(Pos);
     }
@@ -62,6 +64,8 @@ public class MouseCursor : Cursor
     //gotta make a wrapper for Select so the input system can see it
     private void HandleSelect(InputAction.CallbackContext context)
     {
+        if (PauseHandle.Paused)
+            return;
         Select();
     }
 

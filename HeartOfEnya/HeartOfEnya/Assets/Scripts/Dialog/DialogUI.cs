@@ -25,6 +25,7 @@ namespace Dialog
         [Header("General Config")]
         public DialogueRunner runner;
         public float scrollDelay;
+        public float spaceDelay;
         public Canvas dialogCanvas;
         public GameObject dialogBoxPrefab;
         /// The buttons that let the user choose an option
@@ -102,7 +103,7 @@ namespace Dialog
             }
             // Set the dialogBox's portrait
             dialogBox.portrait.sprite = character.Portrait;
-            yield return StartCoroutine(dialogBox.PlayLine(text, scrollDelay));            
+            yield return StartCoroutine(dialogBox.PlayLine(text, scrollDelay, spaceDelay));            
         }
 
         /// Show a list of options, and wait for the player to make a selection.
@@ -171,8 +172,17 @@ namespace Dialog
 
         private void GoToNextGamePhase()
         {
-            string gamePhase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
-            DoNotDestroyOnLoad.Instance.persistentData.gamePhase = ((char)(gamePhase[0] + 1)).ToString();
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
+            pData.gamePhase = ((char)(pData.gamePhase[0] + 1)).ToString();
+            LevelUp();
+        }
+
+        private void LevelUp()
+        {
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
+            Debug.Log("Leveling up characters...");
+            pData.partyLevel += 1;
+            Debug.Log("Characters are now level " + pData.partyLevel);
         }
 
         /// Called by buttons to make a selection.

@@ -18,9 +18,12 @@ public class SpawnPhase : Phase
     public GameObject spawnTileEnemyPrefab;
     public GameObject spawnTileObstaclePrefab;
     public int spawnDamage = 2;
-    public int startAtWave = 1;
+    
+    [Header("Level Editing Properties")]
     // Should we spawn enemies (used for the level editor)
     public bool spawnEnemies = true;
+    public bool overrideSpawnLua = false;
+    public int startAtWave = 1;
 
     public WaveData CurrWave => waveNum < CurrEncounter.Waves.Length ? CurrEncounter.Waves[waveNum] : null;
     public WaveData NextWave => waveNum < CurrEncounter.Waves.Length - 1 ? CurrEncounter.Waves[waveNum + 1] : null;
@@ -69,21 +72,21 @@ public class SpawnPhase : Phase
             var pData = DoNotDestroyOnLoad.Instance.persistentData;
             // Spawn party members
             Vector2 bapyVec = BattleGrid.main.GetSpace(bapyPos);
-            var bapy = Instantiate(bapyLvl[pData.partyLevel], bapyVec, 
+            var bapy = Instantiate(bapyLvl[pData.partyLevel], bapyVec,
                                         Quaternion.identity).GetComponent<PartyMember>();
             bapy.Pos = bapyPos;
 
             Vector2 soleilVec = BattleGrid.main.GetSpace(soleilPos);
-            var soleil = Instantiate(soleilLvl[pData.partyLevel], soleilVec, 
+            var soleil = Instantiate(soleilLvl[pData.partyLevel], soleilVec,
                                         Quaternion.identity).GetComponent<PartyMember>();
             soleil.Pos = soleilPos;
-            
+
             Vector2 rainaVec = BattleGrid.main.GetSpace(rainaPos);
-            var raina = Instantiate(rainaLvl[pData.partyLevel], rainaVec, 
+            var raina = Instantiate(rainaLvl[pData.partyLevel], rainaVec,
                                         Quaternion.identity).GetComponent<PartyMember>();
             raina.Pos = rainaPos;
 
-            bool enableLua = pData.luaBossDefeated;
+            bool enableLua = pData.LuaUnfrozen || overrideSpawnLua;
             PartyMember lua = null;
 
             // Spawn Lua if enabled
@@ -141,6 +144,13 @@ public class SpawnPhase : Phase
                     obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
                     BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
                 }
+                int totalEnemies = 0;
+                foreach(var wave in CurrEncounter.waveList)
+                {
+                    totalEnemies += wave.enemies.Count;
+                }
+                pData.numEnemiesLeft = totalEnemies;
+                BattleUI.main.UpdateEnemiesRemaining(totalEnemies);
             }
             else // This is a continuing encounter, spawn the backed-up enemies
             {

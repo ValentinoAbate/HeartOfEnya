@@ -25,4 +25,13 @@ public class DoNotDestroyOnLoad : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
     }
+
+    public void ResetPersistantData()
+    {
+        if(Instance != null)
+        {
+            Destroy(Instance.gameObject);
+            instance = null;
+        }
+    }
 }

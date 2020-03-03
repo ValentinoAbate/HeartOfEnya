@@ -66,10 +66,11 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     private void FollowMouse(InputAction.CallbackContext context)
     {
+        if (PauseHandle.Paused)
+            return;
         //convert mouse coords from screenspace to worldspace to BattleGrid coords
         Pos newPos = BattleGrid.main.GetPos(Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>()));
         Highlight(newPos);
-        Debug.Log(Pos);
     }
 
     /// <summary>
@@ -77,6 +78,8 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     private void HandleSelect(InputAction.CallbackContext context)
     {
+        if (PauseHandle.Paused)
+            return;
         Select();
     }
 
@@ -85,6 +88,8 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     private void HandleCancel(InputAction.CallbackContext context)
     {
+        if (PauseHandle.Paused)
+            return;
         Cancel();
     }
 
@@ -94,15 +99,7 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public override void SetActive(bool value)
     {
-        base.SetActive(value);
-        if (value)
-        {
-            if (Empty)
-                Highlight(inRange.First());
-            else
-                HighlightFirst();
-        }
-            
+        base.SetActive(value);            
     }
 
     /// <summary>
@@ -112,7 +109,7 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public override void Highlight(Pos newPos)
     {
-        if (!BattleGrid.main.IsLegal(newPos) || !inRange.Contains(newPos))
+        if (newPos == Pos || !BattleGrid.main.IsLegal(newPos) || !inRange.Contains(newPos))
             return;
         
         sfxHighlight.Play();
@@ -122,14 +119,6 @@ public class AttackCursor : GridAndSelectionListCursor
         // Update and show target pattern
         action.targetPattern.Target(attacker.Pos, newPos);
         action.targetPattern.Show(TileUI.Type.TargetPreviewParty);
-        // Find highlighted object, and apply applicable extra displays if one exists
-        var highlightedObj = BattleGrid.main.GetObject(newPos);
-        if (highlightedObj != null)
-        {
-            int index = SelectionList.IndexOf(highlightedObj);
-            if (index != -1)
-                selectedInd = index;
-        }
     }
 
     /// <summary>
@@ -147,7 +136,6 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public void CalculateTargets()
     {
-        SelectionList.Clear();
         inRange.Clear();
         var reachable = BattleGrid.main.Reachable(attacker.Pos, action.range.max, CanMoveThrough);
         foreach(var kvp in reachable)
@@ -156,12 +144,7 @@ public class AttackCursor : GridAndSelectionListCursor
                 continue;
             var pos = kvp.Key;
             inRange.Add(pos);
-            var obj = BattleGrid.main.GetObject(pos) as Combatant;
-            // Put any non-ignored object in the selection list
-            if (obj != null && !ignore.Any((t) => t == obj.Team))
-                SelectionList.Add(obj);
         }
-        SelectionList.Sort((obj1, obj2) => obj1.Team == FieldEntity.Teams.Party ? 1 : -1);
     }
 
     /// <summary>
@@ -231,48 +214,7 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public override void ProcessInput()
     {
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    Highlight(attacker.Pos);
-        //    HideTargets();
-        //    action.targetPattern.Hide();
-        //    SetActive(false);
-        //    OnCancel.Invoke();
-        //    return;
-        //}          
-        //if(action.targetPattern.type == TargetPattern.Type.Spread)
-        //    base.ProcessInput();
-        //else // Targeting pattern is directional, apply special controls
-        //{
-        //    if (Input.GetKeyDown(KeyCode.W))
-        //    {
-        //        Highlight(attacker.Pos + Pos.Up);
-        //    }
-        //    else if (Input.GetKeyDown(KeyCode.S))
-        //    {
-        //        Highlight(attacker.Pos + Pos.Down);
-        //    }
-        //    else if (Input.GetKeyDown(KeyCode.A))
-        //    {
-        //        Highlight(attacker.Pos + Pos.Left);
-        //    }
-        //    else if (Input.GetKeyDown(KeyCode.D))
-        //    {
-        //        Highlight(attacker.Pos + Pos.Right);
-        //    }
-        //    if (Input.GetKeyDown(nextKey))
-        //    {
-        //        HighlightNext();
-        //    }
-        //    else if (Input.GetKeyDown(lastKey))
-        //    {
-        //        HighlightPrev();
-        //    }
-        //    if (Input.GetKeyDown(KeyCode.Space))
-        //    {
-        //        Select();
-        //    }
-        //}
+
     }
 
     public bool CanMoveThrough(FieldObject obj)

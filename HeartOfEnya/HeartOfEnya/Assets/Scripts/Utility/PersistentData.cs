@@ -11,7 +11,12 @@ public class PersistentData : MonoBehaviour
 {
     public const string gamePhaseTutorial = "A";
     public const string gamePhaseLuaBattle = "B";
+    public const string gamePhaseBeginMain = "C";
+    public const string gamePhaseLuaUnfrozen = "D";
     public const string gamePhaseAbsoluteZeroBattle = "E";
+    
+
+    public bool LuaUnfrozen => gamePhase == gamePhaseLuaUnfrozen || gamePhase ==  gamePhaseAbsoluteZeroBattle;
 
     [Header("Battle")]
     public int partyLevel;

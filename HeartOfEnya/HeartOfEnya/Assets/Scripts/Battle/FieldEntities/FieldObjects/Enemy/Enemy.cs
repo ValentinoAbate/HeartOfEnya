@@ -127,14 +127,15 @@ public abstract class Enemy : Combatant, IPausable
     {
         Debug.Log("Enemy arrived");
         Debug.Log(name + " has died...");
-        Destroy(gameObject);
-       
-        int randomIndex = Random.Range(0, drops.Length);
-        if (DoNotDestroyOnLoad.Instance.persistentData.gatheredIngredients.Count <= 5)
-        {
-            DoNotDestroyOnLoad.Instance.persistentData.gatheredIngredients.Add(drops[randomInt(0, 9)]);
-        }
 
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        if (pData.gatheredIngredients.Count <= 5)
+        {
+            pData.gatheredIngredients.Add(drops[randomInt(0, 9)]);
+        }
+        pData.numEnemiesLeft--;
+        BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft);
+        Destroy(gameObject);
     }
 
     public int randomInt(int min, int max)

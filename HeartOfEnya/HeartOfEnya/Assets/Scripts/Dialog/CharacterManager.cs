@@ -14,9 +14,6 @@ public class CharacterManager : MonoBehaviour
     public PhaseData phaseDataD;
     public PhaseData phaseDataE;
 
-    //list of days the party levels up (in the format of phase letter + day number, e.g. A0)
-    public List<string> levelUpDates;
-
     private Dictionary<string, PhaseData> phaseDict;
 
     private void Awake ()
@@ -39,15 +36,6 @@ public class CharacterManager : MonoBehaviour
                 {"D", phaseDataD },
                 {"E", phaseDataE },
             };
-            //check if the party levels up today, and if so level them up
-            var dateCode = DoNotDestroyOnLoad.Instance.persistentData.gamePhase + DoNotDestroyOnLoad.Instance.persistentData.dayNum;
-            Debug.Log("WELCOME TO DAY " + dateCode);
-            if (levelUpDates.Contains(dateCode))
-            {
-                Debug.Log("Leveling up characters...");
-                DoNotDestroyOnLoad.Instance.persistentData.partyLevel += 1;
-                Debug.Log("Characters are now level " + DoNotDestroyOnLoad.Instance.persistentData.partyLevel);
-            }
         }
     }
 

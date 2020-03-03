@@ -213,9 +213,9 @@ public class LevelEditor : EditorWindow
         enableLua = EditorGUILayout.Toggle(new GUIContent("Enable Lua"), enableLua);
         if (enableLua != oldLuaEnabled)
         {
-            Undo.RecordObject(PersistantData, "Set party level");
-            PersistantData.luaBossDefeated = enableLua;
-            PrefabUtility.RecordPrefabInstancePropertyModifications(PersistantData);
+            Undo.RecordObject(Spawner, "Set lua override");
+            Spawner.overrideSpawnLua = enableLua;
+            PrefabUtility.RecordPrefabInstancePropertyModifications(Spawner);
             EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
         GUILayout.EndVertical();

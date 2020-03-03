@@ -9,6 +9,8 @@ public class BattleUI : MonoBehaviour
 {
     public static BattleUI main;
 
+    public TextMeshProUGUI numEnemiesLeft;
+
     [Header("Info Panel Fields")]
     public GameObject infoPanel;
     public UIInfoPanelEnemy enemyInfoPanel;
@@ -30,6 +32,11 @@ public class BattleUI : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void UpdateEnemiesRemaining(int numRemaining)
+    {
+        numEnemiesLeft.text = numRemaining.ToString() + " Enemies Remain...";
     }
 
     public void HideInfoPanel()

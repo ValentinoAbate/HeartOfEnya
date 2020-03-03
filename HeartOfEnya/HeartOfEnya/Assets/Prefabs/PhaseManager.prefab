@@ -199,7 +199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6bbe4cb29b87846bb9151b428e33b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goToSceneOnEnd: TestCamp
+  goToSceneOnEnd: Camp
+  goToSceneOnEndSpecial: VerticalEndScreen
+  specialPhase: C
 --- !u!1 &4288789010848414401
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,17 +294,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Spawn Phase
-  mainEncounter: {fileID: 11400000, guid: c5e07b25cf031aa458766ea8a62045ad, type: 2}
-  tutorialEncounter: {fileID: 11400000, guid: c5e07b25cf031aa458766ea8a62045ad, type: 2}
-  luaEncounter: {fileID: 11400000, guid: c5e07b25cf031aa458766ea8a62045ad, type: 2}
-  absoluteZeroEncounter: {fileID: 11400000, guid: c5e07b25cf031aa458766ea8a62045ad,
+  mainEncounter: {fileID: 11400000, guid: 89240a4eaf9d90c469eda75fb515c556, type: 2}
+  tutorialEncounter: {fileID: 11400000, guid: 89240a4eaf9d90c469eda75fb515c556, type: 2}
+  luaEncounter: {fileID: 11400000, guid: 89240a4eaf9d90c469eda75fb515c556, type: 2}
+  absoluteZeroEncounter: {fileID: 11400000, guid: 89240a4eaf9d90c469eda75fb515c556,
     type: 2}
   spawnTileEnemyPrefab: {fileID: 6271636570576552739, guid: cceb0010f87b9eb42ba2bd38d463505f,
     type: 3}
   spawnTileObstaclePrefab: {fileID: 514688994380597365, guid: a5151b489c8927747a31e3dc2c5274ef,
     type: 3}
   spawnDamage: 2
+  spawnEnemies: 1
+  overrideSpawnLua: 0
   startAtWave: 1
+  waveNum: 0
   bapyLvl:
   - {fileID: 4100317412230784059, guid: 92d6dff19c8e56b4891462301e05feac, type: 3}
   - {fileID: 4100317412230784059, guid: 92d6dff19c8e56b4891462301e05feac, type: 3}

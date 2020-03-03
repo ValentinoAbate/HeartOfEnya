@@ -33,7 +33,7 @@ public class DialogBox : MonoBehaviour, IPausable
             state = state.Next();
     }
 
-    public IEnumerator PlayLine(string line, float scrollDelay, Sprite portrait = null, string voiceEvent = null)
+    public IEnumerator PlayLine(string line, float scrollDelay, float spaceDelay, Sprite portrait = null, string voiceEvent = null)
     {
         // Set Portrait if desired
         if (portrait != null)
@@ -53,9 +53,17 @@ public class DialogBox : MonoBehaviour, IPausable
             for (int i = 0; state != State.Cancel && i < line.Length - 1; ++i)
             {
                 yield return new WaitWhile(() => PauseHandle.Paused);
-                voiceEmitter.SetParameter("Space", char.IsWhiteSpace(line[i]) ? 1 : 0);
                 text.text += line[i];
-                yield return new WaitForSeconds(scrollDelay);
+                if (char.IsWhiteSpace(line[i]))
+                {
+                    voiceEmitter.SetParameter("Space", 1);
+                    yield return new WaitForSeconds(spaceDelay);
+                }
+                else
+                {
+                    voiceEmitter.SetParameter("Space", 0);
+                    yield return new WaitForSeconds(scrollDelay);
+                }                
             }
         }
         // Dump text

@@ -23,7 +23,11 @@ public class PhaseManager : MonoBehaviour, IPausable
     public SpawnPhase SpawnPhase { get; private set; }
 
     [SerializeField]
-    private string goToSceneOnEnd;
+    private string goToSceneOnEnd = string.Empty;
+    [SerializeField]
+    private string goToSceneOnEndSpecial = string.Empty;
+    [SerializeField]
+    private string specialPhase = string.Empty;
 
     private List<Phase> phases;
     private int currPhase;
@@ -122,8 +126,10 @@ public class PhaseManager : MonoBehaviour, IPausable
             });
         }
         SpawnPhase.LogPersistentData();
-
-        SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
+        if(pData.gamePhase == specialPhase)
+            SceneTransitionManager.main?.TransitionScenes(goToSceneOnEndSpecial);
+        else
+            SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
     }
 
     /// <summary>

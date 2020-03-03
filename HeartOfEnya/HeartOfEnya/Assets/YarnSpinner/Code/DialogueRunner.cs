@@ -317,6 +317,15 @@ namespace Yarn.Unity
             dialogue.Stop();
         }
 
+        public void Skip()
+        {
+            // Stop any processes that might be running already
+            StopAllCoroutines();
+            dialogueUI.StopAllCoroutines();
+            // End the UI
+            StartCoroutine(dialogueUI.DialogueComplete());
+        }
+
         /// Test to see if a node name exists
         public bool NodeExists(string nodeName) {
             return dialogue.NodeExists(nodeName);

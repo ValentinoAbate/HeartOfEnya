@@ -16,6 +16,7 @@ public class SoupManager : MonoBehaviour
     public int ingredientsPerSoup; //how many ingredients are used per soup
     public List<Ingredient> ingredients = new List<Ingredient>(); //list of all ingredients we have
     public List<bool> enabledIngredients = new List<bool>(); //bools controlling whether a specific ingredient is enabled
+    public Ingredient defaultIngredient; //emergency ingredient, used to pad out the list if players collect too few ingredients to make soup
     
     //UI details
     public Transform parentCanvas; //the UI canvas that's the parent of the buttons
@@ -97,10 +98,21 @@ public class SoupManager : MonoBehaviour
         //     Debug.Log("No ingredients found for: " + gatheredIngredients);
         // }
 
-        //sanity check - if fewer than 3 buttons were spawned...
-        if (totalSpawned < 3)
+        //sanity check - if fewer than ingredientsPerSoup buttons were spawned, pad out to ingredientsPerSoup ingredients using the default ingredient
+        while (totalSpawned < ingredientsPerSoup)
         {
-            //
+            //spawn the button
+            var button = Instantiate(buttonPrefab);
+            //connect it to the UI canvas and move it to the next open slot
+            button.transform.SetParent(parentCanvas.transform, false);
+            button.transform.localPosition = new Vector3(buttonX, buttonY - (totalSpawned * buttonOffset), 0);
+            //set its ingredient & ID
+            ingredients.Add(defaultIngredient); //work around the ID system by appending copies of the default ingredient to the end of the master list
+            button.ingredient = defaultIngredient;
+            button.SetID(ingredients.Count - 1);
+            button.UpdateData(); //tell the button to refresh its images with data from the new ingredient
+
+            totalSpawned++;
         }
     }
 

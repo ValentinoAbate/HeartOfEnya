@@ -87,7 +87,14 @@ public class SoupButton : MonoBehaviour
             {
                 int ingID = ingredientList[i]; //get the target ingredient's index in the Soup Manager's master ingredient list
                 Ingredient tgtIng = SoupManager.main.ingredients[ingID]; //grab a reference to the target ingredient
-                buffs.Add(new BuffStruct(tgtIng)); //convert the ingredient to a BuffStruct & add it to the buff list
+                if (tgtIng.name == SoupManager.main.defaultIngredient.name)
+                {
+                    Debug.Log("Skipping BuffStruct formation for default ingredient");
+                }
+                else
+                {
+                    buffs.Add(new BuffStruct(tgtIng)); //convert the ingredient to a BuffStruct & add it to the buff list
+                }
             }
             DoNotDestroyOnLoad.Instance.persistentData.buffStructures = buffs; //write to persistent data
 

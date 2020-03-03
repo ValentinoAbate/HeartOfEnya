@@ -90,31 +90,38 @@ public class SoupButton : MonoBehaviour
     /// </summary>
     public void MakeSoup(string nextSceneName)
     {
-    	if (enabled)
-    	{
-    		  //if the recipe is valid, perform any final actions and load the next level
-    		  /***PERSISTANT DATA STORAGE & OTHER END-OF-SCENE JUNK GOES HERE***/
-    		  sfxSelect.Play();
+        if (enabled)
+        {
+            //if the recipe is valid, perform any final actions and load the next level
+            /***PERSISTANT DATA STORAGE & OTHER END-OF-SCENE JUNK GOES HERE***/
+            sfxSelect.Play();
 
-          //convert the ingredients into buff structures & write them to persistent data
-          List<BuffStruct> buffs = new List<BuffStruct>(); //stores the buff structures used in persistent data
-          for(int i = 0; i < ingredientList.Count; i++)
-          {
-              int ingID = ingredientList[i]; //get the target ingredient's index in the Soup Manager's master ingredient list
-              Ingredient tgtIng = SoupManager.main.ingredients[ingID]; //grab a reference to the target ingredient
-              buffs.Add(new BuffStruct(tgtIng)); //convert the ingredient to a BuffStruct & add it to the buff list
-          }
-          DoNotDestroyOnLoad.Instance.persistentData.buffStructures = buffs; //write to persistent data
+            //convert the ingredients into buff structures & write them to persistent data
+            List<BuffStruct> buffs = new List<BuffStruct>(); //stores the buff structures used in persistent data
+            for (int i = 0; i < ingredientList.Count; i++)
+            {
+                int ingID = ingredientList[i]; //get the target ingredient's index in the Soup Manager's master ingredient list
+                Ingredient tgtIng = SoupManager.main.ingredients[ingID]; //grab a reference to the target ingredient
+                if (tgtIng.name == SoupManager.main.defaultIngredient.name)
+                {
+                    Debug.Log("Skipping BuffStruct formation for default ingredient");
+                }
+                else
+                {
+                    buffs.Add(new BuffStruct(tgtIng)); //convert the ingredient to a BuffStruct & add it to the buff list
+                }
+            }
+            DoNotDestroyOnLoad.Instance.persistentData.buffStructures = buffs; //write to persistent data
 
             //load the next level
-    		 SceneTransitionManager.main.TransitionScenes(nextSceneName);
-    	}
-    	else
-    	{
-    		//if the button should do anything special when clicked with an incomplete recipe, put it here
-    		sfxCancel.Play();
+            SceneTransitionManager.main.TransitionScenes(nextSceneName);
+        }
+        else
+        {
+            //if the button should do anything special when clicked with an incomplete recipe, put it here
+            sfxCancel.Play();
             Debug.Log("Invalid Recipe - soup failed.");
-    	}
+        }
     }
 
     private void AddEntry(EventTriggerType type, UnityAction<BaseEventData> action)

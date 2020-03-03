@@ -28,6 +28,19 @@ public class PlaytestData : MonoBehaviour
     public int stunnedEnemies; // how many times an enemy was stunned
     public float avgPos;       // average x position of all characters
 
+    private void Awake()
+    {
+        hp["Bapy"] = 0;
+        hp["Soleil"] = 0;
+        hp["Raina"] = 0;
+        hp["Lua"] = 0;
+
+        fp["Bapy"] = 0;
+        fp["Soleil"] = 0;
+        fp["Raina"] = 0;
+        fp["Lua"] = 0;
+    }
+
 
     /// <summary>
     /// Updates the internal playtest data with new values

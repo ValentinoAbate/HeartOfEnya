@@ -60,6 +60,8 @@ public class PartyMember : Combatant, IPausable
     private FMODUnity.StudioEventEmitter battleTheme;
     private FMODUnity.StudioEventEmitter sfxHighlight;
 
+    private PlaytestLogger logger;
+
     public bool DeathsDoor { get; private set; }
     
     public int DeathsDoorCounter
@@ -123,6 +125,8 @@ public class PartyMember : Combatant, IPausable
         battleTheme = GameObject.Find("BattleTheme").GetComponent<FMODUnity.StudioEventEmitter>();
         // sfxHighlight = GameObject.Find("UIHighlight").GetComponent<FMODUnity.StudioEventEmitter>();
         battleTheme.SetParameter("Loading", 0);
+
+        logger = DoNotDestroyOnLoad.Instance.playtestLogger;
     }
 
     public string GetName()
@@ -132,6 +136,9 @@ public class PartyMember : Combatant, IPausable
 
     public override void Damage(int damage)
     {
+        // log hp change in playtest logger
+        logger.testData.hp[GetName()] += damage;
+
         Hp = Mathf.Max(0, Hp - damage);
         if (damage > 0 && Dead)
         {
@@ -285,12 +292,44 @@ public class PartyMember : Combatant, IPausable
     /// </summary>
     public override Coroutine UseAction(Action action, Pos targetPos)
     {
+        
         //Hide the info panel;
         BattleUI.main.HideInfoPanel();
         var routine = base.UseAction(action, targetPos);
         var fpCost = action.GetComponent<ActionFpCost>();
         if(fpCost != null)
+        {
+            // log fp use in playtest logger
+            logger.testData.fp[GetName()] += fpCost.fpCost;
+
             Fp -= fpCost.fpCost;
+        }
+
+        // log move use count and move damage in playtest logger
+        // if move hasnt been used yet and isnt in dictionary,
+        if(!logger.testData.moves.ContainsKey(action.name))
+        {
+            logger.testData.moves[action.name] = 1;
+
+            // check if the move does damage
+            var dmg = action.GetComponent<DamageEffect>();
+            if(dmg != null)
+            {
+                logger.testData.moveDmg[action.name] = dmg.damage;
+            }
+        }
+        else
+        {
+            logger.testData.moves[action.name] += 1;
+
+            // check if the move does damage
+            var dmg = action.GetComponent<DamageEffect>();
+            if(dmg != null)
+            {
+                logger.testData.moveDmg[action.name] += dmg.damage;
+            }
+        }
+            
         return routine;
     }
 }

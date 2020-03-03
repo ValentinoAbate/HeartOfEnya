@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2998,6 +2998,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1668109702}
     m_Modifications:
+    - target: {fileID: 645324280644760922, guid: 74bfb196dbfc61f478bd91cfb3d8c737,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 631345942}
+    - target: {fileID: 645324280644760922, guid: 74bfb196dbfc61f478bd91cfb3d8c737,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TogglePause
+      objectReference: {fileID: 0}
+    - target: {fileID: 5393198265251584449, guid: 74bfb196dbfc61f478bd91cfb3d8c737,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5393198265251584449, guid: 74bfb196dbfc61f478bd91cfb3d8c737,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5393198265251584449, guid: 74bfb196dbfc61f478bd91cfb3d8c737,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5393198265251584449, guid: 74bfb196dbfc61f478bd91cfb3d8c737,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8871244540257892420, guid: 74bfb196dbfc61f478bd91cfb3d8c737,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8871244540257892423, guid: 74bfb196dbfc61f478bd91cfb3d8c737,
         type: 3}
       propertyPath: m_LocalPosition.z

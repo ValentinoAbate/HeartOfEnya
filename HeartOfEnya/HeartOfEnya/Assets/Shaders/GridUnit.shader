@@ -1,4 +1,4 @@
-﻿// Shader to render units on the battle grid. Based on the URP 2D lit sprite shader, but with added outline for status effects
+﻿// Shader to render units on the battle grid. Based on the URP 2D lit sprite shader, but with added outline/pulse for status effects & highlights
 Shader "Universal Render Pipeline/2D/GridUnit"
 {
     Properties
@@ -14,6 +14,11 @@ Shader "Universal Render Pipeline/2D/GridUnit"
 		[Space]
 		[PerRendererData] _Stunned("Stunned", float) = 0 // should be either 0 or 1, bools in HLSL when
 		_StunColor("Stunned Color", Color) = (1,1,1,1)
+
+		[Header(Highlighted Properties)]
+		[PerRendererData] _Highlighted("Highlighted", float) = 0
+		_HighlightColor("Highlight Color", Color) = (1,1,1,1)
+		_HighlightSpeed("HighLight Speed", range(0, 5)) = 1
 
         // Legacy properties. They're here so that materials using this shader can gracefully fallback to the legacy sprite shader.
         [HideInInspector] _Color("Tint", Color) = (1,1,1,1)
@@ -82,6 +87,10 @@ Shader "Universal Render Pipeline/2D/GridUnit"
 			float4 _ChargeColor;
 			float4 _StunColor;
 
+			float _Highlighted;
+			float4 _HighlightColor;
+			float _HighlightSpeed;
+
             #if USE_SHAPE_LIGHT_TYPE_0
             SHAPE_LIGHT(0)
             #endif
@@ -119,6 +128,13 @@ Shader "Universal Render Pipeline/2D/GridUnit"
 				return c;
 			}
 
+			half4 highlight(half4 c) {
+				float step = sin(_Time.y * _HighlightSpeed) * 0.25 + 0.25;
+				half4 newcol = lerp(c, _HighlightColor * c, step);
+				newcol.a = c.a;
+				return newcol;
+			}
+
 
             Varyings CombinedShapeLightVertex(Attributes v)
             {
@@ -141,6 +157,7 @@ Shader "Universal Render Pipeline/2D/GridUnit"
 				float2 newuv = ComputeScreenPos(i.positionCS / i.positionCS.w).xy;
                 half4 col = CombinedShapeLightShared(main, mask, newuv);
 				if(_Charging > 0 || _Stunned > 0) col = determineOutline(i.uv, col); // add outline if either charging or stunned
+				if(_Highlighted > 0) col = highlight(col);
 				return col;
             }
             ENDHLSL

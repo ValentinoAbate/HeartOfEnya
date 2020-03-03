@@ -48,8 +48,6 @@ public class Action : MonoBehaviour
         // Remove all illegal positions from the list
         targetPositions.RemoveAll((p) => !BattleGrid.main.IsLegal(p));
 
-        var targets = new List<Combatant>();
-
         //Play cut-in if applicable
         if(cutInPrefab != null)
         {
@@ -87,7 +85,6 @@ public class Action : MonoBehaviour
                 var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
                 if (target != null)
                 {
-                    targets.Add(target);
                     routine = PlayActionVfx(target.VfxSpawnPoint);
                 }
                 else
@@ -107,16 +104,47 @@ public class Action : MonoBehaviour
         targetPattern.Hide();
 
         // Apply actual effects to targets and display results
-        foreach(var target in targets)
+        foreach(var position in targetPositions)
         {
+            var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
+            if (target != null)
+            {
+                foreach (var effect in effects)
+                {
+                    if (effect.target != ActionEffect.Target.Other)
+                        continue;
+                    effect.ApplyEffect(user, target);
+                    // If the target died from this effect
+                    if (target == null)
+                        break;
+                }
+                yield return new WaitForSeconds(0.25f);
+            }
+            else
+            {
+                foreach (var effect in effects)
+                {
+                    if (effect.target != ActionEffect.Target.Tile)
+                        continue;
+                    effect.ApplyEffect(user, position);
+                    // If the target died from this effect
+                    if (target == null)
+                        break;
+                }
+            }
             foreach (var effect in effects)
             {
-                effect.ApplyEffect(user, target);
+                if (effect.target != ActionEffect.Target.Self)
+                    continue;
+                if (target != null)
+                    effect.ApplyEffect(target, user);
+                else
+                    effect.ApplyEffect(user, user);
+                yield return new WaitForSeconds(0.25f);
                 // If the target died from this effect
                 if (target == null)
                     break;
             }
-            yield return new WaitForSeconds(0.25f);
         }
 
         Destroy(gameObject);

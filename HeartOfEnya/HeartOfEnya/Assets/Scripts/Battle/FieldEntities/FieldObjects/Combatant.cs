@@ -10,7 +10,7 @@ using TMPro;
 /// </summary>
 public abstract class Combatant : FieldObject
 {
-    public const bool stunIsBurn = false;
+    public const bool stunIsBurn = true;
     public abstract Sprite DisplaySprite { get; }
     public abstract Color DisplaySpriteColor { get; }
     [Header("Cheats")]

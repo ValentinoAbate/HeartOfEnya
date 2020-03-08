@@ -10,6 +10,8 @@ public class EnemyPhase : Phase
 
     public override Coroutine OnPhaseEnd()
     {
+        DoNotDestroyOnLoad.Instance.playtestLogger.testData.UpdateAvgEnemies(Enemies.Count);
+
         Enemies.ForEach((enemy) => enemy.OnPhaseEnd());
         return null;
     }

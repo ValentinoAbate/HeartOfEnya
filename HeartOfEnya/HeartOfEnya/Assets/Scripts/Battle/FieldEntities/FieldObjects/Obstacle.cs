@@ -13,4 +13,12 @@ public class Obstacle : Combatant
     public override Sprite DisplaySprite => sprite.sprite;
     public override Color DisplaySpriteColor => sprite.color;
     public override Teams Team => Teams.Neutral;
+
+    // overriding kill function to add playtest logging
+    public override void Kill()
+    {
+    	DoNotDestroyOnLoad.Instance.playtestLogger.testData.UpdateObstacles();
+
+ 		base.Kill();
+    }
 }

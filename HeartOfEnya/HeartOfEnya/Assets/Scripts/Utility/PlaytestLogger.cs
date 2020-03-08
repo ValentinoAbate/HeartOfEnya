@@ -51,17 +51,7 @@ public class PlaytestLogger : MonoBehaviour
         {
             writer.WriteLine(testData.ToString());
             Debug.Log("New playtest data entry logged: " + testData.ToString());
+            testData.ResetData();
         }    
-    }
-
-    // Start function for debugging only, shouldn't actually do anything
-    public void Start()
-    {
-        // InitializeLog(testData);
-
-        // testData.NewDataLog("hana", 4294967295);
-        // LogData(testData);
-        // testData.NewDataLog("everyone else", 100000000);
-        // LogData(testData);
     }
 }

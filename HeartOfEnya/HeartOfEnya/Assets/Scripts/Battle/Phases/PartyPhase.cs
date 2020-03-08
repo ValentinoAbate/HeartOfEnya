@@ -62,10 +62,21 @@ public class PartyPhase : Phase
         Cursor.SetActive(false);
         // Remove all dead and/or gone
         CleanupParty();
+
         Party.ForEach((member) => member.OnPhaseEnd());
         // If the party is empty, yeet
         if (Party.Count <= 0)
             EndBattle();
+        else
+        {
+            // log average positions of each member
+            int totalPos = 0;
+            foreach(var member in Party)
+            {
+                totalPos += member.Pos.col;
+            }
+            DoNotDestroyOnLoad.Instance.playtestLogger.testData.UpdateAvgPos(totalPos, Party.Count);
+        }
         // TODO: visualize end of phase
         return null;
     }

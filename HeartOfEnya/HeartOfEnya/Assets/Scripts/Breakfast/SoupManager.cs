@@ -15,7 +15,6 @@ public class SoupManager : MonoBehaviour
     public int totalIngredients; //how many ingredients we have available
     public int ingredientsPerSoup; //how many ingredients are used per soup
     public List<Ingredient> ingredients = new List<Ingredient>(); //list of all ingredients we have
-    public List<bool> enabledIngredients = new List<bool>(); //bools controlling whether a specific ingredient is enabled
     public Ingredient defaultIngredient; //emergency ingredient, used to pad out the list if players collect too few ingredients to make soup
 
     //UI details
@@ -54,53 +53,38 @@ public class SoupManager : MonoBehaviour
     {
     	sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
         sfxCancel = GameObject.Find("UICancel").GetComponent<FMODUnity.StudioEventEmitter>();
-        //figure out which ingredients are enabled
-        List<string> gatheredIngredients = DoNotDestroyOnLoad.Instance.persistentData.gatheredIngredients;
-        Debug.Log("***GATHERED " + gatheredIngredients.Count + " INGREDIENTS:***");
-        foreach (string x in gatheredIngredients)
-        {
-            Debug.Log(x);
-        }
-        Debug.Log("***END GATHERED***");
 
-        //Iterate through the master ingredients list, checking if each one was enabled.
-    	//It's an O(n^2) monstrosity, but it's okay because there's only a few ingredients.
-        //Plus it helps prevent duplicates by checking each unique ingredient only once.
-        int totalSpawned = 0; //how many buttons we've currently spawned
-        for (int i = 0; i < totalIngredients; i++)
+    	//spawn ingredient buttons
+    	int totalSpawned = 0; //how many buttons we've currently spawned
+        //create a boolean array to keep track of which ingredients we've already spawned (to prevent duplicates)
+    	bool[] enabledIngredients = new bool[ingredients.Count];
+    	for (int i = 0; i < 6; i++)
     	{
-            //get an ingredient from the master list, then check if it's present in the gatheredIngredients list
-            Ingredient ing = ingredients[i]; //current ingredient from the master list
-            if (gatheredIngredients.Contains(ing.name))
-            {
-                //ingredient was found last round, and should be enabled
-                Debug.Log("Enabling ingredient: " + ing.name);
-                //gatheredIngredients.Remove(ing.name); //minor optimization; also used to ID any ingredients that don't get found
+    		//Random.Range(0, ingredients.Length)
+    		//pick a random ingredient that we haven't spawned yet
+    		int choice = Random.Range(0, ingredients.Count);
+    		while (enabledIngredients[choice])
+    		{
+    			Debug.Log("already spawned " + ingredients[choice].name + ", skipping");
+    			choice = Random.Range(0, ingredients.Count); //re-roll if already enabled
 
-                //spawn the button
-                var button = Instantiate(buttonPrefab);
-                //connect it to the UI canvas and move it to the next open slot
-                button.transform.SetParent(parentCanvas.transform, false);
-                button.transform.localPosition = new Vector3(buttonX, buttonY - (totalSpawned * buttonOffset), 0);
-                //set its ingredient & ID
-                button.ingredient = ing;
-                button.SetID(i); //use i instead of totalSpawned so that we can use the ID as an index to retrieve its ingredient from the ingredients list
-                button.UpdateData(); //tell the button to refresh its images with data from the new ingredient
+    			//if we have problems with this looping infinitely, add logic to detect if there's no remaining options
+    		}
+    		enabledIngredients[choice] = true; //set the ingredient to active
+    		Debug.Log("chosen ingredient " + choice + ", AKA " + ingredients[choice].name);
+    		
+    		//spawn the button
+    		var button = Instantiate(buttonPrefab);
+            //connect it to the UI canvas and move it to the next open slot
+            button.transform.SetParent(parentCanvas.transform, false);
+            button.transform.localPosition = new Vector3(buttonX, buttonY - (totalSpawned * buttonOffset), 0);
+            //set its ingredient & ID
+            button.ingredient = ingredients[choice];
+            button.SetID(choice); //use i instead of totalSpawned so that we can use the ID as an index to retrieve its ingredient from the ingredients list
+            button.UpdateData(); //tell the button to refresh its images with data from the new ingredient
 
-                totalSpawned++;
-            }
-            else
-            {
-                //ingredient was not found last round, and thus will not be enabled
-                Debug.Log("Ingredient " + ing.name + " isn't enabled");
-            }
+            totalSpawned++;
     	}
-
-        //debug cleanup
-        // if (gatheredIngredients.Count > 0)
-        // {
-        //     Debug.Log("No ingredients found for: " + gatheredIngredients);
-        // }
 
         //sanity check - if fewer than ingredientsPerSoup buttons were spawned, pad out to ingredientsPerSoup ingredients using the default ingredient
         while (totalSpawned < ingredientsPerSoup)

@@ -7,7 +7,7 @@ using System.Linq;
 /// A hostile combabatant (a.k.a an enemy unit).
 /// Currently, AI behavior is defined in the AICoroutine which must be defined in a child class.
 /// </summary>
-public abstract class Enemy : Combatant, IPausable
+public class Enemy : Combatant, IPausable
 {
     public PauseHandle PauseHandle { get; set; }
     public override Teams Team => Teams.Enemy;

@@ -116,7 +116,6 @@ public class Enemy : Combatant, IPausable
     }
     public override void Kill()
     {
-        Debug.Log("Enemy arrived");
         Debug.Log(DisplayName + " has died...");
         CancelChargingAction();
         var pData = DoNotDestroyOnLoad.Instance.persistentData;

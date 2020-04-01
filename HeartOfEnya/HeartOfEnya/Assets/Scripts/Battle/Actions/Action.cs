@@ -8,6 +8,8 @@ public class Action : MonoBehaviour
     public const float targetHighlightSeconds = 0.25f;
     public const float cutInSeconds = 2.25f;
 
+    public bool IsRanged => range.max > 1;
+
     public ActionRange range;
     public TargetPattern targetPattern;
     public int chargeTurns = 0;

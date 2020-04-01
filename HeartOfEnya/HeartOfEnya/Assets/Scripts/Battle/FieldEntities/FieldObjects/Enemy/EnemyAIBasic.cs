@@ -8,15 +8,11 @@ public class EnemyAIBasic : AIComponent<Enemy>
     {
         // ref to the action
         var action = self.action;
-        // Sort targets by distance
-        var targetList = new List<FieldObject>(PhaseManager.main.PartyPhase.Party);
+
         
         var obstacleList = new List<FieldObject>(BattleGrid.main.GetAllObjects((obj) => obj is Obstacle));   //get list of all obstacles
 
-        // Remove all destroyed targets (just in case)
-        targetList.RemoveAll((t) => t == null);
-        // Sort targets by grid distance, closest to farthest
-        targetList.Sort((p, p2) => Pos.Distance(self.Pos, p.Pos).CompareTo(Pos.Distance(self.Pos, p2.Pos)));
+
         // Get all obstacles
         obstacleList.RemoveAll((t) => t == null);
         obstacleList.Sort((p, p2) => Pos.Distance(self.Pos, p.Pos).CompareTo(Pos.Distance(self.Pos, p2.Pos))); //sort by distance
@@ -46,34 +42,66 @@ public class EnemyAIBasic : AIComponent<Enemy>
             }
         }
 
-
+        // Get the party
+        var targetList = new List<PartyMember>(PhaseManager.main.PartyPhase.Party);
+        // Remove all destroyed targets (just in case)
+        targetList.RemoveAll((t) => t == null);
+        // Sort targets by priority comparison
+        targetList.Sort((p, p2) => CompareTargetPriority(self.Pos, p, p2));
+        // Determing which targets are attackable, and attack highest priority attackable target found
         foreach (var target in targetList)
         {
             // Find path to target
             var path = BattleGrid.main.Path(self.Pos, target.Pos, (obj) => self.CanMoveThrough(obj) || obj == target);
-            // Move on to next target if no path is found
-            if (path == null)
+            Debug.Log("target: " + target.DisplayName + " path: " + path);
+            if(action.IsRanged)
+            {
+                if(path == null)
+                {
+                    path = PathToAttackRange(self, action);
+                    if (path == null)
+                        continue; // ranged and unattackable, continue
+                }
+                else // Remove the last node (the position of the target)
+                    path.RemoveAt(path.Count - 1);
+                // Remove the first node (our current position)
+                path.RemoveAt(0);
+            }
+            else if (path != null)
+            {
+                // Remove the last node (the position of the target)
+                path.RemoveAt(path.Count - 1);
+                // Remove the first node (our current position)
+                path.RemoveAt(0);
+                // Return if we don't have enough move
+                if (path.Count > self.Move + action.range.max - 1)
+                    continue;
+            }
+            else // attack is melee and there is no path, move on to next highest priority target
+            {
                 continue;
-            // Remove the last node (the position of the target)
-            path.RemoveAt(path.Count - 1);
-            // Remove the first node (our current position)
-            path.RemoveAt(0);
-            // Move along the path
-            for (int i = 0; i < self.Move && i < path.Count; ++i)
+            }
+
+            // Move along the path until within range
+            for (int i = 0; i < path.Count - action.range.max + 1; ++i)
             {
                 yield return new WaitWhile(() => self.PauseHandle.Paused);
                 BattleGrid.main.MoveAndSetWorldPos(self, path[i]);
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(moveDelay);
             }
-            if (self.Move >= path.Count) // Attack if close enough
-            {
-                yield return new WaitWhile(() => self.PauseHandle.Paused);
-                yield return self.Attack(target.Pos);
-                //yield return new WaitForSeconds(1);
-            }
+            // Actually launch the attack
+            yield return new WaitWhile(() => self.PauseHandle.Paused);
+            yield return self.Attack(target.Pos);
             yield return new WaitWhile(() => self.PauseHandle.Paused);
             break;
         }
+        // No target is attackable, move towards closest target
+        Debug.Log("No attackable target");
+    }
+
+    List<Pos> PathToAttackRange(Enemy self, Action action)
+    {
+        return null;
     }
 
     // Data on a FieldObject and the Path to it

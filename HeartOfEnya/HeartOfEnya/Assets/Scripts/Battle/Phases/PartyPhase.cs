@@ -54,12 +54,14 @@ public class PartyPhase : Phase
         else
             keyboardCursor.enabled = false;
         Cursor.SetActive(true);
+        BattleUI.main.ShowEndTurnButton();
         return null;
     }
 
     public override Coroutine OnPhaseEnd()
     {
         Cursor.SetActive(false);
+        BattleUI.main.HideEndTurnButton();
         // Remove all dead and/or gone
         CleanupParty();
         Party.ForEach((member) => member.OnPhaseEnd());
@@ -94,6 +96,7 @@ public class PartyPhase : Phase
             keyboardCursor.HighlightNext();
         }
         Cursor.SetActive(true);
+        BattleUI.main.ShowEndTurnButton();
     }
 
     /// <summary>
@@ -102,6 +105,7 @@ public class PartyPhase : Phase
     public void CancelAction(PartyMember p)
     {
         Cursor.SetActive(true);
+        BattleUI.main.ShowEndTurnButton();
     }
 
     public override void OnPhaseUpdate() { }

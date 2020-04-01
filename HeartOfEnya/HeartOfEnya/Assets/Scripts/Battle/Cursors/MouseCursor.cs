@@ -64,9 +64,10 @@ public class MouseCursor : Cursor
     //gotta make a wrapper for Select so the input system can see it
     private void HandleSelect(InputAction.CallbackContext context)
     {
-        if (PauseHandle.Paused)
+        if (PauseHandle.Paused || !BattleGrid.main.ContainsPoint(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue())))
             return;
         Select();
+        BattleUI.main.HideEndTurnButton();
     }
 
 

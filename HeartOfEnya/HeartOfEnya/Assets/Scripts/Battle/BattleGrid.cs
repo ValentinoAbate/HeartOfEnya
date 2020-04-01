@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System.Linq;
 using System;
 
@@ -191,6 +192,11 @@ public class BattleGrid : MonoBehaviour
         int row = Mathf.FloorToInt(transform.position.y + yleniency - worldSpace.y / (cellSize.y));
         int col = Mathf.FloorToInt((worldSpace.x + leniency - transform.position.x - (skewXOffset * row)) / (cellSize.x));
         return new Pos(row, col);
+    }
+
+    public bool ContainsPoint(Vector2 worldSpace)
+    {
+        return IsLegal(GetPos(worldSpace));
     }
 
     /// <summary>

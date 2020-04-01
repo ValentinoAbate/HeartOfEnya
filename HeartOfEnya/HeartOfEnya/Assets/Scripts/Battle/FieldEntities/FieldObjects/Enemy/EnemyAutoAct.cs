@@ -10,7 +10,7 @@ using UnityEngine;
 public class EnemyAutoAct : Enemy
 {
     private bool moved = false;
-    protected override IEnumerator AICoroutine()
+    protected IEnumerator AICoroutine()
     {
         yield return new WaitWhile(() => PauseHandle.Paused);
         if (!moved && BattleGrid.main.IsEmpty(Pos + Pos.Right))

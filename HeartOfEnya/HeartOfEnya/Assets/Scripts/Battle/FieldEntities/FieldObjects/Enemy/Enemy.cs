@@ -22,6 +22,8 @@ public class Enemy : Combatant, IPausable
 
     private readonly List<TileUI.Entry> tileUIEntries = new List<TileUI.Entry>();
 
+    private PlaytestLogger logger;
+
     protected override void Initialize()
     {
         base.Initialize();
@@ -29,11 +31,27 @@ public class Enemy : Combatant, IPausable
         PauseHandle = new PauseHandle();
         PhaseManager.main?.EnemyPhase.Enemies.Add(this);
         PhaseManager.main?.EnemyPhase.PauseHandle.Dependents.Add(this);
+
+        logger = DoNotDestroyOnLoad.Instance.playtestLogger;
     }
 
     private void OnDestroy()
     {
         PhaseManager.main?.EnemyPhase.PauseHandle.Dependents.Remove(this);
+    }
+
+    // overriding function to add playtest logging
+    public override void OnPhaseEnd()
+    {
+        if (Dead)
+            return;
+        if(Stunned)
+        {
+            logger.testData.stunnedEnemies++;
+            Stunned = false;
+            if(stunIsBurn)
+                Damage(1);
+        }
     }
 
     // Show movement range when highlighted.
@@ -109,9 +127,34 @@ public class Enemy : Combatant, IPausable
     {
         var target = BattleGrid.main.GetObject(p) as Combatant;
         if (action.chargeTurns > 0)
+        {
             Debug.Log(name + " begins charging " + action.name);
+        }
         else if (target != null)
+        {
             Debug.Log(name + " attacks " + target.name + " with " + action.name);
+
+            // log playtest data for damage dealt by enemy type
+            // if enemy type is not already in logger
+            if(!logger.testData.enemyDmg.ContainsKey(DisplayName))
+            {
+                // check if the move does damage
+                var dmg = action.GetComponent<DamageEffect>();
+                if(dmg != null)
+                {
+                    logger.testData.enemyDmg[DisplayName] = dmg.damage;
+                }
+            }
+            else
+            {
+                // check if the move does damage
+                var dmg = action.GetComponent<DamageEffect>();
+                if(dmg != null)
+                {
+                    logger.testData.enemyDmg[DisplayName] += dmg.damage;
+                }
+            }
+        }
         return UseAction(action, p);
     }
     public override void Kill()

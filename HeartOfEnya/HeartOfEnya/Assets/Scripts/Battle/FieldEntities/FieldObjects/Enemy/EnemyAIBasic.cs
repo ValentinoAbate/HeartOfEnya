@@ -12,14 +12,14 @@ public class EnemyAIBasic : AIComponent<Enemy>
         var action = self.action;
 
         
-        var obstacleList = new List<FieldObject>(BattleGrid.main.GetAllObjects((obj) => obj is Obstacle));   //get list of all obstacles
+        var obstacleList = BattleGrid.main.GetAllCombatants((obj) => obj is Obstacle);   //get list of all obstacles
 
 
         // Get all obstacles
         obstacleList.RemoveAll((t) => t == null);
         obstacleList.Sort((p, p2) => Pos.Distance(self.Pos, p.Pos).CompareTo(Pos.Distance(self.Pos, p2.Pos))); //sort by distance
 
-        var lureList = new List<FieldObject>(BattleGrid.main.GetAllObjects((obj) => obj is Lure));   //get list of all lures
+        var lureList = BattleGrid.main.GetAllCombatants((obj) => obj is Lure);   //get list of all lures
         lureList.RemoveAll((t) => t == null);
         lureList.Sort((p, p2) => Pos.Distance(self.Pos, p.Pos).CompareTo(Pos.Distance(self.Pos, p2.Pos))); //sort by distance
         // If there are lures on the field, try and attack them
@@ -45,7 +45,7 @@ public class EnemyAIBasic : AIComponent<Enemy>
         }
 
         // Get the party
-        var targetList = new List<PartyMember>(PhaseManager.main.PartyPhase.Party);
+        var targetList = new List<Combatant>(PhaseManager.main.PartyPhase.Party);
         // Remove all destroyed targets (just in case)
         targetList.RemoveAll((t) => t == null);
         // Sort targets by priority comparison

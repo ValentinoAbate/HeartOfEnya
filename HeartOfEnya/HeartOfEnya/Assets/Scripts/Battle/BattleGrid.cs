@@ -221,6 +221,23 @@ public class BattleGrid : MonoBehaviour
         return null;
     }
 
+    public List<Combatant> GetAllCombatants(Predicate<Combatant> pred)
+    {
+        var foundObjects = new List<Combatant>();
+        //brute force foreach of field; might optimize later
+        foreach (var obj in field)
+        {
+            if(obj is Combatant)
+            {
+                var c = obj as Combatant;
+                //if object matches the predicate, add it to the list
+                if (pred(c))
+                    foundObjects.Add(c);
+            }
+        }
+        return foundObjects;
+    }
+
     /// <summary>
     /// Return all FieldObjects that match the given predicate
     /// </summary>

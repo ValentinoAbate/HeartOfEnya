@@ -28,7 +28,8 @@ public class PersistentData : MonoBehaviour
     public int numEnemiesDefeatedThisEncounter = 0;
     public int waveNum;
     public Encounter lastEncounter; // Used to determing if we are one a new encounter or returning to an old one
-    public List<SavedEnemy> listEnemiesLeft = new List<SavedEnemy>(); // data of remaining enemies
+    public List<SavedCombatant> listEnemiesLeft = new List<SavedCombatant>(); // data of remaining enemies
+    public List<WaveData.SpawnData> listActiveSpawners = new List<WaveData.SpawnData>();
     public List<BuffStruct> buffStructures;  // buffs characters are taking into battle
 
     [Header("Dialog")]
@@ -49,7 +50,7 @@ public class PersistentData : MonoBehaviour
     }
 
     [System.Serializable]
-    public class SavedEnemy
+    public class SavedCombatant
     {
         public GameObject prefabAsset;
         public int remainingHP;

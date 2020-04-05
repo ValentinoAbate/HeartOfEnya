@@ -24,6 +24,7 @@ public abstract class FieldEntity : MonoBehaviour
     /// However, some objects, like traps, make have multiple values for what teams they affect
     /// </summary>
     public virtual Teams Team { get => Teams.Neutral; }
+
     /// <summary>
     /// The entity's name as it should be displayed to the player in the game.
     /// </summary>

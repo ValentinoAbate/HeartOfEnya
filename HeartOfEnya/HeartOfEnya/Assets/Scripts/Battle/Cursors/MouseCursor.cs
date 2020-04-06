@@ -67,7 +67,9 @@ public class MouseCursor : Cursor
         if (PauseHandle.Paused || !BattleGrid.main.ContainsPoint(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue())))
             return;
         Select();
-        BattleUI.main.HideEndTurnButton();
+        var highlighted = BattleGrid.main.GetObject(Pos);
+        if (highlighted != null && highlighted is PartyMember)
+            BattleUI.main.HideEndTurnButton();
     }
 
 

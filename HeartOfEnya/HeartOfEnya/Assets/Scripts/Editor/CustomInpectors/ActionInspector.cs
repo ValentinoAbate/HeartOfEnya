@@ -12,9 +12,11 @@ public class ActionInspector : Editor
         EditorGUILayout.LabelField(new GUIContent("Text"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("displayName"), new GUIContent("Display Name"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("description"), new GUIContent("Description"));
-        EditorGUILayout.LabelField(new GUIContent("VFX Fields"));
+        EditorGUILayout.LabelField(new GUIContent("VFX / SFX Fields"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("cutInPrefab"), new GUIContent("Cut-In Prefab"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("fxPrefab"), new GUIContent("Vfx Prefab"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("actionFxPrefab"), new GUIContent("Action Fx Prefab"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("tileFxPrefab"), new GUIContent("Per-Tile Fx Prefab"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("userFxPrefab"), new GUIContent("User Fx Prefab"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("delayAtEnd"), new GUIContent("Delay At End"));
         EditorUtils.Separator();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("chargeTurns"), new GUIContent("Charge Turns"));

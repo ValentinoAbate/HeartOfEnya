@@ -17,7 +17,9 @@ public class Action : MonoBehaviour
     #region VFX Fields
 
     public GameObject cutInPrefab = null;
-    public GameObject fxPrefab;
+    public GameObject tileFxPrefab;
+    public GameObject actionFxPrefab;
+    public GameObject userFxPrefab;
     public float delayAtEnd = 0.25f;
 
     #endregion
@@ -154,13 +156,13 @@ public class Action : MonoBehaviour
 
     private Coroutine PlayActionVfx(Vector2 position)
     {
-        if (fxPrefab != null)
+        if (tileFxPrefab != null)
         {
-            var fx = Instantiate(fxPrefab, position, Quaternion.identity).GetComponent<ActionVfx>();
+            var fx = Instantiate(tileFxPrefab, position, Quaternion.identity).GetComponent<ActionVfx>();
             if (fx != null)
                 return fx.Play();
             else
-                Debug.LogError("fxPrefab: " + fxPrefab.name + " is missing ActionVFX component");
+                Debug.LogError("fxPrefab: " + tileFxPrefab.name + " is missing ActionVFX component");
         }
         return null;
     }

@@ -66,41 +66,9 @@ public class Action : MonoBehaviour
         targetPattern.Show(tileType);
         yield return new WaitForSeconds(targetHighlightSeconds);
 
-        var targetPositionBatches = new List<List<Pos>>() { targetPositions };
-        bool useBatches = false;
-
-        var customSortingOrder = GetComponent<VfxOrder>();
-        if (customSortingOrder == null)
-            targetPositions.Sort((p1, p2) => Pos.CompareTopToBottomLeftToRight(p1, p2));
-        else
-        {
-            targetPositionBatches = customSortingOrder.GetPositions(targetPositions);
-            useBatches = customSortingOrder.UseBatches;
-        }
-
-
-        foreach(var batch in targetPositionBatches)
-        {
-            Coroutine routine = null;
-            // Iterate through positions and show VFX
-            foreach (var position in batch)
-            {
-                // Check if a target is in this square
-                var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
-                if (target != null)
-                {
-                    routine = PlayActionVfx(target.VfxSpawnPoint);
-                }
-                else
-                {
-                    routine = PlayActionVfx(BattleGrid.main.GetSpace(position));
-                }
-                if (!useBatches)
-                    yield return routine;
-            }
-            if (useBatches)
-                yield return routine;
-        }
+        // If there are per-tile fx, play them
+        if (tileFxPrefab != null)
+            yield return StartCoroutine(PlayPerTileFx(targetPositions));
 
 
         // Wait for the VFX to finish, wait for the highlight time again, then continue
@@ -154,15 +122,63 @@ public class Action : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private Coroutine PlayActionVfx(Vector2 position)
+    /// <summary>
+    /// Play the per-tile fx for this action
+    /// </summary>
+    /// <param name="targetPositions"></param>
+    /// <returns></returns>
+    private IEnumerator PlayPerTileFx(List<Pos> targetPositions)
     {
-        if (tileFxPrefab != null)
+        var targetPositionBatches = new List<List<Pos>>() { targetPositions };
+        bool useBatches = false;
+
+        var customSortingOrder = GetComponent<VfxOrder>();
+        if (customSortingOrder == null)
+            targetPositions.Sort((p1, p2) => Pos.CompareTopToBottomLeftToRight(p1, p2));
+        else
         {
-            var fx = Instantiate(tileFxPrefab, position, Quaternion.identity).GetComponent<ActionVfx>();
+            targetPositionBatches = customSortingOrder.GetPositions(targetPositions);
+            useBatches = customSortingOrder.UseBatches;
+        }
+
+        foreach (var batch in targetPositionBatches)
+        {
+            Coroutine routine = null;
+            // Iterate through positions and show VFX
+            foreach (var position in batch)
+            {
+                // Check if a target is in this square
+                var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
+                if (target != null)
+                {
+                    routine = PlayActionVfx(tileFxPrefab, target.VfxSpawnPoint);
+                }
+                else
+                {
+                    routine = PlayActionVfx(tileFxPrefab, BattleGrid.main.GetSpace(position));
+                }
+                if (!useBatches)
+                    yield return routine;
+            }
+            if (useBatches)
+                yield return routine;
+        }
+    }
+
+    private IEnumerator PlayPerAcionFx()
+    {
+        yield break;
+    }
+
+    private Coroutine PlayActionVfx(GameObject prefab, Vector2 position)
+    {
+        if (prefab != null)
+        {
+            var fx = Instantiate(prefab, position, Quaternion.identity).GetComponent<ActionVfx>();
             if (fx != null)
                 return fx.Play();
             else
-                Debug.LogError("fxPrefab: " + tileFxPrefab.name + " is missing ActionVFX component");
+                Debug.LogError("fxPrefab: " + prefab.name + " is missing ActionVFX component");
         }
         return null;
     }

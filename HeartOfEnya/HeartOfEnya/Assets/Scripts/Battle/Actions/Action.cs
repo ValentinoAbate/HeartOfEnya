@@ -19,6 +19,8 @@ public class Action : MonoBehaviour
     public GameObject cutInPrefab = null;
     public GameObject tileFxPrefab;
     public GameObject actionFxPrefab;
+    public GameObject actionFxPrefabVertical;
+    public GameObject actionFxPrefabHorizontal;
     public GameObject userFxPrefab;
     public float delayAtEnd = 0.25f;
 
@@ -32,6 +34,17 @@ public class Action : MonoBehaviour
     private string displayName = "display name";
 
     private ActionEffect[] effects;
+
+    private bool HasPerActionFx
+    {
+        get
+        {
+            if (targetPattern.type == TargetPattern.Type.Directional)
+                return actionFxPrefabVertical != null && actionFxPrefabHorizontal != null;
+            else
+                return actionFxPrefab != null;
+        }
+    }
 
     private void Awake()
     {
@@ -66,10 +79,20 @@ public class Action : MonoBehaviour
         targetPattern.Show(tileType);
         yield return new WaitForSeconds(targetHighlightSeconds);
 
+        var fxRoutines = new List<Coroutine>();
+
         // If there are per-tile fx, play them
         if (tileFxPrefab != null)
-            yield return StartCoroutine(PlayPerTileFx(targetPositions));
-
+            fxRoutines.Add(StartCoroutine(PlayPerTileFx(targetPositions)));
+        if (HasPerActionFx)
+            fxRoutines.Add(StartCoroutine(PlayPerActionFx(user, targetPos)));
+        if (userFxPrefab != null)
+            fxRoutines.Add(PlayActionVfx(userFxPrefab,user.VfxSpawnPoint));
+        
+        // Wait for all fx to finish up
+        foreach (var routine in fxRoutines)
+            if(routine != null)
+                yield return routine;
 
         // Wait for the VFX to finish, wait for the highlight time again, then continue
         yield return new WaitForSeconds(targetHighlightSeconds + delayAtEnd);
@@ -165,18 +188,58 @@ public class Action : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayPerAcionFx()
+    private IEnumerator PlayPerActionFx(Combatant user, Pos targetPos)
     {
-        yield break;
+        if(targetPattern.type == TargetPattern.Type.Directional)
+        {
+            var direction = Pos.DirectionBasic(user.Pos, targetPos);
+            var prefab = actionFxPrefabHorizontal;
+            bool flipX = false;
+            bool flipY = false;
+            if(direction == Pos.Left)
+            {
+                flipX = true;
+            }
+            else if(direction == Pos.Up)
+            {
+                prefab = actionFxPrefabVertical;
+            }
+            else if(direction == Pos.Down)
+            {
+                prefab = actionFxPrefabVertical;
+                flipY = true;
+            }
+            flipX = !flipX;
+
+            yield return PlayActionVfx(prefab, BattleGrid.main.GetSpace(targetPos), flipX, flipY);
+        }
+        else
+        {
+            yield return PlayActionVfx(actionFxPrefab, BattleGrid.main.GetSpace(targetPos));
+        }
     }
 
-    private Coroutine PlayActionVfx(GameObject prefab, Vector2 position)
+    private Coroutine PlayActionVfx(GameObject prefab, Vector2 position, bool flipX = false, bool flipY = false)
     {
         if (prefab != null)
         {
             var fx = Instantiate(prefab, position, Quaternion.identity).GetComponent<ActionVfx>();
             if (fx != null)
+            {
+                var scaleVec = new Vector3(flipX ? -1 : 1, flipY ? -1 : 1, 1);
+                fx.transform.localScale = Vector3.Scale(fx.transform.localScale, scaleVec);
+                foreach (Transform t in fx.transform)
+                {
+                    t.localScale = Vector3.Scale(t.localScale, scaleVec);
+                    if(t.childCount > 0)
+                    {
+                        foreach(Transform t2 in t)
+                            t2.localScale = Vector3.Scale(t2.localScale, scaleVec);
+                    }
+                }
+                    
                 return fx.Play();
+            }
             else
                 Debug.LogError("fxPrefab: " + prefab.name + " is missing ActionVFX component");
         }

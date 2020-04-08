@@ -14,7 +14,13 @@ public class ActionInspector : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("description"), new GUIContent("Description"));
         EditorGUILayout.LabelField(new GUIContent("VFX / SFX Fields"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("cutInPrefab"), new GUIContent("Cut-In Prefab"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("actionFxPrefab"), new GUIContent("Action Fx Prefab"));
+        if(action.targetPattern.type == TargetPattern.Type.Spread)
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("actionFxPrefab"), new GUIContent("Per-Action Fx Prefab"));
+        else
+        {
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("actionFxPrefabVertical"), new GUIContent("Per-Action Fx Prefab Vertical"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("actionFxPrefabHorizontal"), new GUIContent("Per-Action Fx Prefab Horizontal"));
+        }
         EditorGUILayout.PropertyField(serializedObject.FindProperty("tileFxPrefab"), new GUIContent("Per-Tile Fx Prefab"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("userFxPrefab"), new GUIContent("User Fx Prefab"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("delayAtEnd"), new GUIContent("Delay At End"));

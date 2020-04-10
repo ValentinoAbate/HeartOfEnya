@@ -7,7 +7,6 @@ public class Action : MonoBehaviour
 {
     public const float targetHighlightSeconds = 0.25f;
     public const float cutInSeconds = 2.25f;
-    public const float resultsEffectSeconds = 0.5f;
 
     public bool IsRanged => range.max > 1;
 
@@ -110,12 +109,11 @@ public class Action : MonoBehaviour
                 {
                     if (effect.target != ActionEffect.Target.Other)
                         continue;
-                    effect.ApplyEffect(user, target);
+                    yield return StartCoroutine(effect.ApplyEffect(user, target));
                     // If the target died from this effect
                     if (target == null)
                         break;
                 }
-                yield return new WaitForSeconds(0.25f);
             }
             else
             {
@@ -124,7 +122,7 @@ public class Action : MonoBehaviour
                 {
                     if (effect.target != ActionEffect.Target.Tile)
                         continue;
-                    effect.ApplyEffect(user, position);
+                    yield return StartCoroutine(effect.ApplyEffect(user, position));
                     // If the target died from this effect
                     if (target == null)
                         break;
@@ -136,10 +134,9 @@ public class Action : MonoBehaviour
                 if (effect.target != ActionEffect.Target.Self)
                     continue;
                 if (target != null)
-                    effect.ApplyEffect(target, user);
+                    yield return StartCoroutine(effect.ApplyEffect(target, user));
                 else
-                    effect.ApplyEffect(user, user);
-                yield return new WaitForSeconds(0.25f);
+                    yield return StartCoroutine(effect.ApplyEffect(user, user));
                 // If the target died from this effect
                 if (target == null)
                     break;

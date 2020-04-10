@@ -20,6 +20,7 @@ public abstract class Combatant : FieldObject
     public string description = "Combatant description";
     public AudioClip damageSfx;
     public AudioClip deathSfx;
+    public AudioClip moveSfx;
     [Header("General Combatant Fields")]
     public int maxHp;
     /// <summary>

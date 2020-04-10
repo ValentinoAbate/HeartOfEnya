@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class SwapEffect : ActionEffect
 {
-    public override void ApplyEffect(Combatant user, Combatant target)
+    public override IEnumerator ApplyEffect(Combatant user, Combatant target)
     {
         BattleGrid.main.SwapAndSetWorldPos(user, target);
+        yield break;
     }
 }

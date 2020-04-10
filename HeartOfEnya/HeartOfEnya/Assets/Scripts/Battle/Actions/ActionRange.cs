@@ -5,6 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public struct ActionRange
 {
+    public enum Type
+    { 
+        Normal,
+        Cardinal,
+    }
+
+    public Type type;
     public int min;
     public int max;
 

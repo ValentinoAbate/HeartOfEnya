@@ -7,6 +7,7 @@ public class Action : MonoBehaviour
 {
     public const float targetHighlightSeconds = 0.25f;
     public const float cutInSeconds = 2.25f;
+    public const float resultsEffectSeconds = 0.5f;
 
     public bool IsRanged => range.max > 1;
 
@@ -104,6 +105,7 @@ public class Action : MonoBehaviour
             var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
             if (target != null)
             {
+                // Apply effects to targets
                 foreach (var effect in effects)
                 {
                     if (effect.target != ActionEffect.Target.Other)
@@ -117,6 +119,7 @@ public class Action : MonoBehaviour
             }
             else
             {
+                // Apply effects to tiles
                 foreach (var effect in effects)
                 {
                     if (effect.target != ActionEffect.Target.Tile)
@@ -127,6 +130,7 @@ public class Action : MonoBehaviour
                         break;
                 }
             }
+            // Apply effects to self
             foreach (var effect in effects)
             {
                 if (effect.target != ActionEffect.Target.Self)

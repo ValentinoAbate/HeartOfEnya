@@ -185,7 +185,7 @@ public class PartyMember : Combatant, IPausable
         {
             // moveCursor.SetActive(true);
             mouseMoveCursor.SetActive(true);
-
+            BattleUI.main.HideEndTurnButton();
             return true;
         }
         return false;

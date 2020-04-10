@@ -73,7 +73,7 @@ public class MouseMoveCursor : MoveCursor
 
     private void HandleDeselect(InputAction.CallbackContext context)
     {
-        if (PauseHandle.Paused)
+        if (PauseHandle.Paused || BonusMode)
             return;
         sfxCancel.Play();
     	ResetToLastPosition();

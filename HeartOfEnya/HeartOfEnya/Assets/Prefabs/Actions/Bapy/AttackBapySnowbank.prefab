@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &7291061238567941647
+--- !u!114 &4259270724717145825
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 417375792446999537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e33c48ad71bf17147a9fecb3624a3256, type: 3}
+  m_Script: {fileID: 11500000, guid: 38f71b9acdd157e48b53528355f8a477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: 1
-  moveType: 0
-  squares: 1
+  target: 2
+  objPrefab: {fileID: 2711226696215782862, guid: cba6ec7e80e9e6348adb70692b8ba586,
+    type: 3}
 --- !u!1 &8222393600899925527
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ PrefabInstance:
     - target: {fileID: 876645245125307362, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: m_Name
-      value: AttackBapyPull
+      value: AttackBapySnowbank
       objectReference: {fileID: 0}
     - target: {fileID: 876645245125307388, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -227,7 +227,7 @@ PrefabInstance:
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: targetPattern.maxReach.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -242,7 +242,7 @@ PrefabInstance:
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: targetPattern.offsets.Array.data[1].col
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -262,7 +262,7 @@ PrefabInstance:
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: targetPattern.offsets.Array.data[0].col
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -272,12 +272,12 @@ PrefabInstance:
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: targetPattern.offsets.Array.data[1].row
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: range.max
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -299,17 +299,17 @@ PrefabInstance:
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: displayName
-      value: Pull
+      value: Snowbank
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: description
-      value: Pull an object closer with Bapy's hoe
+      value: Make a 2hp obstacle out of snow on an empty tile.
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: targetPattern.type
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -317,11 +317,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4842508818842539274, guid: ef045a7ca61c6ec4380c335603ca108a,
         type: 3}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: range.type
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65afaea67fb0af4a84fe0702411019e, type: 3}
 --- !u!1 &417375792446999537 stripped

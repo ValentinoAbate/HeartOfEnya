@@ -54,6 +54,7 @@ public class PartyMember : Combatant, IPausable
     public AttackCursor attackCursor;
     public int maxFp;
     public int level;
+    public Color noTurnColor = Color.gray;
     public override Sprite DisplaySprite => chara.Portrait;
     public override Color DisplaySpriteColor => Color.white;
 
@@ -91,11 +92,11 @@ public class PartyMember : Combatant, IPausable
             hasTurn = value;
             if (value)
             {
-                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1f);
+                sprite.color = Color.white;
             }
             else
             {
-                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0.5f);
+                sprite.color = noTurnColor;
             }
         }
     }
@@ -241,9 +242,7 @@ public class PartyMember : Combatant, IPausable
 
     public override void OnPhaseEnd()
     {
-        var sprite = GetComponent<SpriteRenderer>();
-        if (sprite != null)
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+        sprite.color = Color.white;
         if(Stunned)
         {
             Stunned = false;

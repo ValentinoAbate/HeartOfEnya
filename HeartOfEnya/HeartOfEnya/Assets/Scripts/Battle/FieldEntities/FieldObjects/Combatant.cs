@@ -18,6 +18,9 @@ public abstract class Combatant : FieldObject
     [Header("Combatant Display Fields")]
     [TextArea(1, 2)]
     public string description = "Combatant description";
+    public AudioClip damageSfx;
+    public AudioClip deathSfx;
+    public AudioClip moveSfx;
     [Header("General Combatant Fields")]
     public int maxHp;
     /// <summary>
@@ -41,13 +44,15 @@ public abstract class Combatant : FieldObject
             {
                 Debug.Log(name + " is stunned!");
                 unstunnedColor = hpImage.color;
-                hpImage.color = Color.yellow;
+                hpImage.color = new Color(1, 0.55f, 0.55f, 1);
+                uiHelper.SetStun(true);
                 CancelChargingAction();
             }
             else
             {
                 Debug.Log(name + " is no longer stunned");
                 hpImage.color = unstunnedColor;
+                uiHelper.SetStun(false);
             }
         }
     }
@@ -73,6 +78,7 @@ public abstract class Combatant : FieldObject
     public Image hpImage;
     public GameObject chargeUI;
     public TextMeshProUGUI chargeText;
+    public UnitUI uiHelper;
     public bool IsChargingAction => chargingAction != null;
     public bool ChargingActionReady => IsChargingAction && chargingAction.Ready;
     private ChargingAction chargingAction;
@@ -127,7 +133,8 @@ public abstract class Combatant : FieldObject
         {
             chargingAction = new ChargingAction(action, this, targetPos);            
             ChargeChargingAction();
-            chargeUI.SetActive(true);
+            //chargeUI.SetActive(true);
+            uiHelper.SetCharge(true);
         }
         return null;
     }
@@ -156,6 +163,7 @@ public abstract class Combatant : FieldObject
         chargeUI.SetActive(false);
         chargingAction.Cancel();
         chargingAction = null;
+        uiHelper.SetCharge(false);
     }
 
     /// <summary>
@@ -182,6 +190,7 @@ public abstract class Combatant : FieldObject
         chargeUI.SetActive(false);
         var cr = StartCoroutine(chargingAction.Activate());
         chargingAction = null;
+        uiHelper.SetCharge(false);
         return cr;
     }
 

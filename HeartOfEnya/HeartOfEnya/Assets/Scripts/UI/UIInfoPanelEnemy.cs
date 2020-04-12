@@ -21,7 +21,7 @@ public class UIInfoPanelEnemy : MonoBehaviour
         descriptionText.text = e.description;
         statusText.text = e.IsChargingAction ? "Status: Charging" : "Status: Normal";
         if(e.Stunned)
-            statusText.text = "Status: Stunned";
+            statusText.text = "Status: Burning";
         moveNumberText.text = e.Move.ToString();
         hpNumberText.text = e.Hp.ToString();
         attackUI.ShowAttack(e.action);

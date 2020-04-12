@@ -14,6 +14,13 @@ public class MoveCursor : GridCursor
     private Pos lastPosition;
     protected PartyMember partyMember;
     protected List<Pos> traversable;
+    /// <summary>
+    /// If bonusmode is true, end the turn, else open the actionMenu
+    /// will automaticall be unset at the end of amuce
+    /// </summary>
+    public bool BonusMode { get; private set; }
+    private int bonusMoveRange = 1;
+
     private readonly List<TileUI.Entry> tileUIEntries = new List<TileUI.Entry>();
 
     private void Start()
@@ -35,6 +42,12 @@ public class MoveCursor : GridCursor
         DisplayTraversable(value);
     }
 
+    public void SetBonusMode(int range)
+    {
+        BonusMode = true;
+        bonusMoveRange = range;
+    }
+
     /// <summary>
     /// Calculates which squares can be moved to by the cursor, based on the BattleGrid's reachability algorithm
     /// </summary>
@@ -43,7 +56,7 @@ public class MoveCursor : GridCursor
         // Log the last position in case the move is canceled
         lastPosition = partyMember.Pos;
         // Calculate the reachable squares given position, move range, and traverability function
-        traversable = BattleGrid.main.Reachable(partyMember.Pos, partyMember.Move, partyMember.CanMoveThrough).Keys.ToList();
+        traversable = BattleGrid.main.Reachable(partyMember.Pos, BonusMode ? bonusMoveRange : partyMember.Move, partyMember.CanMoveThrough).Keys.ToList();
         // Remove squares that were traversable but cannot be ended in (Squares with trasversable allies, etc.)
         traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
         // Add the initial location back in (as it will be removed by the last line)
@@ -126,7 +139,13 @@ public class MoveCursor : GridCursor
         lastPosition = partyMember.Pos;
         BattleGrid.main.Move(partyMember, Pos);
         SetActive(false);
-        partyMember.OpenActionMenu();
+        if (BonusMode)
+        {
+            partyMember.EndTurn();
+            BonusMode = false;
+        }
+        else
+            partyMember.OpenActionMenu();
     }
 
     /// <summary>

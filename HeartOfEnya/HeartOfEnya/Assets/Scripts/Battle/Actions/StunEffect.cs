@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class StunEffect : ActionEffect
 {
-    public override void ApplyEffect(Combatant user, Combatant target)
+    public override IEnumerator ApplyEffect(Combatant user, Combatant target)
     {
         if (user.Team == target.Team)
-            return;
+            yield break;
         if (!target.Stunned)
             target.Stunned = true;
+        yield break;
     }
 }

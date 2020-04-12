@@ -21,6 +21,10 @@ public class FieldObject : FieldEntity
     private GameObject vfxSpawnPoint;
 
     public Pos OriginalPos { get; protected set; }
+    /// <summary>
+    ///  A reference to the prefab this entity was spawned from. should be set in the spawnphase when spawned.
+    ///  If the entity was not spawned, will be null
+    /// </summary>
     public GameObject PrefabOrigin { get; set; }
 
     /// <summary>

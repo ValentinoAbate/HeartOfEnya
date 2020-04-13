@@ -143,6 +143,9 @@ public class AttackCursor : GridAndSelectionListCursor
             if (kvp.Value < action.range.min)
                 continue;
             var pos = kvp.Key;
+            // Remove non-cardinal squares from cardinal patterns
+            if (action.range.type == ActionRange.Type.Cardinal && attacker.Pos.row != pos.row && attacker.Pos.col != pos.col)
+                continue;        
             inRange.Add(pos);
         }
     }
@@ -202,7 +205,21 @@ public class AttackCursor : GridAndSelectionListCursor
         enabled = false;
         // Wait for the attack routine to finish
         yield return attacker.UseAction(action, Pos);
-        (attacker as PartyMember)?.EndTurn();
+        if(attacker is PartyMember)
+        {
+            var partyMember = attacker as PartyMember;
+            var bonusMove = action.GetComponent<BonusMove>();
+            if (bonusMove != null)
+            {
+                var moveCuror = partyMember.GetComponent<MoveCursor>();
+                moveCuror.SetBonusMode(bonusMove.range);
+                moveCuror.SetActive(true);
+            }
+            else
+            {
+                partyMember.EndTurn();
+            }
+        }     
         enabled = true;
         // Disable attacking again
         SetActive(false);

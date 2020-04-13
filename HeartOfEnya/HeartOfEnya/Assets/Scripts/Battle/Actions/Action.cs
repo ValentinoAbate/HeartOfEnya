@@ -17,7 +17,11 @@ public class Action : MonoBehaviour
     #region VFX Fields
 
     public GameObject cutInPrefab = null;
-    public GameObject fxPrefab;
+    public GameObject tileFxPrefab;
+    public GameObject actionFxPrefab;
+    public GameObject actionFxPrefabVertical;
+    public GameObject actionFxPrefabHorizontal;
+    public GameObject userFxPrefab;
     public float delayAtEnd = 0.25f;
 
     #endregion
@@ -30,6 +34,17 @@ public class Action : MonoBehaviour
     private string displayName = "display name";
 
     private ActionEffect[] effects;
+
+    private bool HasPerActionFx
+    {
+        get
+        {
+            if (targetPattern.type == TargetPattern.Type.Directional)
+                return actionFxPrefabVertical != null && actionFxPrefabHorizontal != null;
+            else
+                return actionFxPrefab != null;
+        }
+    }
 
     private void Awake()
     {
@@ -64,6 +79,80 @@ public class Action : MonoBehaviour
         targetPattern.Show(tileType);
         yield return new WaitForSeconds(targetHighlightSeconds);
 
+        var fxRoutines = new List<Coroutine>();
+
+        // If there are per-tile fx, play them
+        if (tileFxPrefab != null)
+            fxRoutines.Add(StartCoroutine(PlayPerTileFx(targetPositions)));
+        if (HasPerActionFx)
+            fxRoutines.Add(StartCoroutine(PlayPerActionFx(user, targetPos)));
+        if (userFxPrefab != null)
+            fxRoutines.Add(PlayActionVfx(userFxPrefab,user.VfxSpawnPoint));
+        
+        // Wait for all fx to finish up
+        foreach (var routine in fxRoutines)
+            if(routine != null)
+                yield return routine;
+
+        // Wait for the VFX to finish, wait for the highlight time again, then continue
+        yield return new WaitForSeconds(targetHighlightSeconds + delayAtEnd);
+        targetPattern.Hide();
+
+        // Apply actual effects to targets and display results
+        foreach(var position in targetPositions)
+        {
+            var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
+            if (target != null)
+            {
+                // Apply effects to targets
+                foreach (var effect in effects)
+                {
+                    if (effect.target != ActionEffect.Target.Other)
+                        continue;
+                    yield return StartCoroutine(effect.ApplyEffect(user, target));
+                    // If the target died from this effect
+                    if (target == null)
+                        break;
+                }
+            }
+            else
+            {
+                // Apply effects to tiles
+                foreach (var effect in effects)
+                {
+                    if (effect.target != ActionEffect.Target.Tile)
+                        continue;
+                    yield return StartCoroutine(effect.ApplyEffect(user, position));
+                    // If the target died from this effect
+                    if (target == null)
+                        break;
+                }
+            }
+            // Apply effects to self
+            foreach (var effect in effects)
+            {
+                if (effect.target != ActionEffect.Target.Self)
+                    continue;
+                if (target != null)
+                    yield return StartCoroutine(effect.ApplyEffect(target, user));
+                else
+                    yield return StartCoroutine(effect.ApplyEffect(user, user));
+                // If the target died from this effect
+                if (target == null)
+                    break;
+            }
+        }
+
+        Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Play the per-tile fx for this action
+    /// </summary>
+    /// <param name="targetPositions"></param>
+    /// <returns></returns>
+    private IEnumerator PlayPerTileFx(List<Pos> targetPositions)
+    {
         var targetPositionBatches = new List<List<Pos>>() { targetPositions };
         bool useBatches = false;
 
@@ -76,8 +165,7 @@ public class Action : MonoBehaviour
             useBatches = customSortingOrder.UseBatches;
         }
 
-
-        foreach(var batch in targetPositionBatches)
+        foreach (var batch in targetPositionBatches)
         {
             Coroutine routine = null;
             // Iterate through positions and show VFX
@@ -87,11 +175,11 @@ public class Action : MonoBehaviour
                 var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
                 if (target != null)
                 {
-                    routine = PlayActionVfx(target.VfxSpawnPoint);
+                    routine = PlayActionVfx(tileFxPrefab, target.VfxSpawnPoint);
                 }
                 else
                 {
-                    routine = PlayActionVfx(BattleGrid.main.GetSpace(position));
+                    routine = PlayActionVfx(tileFxPrefab, BattleGrid.main.GetSpace(position));
                 }
                 if (!useBatches)
                     yield return routine;
@@ -99,68 +187,62 @@ public class Action : MonoBehaviour
             if (useBatches)
                 yield return routine;
         }
-
-
-        // Wait for the VFX to finish, wait for the highlight time again, then continue
-        yield return new WaitForSeconds(targetHighlightSeconds + delayAtEnd);
-        targetPattern.Hide();
-
-        // Apply actual effects to targets and display results
-        foreach(var position in targetPositions)
-        {
-            var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
-            if (target != null)
-            {
-                foreach (var effect in effects)
-                {
-                    if (effect.target != ActionEffect.Target.Other)
-                        continue;
-                    effect.ApplyEffect(user, target);
-                    // If the target died from this effect
-                    if (target == null)
-                        break;
-                }
-                yield return new WaitForSeconds(0.25f);
-            }
-            else
-            {
-                foreach (var effect in effects)
-                {
-                    if (effect.target != ActionEffect.Target.Tile)
-                        continue;
-                    effect.ApplyEffect(user, position);
-                    // If the target died from this effect
-                    if (target == null)
-                        break;
-                }
-            }
-            foreach (var effect in effects)
-            {
-                if (effect.target != ActionEffect.Target.Self)
-                    continue;
-                if (target != null)
-                    effect.ApplyEffect(target, user);
-                else
-                    effect.ApplyEffect(user, user);
-                yield return new WaitForSeconds(0.25f);
-                // If the target died from this effect
-                if (target == null)
-                    break;
-            }
-        }
-
-        Destroy(gameObject);
     }
 
-    private Coroutine PlayActionVfx(Vector2 position)
+    private IEnumerator PlayPerActionFx(Combatant user, Pos targetPos)
     {
-        if (fxPrefab != null)
+        if(targetPattern.type == TargetPattern.Type.Directional)
         {
-            var fx = Instantiate(fxPrefab, position, Quaternion.identity).GetComponent<ActionVfx>();
+            var direction = Pos.DirectionBasic(user.Pos, targetPos);
+            var prefab = actionFxPrefabHorizontal;
+            bool flipX = false;
+            bool flipY = false;
+            if(direction == Pos.Left)
+            {
+                flipX = true;
+            }
+            else if(direction == Pos.Up)
+            {
+                prefab = actionFxPrefabVertical;
+            }
+            else if(direction == Pos.Down)
+            {
+                prefab = actionFxPrefabVertical;
+                flipY = true;
+            }
+            flipX = !flipX;
+
+            yield return PlayActionVfx(prefab, BattleGrid.main.GetSpace(targetPos), flipX, flipY);
+        }
+        else
+        {
+            yield return PlayActionVfx(actionFxPrefab, BattleGrid.main.GetSpace(targetPos));
+        }
+    }
+
+    private Coroutine PlayActionVfx(GameObject prefab, Vector2 position, bool flipX = false, bool flipY = false)
+    {
+        if (prefab != null)
+        {
+            var fx = Instantiate(prefab, position, Quaternion.identity).GetComponent<ActionVfx>();
             if (fx != null)
+            {
+                var scaleVec = new Vector3(flipX ? -1 : 1, flipY ? -1 : 1, 1);
+                fx.transform.localScale = Vector3.Scale(fx.transform.localScale, scaleVec);
+                foreach (Transform t in fx.transform)
+                {
+                    t.localScale = Vector3.Scale(t.localScale, scaleVec);
+                    if(t.childCount > 0)
+                    {
+                        foreach(Transform t2 in t)
+                            t2.localScale = Vector3.Scale(t2.localScale, scaleVec);
+                    }
+                }
+                    
                 return fx.Play();
+            }
             else
-                Debug.LogError("fxPrefab: " + fxPrefab.name + " is missing ActionVFX component");
+                Debug.LogError("fxPrefab: " + prefab.name + " is missing ActionVFX component");
         }
         return null;
     }

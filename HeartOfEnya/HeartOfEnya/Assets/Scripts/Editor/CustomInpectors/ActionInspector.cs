@@ -12,9 +12,17 @@ public class ActionInspector : Editor
         EditorGUILayout.LabelField(new GUIContent("Text"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("displayName"), new GUIContent("Display Name"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("description"), new GUIContent("Description"));
-        EditorGUILayout.LabelField(new GUIContent("VFX Fields"));
+        EditorGUILayout.LabelField(new GUIContent("VFX / SFX Fields"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("cutInPrefab"), new GUIContent("Cut-In Prefab"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("fxPrefab"), new GUIContent("Vfx Prefab"));
+        if(action.targetPattern.type == TargetPattern.Type.Spread)
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("actionFxPrefab"), new GUIContent("Per-Action Fx Prefab"));
+        else
+        {
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("actionFxPrefabVertical"), new GUIContent("Per-Action Fx Prefab Vertical"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("actionFxPrefabHorizontal"), new GUIContent("Per-Action Fx Prefab Horizontal"));
+        }
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("tileFxPrefab"), new GUIContent("Per-Tile Fx Prefab"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("userFxPrefab"), new GUIContent("User Fx Prefab"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("delayAtEnd"), new GUIContent("Delay At End"));
         EditorUtils.Separator();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("chargeTurns"), new GUIContent("Charge Turns"));

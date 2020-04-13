@@ -66,8 +66,7 @@ public class MouseCursor : Cursor
     {
         if (PauseHandle.Paused || !BattleGrid.main.ContainsPoint(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue())))
             return;
-        Select();
-        BattleUI.main.HideEndTurnButton();
+        Select();          
     }
 
 

@@ -12,20 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7951daf7713baef45b162066c21c9919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
---- !u!114 &8503348518900193958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4627668937623689617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7951daf7713baef45b162066c21c9919, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
+  target: 1
+  damage: 3
 --- !u!1001 &5481637579618120307
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -121,6 +109,12 @@ PrefabInstance:
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: fxPrefab
+      value: 
+      objectReference: {fileID: 6830531661545233957, guid: a753e91888ea16d429569a2bb8a0b91b,
+        type: 3}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: tileFxPrefab
       value: 
       objectReference: {fileID: 6830531661545233957, guid: a753e91888ea16d429569a2bb8a0b91b,
         type: 3}

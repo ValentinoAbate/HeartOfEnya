@@ -201,12 +201,16 @@ MonoBehaviour:
   canMoveThrough: 0
   vfxSpawnPoint: {fileID: 263221112878612941}
   description: Combatant description
+  damageSfx: {fileID: 8300000, guid: 936112434e3522346bca9074ebe5dcb9, type: 3}
+  deathSfx: {fileID: 8300000, guid: caa7bbb35f09cd043b165b8a6feb86ba, type: 3}
+  moveSfx: {fileID: 8300000, guid: 1273e667312313c4e8f744eb59708eec, type: 3}
   maxHp: 0
   move: 0
   hpText: {fileID: 8920598860333299076}
   hpImage: {fileID: 1302292042147855959}
   chargeUI: {fileID: 3654236152280581948}
   chargeText: {fileID: 4376125511369212291}
+  uiHelper: {fileID: 3853463718970126461}
   fpText: {fileID: 5635711817056163598}
   deathsDoorUI: {fileID: 7140538269968718808}
   deathsDoorCounterText: {fileID: 2700865196470761777}
@@ -216,6 +220,7 @@ MonoBehaviour:
   attackCursor: {fileID: 2257095481806516413}
   maxFp: 4
   level: 0
+  noTurnColor: {r: 0.4, g: 0.4, b: 0.4, a: 0.9019608}
 --- !u!114 &844067722643252201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,6 +401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1542552525950020145}
   - component: {fileID: 1648090545418076676}
+  - component: {fileID: 3853463718970126461}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -467,6 +473,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &3853463718970126461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8273984410761784983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffba7449a58dad74c9151ebbbc91a947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chargeColor: {r: 0.8666667, g: 0.1607843, b: 0.6727886, a: 1}
 --- !u!1001 &8077552713195415211
 PrefabInstance:
   m_ObjectHideFlags: 0

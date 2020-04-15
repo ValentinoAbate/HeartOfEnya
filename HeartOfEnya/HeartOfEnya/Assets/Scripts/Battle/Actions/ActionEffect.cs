@@ -13,7 +13,7 @@ public abstract class ActionEffect : MonoBehaviour
 
     public Target target = Target.Other;
 
-    public abstract IEnumerator ApplyEffect(Combatant user, Combatant target);
+    public abstract IEnumerator ApplyEffect(Combatant user, Combatant target, Pos actionTargetPos);
 
     public virtual IEnumerator ApplyEffect(Combatant user, Pos target) { yield break; }
 

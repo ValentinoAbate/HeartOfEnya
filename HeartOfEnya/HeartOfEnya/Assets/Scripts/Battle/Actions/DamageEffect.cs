@@ -5,7 +5,7 @@ using UnityEngine;
 public class DamageEffect : ActionEffect
 {
     public int damage;
-    public override IEnumerator ApplyEffect(Combatant user, Combatant target)
+    public override IEnumerator ApplyEffect(Combatant user, Combatant target, Pos actionTargetPos)
     {
         Debug.Log(user.DisplayName + " dealt " + damage + " damage to " + target.DisplayName + " with " + name);
         bool death = damage >= target.Hp;

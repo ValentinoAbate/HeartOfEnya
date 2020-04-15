@@ -80,7 +80,6 @@ public abstract class Combatant : FieldObject
     public TextMeshProUGUI chargeText;
     public UnitUI uiHelper;
     public bool IsChargingAction => chargingAction != null;
-    public bool ChargingActionReady => IsChargingAction && chargingAction.Ready;
     private ChargingAction chargingAction;
 
     protected override void Initialize()
@@ -132,7 +131,6 @@ public abstract class Combatant : FieldObject
         else // The action is a charged action, start charging
         {
             chargingAction = new ChargingAction(action, this, targetPos);            
-            ChargeChargingAction();
             //chargeUI.SetActive(true);
             uiHelper.SetCharge(true);
         }
@@ -167,17 +165,6 @@ public abstract class Combatant : FieldObject
     }
 
     /// <summary>
-    /// Charged a charging action once. Updates Charge UI.
-    /// </summary>
-    public void ChargeChargingAction()
-    {
-        if (!IsChargingAction)
-            return;
-        chargingAction.Charge();
-        chargeText.text = (chargingAction.TurnsLeft + 1).ToString();
-    }
-
-    /// <summary>
     /// Active a charged action. Updates Charge UI.
     /// The action being fully charged is not a prerequisite of this function working,
     /// But should likely be true.
@@ -192,6 +179,18 @@ public abstract class Combatant : FieldObject
         chargingAction = null;
         uiHelper.SetCharge(false);
         return cr;
+    }
+
+    public void UpdateChargeTileUI()
+    {
+        if (IsChargingAction)
+            chargingAction.UpdateDisplay();
+    }
+
+    public void UpdateChargeTileUI(Pos p)
+    {
+        if (IsChargingAction)
+            chargingAction.UpdateDisplay(p);
     }
 
     #endregion

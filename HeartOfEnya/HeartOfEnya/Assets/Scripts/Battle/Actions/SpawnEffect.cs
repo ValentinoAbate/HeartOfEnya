@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnEffect : ActionEffect
 {
     public FieldObject objPrefab;
-    public override IEnumerator ApplyEffect(Combatant user, Combatant target)
+    public override IEnumerator ApplyEffect(Combatant user, Combatant target, Pos actionTargetPos)
     {
         Debug.Log(user.DisplayName + " can't spawn " + objPrefab.DisplayName + " in an occupied square!");
         yield break;

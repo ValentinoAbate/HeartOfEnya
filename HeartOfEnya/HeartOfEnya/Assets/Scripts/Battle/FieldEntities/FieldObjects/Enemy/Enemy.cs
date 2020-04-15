@@ -106,13 +106,7 @@ public class Enemy : Combatant, IPausable
         if (IsChargingAction)
         {
             yield return new WaitWhile(() => PauseHandle.Paused);
-            if (ChargingActionReady)
-                yield return ActivateChargedAction();
-            else
-            {
-                yield return new WaitForSeconds(1);
-                ChargeChargingAction();
-            }
+            yield return ActivateChargedAction();
             yield break;
         }
         // Else let the AI coroutine play out the turn

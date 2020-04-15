@@ -38,7 +38,7 @@ public class EnemyAILegacy : AIComponent<Enemy>
             for (int i = 0; i < self.Move && i < path.Count; ++i)
             {
                 yield return new WaitWhile(() => self.PauseHandle.Paused);
-                BattleGrid.main.MoveAndSetWorldPos(self, path[i]);
+                BattleGrid.main.MoveAndSetWorldPos(self, path[i]);               
                 yield return new WaitForSeconds(0.1f);
             }
             if (self.Move >= path.Count) // Attack if close enough

@@ -24,7 +24,10 @@ public class ChargingAction
     {
         this.user = user;
         this.action = action;
-        displayPattern = action.targetPattern.Clone();
+        if (action.targetPatternGenerator == null)
+            displayPattern = action.targetPattern.Clone();
+        else
+            displayPattern = action.targetPatternGenerator.Generate();
         displayPattern.Target(user.Pos, target);
         tileType = user.Team == FieldEntity.Teams.Party ? TileUI.Type.ChargingAttackParty
                         : TileUI.Type.ChargingAttackEnemy;
@@ -71,6 +74,7 @@ public class ChargingAction
         else // Target is direction
             target = user.Pos + targetDirection;
         var actionClone = GameObject.Instantiate(action.gameObject).GetComponent<Action>();
+        actionClone.targetPattern = displayPattern;
         return actionClone.Activate(user, target);
     }
 

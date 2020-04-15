@@ -12,6 +12,7 @@ public class Action : MonoBehaviour
 
     public ActionRange range;
     public TargetPattern targetPattern;
+    public TargetPatternGenerator targetPatternGenerator;
     public int chargeTurns = 0;
 
     #region VFX Fields
@@ -49,6 +50,8 @@ public class Action : MonoBehaviour
     private void Awake()
     {
         effects = GetComponentsInChildren<ActionEffect>();
+        if (targetPatternGenerator != null)
+            targetPattern = targetPatternGenerator.Generate();
     }
 
     public IEnumerator Activate(Combatant user, Pos targetPos)

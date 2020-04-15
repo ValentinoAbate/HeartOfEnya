@@ -27,7 +27,8 @@ public class ActionInspector : Editor
         EditorUtils.Separator();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("chargeTurns"), new GUIContent("Charge Turns"));
         EditorUtils.Separator();
-        if(action.targetPattern.type == TargetPattern.Type.Directional)
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("targetPatternGenerator"), new GUIContent("Target Pattern Generator"));
+        if (action.targetPatternGenerator == null && action.targetPattern.type == TargetPattern.Type.Directional)
         {
             if(action.range.min != 1)
             {
@@ -46,7 +47,8 @@ public class ActionInspector : Editor
         else
             EditorGUILayout.PropertyField(serializedObject.FindProperty("range"), new GUIContent("Range"), true);
         EditorUtils.Separator();
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("targetPattern"), GUIContent.none);
+        if(action.targetPatternGenerator == null)
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("targetPattern"), GUIContent.none);
         serializedObject.ApplyModifiedProperties();
         EditorUtils.SetSceneDirtyIfGUIChanged(target);
     }

@@ -139,14 +139,20 @@ public class PartyMember : Combatant, IPausable
     {
         // log hp change in playtest logger
         logger.testData.hp[GetName()] += damage;
-
-        Hp = Mathf.Max(0, Hp - damage);
-        if (damage > 0 && Dead)
+        if (damage > 0)
         {
-            if (!DeathsDoor)
+            Hp = Mathf.Max(0, Hp - damage);
+            if (Dead && !DeathsDoor)
                 EnterDeathsDoor();
-            else
-                --DeathsDoorCounter;
+            else // Decrement counter if in deaths
+            {
+                if(DeathsDoor)
+                    --DeathsDoorCounter;
+                if (damageFxPrefab != null)
+                    Instantiate(damageFxPrefab, VfxSpawnPoint, Quaternion.identity).GetComponent<ActionVfx>()?.Play();
+                sfxDispatch.Dispatch().PlayAndDestroy(damageSfx);
+                animator.Play("Damage");
+            }              
         }
     }
 
@@ -156,6 +162,9 @@ public class PartyMember : Combatant, IPausable
     /// </summary>
     public void EnterDeathsDoor()
     {
+        if (deathFxPrefab != null)
+            Instantiate(deathFxPrefab, VfxSpawnPoint, Quaternion.identity).GetComponent<ActionVfx>()?.Play();
+        sfxDispatch.Dispatch().PlayAndDestroy(deathSfx);
         DeathsDoor = true;
         Debug.Log(DisplayName + "Has Enetered Death's Door");
         battleTheme.SetParameter("Crisis", 1);

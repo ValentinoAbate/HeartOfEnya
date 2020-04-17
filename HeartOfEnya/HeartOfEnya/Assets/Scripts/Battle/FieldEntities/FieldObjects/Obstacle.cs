@@ -18,7 +18,6 @@ public class Obstacle : Combatant
     public override void Kill()
     {
     	DoNotDestroyOnLoad.Instance.playtestLogger.testData.UpdateObstacles();
-
  		base.Kill();
     }
 }

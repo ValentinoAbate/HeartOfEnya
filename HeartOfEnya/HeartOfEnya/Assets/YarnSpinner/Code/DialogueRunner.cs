@@ -218,9 +218,9 @@ namespace Yarn.Unity
                 return;
             }
             ui.endAction = Dialog.DialogUI.EndAction.GoToCampfireScene;
-            ui.phaseData = data;
             monologMusic = GameObject.Find(data.monologMusic).GetComponent<FMODUnity.StudioEventEmitter>();
             monologMusic.Play();
+            ui.Music = monologMusic;
             StartDialogue(data.monologNode);
         }
 
@@ -233,13 +233,13 @@ namespace Yarn.Unity
                 return;
             }
             ui.endAction = Dialog.DialogUI.EndAction.EndScene;
-            ui.phaseData = data;
             if(monologMusic != null)
             {
                 monologMusic.EventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             }
             campfireMusic = GameObject.Find(data.campfireMusic).GetComponent<FMODUnity.StudioEventEmitter>();
             campfireMusic.Play();
+            ui.Music = campfireMusic;
             StartDialogue(data.campfireNode);
         }
 

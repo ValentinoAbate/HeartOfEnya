@@ -32,8 +32,7 @@ namespace Dialog
         public List<Button> optionButtons;
         /// The characters currently in the scene
         public List<Character> characters;
-        [HideInInspector]
-        public CharacterManager.PhaseData phaseData;
+        public FMODUnity.StudioEventEmitter Music { get; set; }
 
         [Header("Scene Transition Fields")]
         public EndAction endAction = EndAction.DoNothing;
@@ -143,6 +142,8 @@ namespace Dialog
         {
             if (dialogBox != null)
                 Destroy(dialogBox.gameObject);
+            if (Music != null)
+                Music.Stop();
             if (endAction == EndAction.EndScene)
             {
                 // Go to next game phase, if applicable.

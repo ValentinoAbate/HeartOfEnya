@@ -12,6 +12,7 @@ public class Action : MonoBehaviour
 
     public ActionRange range;
     public TargetPattern targetPattern;
+    public TargetPatternGenerator targetPatternGenerator;
     public int chargeTurns = 0;
 
     #region VFX Fields
@@ -49,6 +50,8 @@ public class Action : MonoBehaviour
     private void Awake()
     {
         effects = GetComponentsInChildren<ActionEffect>();
+        if (targetPatternGenerator != null)
+            targetPattern = targetPatternGenerator.Generate();
     }
 
     public IEnumerator Activate(Combatant user, Pos targetPos)
@@ -109,7 +112,7 @@ public class Action : MonoBehaviour
                 {
                     if (effect.target != ActionEffect.Target.Other)
                         continue;
-                    yield return StartCoroutine(effect.ApplyEffect(user, target));
+                    yield return StartCoroutine(effect.ApplyEffect(user, target, targetPos));
                     // If the target died from this effect
                     if (target == null)
                         break;
@@ -134,9 +137,9 @@ public class Action : MonoBehaviour
                 if (effect.target != ActionEffect.Target.Self)
                     continue;
                 if (target != null)
-                    yield return StartCoroutine(effect.ApplyEffect(target, user));
+                    yield return StartCoroutine(effect.ApplyEffect(target, user, targetPos));
                 else
-                    yield return StartCoroutine(effect.ApplyEffect(user, user));
+                    yield return StartCoroutine(effect.ApplyEffect(user, user, targetPos));
                 // If the target died from this effect
                 if (target == null)
                     break;

@@ -10,9 +10,7 @@ public class ActionConditionCharge : ActionCondition
     {
         if(user.IsChargingAction)
         {
-            if (user.ChargingActionReady)
-                return enableWhenCharged;
-            return enableWhenCharging;
+            return enableWhenCharged;
         }
         if (enableWhenCharged)
             return false;

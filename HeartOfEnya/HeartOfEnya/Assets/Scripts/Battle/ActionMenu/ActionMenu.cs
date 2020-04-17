@@ -168,7 +168,6 @@ public class ActionMenu : MonoBehaviour, IPausable
 
     public void ChargeChargedAction()
     {
-        user.ChargeChargingAction();
         user.EndTurn();
         Close();
     }

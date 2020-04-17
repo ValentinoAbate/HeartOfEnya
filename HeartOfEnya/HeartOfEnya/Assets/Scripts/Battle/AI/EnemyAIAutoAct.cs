@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAIAutoAct : AIComponent<Enemy>
 {
-    private bool moved = false;
+    public bool moved = false;
     public override IEnumerator DoTurn(Enemy obj)
     {
         yield return new WaitWhile(() => obj.PauseHandle.Paused);

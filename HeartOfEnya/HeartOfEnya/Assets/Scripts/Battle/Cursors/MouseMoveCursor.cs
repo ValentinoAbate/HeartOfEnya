@@ -50,6 +50,7 @@ public class MouseMoveCursor : MoveCursor
         sfxHighlight.Play();
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(Pos);
+        partyMember.UpdateChargeTileUI(Pos);
     }
 
     //highlight whichever square is currently moused over

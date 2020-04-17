@@ -150,12 +150,16 @@ namespace Dialog
                 if (gamePhase == PersistentData.gamePhaseLuaBattle)
                 {
                     if (DoNotDestroyOnLoad.Instance.persistentData.luaBossDefeated)
-                        GoToNextGamePhase();                       
+                        GoToNextGamePhase();
+                    else
+                        DoNotDestroyOnLoad.Instance.persistentData.dayNum += 1; //if lua's not defeated, we spend more time in this phase
                 }
                 else if(gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
                 {
                     if (DoNotDestroyOnLoad.Instance.persistentData.absoluteZeroDefeated)
                         GoToNextGamePhase();
+                    else
+                        DoNotDestroyOnLoad.Instance.persistentData.dayNum += 1; //if Abs0's not defeated, we spend more time in this phase
                 }
                 else
                 {
@@ -165,7 +169,10 @@ namespace Dialog
             }
             else if(endAction == EndAction.GoToCampfireScene)
             {
-                runner.StartCampPartyScene(phaseData);
+                //assume we're on day 0 of the phase, in which case we should...
+                DoNotDestroyOnLoad.Instance.persistentData.dayNum += 1; //...iterate to day 1...
+                SceneTransitionManager.main.TransitionScenes(sceneName); //..and proceed to the battle scene
+                //runner.StartCampPartyScene(phaseData);
             }
             yield break;
         }
@@ -173,7 +180,8 @@ namespace Dialog
         private void GoToNextGamePhase()
         {
             var pData = DoNotDestroyOnLoad.Instance.persistentData;
-            pData.gamePhase = ((char)(pData.gamePhase[0] + 1)).ToString();
+            pData.gamePhase = ((char)(pData.gamePhase[0] + 1)).ToString(); //switch to next phase
+            pData.dayNum = 0; //reset the day to 0 to signifiy new phase
             LevelUp();
         }
 

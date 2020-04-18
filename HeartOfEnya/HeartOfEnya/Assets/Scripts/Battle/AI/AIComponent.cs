@@ -8,10 +8,10 @@ public abstract class AIComponent<T> : MonoBehaviour where T : FieldObject
     public const float moveDelay = 0.1f;
     public abstract IEnumerator DoTurn(T self);
 
-    public int CompareTargetPriority(Pos selfPos, Combatant obj1, Combatant obj2)
+    public int CompareTargetPriority(Combatant obj1, int pathDist1, Combatant obj2, int pathDist2)
     {
         // First compare grid distance
-        int distCmp = Pos.Distance(selfPos, obj1.Pos).CompareTo(Pos.Distance(selfPos, obj2.Pos));
+        int distCmp = pathDist1.CompareTo(pathDist2);
         if (distCmp != 0)
             return distCmp;
         // If grid distance is the same, compare hp

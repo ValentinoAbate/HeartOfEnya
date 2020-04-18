@@ -97,6 +97,18 @@ public struct Pos : IEquatable<Pos>
         return new Pos(p1.row * p2.row, p1.col * p2.col);
     }
 
+    public static Pos Average(IEnumerable<Pos> positions)
+    {
+        Pos sum = Pos.Zero;
+        int count = 0;
+        foreach(var pos in positions)
+        {
+            sum += pos;
+            ++count;
+        }
+        return new Pos(sum.row / count, sum.col / count);
+    }
+
     #endregion
 
     public Pos(int row, int col)

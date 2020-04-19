@@ -10,7 +10,6 @@ using System;
 public struct Pos : IEquatable<Pos>
 {
     #region Static Symbolic Constants
-
     public static Pos Zero { get; } = new Pos(0, 0);
     public static Pos One { get; } = new Pos(1, 1);
     public static Pos Right { get; } = new Pos(0, 1);
@@ -18,6 +17,7 @@ public struct Pos : IEquatable<Pos>
     public static Pos Up { get; } = new Pos(-1, 0);
     public static Pos Down { get; } = new Pos(1, 0);
     public static Pos OutOfBounds { get; } = new Pos(-100, -100);
+    public static Pos[] Directions { get; } = new Pos[] { Up, Down, Left, Right };
 
     #endregion
 

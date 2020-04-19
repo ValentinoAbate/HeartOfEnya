@@ -54,19 +54,26 @@ public class Action : MonoBehaviour
             targetPattern = targetPatternGenerator.Generate();
     }
 
-    public IEnumerator Activate(Combatant user, Pos targetPos)
+    public List<Pos> HitPositions(Pos userPos, Pos targetPos)
     {
-        targetPattern.Target(user.Pos, targetPos);
+        targetPattern.Target(userPos, targetPos);
         var targetPositions = targetPattern.Positions.ToList();
         // If the targeting pattern is directional, rotate the points to the correct orientation
-        if(targetPattern.type == TargetPattern.Type.Directional)
+        if (targetPattern.type == TargetPattern.Type.Directional)
         {
-            Pos direction = targetPos - user.Pos;
-            Pos DirectionalMode(Pos pos) => Pos.Rotated(user.Pos, pos - direction, Pos.Right, direction);
+            Pos direction = targetPos - userPos;
+            Pos DirectionalMode(Pos pos) => Pos.Rotated(userPos, pos - direction, Pos.Right, direction);
             targetPositions = targetPositions.Select(DirectionalMode).ToList();
         }
         // Remove all illegal positions from the list
         targetPositions.RemoveAll((p) => !BattleGrid.main.IsLegal(p));
+        return targetPositions;
+    }
+
+    public IEnumerator Activate(Combatant user, Pos targetPos)
+    {
+        // Get the target positions, with rotating applied
+        var targetPositions = HitPositions(user.Pos, targetPos);
 
         //Play cut-in if applicable
         if(cutInPrefab != null)

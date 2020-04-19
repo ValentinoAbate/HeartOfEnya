@@ -33,6 +33,7 @@ public abstract class Combatant : FieldObject
     public int Move => IsChargingAction ? 1 : move;
     [SerializeField]
     private int move;
+    public bool isMovable = true; //whether the combatant can be moved via MoveEffect
 
     /// <summary>
     /// Is this unit stunned?

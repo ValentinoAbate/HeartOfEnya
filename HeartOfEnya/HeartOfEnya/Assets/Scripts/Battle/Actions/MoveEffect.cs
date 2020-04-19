@@ -51,6 +51,22 @@ public class MoveEffect : ActionEffect
         else
         {
         	//for now, just do what we were doing before until I add an isMovable variable to obstacles
+        	Combatant temp = thingAtDestination as Combatant;
+        	if ((temp != null))
+        	{
+        		if(temp.isMovable)
+        		{
+        			Debug.Log(thingAtDestination + " is movable");
+        		}
+        		else
+        		{
+        			Debug.Log(thingAtDestination + " is not movable");
+        		}
+        	}
+        	else
+        	{
+        		Debug.Log("Oops! " + thingAtDestination + "is not a Combatant");
+        	}
         	BattleGrid.main.MoveAndSetWorldPos(target, destination);
         	var src = GetComponent<AudioSource>();
         	src.PlayOneShot(target.moveSfx);

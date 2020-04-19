@@ -10,6 +10,7 @@ public abstract class ActionEffect : MonoBehaviour
         Other,
         Tile,
     }
+    public const float effectWaitTime = 0.4f;
 
     public Target target = Target.Other;
 

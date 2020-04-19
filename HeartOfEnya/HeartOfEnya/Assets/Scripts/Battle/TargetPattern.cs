@@ -16,6 +16,7 @@ public class TargetPattern
     {
         Spread,
         Directional,
+        Absolute,
     }
 
     public Type type; 
@@ -62,6 +63,11 @@ public class TargetPattern
         return newT;
     }
 
+    public void Add(TargetPattern other)
+    {
+        offsets.AddRange(other.Positions);
+    }
+
     /// <summary>
     /// Display the targeting UI at the current target position
     /// </summary>
@@ -104,7 +110,7 @@ public class TargetPattern
     /// </summary>
     public void Target(Pos userPos, Pos targetPos)
     {
-        TargetPos = targetPos;
+        TargetPos = type == Type.Absolute ? Pos.Zero : targetPos;
         UserPos = userPos;
     }
 }

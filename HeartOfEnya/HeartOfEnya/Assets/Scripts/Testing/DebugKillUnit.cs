@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DebugKillUnit : MonoBehaviour
 {
+    public int killDamage = 10;
     public int damage = 10;
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,10 @@ public class DebugKillUnit : MonoBehaviour
             var target = BattleGrid.main.GetObject(targetPos) as Combatant;
             if(target != null)
             {
-                target.Damage(damage);
+                if (Input.GetKey(KeyCode.LeftShift))
+                    target.Damage(killDamage);
+                else
+                    target.Damage(damage);
             }
         }
     }

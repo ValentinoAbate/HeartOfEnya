@@ -154,11 +154,10 @@ public class Enemy : Combatant, IPausable
     public override void Kill()
     {
         Debug.Log(DisplayName + " has died...");
-        CancelChargingAction();
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         pData.numEnemiesDefeatedThisEncounter++;
         pData.numEnemiesLeft--;
         BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft);
-        Destroy(gameObject);
+        base.Kill();
     }
 }

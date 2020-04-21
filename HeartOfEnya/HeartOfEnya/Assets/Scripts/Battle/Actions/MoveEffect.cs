@@ -85,26 +85,21 @@ public class MoveEffect : ActionEffect
         	{
         		//copied from DamageEffect
         		Debug.Log(user.DisplayName + " dealt " + moveDamage + " damage to " + tgtData.target.DisplayName + " with " + name);
-        		bool death = moveDamage >= tgtData.target.Hp;
-        		var src = GetComponent<AudioSource>();
         		tgtData.target.Damage(moveDamage);
-        		src.PlayOneShot(tgtData.target.damageSfx);
-        		yield return new WaitForSeconds(tgtData.target.damageSfx.length);
-        		if (death)
-        		{
-        			src.PlayOneShot(tgtData.target.deathSfx);
-        			yield return new WaitForSeconds(tgtData.target.deathSfx.length);
-        		}
+                yield return new WaitForSeconds(0.4f);
         	}
         	else
         	{
         		//move the object to the specified destination
         		Debug.Log(user.DisplayName + " moves " + tgtData.target.DisplayName);
         		BattleGrid.main.MoveAndSetWorldPos(tgtData.target, tgtData.destination);
-        		var src = GetComponent<AudioSource>();
-        		src.PlayOneShot(tgtData.target.moveSfx);
-        		yield return new WaitForSeconds(tgtData.target.moveSfx.length);
         	}
+        }
+        if(!dealDamage)
+        {
+            var src = GetComponent<AudioSource>();
+            src.PlayOneShot(target.moveSfx);
+            yield return new WaitForSeconds(target.moveSfx.length);
         }
     }
 }

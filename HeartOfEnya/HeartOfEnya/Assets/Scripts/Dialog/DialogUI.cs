@@ -144,23 +144,28 @@ namespace Dialog
                 Destroy(dialogBox.gameObject);
             if (Music != null)
                 Music.Stop();
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
             if (endAction == EndAction.EndScene)
             {
                 // Go to next game phase, if applicable.
-                string gamePhase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase.ToUpper();
+                string gamePhase = pData.gamePhase.ToUpper();
                 if (gamePhase == PersistentData.gamePhaseLuaBattle)
                 {
-                    if (DoNotDestroyOnLoad.Instance.persistentData.luaBossDefeated)
+                    if (pData.luaBossDefeated)
                         GoToNextGamePhase();
                     else
                         DoNotDestroyOnLoad.Instance.persistentData.dayNum += 1; //if lua's not defeated, we spend more time in this phase
                 }
                 else if(gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
                 {
-                    if (DoNotDestroyOnLoad.Instance.persistentData.absoluteZeroDefeated)
+                    if (pData.absoluteZeroDefeated)
                         GoToNextGamePhase();
                     else
-                        DoNotDestroyOnLoad.Instance.persistentData.dayNum += 1; //if Abs0's not defeated, we spend more time in this phase
+                        pData.dayNum += 1; //if Abs0's not defeated, we spend more time in this phase
+                }
+                else if(gamePhase == PersistentData.gamePhaseIntro)
+                {
+                    pData.gamePhase = PersistentData.gamePhaseTutorial;
                 }
                 else
                 {
@@ -171,7 +176,7 @@ namespace Dialog
             else if(endAction == EndAction.GoToCampfireScene)
             {
                 //assume we're on day 0 of the phase, in which case we should...
-                DoNotDestroyOnLoad.Instance.persistentData.dayNum += 1; //...iterate to day 1...
+                pData.dayNum += 1; //...iterate to day 1...
                 SceneTransitionManager.main.TransitionScenes(sceneName); //..and proceed to the battle scene
                 //runner.StartCampPartyScene(phaseData);
             }

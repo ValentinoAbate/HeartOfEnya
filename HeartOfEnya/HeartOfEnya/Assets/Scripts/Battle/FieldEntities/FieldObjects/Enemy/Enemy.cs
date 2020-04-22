@@ -149,7 +149,7 @@ public class Enemy : Combatant, IPausable
                 }
             }
         }
-        return UseAction(action, p);
+        return UseAction(action, p, Pos.OutOfBounds);
     }
     public override void Kill()
     {

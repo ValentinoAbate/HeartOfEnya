@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StunEffect : ActionEffect
 {
-    public override IEnumerator ApplyEffect(Combatant user, Combatant target, Pos actionTargetPos)
+    public override IEnumerator ApplyEffect(Combatant user, Combatant target, ExtraData data)
     {
         if (user.Team == target.Team)
             yield break;

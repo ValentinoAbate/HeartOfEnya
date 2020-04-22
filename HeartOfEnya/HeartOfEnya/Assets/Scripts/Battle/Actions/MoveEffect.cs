@@ -14,7 +14,7 @@ public class MoveEffect : ActionEffect
     public int squares = 1;
     public int moveDamage = 2; //how much damage do we take if pushed into world border/immovable object?
 
-    public override IEnumerator ApplyEffect(Combatant user, Combatant target, Pos actionTargetPos)
+    public override IEnumerator ApplyEffect(Combatant user, Combatant target, ExtraData data)
     {
         //quick test - if initial target is immovable, what should we do?
         if(target != null && !target.isMovable)
@@ -86,7 +86,7 @@ public class MoveEffect : ActionEffect
         		//copied from DamageEffect
         		Debug.Log(user.DisplayName + " dealt " + moveDamage + " damage to " + tgtData.target.DisplayName + " with " + name);
         		tgtData.target.Damage(moveDamage);
-                yield return new WaitForSeconds(0.4f);
+                yield return new WaitForSeconds(effectWaitTime);
         	}
         	else
         	{

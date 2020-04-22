@@ -298,11 +298,11 @@ public class PartyMember : Combatant, IPausable
     /// <summary>
     /// Use the action and reduce Fp if the action has an ActionFpCost component
     /// </summary>
-    public override Coroutine UseAction(Action action, Pos targetPos)
+    public override Coroutine UseAction(Action action, Pos targetPos, Pos primaryTarget)
     {        
         //Hide the info panel;
         BattleUI.main.HideInfoPanel();
-        var routine = base.UseAction(action, targetPos);
+        var routine = base.UseAction(action, targetPos, primaryTarget);
         var fpCost = action.GetComponent<ActionFpCost>();
         if(fpCost != null)
         {

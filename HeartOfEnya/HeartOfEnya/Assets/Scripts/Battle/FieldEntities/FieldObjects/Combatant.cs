@@ -143,14 +143,14 @@ public abstract class Combatant : FieldObject
     /// <summary>
     /// Have the unit use an action at a certain target position
     /// </summary>
-    public virtual Coroutine UseAction(Action action, Pos targetPos)
+    public virtual Coroutine UseAction(Action action, Pos targetPos, Pos primaryTarget)
     {
         // If the action is not a charged action
         if (action.chargeTurns <= 0)
         {
             // Instantiate a copy of the action object
             var actionClone = Instantiate(action.gameObject).GetComponent<Action>();
-            return StartCoroutine(actionClone.Activate(this, targetPos));
+            return StartCoroutine(actionClone.Activate(this, targetPos, primaryTarget));
         }
         else // The action is a charged action, start charging
         {

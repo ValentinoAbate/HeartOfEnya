@@ -11,6 +11,8 @@ public class Action : MonoBehaviour
     public bool IsRanged => range.max > 1;
 
     public ActionRange range;
+    public bool useSecondaryRange;
+    public ActionRange secondaryRange;
     public TargetPattern targetPattern;
     public TargetPatternGenerator targetPatternGenerator;
     public int chargeTurns = 0;
@@ -70,7 +72,7 @@ public class Action : MonoBehaviour
         return targetPositions;
     }
 
-    public IEnumerator Activate(Combatant user, Pos targetPos)
+    public IEnumerator Activate(Combatant user, Pos targetPos, Pos primaryTargetPos)
     {
         // Get the target positions, with rotating applied
         var targetPositions = HitPositions(user.Pos, targetPos);
@@ -107,9 +109,13 @@ public class Action : MonoBehaviour
         // Wait for the VFX to finish, wait for the highlight time again, then continue
         yield return new WaitForSeconds(targetHighlightSeconds + delayAtEnd);
         targetPattern.Hide();
-
+        var extraData = new ActionEffect.ExtraData()
+        {
+            actionTargetPos = targetPos,
+            primaryTargetPos = primaryTargetPos,
+        };
         // Apply actual effects to targets and display results
-        foreach(var position in targetPositions)
+        foreach (var position in targetPositions)
         {
             var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
             if (target != null)
@@ -117,9 +123,9 @@ public class Action : MonoBehaviour
                 // Apply effects to targets
                 foreach (var effect in effects)
                 {
-                    if (effect.target != ActionEffect.Target.Other)
+                    if (effect.target != ActionEffect.Target.Target)
                         continue;
-                    yield return StartCoroutine(effect.ApplyEffect(user, target, targetPos));
+                    yield return StartCoroutine(effect.ApplyEffect(user, target, extraData));
                     // If the target died from this effect
                     if (target == null)
                         break;
@@ -132,24 +138,11 @@ public class Action : MonoBehaviour
                 {
                     if (effect.target != ActionEffect.Target.Tile)
                         continue;
-                    yield return StartCoroutine(effect.ApplyEffect(user, position));
+                    yield return StartCoroutine(effect.ApplyEffect(user, position, extraData));
                     // If the target died from this effect
                     if (target == null)
                         break;
                 }
-            }
-            // Apply effects to self
-            foreach (var effect in effects)
-            {
-                if (effect.target != ActionEffect.Target.Self)
-                    continue;
-                if (target != null)
-                    yield return StartCoroutine(effect.ApplyEffect(target, user, targetPos));
-                else
-                    yield return StartCoroutine(effect.ApplyEffect(user, user, targetPos));
-                // If the target died from this effect
-                if (target == null)
-                    break;
             }
         }
 

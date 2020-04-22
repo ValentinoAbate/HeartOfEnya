@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &4698626565202015868
+--- !u!114 &5053682197002086319
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4221800355855424386}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e33c48ad71bf17147a9fecb3624a3256, type: 3}
+  m_Script: {fileID: 11500000, guid: f04655e69f2fc2c4ca50b1f5be4130e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attribute: 4
-  moveType: 1
-  squares: 1
+  target: 2
 --- !u!1001 &3944204646680883296
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25,7 +23,7 @@ PrefabInstance:
     - target: {fileID: 876645245125307362, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: m_Name
-      value: AttackLuaShieldPush
+      value: AttackLuaThrow
       objectReference: {fileID: 0}
     - target: {fileID: 876645245125307388, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -100,12 +98,12 @@ PrefabInstance:
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: targetPattern.type
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: targetPattern.maxReach.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -115,12 +113,44 @@ PrefabInstance:
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: targetPattern.offsets.Array.data[0].col
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: displayName
-      value: Push
+      value: Throw
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: description
+      value: Throw a unit up to 2 tiles
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: cutInPrefab
+      value: 
+      objectReference: {fileID: 5542415893087554733, guid: 4a49f817d73d43b4c8f77eaf208a7415,
+        type: 3}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: tileFxPrefab
+      value: 
+      objectReference: {fileID: 4842508818842539274, guid: ef045a7ca61c6ec4380c335603ca108a,
+        type: 3}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: useSecondaryRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: secondaryRange.min
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: secondaryRange.max
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65afaea67fb0af4a84fe0702411019e, type: 3}

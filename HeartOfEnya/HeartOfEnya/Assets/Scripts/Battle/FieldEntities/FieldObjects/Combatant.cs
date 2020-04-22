@@ -10,14 +10,26 @@ using TMPro;
 /// </summary>
 public abstract class Combatant : FieldObject
 {
+    public enum Passives
+    { 
+        None,
+        Sturdy,
+        Small,
+        Strong,
+        Nimble,
+    }
+
     public const bool stunIsBurn = true;
     public abstract Sprite DisplaySprite { get; }
     public abstract Color DisplaySpriteColor { get; }
-    [Header("Cheats")]
+    [Header("Passive Ability")]
+    public Passives passiveAbility = Passives.None;
 
     [Header("Combatant Display Fields")]
     [TextArea(1, 2)]
     public string description = "Combatant description";
+    public string passiveName = string.Empty;
+    public string passiveDescription = string.Empty;
     public GameObject damageFxPrefab;
     public GameObject deathFxPrefab;
     // Debug Audio fields while we don't have FMOD setup
@@ -30,7 +42,7 @@ public abstract class Combatant : FieldObject
     /// <summary>
     /// The units current movement range. Is only 1 square when an action is being charged.
     /// </summary>
-    public int Move => IsChargingAction ? 1 : move;
+    public int Move => IsChargingAction ? (passiveAbility == Passives.Nimble ? 2 : 1) : move;
     [SerializeField]
     private int move;
     public bool isMovable = true; //whether the combatant can be moved via MoveEffect
@@ -102,6 +114,8 @@ public abstract class Combatant : FieldObject
     /// </summary>
     public virtual void Damage(int damage)
     {
+        if (passiveAbility == Passives.Sturdy)
+            --damage;
         if (damage > 0)
         {
             Hp = Mathf.Max(0, hp - damage);

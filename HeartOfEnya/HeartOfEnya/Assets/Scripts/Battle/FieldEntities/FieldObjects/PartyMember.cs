@@ -137,6 +137,8 @@ public class PartyMember : Combatant, IPausable
 
     public override void Damage(int damage)
     {
+        if (passiveAbility == Passives.Sturdy)
+            --damage;
         // log hp change in playtest logger
         logger.testData.hp[GetName()] += damage;
         if (damage > 0)

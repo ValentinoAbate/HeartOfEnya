@@ -196,6 +196,13 @@ public class PartyMember : Combatant, IPausable
             // moveCursor.SetActive(true);
             mouseMoveCursor.SetActive(true);
             BattleUI.main.HideEndTurnButton();
+
+            // run tutorial trigger when raina is selected
+            if(GetName() == "Raina")
+            {
+                BattleEvents.main.tutMove._event.Invoke();
+            }
+
             return true;
         }
         return false;
@@ -213,6 +220,12 @@ public class PartyMember : Combatant, IPausable
     public void OpenActionMenu()
     {
         ActionMenu.SetActive(true);
+
+        // cancel trigger for bapy
+        if(GetName() == "Bapy")
+        {
+            BattleEvents.main.tutBapyCancel._event.Invoke();
+        }
     }
 
     /// <summary>

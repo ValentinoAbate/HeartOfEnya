@@ -14,7 +14,7 @@ public class BattleEvents : MonoBehaviour
     }
 
     public static BattleEvents main;
-    public bool tutorial; // whether we are in the tutorial or not
+    private bool tutorial; // whether we are in the tutorial or not
 
     public BattleEvent tutorialIntro;
     public BattleEvent tutMove;
@@ -40,16 +40,19 @@ public class BattleEvents : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }
+        }   
+    }
 
+    private void Start()
+    {
         tutorial = (DoNotDestroyOnLoad.Instance.persistentData.gamePhase == PersistentData.gamePhaseTutorial);
     }
 
     public void IntroTrigger()
     {
-        if(!tutorialIntro.flag)
+        if(tutorial && !tutorialIntro.flag)
         {
-            Debug.Log("start of battle");
+            Debug.Log("Battle Triggers: start of battle");
             tutorialIntro.flag = true;
         }
     }
@@ -57,66 +60,118 @@ public class BattleEvents : MonoBehaviour
 
     public void MoveTrigger()
     {
-
+        if(tutorial && !tutMove.flag)
+        {
+            Debug.Log("Battle Triggers: select raina");
+            tutMove.flag = true;
+        }
     }
 
     public void RainaAttackTrigger()
     {
-        
+        if(tutorial && !tutRainaAttack.flag)
+        {
+            Debug.Log("Battle Triggers: raina attack");
+            tutRainaAttack.flag = true;
+        }
     }
 
     public void BapySelectTrigger()
     {
-        
+        if(tutorial && !tutBapySelect.flag)
+        {
+            Debug.Log("Battle Triggers: select bapy");
+            tutBapySelect.flag = true;
+        }
     }
 
     public void BapyCancelTrigger()
     {
-        
+        if(tutorial && !tutBapyCancel.flag)
+        {
+            Debug.Log("Battle Triggers: bapy cancel");
+            tutBapyCancel.flag = true;
+        }
     }
 
     public void SoleilSelectTrigger()
     {
-        
+        if(tutorial && !tutSoleilSelect.flag)
+        {
+            Debug.Log("Battle Triggers: select soleil");
+            tutSoleilSelect.flag = true;
+        }
     }
 
     public void SoleilAttackTrigger()
     {
-        
+        if(tutorial && !tutSoleilAttack.flag)
+        {
+            Debug.Log("Battle Triggers: soleil attack");
+            tutSoleilAttack.flag = true;
+        }
     }
 
     public void SoleilChargeReminderTrigger()
     {
-        
+        if(tutorial && !tutSoleilChargeReminder.flag)
+        {
+            Debug.Log("Battle Triggers: SoleilChargeReminder");
+            tutSoleilChargeReminder.flag = true;
+        }
     }
 
     public void SoleilChargeExplanationTrigger()
     {
-        
+        if(tutorial && !tutSoleilChargeExplanation.flag)
+        {
+            Debug.Log("Battle Triggers: SoleilChargeExplanation");
+            tutSoleilChargeExplanation.flag = true;
+        }
     }
 
     public void EnemySpawnWarningTrigger()
     {
-
+        if(tutorial && !tutEnemySpawnWarning.flag)
+        {
+            Debug.Log("Battle Triggers: EnemySpawnWarning");
+            tutEnemySpawnWarning.flag = true;
+        }
     }
 
     public void EnemySpawnTrigger()
     {
-
+        if(tutorial && !tutEnemySpawn.flag)
+        {
+            Debug.Log("Battle Triggers: EnemySpawn");
+            tutEnemySpawn.flag = true;
+        }
     }
 
     public void EnemyInfoTrigger()
     {
-
+        if(tutorial && !tutEnemyInfo.flag)
+        {
+            Debug.Log("Battle Triggers: EnemyInfo");
+            tutEnemyInfo.flag = true;
+        }
     }
 
     public void EnemyRangedTrigger()
     {
-
+        if(tutorial && !tutEnemyRanged.flag)
+        {
+            Debug.Log("Battle Triggers: EnemyRanged");
+            tutEnemyRanged.flag = true;
+        }
     }
 
     public void DeathsDoorTrigger()
     {
-
+        if(tutorial && !tutDD.flag)
+        {
+            Debug.Log("Battle Triggers: DeathsDoor");
+            tutDD.flag = true;
+        }
     }
 }

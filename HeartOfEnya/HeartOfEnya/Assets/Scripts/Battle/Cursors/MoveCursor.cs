@@ -128,6 +128,7 @@ public class MoveCursor : GridCursor
                 break;
             case "Raina":
                 placeRaina.Play();
+                BattleEvents.main.tutRainaAttack._event.Invoke(); // run tutorial trigger for moving raina
                 break;
             case "Lua":
                 placeLua.Play();

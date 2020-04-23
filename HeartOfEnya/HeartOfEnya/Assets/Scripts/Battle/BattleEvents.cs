@@ -62,7 +62,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorial && !tutMove.flag)
         {
-            Debug.Log("Battle Triggers: select raina");
+            Debug.Log("Battle Triggers: raina move");
             tutMove.flag = true;
         }
     }

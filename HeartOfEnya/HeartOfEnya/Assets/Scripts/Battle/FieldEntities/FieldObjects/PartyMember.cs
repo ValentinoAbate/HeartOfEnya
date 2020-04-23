@@ -203,6 +203,12 @@ public class PartyMember : Combatant, IPausable
                 BattleEvents.main.tutMove._event.Invoke();
             }
 
+            // run tutorial trigger when soleil is selected on turn 2
+            if(GetName() == "Soleil" && PhaseManager.main.Turn == 2)
+            {
+                BattleEvents.main.tutSoleilChargeExplanation._event.Invoke();
+            }
+
             return true;
         }
         return false;

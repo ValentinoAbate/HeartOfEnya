@@ -56,7 +56,13 @@ public class PartyPhase : Phase
         Cursor.SetActive(true);
         BattleUI.main.ShowEndTurnButton();
 
-        BattleEvents.main.tutorialIntro._event.Invoke();
+        BattleEvents.main.tutorialIntro._event.Invoke(); // tutorial event at the start of battle
+
+        // tutorial event at the start of the second turn
+        if(PhaseManager.main.Turn == 2)
+        {
+            BattleEvents.main.tutSoleilChargeReminder._event.Invoke();
+        }
         return null;
     }
 

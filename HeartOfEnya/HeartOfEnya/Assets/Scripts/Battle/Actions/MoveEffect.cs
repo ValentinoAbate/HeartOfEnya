@@ -14,52 +14,105 @@ public class MoveEffect : ActionEffect
     public int squares = 1;
     public int moveDamage = 2; //how much damage do we take if pushed into world border/immovable object?
 
-    public override IEnumerator ApplyEffect(Combatant user, Combatant target, Pos actionTargetPos)
+    public override IEnumerator ApplyEffect(Combatant user, Combatant target, ExtraData data)
     {
+        //quick test - if initial target is immovable, what should we do?
+        if(target != null && !target.isMovable)
+        {
+        	//Uncomment the below code to just abort the effect.
+        	// Debug.Log("Initial target is immovable. Aborting.");
+        	// yield break;
+
+        	//If we don't want to just fail, swap things around so that if A tries to push B (who's immobile),
+        	//it becomes B pushes A (e.g. if Bapy pushes a pillar, Bapy gets pushed backwards) 
+        	Combatant temp = user;
+        	user = target;
+        	target = temp;
+        }
+
         Pos direction = Pos.DirectionBasic(user.Pos, target.Pos);
         if (moveType == Direction.Toward || (moveType == Direction.Hybrid && Pos.Distance(user.Pos, target.Pos) > 1))
             direction *= -1;
         Pos destination = target.Pos + direction; //where are we trying to push the object to?
-        FieldObject thingAtDestination = BattleGrid.main.GetObject(destination); //what is in our way?
+        Combatant thingAtDestination = BattleGrid.main.GetObject(destination) as Combatant; //what is in our way?
         Debug.Log("moving: " + thingAtDestination);
 
-        //what do we do with thingAtDestination?
-        if (!BattleGrid.main.IsLegal(destination)) //destination is a world border
-        {
-        	Debug.Log("cannot move into world border, so get smote");
-        	//copied from DamageEffect
-        	Debug.Log(user.DisplayName + " dealt " + moveDamage + " damage to " + target.DisplayName + " with " + name);
-        	bool death = moveDamage >= target.Hp;
-        	var src = GetComponent<AudioSource>();
-        	target.Damage(moveDamage);
-        	src.PlayOneShot(target.damageSfx);
-        	yield return new WaitForSeconds(target.damageSfx.length);
-        	if (death)
+        //compile a list of all the objects to move
+        Stack<MoveData> toMove = new Stack<MoveData>();
+        bool keepGoing = true; //loop control variable
+        bool dealDamage = false; //whether or not we deal damage from pushing/pulling into immovable object
+        Debug.Log("======BEGINNING TARGET COMPILATION======");
+        do{
+        	Debug.Log("added " + target.DisplayName + " to move chain");
+        	toMove.Push(new MoveData(target, destination)); //add current target to the list
+        	bool isWorldBorder = !BattleGrid.main.IsLegal(destination); //whether the destination spot is a world border
+        	if (thingAtDestination == null && !isWorldBorder)
         	{
-        		src.PlayOneShot(target.deathSfx);
-        		yield return new WaitForSeconds(target.deathSfx.length);
+        		//if pushing into empty space, end search
+        		keepGoing = false;
+        	}
+        	else if (isWorldBorder || !thingAtDestination.isMovable)
+        	{
+        		//if pushing into immovable object or world border, end search and tell us to deal damage
+        		if(isWorldBorder)
+        		{
+        			Debug.Log("ENCOUNTERED OBSTACLE: WorldBorder");
+        		}
+        		else
+        		{
+        			Debug.Log("ENCOUNTERED OBSTACLE: ImmovableObject " + thingAtDestination.DisplayName);
+        			//if we found an immovable obstacle, we also have to add it to the movement chain to make sure it takes damage
+        			toMove.Push(new MoveData(thingAtDestination, destination)); //since the damage code doesn't care about destination, we can just say to put it where it is
+        		}
+        		keepGoing = false;
+        		dealDamage = true;
+        	}
+        	else
+        	{
+        		//if there's a movable object in our way, iterate the loop
+        		target = thingAtDestination;
+        		destination = target.Pos + direction;
+        		thingAtDestination = BattleGrid.main.GetObject(destination) as Combatant;
+        	}
+        } while (keepGoing);
+
+        //iterate through our movement chain and apply the movement
+        Debug.Log("======BEGINNING MOVEMENT EXECUTION======");
+        while(toMove.Count != 0)
+        {
+        	MoveData tgtData = toMove.Pop();
+        	if(dealDamage)
+        	{
+        		//copied from DamageEffect
+        		Debug.Log(user.DisplayName + " dealt " + moveDamage + " damage to " + tgtData.target.DisplayName + " with " + name);
+        		tgtData.target.Damage(moveDamage);
+                yield return new WaitForSeconds(effectWaitTime);
+        	}
+        	else
+        	{
+        		//move the object to the specified destination
+        		Debug.Log(user.DisplayName + " moves " + tgtData.target.DisplayName);
+        		BattleGrid.main.MoveAndSetWorldPos(tgtData.target, tgtData.destination);
         	}
         }
-        else if (thingAtDestination == null) //destination is an empty square
+        if(!dealDamage)
         {
-        	Debug.Log("moving into empty square");
-        	BattleGrid.main.MoveAndSetWorldPos(target, destination);
-        	var src = GetComponent<AudioSource>();
-        	src.PlayOneShot(target.moveSfx);
-        	yield return new WaitForSeconds(target.moveSfx.length);
+            var src = GetComponent<AudioSource>();
+            src.PlayOneShot(target.moveSfx);
+            yield return new WaitForSeconds(target.moveSfx.length);
         }
-        else
-        {
-        	//for now, just do what we were doing before until I add an isMovable variable to obstacles
-        	BattleGrid.main.MoveAndSetWorldPos(target, destination);
-        	var src = GetComponent<AudioSource>();
-        	src.PlayOneShot(target.moveSfx);
-        	yield return new WaitForSeconds(target.moveSfx.length);
-        }
-
-        // BattleGrid.main.MoveAndSetWorldPos(target, destination);
-        // var src = GetComponent<AudioSource>();
-        // src.PlayOneShot(target.moveSfx);
-        // yield return new WaitForSeconds(target.moveSfx.length);
     }
+}
+
+//helper class used to store (target, destination) pairs for chained movement
+public class MoveData
+{
+	public Combatant target;
+	public Pos destination;
+
+	public MoveData(Combatant t, Pos d)
+	{
+		target = t;
+		destination = d;
+	}
 }

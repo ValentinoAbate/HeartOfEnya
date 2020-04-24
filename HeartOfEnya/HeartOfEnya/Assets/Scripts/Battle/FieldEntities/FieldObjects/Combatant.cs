@@ -8,16 +8,29 @@ using TMPro;
 /// A combatant is any FieldObject that is can use Actions (see Action.cs) or be affected by them.
 /// Combatants have a movement stat, an HP stat, elemental reactions, and can be Stunned.
 /// </summary>
-public abstract class Combatant : FieldObject
+public abstract class Combatant : FieldObject, IPausable
 {
+    public PauseHandle PauseHandle { get; set; }
+    public enum Passives
+    { 
+        None,
+        Sturdy,
+        Small,
+        Strong,
+        Nimble,
+    }
+
     public const bool stunIsBurn = true;
     public abstract Sprite DisplaySprite { get; }
     public abstract Color DisplaySpriteColor { get; }
-    [Header("Cheats")]
+    [Header("Passive Ability")]
+    public Passives passiveAbility = Passives.None;
 
     [Header("Combatant Display Fields")]
     [TextArea(1, 2)]
     public string description = "Combatant description";
+    public string passiveName = string.Empty;
+    public string passiveDescription = string.Empty;
     public GameObject damageFxPrefab;
     public GameObject deathFxPrefab;
     // Debug Audio fields while we don't have FMOD setup
@@ -30,9 +43,10 @@ public abstract class Combatant : FieldObject
     /// <summary>
     /// The units current movement range. Is only 1 square when an action is being charged.
     /// </summary>
-    public int Move => IsChargingAction ? 1 : move;
+    public int Move => IsChargingAction ? (passiveAbility == Passives.Nimble ? 2 : 1) : move;
     [SerializeField]
     private int move;
+    public bool isMovable = true; //whether the combatant can be moved via MoveEffect
 
     /// <summary>
     /// Is this unit stunned?
@@ -101,6 +115,8 @@ public abstract class Combatant : FieldObject
     /// </summary>
     public virtual void Damage(int damage)
     {
+        if (passiveAbility == Passives.Sturdy)
+            --damage;
         if (damage > 0)
         {
             Hp = Mathf.Max(0, hp - damage);
@@ -142,14 +158,14 @@ public abstract class Combatant : FieldObject
     /// <summary>
     /// Have the unit use an action at a certain target position
     /// </summary>
-    public virtual Coroutine UseAction(Action action, Pos targetPos)
+    public virtual Coroutine UseAction(Action action, Pos targetPos, Pos primaryTarget)
     {
         // If the action is not a charged action
         if (action.chargeTurns <= 0)
         {
             // Instantiate a copy of the action object
             var actionClone = Instantiate(action.gameObject).GetComponent<Action>();
-            return StartCoroutine(actionClone.Activate(this, targetPos));
+            return StartCoroutine(actionClone.Activate(this, targetPos, primaryTarget));
         }
         else // The action is a charged action, start charging
         {

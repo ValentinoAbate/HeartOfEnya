@@ -1,5 +1,40 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8772817020778783193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Text Playing
+  m_EditorClassIdentifier:
+  Name: Text Playing
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
+--- !u!114 &-8608481893436363359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier:
+  Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.bank
+  SubDir:
+  lastModified: 637230006808676698
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &-7503570847189912686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11,16 +46,16 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/Voices/Lua/Lua Normal
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/Voices/Lua/Lua Normal
   guid: 5e708cc22e80094a8084af455bc148e3
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -2934384862983434605}
+  - {fileID: -6923209031137872031}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
@@ -35,7 +70,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Crisis
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Crisis
   Min: 0
   Max: 1
@@ -52,11 +87,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/Ambient/Snowstorm
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/Ambient/Snowstorm
   guid: 1bf7ffd967922e47a5c315791d0fd1b7
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -75,19 +110,36 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/Voices/Bapy/Bapy Normal
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/Voices/Bapy/Bapy Normal
   guid: 375404193540074fa1d1915e870c79d1
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -5787622054230678328}
+  - {fileID: 4036896996882692237}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
+--- !u!114 &-6923209031137872031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Lua Normal/Space
+  m_EditorClassIdentifier:
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &-6662155835196700913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,16 +151,16 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/Voices/Soleil/Soleil Normal
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/Voices/Soleil/Soleil Normal
   guid: a30e360095381d45a49a6e926e4e6c01
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 3205320790855019212}
+  - {fileID: 8737963593111365733}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
@@ -123,7 +175,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Soleil Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -140,7 +192,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Bapy Angry/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -157,12 +209,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Loading
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Loading
   Min: 0
   Max: 1
   Default: 1
-  Exists: 1
+  Exists: 0
 --- !u!114 &-6184745981713408480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,12 +226,29 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Loading
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Loading
   Min: 0
   Max: 1
   Default: 1
   Exists: 0
+--- !u!114 &-6022494551739078402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Raina Normal/Space
+  m_EditorClassIdentifier:
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &-5787622054230678328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,12 +260,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Bapy Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-5673104688273702113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,13 +277,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.bank
-  SubDir: 
+  SubDir:
   lastModified: 637218740884119628
   LoadResult: 0
   FileSizes: []
-  Exists: 1
+  Exists: 0
 --- !u!114 &-5472759465633633692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,7 +295,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Bapy Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -243,7 +312,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Raina Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -260,18 +329,18 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/Music/Battle Theme
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/Music/Battle Theme
   guid: 34ce1126a9dfcf46a856be6b7d67badf
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -6216141377078209376}
-  - {fileID: 4870037041496097460}
-  - {fileID: -3289735795381811969}
+  - {fileID: 3263593359828049557}
+  - {fileID: -8772817020778783193}
+  - {fileID: 6974541893281454166}
   MinDistance: 0
   MaxDistance: 0
   Length: 451516
@@ -286,7 +355,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Loading
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Loading
   Min: 0
   Max: 1
@@ -303,7 +372,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Lua Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -320,9 +389,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.bank
-  SubDir: 
+  SubDir:
   lastModified: 637187857109057272
   LoadResult: 0
   FileSizes: []
@@ -338,7 +407,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Raina Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -355,16 +424,16 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/Voices/Raina/Raina Normal
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/Voices/Raina/Raina Normal
   guid: b15ed984ae98b1458469372a725d4601
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -1915146868611223562}
+  - {fileID: -6022494551739078402}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
@@ -379,12 +448,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Crisis
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Crisis
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-3046494156917521377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,11 +465,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/UI/Highlight
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/UI/Highlight
   guid: 7e45e13ac1066246a506f2d0c7d5a514
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -419,7 +488,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Crisis
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Crisis
   Min: 0
   Max: 1
@@ -436,12 +505,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Lua Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-2458175627002084853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,9 +522,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.bank
-  SubDir: 
+  SubDir:
   lastModified: 637187651046490963
   LoadResult: 0
   FileSizes: []
@@ -471,7 +540,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Soleil Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -488,11 +557,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/UI/Cancel
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/UI/Cancel
   guid: b9d2fc7667c9ac41945e378c74b462e6
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -511,7 +580,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Text Playing
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Text Playing
   Min: 0
   Max: 1
@@ -528,7 +597,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Bapy Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -545,11 +614,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/Battle/Place Character/Place Bapy
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/Battle/Place Character/Place Bapy
   guid: 00868b11eec5ff46af0ba6560af56c90
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -568,12 +637,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Raina Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-1753815174013776704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,7 +654,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Bapy Angry/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -602,7 +671,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Bapy Angry/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -619,7 +688,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Bapy Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -636,7 +705,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Soleil Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -653,11 +722,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/Music/Soup Theme
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/Music/Soup Theme
   guid: 5caf18e85864f643877a9a8b46317085
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -676,11 +745,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/Ambient/Fire
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/Ambient/Fire
   guid: d8a8053abfc3cf4ea1e42082a9bd7f88
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -699,16 +768,16 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/Voices/Bapy/Bapy Angry
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/Voices/Bapy/Bapy Angry
   guid: 7536d24792d9a34c86769459c95eb6d2
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 7156393202549473818}
+  - {fileID: -658622941789351416}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
@@ -723,11 +792,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/Music/Camp Theme
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/Music/Camp Theme
   guid: 2ed6b8e2a816e540a712490bf67c2a7e
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -746,11 +815,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/Music/Soleil Conversation
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/Music/Soleil Conversation
   guid: 7b4bae72ecdb454bbbc193e0694d3093
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -758,6 +827,23 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 164000
+--- !u!114 &-658622941789351416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Bapy Angry/Space
+  m_EditorClassIdentifier:
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -769,10 +855,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
   m_Name: FMODStudioCache
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   EditorBanks:
   - {fileID: 8180324856139246775}
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   EditorEvents:
   - {fileID: -1996147224635830896}
   - {fileID: 137066688830738650}
@@ -794,10 +880,10 @@ MonoBehaviour:
   - {fileID: -1250977911064390319}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   StringsBanks:
   - {fileID: 8180324856139246775}
-  stringsBankWriteTime: 637218740884149545
+  stringsBankWriteTime: 637230006808706622
   cacheVersion: 3
 --- !u!114 &137066688830738650
 MonoBehaviour:
@@ -810,11 +896,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/Battle/Place Character/Place Soleil
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/Battle/Place Character/Place Soleil
   guid: 0d1190094595e34494627e5ea6fb7182
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -833,7 +919,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Text Playing
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Text Playing
   Min: 0
   Max: 1
@@ -850,7 +936,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Bapy Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -867,7 +953,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Soleil Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -884,7 +970,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Bapy Angry/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -901,9 +987,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.bank
-  SubDir: 
+  SubDir:
   lastModified: 637187642428321740
   LoadResult: 0
   FileSizes: []
@@ -919,7 +1005,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Raina Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -936,7 +1022,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Text Playing
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Text Playing
   Min: 0
   Max: 1
@@ -953,7 +1039,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Text Playing
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Text Playing
   Min: 0
   Max: 1
@@ -970,7 +1056,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Lua Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -987,11 +1073,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/Battle/Place Character/Place Lua
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/Battle/Place Character/Place Lua
   guid: ce553535176c17468e7023e84bd03c32
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -1010,7 +1096,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Crisis
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Crisis
   Min: 0
   Max: 1
@@ -1027,11 +1113,28 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Soleil Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
   Default: 0
+  Exists: 0
+--- !u!114 &3263593359828049557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Loading
+  m_EditorClassIdentifier:
+  Name: Loading
+  Min: 0
+  Max: 1
+  Default: 1
   Exists: 1
 --- !u!114 &3574018720297329132
 MonoBehaviour:
@@ -1044,11 +1147,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/UI/Select
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/UI/Select
   guid: b18ada5908e2864793f9eea4d27ac0e6
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1067,7 +1170,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Crisis
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Crisis
   Min: 0
   Max: 1
@@ -1084,12 +1187,29 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Crisis
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Crisis
   Min: 0
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &4036896996882692237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Bapy Normal/Space
+  m_EditorClassIdentifier:
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &4463054975906725110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1101,7 +1221,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Raina Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -1118,7 +1238,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Bapy Angry/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -1135,12 +1255,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Text Playing
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Text Playing
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &4944389691887603512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1152,7 +1272,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Loading
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Loading
   Min: 0
   Max: 1
@@ -1169,7 +1289,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Loading
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Loading
   Min: 0
   Max: 1
@@ -1186,7 +1306,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Soleil Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -1203,9 +1323,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.bank
-  SubDir: 
+  SubDir:
   lastModified: 637185838470000000
   LoadResult: 0
   FileSizes: []
@@ -1221,7 +1341,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Bapy Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -1238,7 +1358,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Loading
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Loading
   Min: 0
   Max: 1
@@ -1255,7 +1375,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Lua Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -1272,7 +1392,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Lua Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -1289,11 +1409,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/SFX/Battle/Place Character/Place Raina
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: event:/SFX/Battle/Place Character/Place Raina
   guid: 7373bd27359e224f8eba989fc344d017
   Banks:
-  - {fileID: -5673104688273702113}
+  - {fileID: -8608481893436363359}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -1312,9 +1432,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.bank
-  SubDir: 
+  SubDir:
   lastModified: 637188044341943557
   LoadResult: 0
   FileSizes: []
@@ -1330,12 +1450,29 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Battle Theme/Text Playing
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Text Playing
   Min: 0
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &6974541893281454166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Crisis
+  m_EditorClassIdentifier:
+  Name: Crisis
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &7156393202549473818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1347,12 +1484,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Bapy Angry/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &8180324856139246775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1364,14 +1501,31 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: bank:/Master.strings.bank
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.strings.bank
-  SubDir: 
-  lastModified: 637218740884149545
+  SubDir:
+  lastModified: 637230006808706622
   LoadResult: 0
   FileSizes:
   - Name: Desktop
     Value: 1812
+  Exists: 1
+--- !u!114 &8737963593111365733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Soleil Normal/Space
+  m_EditorClassIdentifier:
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
   Exists: 1
 --- !u!114 &8852345676880490808
 MonoBehaviour:
@@ -1384,7 +1538,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Raina Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2
@@ -1401,7 +1555,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Lua Normal/Space
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   Name: Space
   Min: 0
   Max: 2

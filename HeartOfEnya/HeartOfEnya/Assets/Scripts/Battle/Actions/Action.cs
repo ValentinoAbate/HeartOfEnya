@@ -11,6 +11,8 @@ public class Action : MonoBehaviour
     public bool IsRanged => range.max > 1;
 
     public ActionRange range;
+    public bool useSecondaryRange;
+    public ActionRange secondaryRange;
     public TargetPattern targetPattern;
     public TargetPatternGenerator targetPatternGenerator;
     public int chargeTurns = 0;
@@ -54,19 +56,26 @@ public class Action : MonoBehaviour
             targetPattern = targetPatternGenerator.Generate();
     }
 
-    public IEnumerator Activate(Combatant user, Pos targetPos)
+    public List<Pos> HitPositions(Pos userPos, Pos targetPos)
     {
-        targetPattern.Target(user.Pos, targetPos);
+        targetPattern.Target(userPos, targetPos);
         var targetPositions = targetPattern.Positions.ToList();
         // If the targeting pattern is directional, rotate the points to the correct orientation
-        if(targetPattern.type == TargetPattern.Type.Directional)
+        if (targetPattern.type == TargetPattern.Type.Directional)
         {
-            Pos direction = targetPos - user.Pos;
-            Pos DirectionalMode(Pos pos) => Pos.Rotated(user.Pos, pos - direction, Pos.Right, direction);
+            Pos direction = targetPos - userPos;
+            Pos DirectionalMode(Pos pos) => Pos.Rotated(userPos, pos - direction, Pos.Right, direction);
             targetPositions = targetPositions.Select(DirectionalMode).ToList();
         }
         // Remove all illegal positions from the list
         targetPositions.RemoveAll((p) => !BattleGrid.main.IsLegal(p));
+        return targetPositions;
+    }
+
+    public IEnumerator Activate(Combatant user, Pos targetPos, Pos primaryTargetPos)
+    {
+        // Get the target positions, with rotating applied
+        var targetPositions = HitPositions(user.Pos, targetPos);
 
         //Play cut-in if applicable
         if(cutInPrefab != null)
@@ -100,9 +109,14 @@ public class Action : MonoBehaviour
         // Wait for the VFX to finish, wait for the highlight time again, then continue
         yield return new WaitForSeconds(targetHighlightSeconds + delayAtEnd);
         targetPattern.Hide();
-
+        var extraData = new ActionEffect.ExtraData()
+        {
+            actionTargetPos = targetPos,
+            primaryTargetPos = primaryTargetPos,
+        };
+        List<Combatant> toStun = new List<Combatant>();
         // Apply actual effects to targets and display results
-        foreach(var position in targetPositions)
+        foreach (var position in targetPositions)
         {
             var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
             if (target != null)
@@ -110,9 +124,14 @@ public class Action : MonoBehaviour
                 // Apply effects to targets
                 foreach (var effect in effects)
                 {
-                    if (effect.target != ActionEffect.Target.Other)
+                    if (effect.target != ActionEffect.Target.Target)
                         continue;
-                    yield return StartCoroutine(effect.ApplyEffect(user, target, targetPos));
+                    if (effect is StunEffect)
+                    {                     
+                        toStun.Add(target);
+                        continue;
+                    }                       
+                    yield return StartCoroutine(effect.ApplyEffect(user, target, extraData));
                     // If the target died from this effect
                     if (target == null)
                         break;
@@ -125,27 +144,28 @@ public class Action : MonoBehaviour
                 {
                     if (effect.target != ActionEffect.Target.Tile)
                         continue;
-                    yield return StartCoroutine(effect.ApplyEffect(user, position));
+                    yield return StartCoroutine(effect.ApplyEffect(user, position, extraData));
                     // If the target died from this effect
                     if (target == null)
                         break;
                 }
             }
-            // Apply effects to self
-            foreach (var effect in effects)
-            {
-                if (effect.target != ActionEffect.Target.Self)
-                    continue;
-                if (target != null)
-                    yield return StartCoroutine(effect.ApplyEffect(target, user, targetPos));
-                else
-                    yield return StartCoroutine(effect.ApplyEffect(user, user, targetPos));
-                // If the target died from this effect
-                if (target == null)
-                    break;
-            }
         }
-
+        // Remove all dead combatants
+        toStun.RemoveAll((c) => c == null || c.Dead);
+        if(toStun.Count > 0)
+        {
+            yield return new WaitForSeconds(ActionEffect.effectWaitTime);
+            foreach (var stunTarget in toStun)
+            {
+                if (stunTarget.Team == user.Team)
+                    continue;
+                if (!stunTarget.Stunned)
+                    stunTarget.Stunned = true;
+            }
+            // Play stun sound
+            yield return new WaitForSeconds(ActionEffect.effectWaitTime);
+        }
         Destroy(gameObject);
     }
 

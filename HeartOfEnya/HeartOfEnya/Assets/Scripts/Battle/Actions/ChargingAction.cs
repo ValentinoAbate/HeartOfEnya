@@ -75,7 +75,7 @@ public class ChargingAction
             target = user.Pos + targetDirection;
         var actionClone = GameObject.Instantiate(action.gameObject).GetComponent<Action>();
         actionClone.targetPattern = displayPattern;
-        return actionClone.Activate(user, target);
+        return actionClone.Activate(user, target, Pos.OutOfBounds);
     }
 
     public void Cancel()

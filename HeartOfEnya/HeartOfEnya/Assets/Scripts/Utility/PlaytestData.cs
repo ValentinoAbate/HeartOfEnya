@@ -89,12 +89,16 @@ public class PlaytestData : MonoBehaviour
 
     public void UpdateAvgEnemies(int enemies)
     {
+        if (turns == 0)
+            return;
         totalEnemies += enemies;
         avgEnemies = totalEnemies / turns;
     }
 
     public void UpdateAvgPos(int pos, int partySize)
     {
+        if (turns == 0 || partySize == 0)
+            return;
         totalPos += pos;
         avgPos = totalPos / (partySize * turns);
     }

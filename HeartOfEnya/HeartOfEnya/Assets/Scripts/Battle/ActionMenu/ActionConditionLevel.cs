@@ -5,7 +5,7 @@ using UnityEngine;
 public class ActionConditionLevel : ActionCondition
 {
     public int levelReq;
-    public override bool CheckCondition(ActionMenu menu, PartyMember user)
+    protected override bool CheckConditionFn(ActionMenu menu, PartyMember user)
     {
         return user.level >= levelReq;
     }

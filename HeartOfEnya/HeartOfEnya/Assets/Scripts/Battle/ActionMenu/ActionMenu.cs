@@ -13,7 +13,6 @@ public class ActionMenu : MonoBehaviour, IPausable
     }
 
     public PauseHandle PauseHandle { get; set; }
-
     public PartyMember user;
     public AttackCursor cursor;
     public KeyCode cancelKey;

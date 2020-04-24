@@ -16,6 +16,7 @@ public class UIInfoPanelParty : MonoBehaviour
     public Image hpBarImage;
     public TextMeshProUGUI fpNumberText;
     public Image fpBarImage;
+    public TextMeshProUGUI passiveText;
 
     [Header("Unit Display Background Colors")]
     public Color bapyColor;
@@ -66,5 +67,6 @@ public class UIInfoPanelParty : MonoBehaviour
         statusText.text = "Status: " + (p.DeathsDoor ? "Dying." : "Doing fine!");
         if (p.Stunned)
             statusText.text = "Status: " + "Stunned.";
+        passiveText.text = p.passiveName + ": " + p.passiveDescription;
     }
 }

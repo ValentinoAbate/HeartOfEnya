@@ -6,6 +6,8 @@ Shader "UI/Unlit/MulticolorTile"
     {
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         [Header(Colors and Textures)] [Space]
+        [PerRendererData] _ColorTex ("Color Lookup Texture", 2D) = "white" {}
+        [PerRendererData] _NumColors ("Number of Active Colors", Range(1.0,10.0)) = 1
         [PerRendererData] _Color1 ("Color 1", Color) = (1,1,1,1)
         [PerRendererData] _DetailTex ("Texture 1", 2D) = "white" {}
         _Strength ("Texture 1 Strength", Range(0.0, 1.0)) = 0.2
@@ -105,6 +107,9 @@ Shader "UI/Unlit/MulticolorTile"
             float4 _DetailTex_ST;
             float4 _DetailTex_TexelSize;
 
+            sampler2D _ColorTex;
+            fixed _NumActiveColors;
+
             fixed4 _Color1;
 			sampler2D _DetailTex;
 			fixed _Strength;
@@ -172,19 +177,15 @@ Shader "UI/Unlit/MulticolorTile"
                 return o;
             }
 
-            fixed4 frag (v2f i) : COLOR
+            fixed4 frag(v2f i) : COLOR
             {
-				float div = 1 /_Divisions;
+                float div =  1 / _Divisions;
+                float floorMod = floor(i.moduv.x / div) % (_NumActiveColors);
 				fixed4 color;
 				fixed4 detail;
-				if(floor(i.moduv.x / div) % 2 == 0) {
-					color = _Color1;
-					detail = tex2D(_DetailTex, i.uv);
-				}
-				else {
-					color = _Color2;
-					detail = tex2D(_DetailTex2, i.uv);
-				}
+                float x = floorMod / 10 + 0.5 / 10;
+                color = tex2D(_ColorTex, float2(x, 0));
+                detail = tex2D(_DetailTex, i.uv);
 				color.rgb = lerp(color.rgb, color.rgb * detail.rgb, detail.a * _Strength);
 
                 #ifdef UNITY_UI_CLIP_RECT

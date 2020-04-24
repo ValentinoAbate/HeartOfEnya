@@ -145,7 +145,7 @@ public class BattleGrid : MonoBehaviour
             return new TileUI.Entry() { pos = Pos.OutOfBounds, type = TileUI.Type.Empty };
         // If there is already a tile, set the secondary type
         if (tileUIManager.HasActiveTileUI(p))
-            return tileUIManager.SetSecondaryType(p, type);
+            return tileUIManager.AddType(p, type);
 
         // Calculate Vertices
         Vector2 offset = new Vector2((cellSize.x + skewXOffset) * 0.5f, -cellSize.y / 2);
@@ -159,7 +159,7 @@ public class BattleGrid : MonoBehaviour
 
     public void RemoveTileUI(TileUI.Entry entry)
     {
-        tileUIManager.ClearTileUI(entry);
+        tileUIManager.RemoveType(entry);
     }
 
     #endregion

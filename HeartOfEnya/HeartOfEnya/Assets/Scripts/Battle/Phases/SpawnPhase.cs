@@ -225,6 +225,9 @@ public class SpawnPhase : Phase
             }
             // Remove all spawners that spawned
             spawners.RemoveAll((s) => s == null);
+
+            // run tutorial trigger telling player about enemy spawn
+            BattleEvents.main.tutEnemySpawn._event.Invoke();
         }
         else // Increase the turns since something was last spawned
         {
@@ -242,6 +245,8 @@ public class SpawnPhase : Phase
             );
             logger.LogData(logger.testData);
 
+            // run tutorial trigger telling player about enemy spawn
+            BattleEvents.main.tutEnemySpawnWarning._event.Invoke();
 
             // Declare next spawns
             foreach (var spawnData in NextWave.enemies)

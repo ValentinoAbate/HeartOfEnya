@@ -168,7 +168,7 @@ public class BattleEvents : MonoBehaviour
 
     public void DeathsDoorTrigger()
     {
-        if(tutorial && !tutDD.flag)
+        if(!tutDD.flag)
         {
             Debug.Log("Battle Triggers: DeathsDoor");
             tutDD.flag = true;

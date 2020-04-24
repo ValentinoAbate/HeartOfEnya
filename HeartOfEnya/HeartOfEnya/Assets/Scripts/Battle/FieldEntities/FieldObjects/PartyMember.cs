@@ -170,6 +170,9 @@ public class PartyMember : Combatant, IPausable
         battleTheme.SetParameter("Crisis", 1);
         deathsDoorUI.SetActive(true);
         CancelChargingAction();
+
+        // invoke tutorial trigger for death's door
+        BattleEvents.main.tutDD._event.Invoke();
     }
 
     public override void Kill()

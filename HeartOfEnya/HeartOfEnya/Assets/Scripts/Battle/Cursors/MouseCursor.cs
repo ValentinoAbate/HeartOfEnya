@@ -47,7 +47,16 @@ public class MouseCursor : Cursor
         BattleGrid.main.GetObject(Pos)?.UnHighlight();
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(Pos);
-        BattleGrid.main.GetObject(Pos)?.Highlight();
+        FieldObject newObject = BattleGrid.main.GetObject(Pos);
+        newObject?.Highlight();
+
+        // check if the object is an enemy
+        if(newObject != null && newObject.Team == FieldEntity.Teams.Enemy)
+        {
+            // invoke tutorial event explain enemy stats
+            BattleEvents.main.tutEnemyInfo._event.Invoke();
+        }
+
     }
 
     //highlight whichever square is currently moused over

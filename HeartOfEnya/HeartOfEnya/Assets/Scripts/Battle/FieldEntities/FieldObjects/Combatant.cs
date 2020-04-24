@@ -8,8 +8,9 @@ using TMPro;
 /// A combatant is any FieldObject that is can use Actions (see Action.cs) or be affected by them.
 /// Combatants have a movement stat, an HP stat, elemental reactions, and can be Stunned.
 /// </summary>
-public abstract class Combatant : FieldObject
+public abstract class Combatant : FieldObject, IPausable
 {
+    public PauseHandle PauseHandle { get; set; }
     public enum Passives
     { 
         None,

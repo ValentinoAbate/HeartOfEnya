@@ -9,7 +9,6 @@ using System.Linq;
 /// </summary>
 public class Enemy : Combatant, IPausable
 {
-    public PauseHandle PauseHandle { get; set; }
     public override Teams Team => Teams.Enemy;
 
     [Header("Enemy-Specific Fields")]

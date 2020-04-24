@@ -13,7 +13,7 @@ public class EnemyAIAutoAct : AIComponent<Enemy>
             BattleGrid.main.MoveAndSetWorldPos(obj, obj.Pos + Pos.Right);
             moved = true;
             yield return new WaitWhile(() => obj.PauseHandle.Paused);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(moveDelay);
         }
         yield return obj.Attack(obj.Pos + Pos.Right);
         yield return new WaitWhile(() => obj.PauseHandle.Paused);

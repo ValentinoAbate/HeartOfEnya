@@ -49,13 +49,7 @@ public class EnemyAIDirectionalCharge : AIComponent<Enemy>
         if(moveTo != self.Pos)
         {
             var path = BattleGrid.main.Path(self.Pos, moveTo, self.CanMoveThrough);
-            // Move along the path until within range
-            for (int i = 0; i < path.Count; ++i)
-            {
-                yield return new WaitWhile(() => self.PauseHandle.Paused);
-                BattleGrid.main.MoveAndSetWorldPos(self, path[i]);
-                yield return new WaitForSeconds(moveDelay);
-            }
+            yield return MoveAlongPath(self, path, path.Count);
         }
         yield return self.Attack(self.Pos + targetDirection);
     }

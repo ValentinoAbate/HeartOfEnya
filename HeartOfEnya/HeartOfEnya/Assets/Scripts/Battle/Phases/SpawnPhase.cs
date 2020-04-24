@@ -167,12 +167,15 @@ public class SpawnPhase : Phase
                     }
                     foreach(var spawnData in pData.listActiveSpawners)
                     {
-                        EventTileSpawn spawnTile = null;
-                        if(spawnData.spawnObject.GetComponent<Obstacle>() != null)
-                            spawnTile = Instantiate(spawnTileObstaclePrefab).GetComponent<EventTileSpawn>();
-                        else
-                            spawnTile = Instantiate(spawnTileEnemyPrefab).GetComponent<EventTileSpawn>();
+                        var spawnTile = Instantiate(spawnTileEnemyPrefab).GetComponent<EventTileSpawn>();
                         LogEventTile(spawnData, spawnTile);
+                    }
+                    foreach(var spawnData in CurrWave.obstacles)
+                    {
+                        var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
+                        obj.PrefabOrigin = spawnData.spawnObject;
+                        obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
+                        BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
                     }
 
                 }
@@ -247,12 +250,6 @@ public class SpawnPhase : Phase
             foreach (var spawnData in NextWave.enemies)
             {
                 var spawnTile = Instantiate(spawnTileEnemyPrefab).GetComponent<EventTileSpawn>();
-                LogEventTile(spawnData, spawnTile);
-                yield return new WaitForSeconds(delaySeconds);
-            }
-            foreach (var spawnData in NextWave.obstacles)
-            {
-                var spawnTile = Instantiate(spawnTileObstaclePrefab).GetComponent<EventTileSpawn>();
                 LogEventTile(spawnData, spawnTile);
                 yield return new WaitForSeconds(delaySeconds);
             }

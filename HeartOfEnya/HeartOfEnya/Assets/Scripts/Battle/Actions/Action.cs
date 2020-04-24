@@ -114,6 +114,7 @@ public class Action : MonoBehaviour
             actionTargetPos = targetPos,
             primaryTargetPos = primaryTargetPos,
         };
+        List<Combatant> toStun = new List<Combatant>();
         // Apply actual effects to targets and display results
         foreach (var position in targetPositions)
         {
@@ -125,6 +126,11 @@ public class Action : MonoBehaviour
                 {
                     if (effect.target != ActionEffect.Target.Target)
                         continue;
+                    if (effect is StunEffect)
+                    {                     
+                        toStun.Add(target);
+                        continue;
+                    }                       
                     yield return StartCoroutine(effect.ApplyEffect(user, target, extraData));
                     // If the target died from this effect
                     if (target == null)
@@ -145,7 +151,21 @@ public class Action : MonoBehaviour
                 }
             }
         }
-
+        // Remove all dead combatants
+        toStun.RemoveAll((c) => c == null || c.Dead);
+        if(toStun.Count > 0)
+        {
+            yield return new WaitForSeconds(ActionEffect.effectWaitTime);
+            foreach (var stunTarget in toStun)
+            {
+                if (stunTarget.Team == user.Team)
+                    continue;
+                if (!stunTarget.Stunned)
+                    stunTarget.Stunned = true;
+            }
+            // Play stun sound
+            yield return new WaitForSeconds(ActionEffect.effectWaitTime);
+        }
         Destroy(gameObject);
     }
 

@@ -202,7 +202,10 @@ MonoBehaviour:
     col: 0
   canMoveThrough: 0
   vfxSpawnPoint: {fileID: 263221112878612941}
+  passiveAbility: 0
   description: Combatant description
+  passiveName: 
+  passiveDescription: 
   damageFxPrefab: {fileID: 0}
   deathFxPrefab: {fileID: 0}
   sfxDispatch: {fileID: 7649253792842341975}
@@ -211,6 +214,7 @@ MonoBehaviour:
   moveSfx: {fileID: 8300000, guid: 1273e667312313c4e8f744eb59708eec, type: 3}
   maxHp: 0
   move: 0
+  isMovable: 1
   animator: {fileID: 7116945294850344080}
   hpText: {fileID: 8920598860333299076}
   hpImage: {fileID: 1302292042147855959}
@@ -263,7 +267,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5997579284185976457}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 22100000, guid: 5e5851dedbec6a840a3981da07736b69, type: 2}
   m_CullingMode: 0

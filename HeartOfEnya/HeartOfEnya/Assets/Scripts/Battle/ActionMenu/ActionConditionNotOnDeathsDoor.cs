@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ActionConditionNotOnDeathsDoor : ActionCondition
 {
-    public override bool CheckCondition(ActionMenu menu, PartyMember user)
+    protected override bool CheckConditionFn(ActionMenu menu, PartyMember user)
     {
         return !user.DeathsDoor;
     }

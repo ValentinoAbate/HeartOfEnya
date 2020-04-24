@@ -181,6 +181,13 @@ public abstract class Combatant : FieldObject
         animator.SetBool("Charging", true);
         //chargeUI.SetActive(true);
         uiHelper.SetCharge(true);
+
+        // check if unit is an enemy
+        if(Team == Teams.Enemy)
+        {
+            // run tutorial trigger for enemy charging action
+            BattleEvents.main.tutEnemyRanged._event.Invoke();
+        }
     }
 
     /// <summary>

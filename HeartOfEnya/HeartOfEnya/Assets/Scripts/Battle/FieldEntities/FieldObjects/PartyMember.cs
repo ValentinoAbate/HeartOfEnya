@@ -172,6 +172,9 @@ public class PartyMember : Combatant, IPausable
         battleTheme.SetParameter("Crisis", 1);
         deathsDoorUI.SetActive(true);
         CancelChargingAction();
+
+        // invoke tutorial trigger for death's door
+        BattleEvents.main.tutDD._event.Invoke();
     }
 
     public override void Kill()
@@ -198,6 +201,19 @@ public class PartyMember : Combatant, IPausable
             // moveCursor.SetActive(true);
             mouseMoveCursor.SetActive(true);
             BattleUI.main.HideEndTurnButton();
+
+            // run tutorial trigger when raina is selected
+            if(GetName() == "Raina")
+            {
+                BattleEvents.main.tutMove._event.Invoke();
+            }
+
+            // run tutorial trigger when soleil is selected on turn 2
+            if(GetName() == "Soleil" && PhaseManager.main.Turn == 2)
+            {
+                BattleEvents.main.tutSoleilChargeExplanation._event.Invoke();
+            }
+
             return true;
         }
         return false;
@@ -215,6 +231,12 @@ public class PartyMember : Combatant, IPausable
     public void OpenActionMenu()
     {
         ActionMenu.SetActive(true);
+
+        // cancel trigger for bapy
+        if(GetName() == "Bapy")
+        {
+            BattleEvents.main.tutBapyCancel._event.Invoke();
+        }
     }
 
     /// <summary>

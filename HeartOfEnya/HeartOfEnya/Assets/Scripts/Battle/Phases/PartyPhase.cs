@@ -55,6 +55,14 @@ public class PartyPhase : Phase
             keyboardCursor.enabled = false;
         Cursor.SetActive(true);
         BattleUI.main.ShowEndTurnButton();
+
+        BattleEvents.main.tutorialIntro._event.Invoke(); // tutorial event at the start of battle
+
+        // tutorial event at the start of the second turn
+        if(PhaseManager.main.Turn == 2)
+        {
+            BattleEvents.main.tutSoleilChargeReminder._event.Invoke();
+        }
         return null;
     }
 
@@ -108,6 +116,9 @@ public class PartyPhase : Phase
         }
         Cursor.SetActive(true);
         BattleUI.main.ShowEndTurnButton();
+
+        // run tutorial trigger when raina's attack finishes
+        BattleEvents.main.tutBapySelect._event.Invoke();
     }
 
     /// <summary>
@@ -117,6 +128,12 @@ public class PartyPhase : Phase
     {
         Cursor.SetActive(true);
         BattleUI.main.ShowEndTurnButton();
+
+        // tutorial trigger for bapy cancelling action
+        if(p.GetName() == "Bapy")
+        {
+            BattleEvents.main.tutSoleilSelect._event.Invoke();
+        }
     }
 
     public override void OnPhaseUpdate() { }

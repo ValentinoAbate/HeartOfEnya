@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Yarn.Unity;
 
 public class BattleEvents : MonoBehaviour
 {
@@ -54,9 +55,16 @@ public class BattleEvents : MonoBehaviour
         {
             Debug.Log("Battle Triggers: start of battle");
             tutorialIntro.flag = true;
+            // Start the dialog (connect to ambers code)
+            // Wait for finish StartCoroutine(IntroTriggerPost(runner))
         }
     }
 
+    private IEnumerator IntroTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
+    }
 
     public void MoveTrigger()
     {
@@ -65,6 +73,12 @@ public class BattleEvents : MonoBehaviour
             Debug.Log("Battle Triggers: raina move");
             tutMove.flag = true;
         }
+    }
+
+    private IEnumerator MoveTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
     }
 
     public void RainaAttackTrigger()
@@ -76,6 +90,12 @@ public class BattleEvents : MonoBehaviour
         }
     }
 
+    private IEnumerator RainaAttackTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
+    }
+
     public void BapySelectTrigger()
     {
         if(tutorial && !tutBapySelect.flag)
@@ -83,6 +103,12 @@ public class BattleEvents : MonoBehaviour
             Debug.Log("Battle Triggers: select bapy");
             tutBapySelect.flag = true;
         }
+    }
+
+    private IEnumerator BapySelectTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
     }
 
     public void BapyCancelTrigger()
@@ -94,6 +120,12 @@ public class BattleEvents : MonoBehaviour
         }
     }
 
+    private IEnumerator BapyCancelTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
+    }
+
     public void SoleilSelectTrigger()
     {
         if(tutorial && !tutSoleilSelect.flag)
@@ -101,6 +133,12 @@ public class BattleEvents : MonoBehaviour
             Debug.Log("Battle Triggers: select soleil");
             tutSoleilSelect.flag = true;
         }
+    }
+
+    private IEnumerator SoleilSelectTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
     }
 
     public void SoleilAttackTrigger()
@@ -112,6 +150,12 @@ public class BattleEvents : MonoBehaviour
         }
     }
 
+    private IEnumerator SoleilAttackTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
+    }
+
     public void SoleilChargeReminderTrigger()
     {
         if(tutorial && !tutSoleilChargeReminder.flag)
@@ -119,6 +163,12 @@ public class BattleEvents : MonoBehaviour
             Debug.Log("Battle Triggers: SoleilChargeReminder");
             tutSoleilChargeReminder.flag = true;
         }
+    }
+
+    private IEnumerator SoleilChargeReminderTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
     }
 
     public void SoleilChargeExplanationTrigger()
@@ -130,6 +180,12 @@ public class BattleEvents : MonoBehaviour
         }
     }
 
+    private IEnumerator SoleilChargeExplanationTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
+    }
+
     public void EnemySpawnWarningTrigger()
     {
         if(tutorial && !tutEnemySpawnWarning.flag)
@@ -137,6 +193,12 @@ public class BattleEvents : MonoBehaviour
             Debug.Log("Battle Triggers: EnemySpawnWarning");
             tutEnemySpawnWarning.flag = true;
         }
+    }
+
+    private IEnumerator EnemySpawnWarningTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
     }
 
     public void EnemySpawnTrigger()
@@ -148,6 +210,12 @@ public class BattleEvents : MonoBehaviour
         }
     }
 
+    private IEnumerator EnemySpawnTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
+    }
+
     public void EnemyInfoTrigger()
     {
         if(tutorial && !tutEnemyInfo.flag)
@@ -155,6 +223,12 @@ public class BattleEvents : MonoBehaviour
             Debug.Log("Battle Triggers: EnemyInfo");
             tutEnemyInfo.flag = true;
         }
+    }
+
+    private IEnumerator EnemyInfoTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
     }
 
     public void EnemyRangedTrigger()
@@ -166,6 +240,12 @@ public class BattleEvents : MonoBehaviour
         }
     }
 
+    private IEnumerator EnemyRangedTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
+    }
+
     public void DeathsDoorTrigger()
     {
         if(!tutDD.flag)
@@ -173,5 +253,11 @@ public class BattleEvents : MonoBehaviour
             Debug.Log("Battle Triggers: DeathsDoor");
             tutDD.flag = true;
         }
+    }
+
+    private IEnumerator DeathsDoorTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        // put the post-code here
     }
 }

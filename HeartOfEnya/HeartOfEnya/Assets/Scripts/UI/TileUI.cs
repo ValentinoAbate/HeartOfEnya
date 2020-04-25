@@ -9,10 +9,6 @@ public class TileUI : MonoBehaviour
     private const int colorTexWidth = 10;
     private static readonly string colorTexProp = "_ColorTex";
     private static readonly string numColorsProp = "_NumActiveColors";
-    private static readonly string colorProp1 = "_Color1";
-    private static readonly string colorProp2 = "_Color2";
-    private static readonly string texProp1 = "_DetailTex";
-    private static readonly string texProp2 = "_DetailTex2";
     public enum Type
     {
         Empty,
@@ -57,9 +53,6 @@ public class TileUI : MonoBehaviour
             return new Entry();
         }
         var types = tilesTypes[p];
-        // Tile already has this type of UI on it
-        //if (types.Contains(t))
-            //return new Entry();
         types.Add(t);
         // Set property block values and return
         UpdatePropertyBlock(p);
@@ -84,11 +77,10 @@ public class TileUI : MonoBehaviour
         var types = tilesTypes[p].Distinct();
         var count = types.Count();
         var colors = types.Select((t) => tileColors[t]).ToArray();
-        var colorTex = new Texture2D(colorTexWidth, 1);
+        var colorTex = new Texture2D(count, 1);
         colorTex.SetPixels(0, 0, count, 1, colors);
         colorTex.Apply();
         var qMesh = tiles[p];
-
         var pBlock = qMesh.PropertyBlock;
         pBlock.SetTexture(colorTexProp, colorTex);
         pBlock.SetFloat(numColorsProp, count);

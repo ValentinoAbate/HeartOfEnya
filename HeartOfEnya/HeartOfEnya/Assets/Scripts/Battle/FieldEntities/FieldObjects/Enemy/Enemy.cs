@@ -7,7 +7,7 @@ using System.Linq;
 /// A hostile combabatant (a.k.a an enemy unit).
 /// Currently, AI behavior is defined in the AICoroutine which must be defined in a child class.
 /// </summary>
-public abstract class Enemy : Combatant, IPausable
+public class Enemy : Combatant, IPausable
 {
     public PauseHandle PauseHandle { get; set; }
     public override Teams Team => Teams.Enemy;
@@ -18,19 +18,40 @@ public abstract class Enemy : Combatant, IPausable
     public override Sprite DisplaySprite => sprite.sprite;
     public override Color DisplaySpriteColor => sprite.color;
 
+    private AIComponent<Enemy> aiComponent = null;
+
     private readonly List<TileUI.Entry> tileUIEntries = new List<TileUI.Entry>();
+
+    private PlaytestLogger logger;
 
     protected override void Initialize()
     {
         base.Initialize();
+        aiComponent = GetComponent<AIComponent<Enemy>>();
         PauseHandle = new PauseHandle();
         PhaseManager.main?.EnemyPhase.Enemies.Add(this);
         PhaseManager.main?.EnemyPhase.PauseHandle.Dependents.Add(this);
+
+        logger = DoNotDestroyOnLoad.Instance.playtestLogger;
     }
 
     private void OnDestroy()
     {
         PhaseManager.main?.EnemyPhase.PauseHandle.Dependents.Remove(this);
+    }
+
+    // overriding function to add playtest logging
+    public override void OnPhaseEnd()
+    {
+        if (Dead)
+            return;
+        if(Stunned)
+        {
+            logger.testData.stunnedEnemies++;
+            Stunned = false;
+            if(stunIsBurn)
+                Damage(1);
+        }
     }
 
     // Show movement range when highlighted.
@@ -74,7 +95,7 @@ public abstract class Enemy : Combatant, IPausable
     private IEnumerator TurnCR()
     {
         yield return new WaitWhile(() => PauseHandle.Paused);
-        // Apply stun an d exit if stunned
+        // Apply stun and exit if stunned
         if (Stunned)
         {
             yield return new WaitForSeconds(0.25f);
@@ -85,46 +106,58 @@ public abstract class Enemy : Combatant, IPausable
         if (IsChargingAction)
         {
             yield return new WaitWhile(() => PauseHandle.Paused);
-            if (ChargingActionReady)
-                yield return ActivateChargedAction();
-            else
-            {
-                yield return new WaitForSeconds(1);
-                ChargeChargingAction();
-            }
+            yield return ActivateChargedAction();
             yield break;
         }
         // Else let the AI coroutine play out the turn
-        yield return StartCoroutine(AICoroutine());
+        yield return StartCoroutine(aiComponent.DoTurn(this));
     }
-
-    /// <summary>
-    /// The AI routine. needs to be overriden in a base class
-    /// </summary>
-    protected abstract IEnumerator AICoroutine();
 
     /// <summary>
     /// Attack a position. Basically a wrapper to UseAction, with some addional debugging.
     /// Might be used later for displaying attacks
     /// </summary>
-    protected Coroutine Attack(Pos p)
+    public Coroutine Attack(Pos p)
     {
         var target = BattleGrid.main.GetObject(p) as Combatant;
         if (action.chargeTurns > 0)
+        {
             Debug.Log(name + " begins charging " + action.name);
+        }
         else if (target != null)
+        {
             Debug.Log(name + " attacks " + target.name + " with " + action.name);
+
+            // log playtest data for damage dealt by enemy type
+            // if enemy type is not already in logger
+            if(!logger.testData.enemyDmg.ContainsKey(DisplayName))
+            {
+                // check if the move does damage
+                var dmg = action.GetComponent<DamageEffect>();
+                if(dmg != null)
+                {
+                    logger.testData.enemyDmg[DisplayName] = dmg.damage;
+                }
+            }
+            else
+            {
+                // check if the move does damage
+                var dmg = action.GetComponent<DamageEffect>();
+                if(dmg != null)
+                {
+                    logger.testData.enemyDmg[DisplayName] += dmg.damage;
+                }
+            }
+        }
         return UseAction(action, p);
     }
     public override void Kill()
     {
-        Debug.Log("Enemy arrived");
         Debug.Log(DisplayName + " has died...");
-
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         pData.numEnemiesDefeatedThisEncounter++;
         pData.numEnemiesLeft--;
         BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft);
-        Destroy(gameObject);
+        base.Kill();
     }
 }

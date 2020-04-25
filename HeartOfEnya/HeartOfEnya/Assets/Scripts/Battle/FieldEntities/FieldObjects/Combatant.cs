@@ -18,6 +18,13 @@ public abstract class Combatant : FieldObject
     [Header("Combatant Display Fields")]
     [TextArea(1, 2)]
     public string description = "Combatant description";
+    public GameObject damageFxPrefab;
+    public GameObject deathFxPrefab;
+    // Debug Audio fields while we don't have FMOD setup
+    public SfxPlayerDispatcher sfxDispatch;
+    public AudioClip damageSfx;
+    public AudioClip deathSfx;
+    public AudioClip moveSfx;
     [Header("General Combatant Fields")]
     public int maxHp;
     /// <summary>
@@ -37,17 +44,20 @@ public abstract class Combatant : FieldObject
         set
         {
             stunned = value;
-            if(value)
+            animator.SetBool("Stunned", value);
+            if (value)
             {
                 Debug.Log(name + " is stunned!");
                 unstunnedColor = hpImage.color;
-                hpImage.color = Color.yellow;
+                hpImage.color = new Color(1, 0.55f, 0.55f, 1);
+                uiHelper.SetStun(true);
                 CancelChargingAction();
             }
             else
             {
                 Debug.Log(name + " is no longer stunned");
                 hpImage.color = unstunnedColor;
+                uiHelper.SetStun(false);
             }
         }
     }
@@ -57,7 +67,7 @@ public abstract class Combatant : FieldObject
     /// <summary>
     /// Is this unit dead? (true if Hp <= 0)
     /// </summary>
-    public bool Dead { get => Hp <= 0; }  
+    public bool Dead { get => Hp <= 0; }
     public int Hp
     {
         get => hp;
@@ -69,12 +79,14 @@ public abstract class Combatant : FieldObject
     }
     private int hp = 0;
     [Header("UI References")]
+    public Animator animator;
     public TextMeshProUGUI hpText;
     public Image hpImage;
     public GameObject chargeUI;
     public TextMeshProUGUI chargeText;
+    public UnitUI uiHelper;
+
     public bool IsChargingAction => chargingAction != null;
-    public bool ChargingActionReady => IsChargingAction && chargingAction.Ready;
     private ChargingAction chargingAction;
 
     protected override void Initialize()
@@ -96,6 +108,13 @@ public abstract class Combatant : FieldObject
             {
                 Kill();
             }
+            else
+            {
+                if(damageFxPrefab != null)
+                    Instantiate(damageFxPrefab, VfxSpawnPoint, Quaternion.identity).GetComponent<ActionVfx>()?.Play();
+                sfxDispatch.Dispatch().PlayAndDestroy(damageSfx);
+                animator.Play("Damage");
+            }
         }
     }
 
@@ -104,16 +123,25 @@ public abstract class Combatant : FieldObject
     /// </summary>
     public virtual void Kill()
     {
-        chargingAction?.Cancel();
-        Debug.Log(name + " has died...");
+        CancelChargingAction();
+        BattleGrid.main.RemoveObject(this);
+        Debug.Log(name + " has died...");       
+        StartCoroutine(DestroyAfterDeath());
+    }
+
+    private IEnumerator DestroyAfterDeath()
+    {
+        if(deathFxPrefab != null)
+            Instantiate(deathFxPrefab, VfxSpawnPoint, Quaternion.identity).GetComponent<ActionVfx>()?.Play();
+        sfxDispatch.Dispatch().PlayAndDestroy(deathSfx);
+        animator.SetTrigger("Death");
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         Destroy(gameObject);
     }
 
     /// <summary>
     /// Have the unit use an action at a certain target position
     /// </summary>
-    /// <param name="action"></param>
-    /// <param name="targetPos"></param>
     public virtual Coroutine UseAction(Action action, Pos targetPos)
     {
         // If the action is not a charged action
@@ -125,9 +153,7 @@ public abstract class Combatant : FieldObject
         }
         else // The action is a charged action, start charging
         {
-            chargingAction = new ChargingAction(action, this, targetPos);            
-            ChargeChargingAction();
-            chargeUI.SetActive(true);
+            SetChargingAction(action, targetPos);
         }
         return null;
     }
@@ -147,26 +173,37 @@ public abstract class Combatant : FieldObject
     #region Action Charging
 
     /// <summary>
+    /// Set the charging action and associated UI parameters
+    /// </summary>
+    private void SetChargingAction(Action action, Pos target)
+    {
+        chargingAction = new ChargingAction(action, this, target);
+        animator.SetBool("Charging", true);
+        //chargeUI.SetActive(true);
+        uiHelper.SetCharge(true);
+    }
+
+    /// <summary>
+    /// Clears the charging action properties. 
+    /// called after activating or canceling a charged action
+    /// </summary>
+    private void ClearCharging()
+    {
+        animator.SetBool("Charging", false);
+        chargingAction = null;
+        uiHelper.SetCharge(false);
+        chargeUI.SetActive(false);
+    }
+
+    /// <summary>
     /// Cancel a charged action without using it. Updates Charge UI.
     /// </summary>
     public void CancelChargingAction()
     {
         if (!IsChargingAction)
             return;
-        chargeUI.SetActive(false);
         chargingAction.Cancel();
-        chargingAction = null;
-    }
-
-    /// <summary>
-    /// Charged a charging action once. Updates Charge UI.
-    /// </summary>
-    public void ChargeChargingAction()
-    {
-        if (!IsChargingAction)
-            return;
-        chargingAction.Charge();
-        chargeText.text = (chargingAction.TurnsLeft + 1).ToString();
+        ClearCharging();
     }
 
     /// <summary>
@@ -181,8 +218,20 @@ public abstract class Combatant : FieldObject
         Debug.Log(name + " uses charged action!");
         chargeUI.SetActive(false);
         var cr = StartCoroutine(chargingAction.Activate());
-        chargingAction = null;
+        ClearCharging();
         return cr;
+    }
+
+    public void UpdateChargeTileUI()
+    {
+        if (IsChargingAction)
+            chargingAction.UpdateDisplay();
+    }
+
+    public void UpdateChargeTileUI(Pos p)
+    {
+        if (IsChargingAction)
+            chargingAction.UpdateDisplay(p);
     }
 
     #endregion

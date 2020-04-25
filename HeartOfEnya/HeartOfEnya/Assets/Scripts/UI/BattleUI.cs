@@ -11,6 +11,8 @@ public class BattleUI : MonoBehaviour
 
     public TextMeshProUGUI numEnemiesLeft;
 
+    public Button endTurnButton;
+
     [Header("Info Panel Fields")]
     public GameObject infoPanel;
     public UIInfoPanelEnemy enemyInfoPanel;
@@ -38,6 +40,10 @@ public class BattleUI : MonoBehaviour
     {
         numEnemiesLeft.text = numRemaining.ToString() + " Enemies Remain...";
     }
+
+    public void ShowEndTurnButton() => endTurnButton.interactable = true;
+
+    public void HideEndTurnButton() => endTurnButton.interactable = false;
 
     public void HideInfoPanel()
     {

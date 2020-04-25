@@ -40,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6405744111515405522}
   - component: {fileID: 166792643511715538}
+  - component: {fileID: 8562865119816052089}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -111,6 +112,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &8562865119816052089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5902082664438179050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffba7449a58dad74c9151ebbbc91a947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chargeColor: {r: 0.496, g: 0.496, b: 0.496, a: 1}
 --- !u!1 &6271636570576552739
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,6 +135,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6271636570576552798}
   - component: {fileID: -225921385592598223}
+  - component: {fileID: 7001886260666202765}
+  - component: {fileID: 6588326718544028018}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Untagged
@@ -164,13 +180,54 @@ MonoBehaviour:
   canMoveThrough: 0
   vfxSpawnPoint: {fileID: 2361452794203608024}
   description: Combatant description
+  damageFxPrefab: {fileID: 0}
+  deathFxPrefab: {fileID: 0}
+  sfxDispatch: {fileID: 6588326718544028018}
+  damageSfx: {fileID: 8300000, guid: 936112434e3522346bca9074ebe5dcb9, type: 3}
+  deathSfx: {fileID: 8300000, guid: caa7bbb35f09cd043b165b8a6feb86ba, type: 3}
+  moveSfx: {fileID: 8300000, guid: 1273e667312313c4e8f744eb59708eec, type: 3}
   maxHp: 4
   move: 0
+  animator: {fileID: 7001886260666202765}
   hpText: {fileID: 6537207338631405516}
   hpImage: {fileID: 3703697910149567519}
   chargeUI: {fileID: 1423967052259601780}
   chargeText: {fileID: 2148103642408283083}
+  uiHelper: {fileID: 8562865119816052089}
   sprite: {fileID: 166792643511715538}
+--- !u!95 &7001886260666202765
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6271636570576552739}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: d95080c8c6ecec34bb9b59b1f8511bae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6588326718544028018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6271636570576552739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac751914963ad3741b204cd5f2adf152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxPlayerPrefab: {fileID: 5694999867227550884, guid: 4e3cbc787db179a4e895032d270eac16,
+    type: 3}
 --- !u!1001 &6615416752555109236
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System.Linq;
 using System;
 
@@ -193,6 +194,11 @@ public class BattleGrid : MonoBehaviour
         return new Pos(row, col);
     }
 
+    public bool ContainsPoint(Vector2 worldSpace)
+    {
+        return IsLegal(GetPos(worldSpace));
+    }
+
     /// <summary>
     /// Is this grid position legal (a.k.a can that grid position contain field objects and/or event tiles)?
     /// </summary>
@@ -219,6 +225,23 @@ public class BattleGrid : MonoBehaviour
             return field.Get(pos);
         }
         return null;
+    }
+
+    public List<Combatant> GetAllCombatants(Predicate<Combatant> pred)
+    {
+        var foundObjects = new List<Combatant>();
+        //brute force foreach of field; might optimize later
+        foreach (var obj in field)
+        {
+            if(obj is Combatant)
+            {
+                var c = obj as Combatant;
+                //if object matches the predicate, add it to the list
+                if (pred(c))
+                    foundObjects.Add(c);
+            }
+        }
+        return foundObjects;
     }
 
     /// <summary>
@@ -294,6 +317,11 @@ public class BattleGrid : MonoBehaviour
         // Activate any event tiles if present on the square moved to
         if (eventTiles.ContainsKey(dest))
             eventTiles[dest].ForEach((et) => et.OnSteppedOn(obj));
+        if (obj is Combatant)
+        {
+            var c = obj as Combatant;
+            c.UpdateChargeTileUI();
+        }
         return true;
     }
 
@@ -333,6 +361,16 @@ public class BattleGrid : MonoBehaviour
             eventTiles[obj1.Pos].ForEach((et) => et.OnSteppedOn(obj1));
         if (eventTiles.ContainsKey(obj2.Pos))
             eventTiles[obj2.Pos].ForEach((et) => et.OnSteppedOn(obj2));
+        if (obj1 is Combatant)
+        {
+            var c = obj1 as Combatant;
+            c.UpdateChargeTileUI();
+        }
+        if (obj2 is Combatant)
+        {
+            var c = obj2 as Combatant;
+            c.UpdateChargeTileUI();
+        }
     }
 
     #endregion

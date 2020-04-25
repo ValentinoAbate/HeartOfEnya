@@ -54,6 +54,7 @@ public class PartyMember : Combatant, IPausable
     public AttackCursor attackCursor;
     public int maxFp;
     public int level;
+    public Color noTurnColor = Color.gray;
     public override Sprite DisplaySprite => chara.Portrait;
     public override Color DisplaySpriteColor => Color.white;
 
@@ -91,11 +92,11 @@ public class PartyMember : Combatant, IPausable
             hasTurn = value;
             if (value)
             {
-                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1f);
+                sprite.color = Color.white;
             }
             else
             {
-                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0.5f);
+                sprite.color = noTurnColor;
             }
         }
     }
@@ -138,14 +139,20 @@ public class PartyMember : Combatant, IPausable
     {
         // log hp change in playtest logger
         logger.testData.hp[GetName()] += damage;
-
-        Hp = Mathf.Max(0, Hp - damage);
-        if (damage > 0 && Dead)
+        if (damage > 0)
         {
-            if (!DeathsDoor)
+            Hp = Mathf.Max(0, Hp - damage);
+            if (Dead && !DeathsDoor)
                 EnterDeathsDoor();
-            else
-                --DeathsDoorCounter;
+            else // Decrement counter if in deaths
+            {
+                if(DeathsDoor)
+                    --DeathsDoorCounter;
+                if (damageFxPrefab != null)
+                    Instantiate(damageFxPrefab, VfxSpawnPoint, Quaternion.identity).GetComponent<ActionVfx>()?.Play();
+                sfxDispatch.Dispatch().PlayAndDestroy(damageSfx);
+                animator.Play("Damage");
+            }              
         }
     }
 
@@ -155,6 +162,9 @@ public class PartyMember : Combatant, IPausable
     /// </summary>
     public void EnterDeathsDoor()
     {
+        if (deathFxPrefab != null)
+            Instantiate(deathFxPrefab, VfxSpawnPoint, Quaternion.identity).GetComponent<ActionVfx>()?.Play();
+        sfxDispatch.Dispatch().PlayAndDestroy(deathSfx);
         DeathsDoor = true;
         Debug.Log(DisplayName + "Has Enetered Death's Door");
         battleTheme.SetParameter("Crisis", 1);
@@ -185,7 +195,7 @@ public class PartyMember : Combatant, IPausable
         {
             // moveCursor.SetActive(true);
             mouseMoveCursor.SetActive(true);
-
+            BattleUI.main.HideEndTurnButton();
             return true;
         }
         return false;
@@ -241,9 +251,7 @@ public class PartyMember : Combatant, IPausable
 
     public override void OnPhaseEnd()
     {
-        var sprite = GetComponent<SpriteRenderer>();
-        if (sprite != null)
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+        sprite.color = Color.white;
         if(Stunned)
         {
             Stunned = false;
@@ -291,8 +299,7 @@ public class PartyMember : Combatant, IPausable
     /// Use the action and reduce Fp if the action has an ActionFpCost component
     /// </summary>
     public override Coroutine UseAction(Action action, Pos targetPos)
-    {
-        
+    {        
         //Hide the info panel;
         BattleUI.main.HideInfoPanel();
         var routine = base.UseAction(action, targetPos);

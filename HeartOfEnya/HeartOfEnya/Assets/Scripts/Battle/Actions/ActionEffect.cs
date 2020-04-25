@@ -10,11 +10,12 @@ public abstract class ActionEffect : MonoBehaviour
         Other,
         Tile,
     }
+    public const float effectWaitTime = 0.4f;
 
     public Target target = Target.Other;
 
-    public abstract void ApplyEffect(Combatant user, Combatant target);
+    public abstract IEnumerator ApplyEffect(Combatant user, Combatant target, Pos actionTargetPos);
 
-    public virtual void ApplyEffect(Combatant user, Pos target) { }
+    public virtual IEnumerator ApplyEffect(Combatant user, Pos target) { yield break; }
 
 }

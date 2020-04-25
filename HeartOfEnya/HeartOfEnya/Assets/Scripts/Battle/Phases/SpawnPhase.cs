@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Dialog;
 public class SpawnPhase : Phase
 {
+    public DialogUI dialog;
     public const float delaySeconds = 0.25f;
     public override PauseHandle PauseHandle { get; set; } = new PauseHandle(null);
-
     public Encounter mainEncounter;
     [SerializeField]
     private Encounter tutorialEncounter;
@@ -43,6 +43,7 @@ public class SpawnPhase : Phase
     public Pos soleilPos;
     public Pos rainaPos;
     public Pos luaPos;
+    
 
     // Playtest data logger reference
     private PlaytestLogger logger;
@@ -62,6 +63,8 @@ public class SpawnPhase : Phase
             CurrEncounter = luaEncounter;
         else if (gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
             CurrEncounter = absoluteZeroEncounter;
+
+     
     }
 
     public override Coroutine OnPhaseStart()
@@ -74,16 +77,20 @@ public class SpawnPhase : Phase
             Vector2 bapyVec = BattleGrid.main.GetSpace(bapyPos);
             var bapy = Instantiate(bapyLvl[pData.partyLevel], bapyVec,
                                         Quaternion.identity).GetComponent<PartyMember>();
+            dialog.characters.Clear();
+            dialog.characters.Add(bapy.GetComponent<Character>());
             bapy.Pos = bapyPos;
 
             Vector2 soleilVec = BattleGrid.main.GetSpace(soleilPos);
             var soleil = Instantiate(soleilLvl[pData.partyLevel], soleilVec,
                                         Quaternion.identity).GetComponent<PartyMember>();
+            dialog.characters.Add(soleil.GetComponent<Character>());
             soleil.Pos = soleilPos;
 
             Vector2 rainaVec = BattleGrid.main.GetSpace(rainaPos);
             var raina = Instantiate(rainaLvl[pData.partyLevel], rainaVec,
                                         Quaternion.identity).GetComponent<PartyMember>();
+            dialog.characters.Add(raina.GetComponent<Character>());
             raina.Pos = rainaPos;
 
             bool enableLua = pData.LuaUnfrozen || overrideSpawnLua;
@@ -95,6 +102,7 @@ public class SpawnPhase : Phase
                 Vector2 luaVec = BattleGrid.main.GetSpace(luaPos);
                 lua = Instantiate(luaLvl[pData.partyLevel], luaVec, 
                                     Quaternion.identity).GetComponent<PartyMember>();
+                dialog.characters.Add(lua.GetComponent<Character>());
                 lua.Pos = luaPos;
             }
 
@@ -154,18 +162,8 @@ public class SpawnPhase : Phase
             else // This is a continuing encounter, spawn the backed-up enemies
             {
                 waveNum = pData.waveNum;
-                // No Backed up enemies to spawn
-                if (pData.listEnemiesLeft.Count <= 0)
-                {                  
-                    foreach (var spawnData in CurrWave.AllSpawns)
-                    {
-                        var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
-                        obj.PrefabOrigin = spawnData.spawnObject;
-                        obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
-                        BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
-                    }
-                }
-                else
+                // Backed up enemies or backed up spawners to to spawn
+                if (pData.listEnemiesLeft.Count > 0 || pData.listActiveSpawners.Count > 0)
                 {
                     foreach (var spawnData in pData.listEnemiesLeft)
                     {
@@ -174,6 +172,26 @@ public class SpawnPhase : Phase
                         obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPos);
                         BattleGrid.main.SetObject(spawnData.spawnPos, obj);
                         obj.Hp = spawnData.remainingHP;
+                    }
+                    foreach(var spawnData in pData.listActiveSpawners)
+                    {
+                        EventTileSpawn spawnTile = null;
+                        if(spawnData.spawnObject.GetComponent<Obstacle>() != null)
+                            spawnTile = Instantiate(spawnTileObstaclePrefab).GetComponent<EventTileSpawn>();
+                        else
+                            spawnTile = Instantiate(spawnTileEnemyPrefab).GetComponent<EventTileSpawn>();
+                        LogEventTile(spawnData, spawnTile);
+                    }
+
+                }
+                else // No backed up stuff, spawn first wave
+                {
+                    foreach (var spawnData in CurrWave.AllSpawns)
+                    {
+                        var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
+                        obj.PrefabOrigin = spawnData.spawnObject;
+                        obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
+                        BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
                     }
                 }
             }
@@ -287,11 +305,14 @@ public class SpawnPhase : Phase
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         pData.waveNum = waveNum;
         pData.lastEncounter = CurrEncounter;
+        pData.listActiveSpawners.Clear();
+        foreach (var spawner in spawners)
+            pData.listActiveSpawners.Add(spawner.SpawnData);
 
         // Log playtest data from previous wave
         logger.testData.NewDataLog(
-          waveNum, pData.dayNum, CurrWave.enemies.Count, "party retreated"
-        );
+            waveNum, pData.dayNum, CurrWave.enemies.Count, "party retreated"
+            );
         logger.LogData(logger.testData);
     }
 }

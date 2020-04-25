@@ -18,7 +18,7 @@ Shader "Universal Render Pipeline/2D/GridUnit"
 		[Header(Highlighted Properties)]
 		[PerRendererData] _Highlighted("Highlighted", float) = 0
 		_HighlightColor("Highlight Color", Color) = (1,1,1,1)
-		_HighlightSpeed("HighLight Speed", range(0, 5)) = 1
+		_HighlightSpeed("Highlight Speed", range(0, 5)) = 1
 
         // Legacy properties. They're here so that materials using this shader can gracefully fallback to the legacy sprite shader.
         [HideInInspector] _Color("Tint", Color) = (1,1,1,1)
@@ -107,33 +107,38 @@ Shader "Universal Render Pipeline/2D/GridUnit"
             SHAPE_LIGHT(3)
             #endif
 
+            half4 highlight(half4 c) {
+                float step = sin(_Time.y * _HighlightSpeed) * 0.25 + 0.25;
+                half4 newcol = lerp(c, _HighlightColor * c, step);
+                newcol.a = c.a;
+                return newcol;
+            }
+
 			// function to add an outline.
 			// req: (_Charging || _Stunned) && !(_Charging && _Stunned)
 			// @param uv: 2d texture coordinate. currently in object space and not screen space because God hates me
 			// @param c: color from the currently sampled fragment + lighting calcs
-			half4 determineOutline(float2 uv, half4 c) {
-				float2 x_dist = float2 (_Outline, 0);
-				float2 y_dist = float2 (0, _Outline);
-				if (c.a < 0.3) {
-					if ((SAMPLE_TEXTURE2D (_MainTex, sampler_MainTex, uv + x_dist).a > 0) ||
-				        (SAMPLE_TEXTURE2D (_MainTex, sampler_MainTex, uv - x_dist).a > 0) ||
-					    (SAMPLE_TEXTURE2D (_MainTex, sampler_MainTex, uv + y_dist).a > 0) ||
-					    (SAMPLE_TEXTURE2D (_MainTex, sampler_MainTex, uv - y_dist).a > 0))
-						c = (_Charging * _ChargeColor) + (_Stunned * _StunColor);
-				} else {
-					float alpha = c.a;
-					c = lerp((_Charging * _ChargeColor) + (_Stunned * _StunColor), c, alpha - 0.2);
-					c.a = alpha;
-				}
-				return c;
-			}
+                half4 determineOutline(float2 uv, half4 c) {
+                float2 x_dist = float2 (_Outline, 0);
+                float2 y_dist = float2 (0, _Outline);
+                if (c.a < 0.3) {
+                    if ((SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + x_dist).a > 0) ||
+                        (SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv - x_dist).a > 0) ||
+                        (SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + y_dist).a > 0) ||
+                        (SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv - y_dist).a > 0))
+                    {
+                        c = (_Charging * _ChargeColor) + (_Stunned * _StunColor);
+                        float step = sin(_Time.y * _HighlightSpeed) * 0.5 + 0.5;
+                        c.a = lerp(0, c.a, step);
+                    }                       
+                }
+                else {
+                    float alpha = c.a;
+                    c = lerp((_Charging * _ChargeColor) + (_Stunned * _StunColor), c, alpha - 0.2);
+                }
 
-			half4 highlight(half4 c) {
-				float step = sin(_Time.y * _HighlightSpeed) * 0.25 + 0.25;
-				half4 newcol = lerp(c, _HighlightColor * c, step);
-				newcol.a = c.a;
-				return newcol;
-			}
+                return c;
+            }
 
 
             Varyings CombinedShapeLightVertex(Attributes v)

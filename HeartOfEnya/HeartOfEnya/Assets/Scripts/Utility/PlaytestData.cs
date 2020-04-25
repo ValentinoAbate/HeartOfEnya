@@ -7,40 +7,36 @@ using UnityEngine;
 /// </summary>
 public class PlaytestData : MonoBehaviour
 {
-    // private string name;
-    // private uint amountOfLoveForBapy;
     private int wave;       // which wave is it
     private int day;        // which day is it
     private int numEnemies; // number of enemies spawned in the wave
     private string victory; // whether player won the wave or retreated
+
     private int turns;      // how many turns it took to finish wave
+    private int totalTurns = 0;
+    private int prevTurns;
 
     public Dictionary<string, int> hp = new Dictionary<string, int>();      // how much hp/fp each char lost
     public Dictionary<string, int> fp = new Dictionary<string, int>();
     public Dictionary<string, int> moves = new Dictionary<string, int>();   // how many times each move was used
     public Dictionary<string, int> moveDmg = new Dictionary<string, int>(); // how much damage each move did
     
-    public int obstaclesDestroyed;                    // how many obstacles were destroyed
-    public List<int> obstacleTurns = new List<int>(); // which turns obstacles were destroyed on
+    private int obstaclesDestroyed;                    // how many obstacles were destroyed
+    private List<int> obstacleTurns = new List<int>(); // which turns obstacles were destroyed on
     
-    public float avgEnemies;   // average number of enemies on screen
-    public Dictionary<string, int> enemyDmg = new Dictionary<string, int>(); // how much damage each enemy time dealt
-    public int stunnedEnemies; // how many times an enemy was stunned
-    public float avgPos;       // average x position of all characters
+    private int totalEnemies;
+    private float avgEnemies;   // average number of enemies on screen
+    
+    public Dictionary<string, int> enemyDmg = new Dictionary<string, int>(); // how much damage each enemy type dealt
+    public int stunnedEnemies;  // how many times an enemy was stunned
+
+    private int totalPos;     
+    private float avgPos;       // average x position of all characters
 
     private void Awake()
     {
-        hp["Bapy"] = 0;
-        hp["Soleil"] = 0;
-        hp["Raina"] = 0;
-        hp["Lua"] = 0;
-
-        fp["Bapy"] = 0;
-        fp["Soleil"] = 0;
-        fp["Raina"] = 0;
-        fp["Lua"] = 0;
+        ResetData();
     }
-
 
     /// <summary>
     /// Updates the internal playtest data with new values
@@ -53,9 +49,54 @@ public class PlaytestData : MonoBehaviour
         victory = _victory;
     }
 
+    public void ResetData()
+    {
+        prevTurns = totalTurns;
+
+        hp["Bapy"] = 0;
+        hp["Soleil"] = 0;
+        hp["Raina"] = 0;
+        hp["Lua"] = 0;
+
+        fp["Bapy"] = 0;
+        fp["Soleil"] = 0;
+        fp["Raina"] = 0;
+        fp["Lua"] = 0;
+
+        moves.Clear();
+        moveDmg.Clear();
+
+        obstaclesDestroyed = 0;
+        obstacleTurns.Clear();
+
+        avgEnemies = 0;
+        enemyDmg.Clear();
+        stunnedEnemies = 0;
+        avgPos = 0;
+    }
+
     public void UpdateTurnCount(int turn)
     {
-        turns = turn;
+        totalTurns = turn;
+        turns = totalTurns - prevTurns;
+    }
+
+    public void UpdateObstacles()
+    {
+        obstaclesDestroyed++;
+        obstacleTurns.Add(turns);
+    }
+
+    public void UpdateAvgEnemies(int enemies)
+    {
+        totalEnemies += enemies;
+        avgEnemies = totalEnemies / turns;
+    }
+
+    public void UpdateAvgPos(int pos, int partySize)
+    {
+        totalPos += pos;
+        avgPos = totalPos / (partySize * turns);
     }
 
     public string FieldNames()
@@ -73,7 +114,7 @@ public class PlaytestData : MonoBehaviour
 
         output += PrintDictionary(hp) + "," + PrintDictionary(fp) + ",";
         output += PrintDictionary(moves) + "," + PrintDictionary(moveDmg) + ",";
-        output += obstaclesDestroyed.ToString() + "," + PrintList(obstacleTurns);
+        output += obstaclesDestroyed.ToString() + "," + PrintList(obstacleTurns) + ",";
 
         output += avgEnemies.ToString() + "," + PrintDictionary(enemyDmg) + "," + stunnedEnemies.ToString(); 
         output += "," + avgPos.ToString();

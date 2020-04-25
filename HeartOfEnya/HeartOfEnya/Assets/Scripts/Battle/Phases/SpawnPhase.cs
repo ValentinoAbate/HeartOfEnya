@@ -268,6 +268,9 @@ public class SpawnPhase : Phase
             }
             // Increment the wave counter
             ++waveNum;
+            // Repeat the last x waves according to the number on the encounter
+            if(NextWave == null)
+                waveNum -= CurrEncounter.repeatLastWaves;
         }
         yield break;
     }

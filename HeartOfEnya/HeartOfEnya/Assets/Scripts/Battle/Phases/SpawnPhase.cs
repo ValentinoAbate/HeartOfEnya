@@ -196,26 +196,6 @@ public class SpawnPhase : Phase
                         obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
                         BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
                     }
-                    foreach(var spawnData in pData.listActiveSpawners)
-                    {
-                        EventTileSpawn spawnTile = null;
-                        if(spawnData.spawnObject.GetComponent<Obstacle>() != null)
-                            spawnTile = Instantiate(spawnTileObstaclePrefab).GetComponent<EventTileSpawn>();
-                        else
-                            spawnTile = Instantiate(spawnTileEnemyPrefab).GetComponent<EventTileSpawn>();
-                        LogEventTile(spawnData, spawnTile);
-                    }
-
-                }
-                else // No backed up stuff, spawn first wave
-                {
-                    foreach (var spawnData in CurrWave.AllSpawns)
-                    {
-                        var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
-                        obj.PrefabOrigin = spawnData.spawnObject;
-                        obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
-                        BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
-                    }
                 }
             }
             BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft);

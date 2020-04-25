@@ -22,7 +22,7 @@ public class PartyPhase : Phase
 
     private void Awake()
     {
-        PauseHandle = new PauseHandle(null, keyboardCursor);
+        PauseHandle = new PauseHandle(null, mouseCursor, keyboardCursor);
     }
 
     public override Coroutine OnPhaseStart()

@@ -38,7 +38,16 @@ public class BattleUI : MonoBehaviour
 
     public void UpdateEnemiesRemaining(int numRemaining)
     {
-        numEnemiesLeft.text = numRemaining.ToString() + " Enemies Remain...";
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        if (pData.InMainPhase || pData.absoluteZeroDefeated)
+        {
+            numEnemiesLeft.text = numRemaining.ToString() + " Enemies Remain...";
+        }
+        else
+        {
+            numEnemiesLeft.text =  "??? Enemies Remain...";
+        }
+
     }
 
     public void ShowEndTurnButton() => endTurnButton.interactable = true;

@@ -8,7 +8,8 @@ public class EnemyAIAbs0Boss : AIComponent<Enemy>
     public Action clearObstacles;
     public Action spawnObstacles;
     public Action moveUnits;
-    private bool wasLastActionResetObstacles = false;
+    public Action moveAllToRight;
+    private bool wasLastActionResetObstacles = true;
     public override IEnumerator DoTurn(Enemy self)
     {
         if(secondPhase)

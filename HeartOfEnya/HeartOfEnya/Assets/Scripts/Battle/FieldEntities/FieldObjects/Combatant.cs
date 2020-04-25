@@ -39,6 +39,7 @@ public abstract class Combatant : FieldObject, IPausable
     public AudioClip deathSfx;
     public AudioClip moveSfx;
     [Header("General Combatant Fields")]
+    public bool invincible = false;
     public int maxHp;
     /// <summary>
     /// The units current movement range. Is only 1 square when an action is being charged.
@@ -122,7 +123,12 @@ public abstract class Combatant : FieldObject, IPausable
             Hp = Mathf.Max(0, hp - damage);
             if (Dead)
             {
-                Kill();
+                if(!invincible)
+                    Kill();
+                else if(DoNotDestroyOnLoad.Instance.persistentData.gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
+                {
+                    BattleEvents.main.abs0PhaseChange._event.Invoke();
+                }
             }
             else
             {

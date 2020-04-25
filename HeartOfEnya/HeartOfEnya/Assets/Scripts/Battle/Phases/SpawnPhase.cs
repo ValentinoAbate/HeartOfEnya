@@ -153,11 +153,14 @@ public class SpawnPhase : Phase
                     BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
                 }
                 int totalEnemies = 0;
-                foreach(var wave in CurrEncounter.waveList)
+                if(CurrEncounter == mainEncounter)
                 {
-                    totalEnemies += wave.enemies.Count;
+                    foreach (var wave in CurrEncounter.waveList)
+                    {
+                        totalEnemies += wave.enemies.Count;
+                    }
+                    pData.numEnemiesLeft = totalEnemies;
                 }
-                pData.numEnemiesLeft = totalEnemies;
             }
             else // This is a continuing encounter, spawn the backed-up enemies
             {

@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34477e4274f9901499bc6d8fa0f8f886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondPhase: 1
+  secondPhase: 0
   clearObstacles: {fileID: 8902642157473425592, guid: 637cfb1d279985246ae57249c98b1d9b,
     type: 3}
   spawnObstacles: {fileID: 8902642157473425592, guid: 8ac11e2d44d868549bf33e58d18d60f8,
     type: 3}
   moveUnits: {fileID: 8902642157473425592, guid: eb5c98caf4d64724e91f87869c293794,
+    type: 3}
+  moveAllToRight: {fileID: 8902642157473425592, guid: b1acd789cce6ac4469fc283a709df6af,
     type: 3}
 --- !u!1001 &6016613264502088977
 PrefabInstance:
@@ -275,6 +277,11 @@ PrefabInstance:
         type: 3}
       propertyPath: isMovable
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462303551624533822, guid: 17f7430228c302c40a43d2e6db488893,
+        type: 3}
+      propertyPath: invincible
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17f7430228c302c40a43d2e6db488893, type: 3}

@@ -82,7 +82,8 @@ namespace Dialog
 
             // Find speaking character
             var character = characters.Find((c) => c.Name.ToLower() == speaker);
-            if(character == default)
+            //characters.Add(character);
+            if (character == default)
             {
                 Debug.LogWarning("Character " + speaker + "not found in scene. Skipping line.");
                 yield break;
@@ -95,14 +96,14 @@ namespace Dialog
             {
                 if(dialogBox != null)
                     Destroy(dialogBox.gameObject);
-                dialogBox = Instantiate(dialogBoxPrefab, Camera.main.WorldToScreenPoint(character.DialogSpawnPoint), 
+                dialogBox = Instantiate(dialogBoxPrefab, Camera.main.WorldToScreenPoint(character.DialogSpawnPoint),
                                         Quaternion.identity, dialogCanvas.transform).GetComponent<DialogBox>();
                 lastSpeaker = character;
                 dialogBox.VoiceEvent = character.VoiceEvent;
             }
             // Set the dialogBox's portrait
             dialogBox.portrait.sprite = character.Portrait;
-            yield return StartCoroutine(dialogBox.PlayLine(text, scrollDelay, spaceDelay));            
+            yield return StartCoroutine(dialogBox.PlayLine(text, scrollDelay, spaceDelay));
         }
 
         /// Show a list of options, and wait for the player to make a selection.

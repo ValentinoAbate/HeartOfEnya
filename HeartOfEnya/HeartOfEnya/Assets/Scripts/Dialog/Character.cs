@@ -38,6 +38,8 @@ public class Character : MonoBehaviour
     {
         Expression = defaultExpression;
         sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
+       
+     
     }
 
     //runs whenever the character gets clicked on

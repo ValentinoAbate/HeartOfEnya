@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &552840676471255378
+--- !u!114 &5565340100933180100
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,10 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7429941194639937236}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dd1a7d59d89dfc48aead99e457dca60, type: 3}
+  m_Script: {fileID: 11500000, guid: 34477e4274f9901499bc6d8fa0f8f886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moved: 1
+  secondPhase: 1
+  clearObstacles: {fileID: 8902642157473425592, guid: 637cfb1d279985246ae57249c98b1d9b,
+    type: 3}
+  spawnObstacles: {fileID: 8902642157473425592, guid: 8ac11e2d44d868549bf33e58d18d60f8,
+    type: 3}
+  moveUnits: {fileID: 8902642157473425592, guid: eb5c98caf4d64724e91f87869c293794,
+    type: 3}
 --- !u!1001 &6016613264502088977
 PrefabInstance:
   m_ObjectHideFlags: 0

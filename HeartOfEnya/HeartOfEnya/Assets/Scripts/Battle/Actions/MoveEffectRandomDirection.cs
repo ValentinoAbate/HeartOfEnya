@@ -1,19 +1,33 @@
-﻿using System.Collections;
+﻿using RandomUtils;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
 
-public class MoveEffect : ActionEffect
+public class MoveEffectRandomDirection : ActionEffect
 {
     public enum Direction
     {
-        Toward,
-        Away,
-        Hybrid,
+        Right,
+        Left,
+        Up,
+        Down,
     }
-    public Direction moveType;
+
+    public List<Direction> directionChoices;
+    public List<float> weights;
+
     public int squares = 1;
     public int moveDamage = 2; //how much damage do we take if pushed into world border/immovable object?
+
+    private Dictionary<Direction, Pos> directionTranslator = new Dictionary<Direction, Pos>
+    {
+        {Direction.Right, Pos.Right },
+        {Direction.Up, Pos.Up },
+        {Direction.Left, Pos.Left },
+        {Direction.Down, Pos.Down },
+    };
+
 
     public override IEnumerator ApplyEffect(Combatant user, Combatant target, ExtraData data)
     {
@@ -35,9 +49,7 @@ public class MoveEffect : ActionEffect
         	target = temp;
         }
 
-        Pos direction = Pos.DirectionBasic(user.Pos, target.Pos);
-        if (moveType == Direction.Toward || (moveType == Direction.Hybrid && Pos.Distance(user.Pos, target.Pos) > 1))
-            direction *= -1;
+        Pos direction = directionTranslator[RandomU.instance.Choice(directionChoices, weights)];
         yield return StartCoroutine(DoMove(user, target, direction, moveDamage));
     }
 }

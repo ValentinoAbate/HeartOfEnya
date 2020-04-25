@@ -17,6 +17,7 @@ public abstract class FieldEntity : MonoBehaviour
         Party = 1,
         Enemy = 2,
         Neutral = 4,
+        All = Party | Enemy | Neutral,
     }
     /// <summary>
     /// The team(s) this object is affiliated with.

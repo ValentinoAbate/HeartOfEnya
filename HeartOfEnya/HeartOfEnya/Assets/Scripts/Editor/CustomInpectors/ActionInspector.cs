@@ -26,6 +26,7 @@ public class ActionInspector : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("delayAtEnd"), new GUIContent("Delay At End"));
         EditorUtils.Separator();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("chargeTurns"), new GUIContent("Charge Turns"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("targetFilter"), new GUIContent("Target Filter"));
         EditorUtils.Separator();
 
         #region Target Pattern And Range

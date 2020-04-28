@@ -41,7 +41,7 @@ public class Character : MonoBehaviour
     }
 
     //runs whenever the character gets clicked on
-    void OnMouseDown()
+    public void RunDialogue()
     {
     	Debug.Log("You've clicked on: " + Name + " on day " + DoNotDestroyOnLoad.Instance.persistentData.dayNum);
     	

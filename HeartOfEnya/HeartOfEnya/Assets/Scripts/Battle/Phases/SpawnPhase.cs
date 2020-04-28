@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Dialog;
 public class SpawnPhase : Phase
 {
+    public DialogUI dialog;
     public const float delaySeconds = 0.25f;
     public override PauseHandle PauseHandle { get; set; } = new PauseHandle(null);
-
     public Encounter mainEncounter;
     [SerializeField]
     private Encounter tutorialEncounter;
@@ -18,7 +18,7 @@ public class SpawnPhase : Phase
     public GameObject spawnTileEnemyPrefab;
     public GameObject spawnTileObstaclePrefab;
     public int spawnDamage = 2;
-    
+
     [Header("Level Editing Properties")]
     // Should we spawn enemies (used for the level editor)
     public bool spawnEnemies = true;
@@ -44,6 +44,7 @@ public class SpawnPhase : Phase
     public Pos rainaPos;
     public Pos luaPos;
 
+
     // Playtest data logger reference
     private PlaytestLogger logger;
 
@@ -62,6 +63,8 @@ public class SpawnPhase : Phase
             CurrEncounter = luaEncounter;
         else if (gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
             CurrEncounter = absoluteZeroEncounter;
+
+
     }
 
     public override Coroutine OnPhaseStart()
@@ -74,16 +77,20 @@ public class SpawnPhase : Phase
             Vector2 bapyVec = BattleGrid.main.GetSpace(bapyPos);
             var bapy = Instantiate(bapyLvl[pData.partyLevel], bapyVec,
                                         Quaternion.identity).GetComponent<PartyMember>();
+            dialog.characters.Clear();
+            dialog.characters.Add(bapy.GetComponent<Character>());
             bapy.Pos = bapyPos;
 
             Vector2 soleilVec = BattleGrid.main.GetSpace(soleilPos);
             var soleil = Instantiate(soleilLvl[pData.partyLevel], soleilVec,
                                         Quaternion.identity).GetComponent<PartyMember>();
+            dialog.characters.Add(soleil.GetComponent<Character>());
             soleil.Pos = soleilPos;
 
             Vector2 rainaVec = BattleGrid.main.GetSpace(rainaPos);
             var raina = Instantiate(rainaLvl[pData.partyLevel], rainaVec,
                                         Quaternion.identity).GetComponent<PartyMember>();
+            dialog.characters.Add(raina.GetComponent<Character>());
             raina.Pos = rainaPos;
 
             bool enableLua = pData.LuaUnfrozen || overrideSpawnLua;
@@ -93,8 +100,9 @@ public class SpawnPhase : Phase
             if (enableLua)
             {
                 Vector2 luaVec = BattleGrid.main.GetSpace(luaPos);
-                lua = Instantiate(luaLvl[pData.partyLevel], luaVec, 
+                lua = Instantiate(luaLvl[pData.partyLevel], luaVec,
                                     Quaternion.identity).GetComponent<PartyMember>();
+                dialog.characters.Add(lua.GetComponent<Character>());
                 lua.Pos = luaPos;
             }
 
@@ -197,7 +205,7 @@ public class SpawnPhase : Phase
             return null;
         return StartCoroutine(OnPhaseStartCr());
     }
-    
+
     private IEnumerator OnPhaseStartCr()
     {
         // If something is supposed to be spawned
@@ -260,6 +268,9 @@ public class SpawnPhase : Phase
             }
             // Increment the wave counter
             ++waveNum;
+            // Repeat the last x waves according to the number on the encounter
+            if(NextWave == null)
+                waveNum -= CurrEncounter.repeatLastWaves;
         }
         yield break;
     }
@@ -279,7 +290,7 @@ public class SpawnPhase : Phase
         {
             return true;
         }
-        if(CurrWave.spawnAfterTurns && 
+        if(CurrWave.spawnAfterTurns &&
             turnsSinceLastSpawn >= CurrWave.numTurns )
         {
             return true;

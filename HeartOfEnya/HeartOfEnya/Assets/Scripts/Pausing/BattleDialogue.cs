@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestBattleInterrupt : MonoBehaviour
+public class BattleDialogue : MonoBehaviour
 {
     public KeyCode testKey;
     public string startNode;

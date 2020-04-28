@@ -22,7 +22,7 @@ public class PartyPhase : Phase
 
     private void Awake()
     {
-        PauseHandle = new PauseHandle(null, keyboardCursor);
+        PauseHandle = new PauseHandle(null, mouseCursor, keyboardCursor);
     }
 
     public override Coroutine OnPhaseStart()
@@ -34,7 +34,7 @@ public class PartyPhase : Phase
         {
             EndBattle();
             return null;
-        }         
+        }
         // Call on phse start function for each party member (may need to wait later for DOT effects, stunning, etc.)
         Party.ForEach((p) => p.OnPhaseStart());
         // Reset the active party

@@ -42,9 +42,8 @@ public class Character : MonoBehaviour
         anim = GetComponent<Animator>();
         //retrieve date from persistent data
         string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
-        int day = DoNotDestroyOnLoad.Instance.persistentData.dayNum;
         var phaseData = CharacterManager.main.GetPhaseData(phase);
-        if(anim != null && phaseData.monologCharacter.ToLower() == Name.ToLower())
+        if(anim != null && phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower())
         {
             anim.SetBool("Highlight", true);
         }

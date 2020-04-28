@@ -15,6 +15,7 @@ public class Character : MonoBehaviour
     [SerializeField] private DialogueRunner dialogManager;
 
     private FMODUnity.StudioEventEmitter sfxSelect;
+    private Animator anim;
 
     public string Expression
     {
@@ -38,8 +39,15 @@ public class Character : MonoBehaviour
     {
         Expression = defaultExpression;
         sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
-       
-     
+        anim = GetComponent<Animator>();
+        //retrieve date from persistent data
+        string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
+        int day = DoNotDestroyOnLoad.Instance.persistentData.dayNum;
+        var phaseData = CharacterManager.main.GetPhaseData(phase);
+        if(anim != null && phaseData.monologCharacter.ToLower() == Name.ToLower())
+        {
+            anim.SetBool("Highlight", true);
+        }
     }
 
     //runs whenever the character gets clicked on
@@ -64,7 +72,11 @@ public class Character : MonoBehaviour
 
             if(phaseData.monologCharacter.ToLower() == Name.ToLower()) //if the clicked character's monologue takes place in this scene
 	        {
-	        	if (day == 0)
+                if (anim != null)
+                {
+                    anim.SetBool("Highlight", false);
+                }
+                if (day == 0)
 	        	{
 	        		//If it's day 0 (i.e. 1st night in this phase), launch their monologue
 	            	Debug.Log(Name + " launches their monologue");

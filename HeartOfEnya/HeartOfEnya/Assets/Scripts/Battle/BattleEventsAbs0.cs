@@ -28,12 +28,14 @@ public class BattleEventsAbs0 : MonoBehaviour
         yield return abs0.UseAction(aiComponent.clearObstaclesAndEnemies, Pos.Zero, Pos.Zero);
         yield return abs0.UseAction(aiComponent.moveAllToRight, Pos.Zero, Pos.Zero);
         yield return abs0.UseAction(aiComponent.spawnObstacles, Pos.Zero, Pos.Zero);
+        yield return StartCoroutine(PhaseManager.main.SpawnPhase.DeclareNextWave());
         foreach(var partyMember in PhaseManager.main.PartyPhase.Party)
         {
             partyMember.Hp = partyMember.maxHp;
             partyMember.Fp = partyMember.maxFp;
         }
-        BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft);
+        // Update the counter to actually show the number that remain +1 for abs0
+        BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft + 1);
         // Start dialog scene here
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }

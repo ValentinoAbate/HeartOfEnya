@@ -105,6 +105,28 @@ public class PartyPhase : Phase
             EndPhase();
             return;
         }
+        var ePhase = PhaseManager.main.EnemyPhase;
+        var sPhase = PhaseManager.main.SpawnPhase;
+        ePhase.RemoveDead();
+        if (ePhase.Enemies.Count <= 0 && !sPhase.HasActiveSpawners)
+        {
+            StartCoroutine(DeclareSpawnsThenFinishEndAction());
+        }
+        else
+        {
+            FinishEndAction();
+        }
+
+    }
+
+    private IEnumerator DeclareSpawnsThenFinishEndAction()
+    {
+        yield return PhaseManager.main.SpawnPhase.DeclareNextWave();
+        FinishEndAction();
+    }
+
+    private void FinishEndAction()
+    {
         if (KeyboardMode)
         {
             // Remove the party member whose action ended

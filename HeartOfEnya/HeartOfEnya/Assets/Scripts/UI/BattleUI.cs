@@ -41,11 +41,20 @@ public class BattleUI : MonoBehaviour
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         if (pData.InMainPhase || pData.absoluteZeroDefeated)
         {
-            numEnemiesLeft.text = numRemaining.ToString() + " Enemies Remain...";
+            if(pData.numEnemiesLeft == 1)
+            {
+                numEnemiesLeft.text = numRemaining.ToString() + " Frost Remains!";
+            }
+            else if(pData.numEnemiesLeft <= 0)
+            {
+                numEnemiesLeft.text = "No Frost Remain";
+            }
+            else
+                numEnemiesLeft.text = numRemaining.ToString() + " Frost Remain...";
         }
         else
         {
-            numEnemiesLeft.text =  "??? Enemies Remain...";
+            numEnemiesLeft.text =  "??? Frost Remain...";
         }
 
     }

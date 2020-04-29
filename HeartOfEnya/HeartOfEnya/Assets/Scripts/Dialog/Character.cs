@@ -40,10 +40,14 @@ public class Character : MonoBehaviour
         Expression = defaultExpression;
         sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
         anim = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
         //retrieve date from persistent data
         string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
         var phaseData = CharacterManager.main.GetPhaseData(phase);
-        if(anim != null && phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower())
+        if (anim != null && phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower())
         {
             anim.SetBool("Highlight", true);
         }

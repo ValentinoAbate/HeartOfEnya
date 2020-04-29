@@ -25,7 +25,7 @@ public class BattleEventsAbs0 : MonoBehaviour
     private IEnumerator Abs0PhaseChangeRoutine(Combatant abs0, EnemyAIAbs0Boss aiComponent)
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        yield return abs0.UseAction(aiComponent.clearObstacles, Pos.Zero, Pos.Zero);
+        yield return abs0.UseAction(aiComponent.clearObstaclesAndEnemies, Pos.Zero, Pos.Zero);
         yield return abs0.UseAction(aiComponent.moveAllToRight, Pos.Zero, Pos.Zero);
         yield return abs0.UseAction(aiComponent.spawnObstacles, Pos.Zero, Pos.Zero);
         foreach(var partyMember in PhaseManager.main.PartyPhase.Party)

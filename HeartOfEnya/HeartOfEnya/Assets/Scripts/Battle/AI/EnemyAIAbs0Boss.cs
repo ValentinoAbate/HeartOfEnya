@@ -6,6 +6,7 @@ public class EnemyAIAbs0Boss : AIComponent<Enemy>
 {
     public bool secondPhase = false;
     public Action clearObstacles;
+    public Action clearObstaclesAndEnemies;
     public Action spawnObstacles;
     public Action moveUnits;
     public Action moveAllToRight;

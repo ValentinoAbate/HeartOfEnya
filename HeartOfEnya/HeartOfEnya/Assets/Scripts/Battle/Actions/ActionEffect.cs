@@ -13,6 +13,12 @@ public abstract class ActionEffect : MonoBehaviour
 
     public Target target = Target.Target;
 
+    // Initialize any values that should apply to multiple effects on this attack
+    public virtual void Initialize(Combatant user)
+    {
+
+    }
+
     public abstract IEnumerator ApplyEffect(Combatant user, Combatant target, ExtraData data);
 
     public virtual IEnumerator ApplyEffect(Combatant user, Pos target, ExtraData data) { yield break; }

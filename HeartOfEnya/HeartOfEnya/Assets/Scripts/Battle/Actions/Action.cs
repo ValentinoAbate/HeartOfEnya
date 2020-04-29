@@ -115,6 +115,9 @@ public class Action : MonoBehaviour
             actionTargetPos = targetPos,
             primaryTargetPos = primaryTargetPos,
         };
+        // Initialize the effects
+        foreach (var effect in effects)
+            effect.Initialize(user);
         List<Combatant> toStun = new List<Combatant>();
         // Apply actual effects to targets and display results
         foreach (var position in targetPositions)

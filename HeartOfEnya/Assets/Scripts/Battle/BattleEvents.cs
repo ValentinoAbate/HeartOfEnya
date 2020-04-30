@@ -59,6 +59,7 @@ public class BattleEvents : MonoBehaviour
             Debug.Log("Battle Triggers: start of battle");
             tutorialIntro.flag = true;
             // Start the dialog (connect to ambers code)
+            DialogueManager.main.runner.StartDialogue("TutIntro");
             // Wait for finish StartCoroutine(IntroTriggerPost(runner))
         }
     }
@@ -73,6 +74,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorial && !tutMove.flag)
         {
+            DialogueManager.main.runner.StartDialogue("TutMove");
             Debug.Log("Battle Triggers: raina move");
             tutMove.flag = true;
         }
@@ -88,6 +90,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorial && !tutRainaAttack.flag)
         {
+            DialogueManager.main.runner.StartDialogue("TutRainaAttack");
             Debug.Log("Battle Triggers: raina attack");
             tutRainaAttack.flag = true;
         }
@@ -103,6 +106,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorial && !tutBapySelect.flag)
         {
+            DialogueManager.main.runner.StartDialogue("TutBapySelect");
             Debug.Log("Battle Triggers: select bapy");
             tutBapySelect.flag = true;
         }
@@ -118,6 +122,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorial && !tutBapyCancel.flag)
         {
+            DialogueManager.main.runner.StartDialogue("TutBapyCancel");
             Debug.Log("Battle Triggers: bapy cancel");
             tutBapyCancel.flag = true;
         }
@@ -133,6 +138,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorial && !tutSoleilSelect.flag)
         {
+            DialogueManager.main.runner.StartDialogue("TutSoleilSelect");
             Debug.Log("Battle Triggers: select soleil");
             tutSoleilSelect.flag = true;
         }
@@ -140,6 +146,7 @@ public class BattleEvents : MonoBehaviour
 
     private IEnumerator SoleilSelectTriggerPost(DialogueRunner runner)
     {
+
         yield return new WaitWhile(() => runner.isDialogueRunning);
         // put the post-code here
     }
@@ -148,6 +155,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorial && !tutSoleilAttack.flag)
         {
+            DialogueManager.main.runner.StartDialogue("TutSoleilAttack");
             Debug.Log("Battle Triggers: soleil attack");
             tutSoleilAttack.flag = true;
         }
@@ -163,6 +171,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorial && !tutSoleilChargeReminder.flag)
         {
+            DialogueManager.main.runner.StartDialogue("TutSoleilChargeReminder");
             Debug.Log("Battle Triggers: SoleilChargeReminder");
             tutSoleilChargeReminder.flag = true;
         }
@@ -178,6 +187,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorial && !tutSoleilChargeExplanation.flag)
         {
+            DialogueManager.main.runner.StartDialogue("TutSoleilChargeExplanation");
             Debug.Log("Battle Triggers: SoleilChargeExplanation");
             tutSoleilChargeExplanation.flag = true;
         }
@@ -193,6 +203,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorial && !tutEnemySpawnWarning.flag)
         {
+            DialogueManager.main.runner.StartDialogue("TutEnemySpawnWarning");
             Debug.Log("Battle Triggers: EnemySpawnWarning");
             tutEnemySpawnWarning.flag = true;
         }
@@ -208,6 +219,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorial && !tutEnemySpawn.flag)
         {
+            DialogueManager.main.runner.StartDialogue("TutEnemySpawn");
             Debug.Log("Battle Triggers: EnemySpawn");
             tutEnemySpawn.flag = true;
         }
@@ -223,6 +235,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorial && !tutEnemyInfo.flag)
         {
+            DialogueManager.main.runner.StartDialogue("TutEnemyInfo");
             Debug.Log("Battle Triggers: EnemyInfo");
             tutEnemyInfo.flag = true;
         }
@@ -238,6 +251,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorial && !tutEnemyRanged.flag)
         {
+            DialogueManager.main.runner.StartDialogue("TutEnemyRanged");
             Debug.Log("Battle Triggers: EnemyRanged");
             tutEnemyRanged.flag = true;
         }

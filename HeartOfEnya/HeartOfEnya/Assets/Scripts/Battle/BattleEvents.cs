@@ -47,7 +47,7 @@ public class BattleEvents : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }   
+        }
     }
 
     private void Start()
@@ -63,12 +63,10 @@ public class BattleEvents : MonoBehaviour
             Debug.Log("Battle Triggers: start of battle");
             tutorialIntro.flag = true;
             // Start the dialog (connect to ambers code)
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutIntro");
             // Wait for finish StartCoroutine(IntroTriggerPost(runner))
-
-            // (this code should be moved into the post function once dialog merged)
-            // post-condition: disable everyone but raina
-            string[] units = {"Bapy", "Soleil"};
-            partyPhase.DisableUnits(new List<string>(units));
+            StartCoroutine(IntroTriggerPost(DialogueManager.main.runner));
         }
     }
 
@@ -76,14 +74,21 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         // put the post-code here
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        // post-condition: disable everyone but raina
+        string[] units = {"Bapy", "Soleil"};
+        partyPhase.DisableUnits(new List<string>(units));
     }
 
     public void MoveTrigger()
     {
         if(tutorial && !tutMove.flag)
         {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutMove");
             Debug.Log("Battle Triggers: raina move");
             tutMove.flag = true;
+            StartCoroutine(MoveTriggerPost(DialogueManager.main.runner));
         }
     }
 
@@ -91,14 +96,18 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         // put the post-code here
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void RainaAttackTrigger()
     {
         if(tutorial && !tutRainaAttack.flag)
         {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutRainaAttack");
             Debug.Log("Battle Triggers: raina attack");
             tutRainaAttack.flag = true;
+            StartCoroutine(RainaAttackTriggerPost(DialogueManager.main.runner));
         }
     }
 
@@ -106,32 +115,39 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         // put the post-code here
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void BapySelectTrigger()
     {
         if(tutorial && !tutBapySelect.flag)
         {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutBapySelect");
             Debug.Log("Battle Triggers: select bapy");
             tutBapySelect.flag = true;
-
-            // re-enable bapy's turn
-            partyPhase.EnableUnits("Bapy");
+            StartCoroutine(BapySelectTriggerPost(DialogueManager.main.runner));
         }
     }
 
     private IEnumerator BapySelectTriggerPost(DialogueRunner runner)
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
+        // re-enable bapy's turn
+        partyPhase.EnableUnits("Bapy");
         // put the post-code here
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void BapyCancelTrigger()
     {
         if(tutorial && !tutBapyCancel.flag)
         {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutBapyCancel");
             Debug.Log("Battle Triggers: bapy cancel");
             tutBapyCancel.flag = true;
+            StartCoroutine(BapyCancelTriggerPost(DialogueManager.main.runner));
         }
     }
 
@@ -139,54 +155,65 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         // put the post-code here
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void SoleilSelectTrigger()
     {
         if(tutorial && !tutSoleilSelect.flag)
         {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutSoleilSelect");
             Debug.Log("Battle Triggers: select soleil");
             tutSoleilSelect.flag = true;
-
-            // enable soleil
-            partyPhase.EnableUnits("Soleil");
-            
-            // disable bapy
-            partyPhase.DisableUnits("Bapy");
+            StartCoroutine(SoleilSelectTriggerPost(DialogueManager.main.runner));
         }
     }
 
     private IEnumerator SoleilSelectTriggerPost(DialogueRunner runner)
     {
+
         yield return new WaitWhile(() => runner.isDialogueRunning);
+        // enable soleil
+        partyPhase.EnableUnits("Soleil");
+
+        // disable bapy
+        partyPhase.DisableUnits("Bapy");
         // put the post-code here
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void SoleilAttackTrigger()
     {
         if(tutorial && !tutSoleilAttack.flag)
         {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutSoleilAttack");
             Debug.Log("Battle Triggers: soleil attack");
             tutSoleilAttack.flag = true;
-
-            // re-enable bapy (and everyone else since their turns are over anyway)
-            string[] units = {"Bapy", "Soleil", "Raina"};
-            partyPhase.EnableUnits(new List<string>(units));
+            StartCoroutine(SoleilAttackTriggerPost(DialogueManager.main.runner));
         }
     }
 
     private IEnumerator SoleilAttackTriggerPost(DialogueRunner runner)
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
+        // re-enable bapy (and everyone else since their turns are over anyway)
+        string[] units = {"Bapy", "Soleil", "Raina"};
+        partyPhase.EnableUnits(new List<string>(units));
         // put the post-code here
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void SoleilChargeReminderTrigger()
     {
         if(tutorial && !tutSoleilChargeReminder.flag)
         {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutSoleilChargeReminder");
             Debug.Log("Battle Triggers: SoleilChargeReminder");
             tutSoleilChargeReminder.flag = true;
+            StartCoroutine(SoleilChargeReminderTriggerPost(DialogueManager.main.runner));
         }
     }
 
@@ -194,14 +221,18 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         // put the post-code here
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void SoleilChargeExplanationTrigger()
     {
         if(tutorial && !tutSoleilChargeExplanation.flag)
         {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutSoleilChargeExplanation");
             Debug.Log("Battle Triggers: SoleilChargeExplanation");
             tutSoleilChargeExplanation.flag = true;
+            StartCoroutine(SoleilChargeExplanationTriggerPost(DialogueManager.main.runner));
         }
     }
 
@@ -209,14 +240,18 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         // put the post-code here
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void EnemySpawnWarningTrigger()
     {
         if(tutorial && !tutEnemySpawnWarning.flag)
         {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutEnemySpawnWarning");
             Debug.Log("Battle Triggers: EnemySpawnWarning");
             tutEnemySpawnWarning.flag = true;
+            StartCoroutine(EnemySpawnWarningTriggerPost(DialogueManager.main.runner));
         }
     }
 
@@ -224,14 +259,18 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         // put the post-code here
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void EnemySpawnTrigger()
     {
         if(tutorial && !tutEnemySpawn.flag)
         {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutEnemySpawn");
             Debug.Log("Battle Triggers: EnemySpawn");
             tutEnemySpawn.flag = true;
+            StartCoroutine(EnemySpawnTriggerPost(DialogueManager.main.runner));
         }
     }
 
@@ -239,14 +278,18 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         // put the post-code here
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void EnemyInfoTrigger()
     {
         if(tutorial && !tutEnemyInfo.flag)
         {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutEnemyInfo");
             Debug.Log("Battle Triggers: EnemyInfo");
             tutEnemyInfo.flag = true;
+            StartCoroutine(EnemyInfoTriggerPost(DialogueManager.main.runner));
         }
     }
 
@@ -254,14 +297,18 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         // put the post-code here
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void EnemyRangedTrigger()
     {
         if(tutorial && !tutEnemyRanged.flag)
         {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutEnemyRanged");
             Debug.Log("Battle Triggers: EnemyRanged");
             tutEnemyRanged.flag = true;
+            StartCoroutine(EnemyRangedTriggerPost(DialogueManager.main.runner));
         }
     }
 
@@ -269,6 +316,7 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         // put the post-code here
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void DeathsDoorTrigger()

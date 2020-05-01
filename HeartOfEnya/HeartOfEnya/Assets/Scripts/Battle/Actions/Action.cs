@@ -27,7 +27,6 @@ public class Action : MonoBehaviour
     public GameObject actionFxPrefabHorizontal;
     public GameObject userFxPrefab;
     public float delayAtEnd = 0.25f;
-
     #endregion
 
     public string Description => description;
@@ -244,7 +243,11 @@ public class Action : MonoBehaviour
                 flipY = true;
             }
             flipX = !flipX;
-
+            var actionVfx = prefab.GetComponent<ActionVfx>();
+            if (!actionVfx.allowFlipX)
+                flipX = false;
+            if (!actionVfx.allowFlipY)
+                flipY = false;
             yield return PlayActionVfx(prefab, BattleGrid.main.GetSpace(targetPos), flipX, flipY);
         }
         else

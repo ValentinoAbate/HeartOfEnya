@@ -13,6 +13,8 @@ public class Character : MonoBehaviour
     [SerializeField] private Transform dialogSpawnPoint;
     [SerializeField] private CharacterData data;
     [SerializeField] private DialogueRunner dialogManager;
+    [SerializeField] private Vector3 doorPosition;	//where to go during our monologue night
+    [SerializeField] private bool doorOverride;		//temporary control for going to the door - will be removed once I hook the system up to game time
 
     private FMODUnity.StudioEventEmitter sfxSelect;
     private Animator anim;
@@ -26,7 +28,7 @@ public class Character : MonoBehaviour
             {
                 expression = value;
                 Portrait = data.portraits[value];
-            }                
+            }
             else
                 Debug.LogError(value + " is not a valid expression for " + Name);
         }
@@ -34,7 +36,7 @@ public class Character : MonoBehaviour
     private string expression;
     public Sprite Portrait { get; private set; }
     public string VoiceEvent { get => data.voiceEvent; }
-    
+
     private void Awake()
     {
         Expression = defaultExpression;
@@ -52,14 +54,23 @@ public class Character : MonoBehaviour
         if (anim != null && phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower())
         {
             anim.SetBool("Highlight", true);
+
+        //if(phaseData.monologCharacter.ToLower() == Name.ToLower()) //if the clicked character's monologue takes place in this scene
+
+        //move to the door position if it's our monologue time
+        string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
+        var phaseData = CharacterManager.main.GetPhaseData(phase);
+        if (phaseData.monologCharacter.ToLower() == Name.ToLower() && CharacterManager.main != null) //second parameter makes sure we only trigger in the VN scene
+        {
+        	transform.position = doorPosition;
         }
     }
 
     //runs whenever the character gets clicked on
-    void OnMouseDown()
+    public void RunDialogue()
     {
     	Debug.Log("You've clicked on: " + Name + " on day " + DoNotDestroyOnLoad.Instance.persistentData.dayNum);
-    	
+
     	//if the dialog is already running, don't do anything
     	if (dialogManager.isDialogueRunning)
     	{
@@ -69,7 +80,7 @@ public class Character : MonoBehaviour
     	else
     	{
     		sfxSelect.Play();
-            
+
             //retrieve date from persistent data
     		string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
     		int day = DoNotDestroyOnLoad.Instance.persistentData.dayNum;
@@ -122,5 +133,3 @@ public class Character : MonoBehaviour
     	}
     }
 }
-
-    

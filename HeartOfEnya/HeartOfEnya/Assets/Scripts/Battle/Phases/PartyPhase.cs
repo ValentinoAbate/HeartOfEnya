@@ -119,6 +119,38 @@ public class PartyPhase : Phase
 
     }
 
+    #region Action Soloing Commands
+
+    public void PartyWideSoloAction(string actionID)
+    {
+        foreach(var partyMember in Party)
+        {
+            partyMember.ActionMenu.SoloAction(actionID);
+        }
+    }
+
+    public void PartyWideSoloAction(Action action) => PartyWideSoloAction(action.ID);
+
+    public void PartyWideUnSoloAction(string actionID)
+    {
+        foreach (var partyMember in Party)
+        {
+            partyMember.ActionMenu.UnSoloAction(actionID);
+        }
+    }
+
+    public void PartyWideUnSoloAction(Action action) => PartyWideUnSoloAction(action.ID);
+
+    public void PartyWideClearSoloActions()
+    {
+        foreach (var partyMember in Party)
+        {
+            partyMember.ActionMenu.ClearSoloActions();
+        }
+    }
+
+    #endregion
+
     private IEnumerator DeclareSpawnsThenFinishEndAction()
     {
         yield return PhaseManager.main.SpawnPhase.DeclareNextWave();
@@ -165,7 +197,7 @@ public class PartyPhase : Phase
     /// </summary>
     private void CleanupParty()
     {
-        // Remove all dead party members and ranaway members
+        // Remove all dead party members and runaway members
         Party.RemoveAll((obj) => obj == null || obj.RanAway);
     }
 }

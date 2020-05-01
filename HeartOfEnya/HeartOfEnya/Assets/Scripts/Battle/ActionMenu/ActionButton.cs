@@ -7,8 +7,10 @@ using UnityEngine.Events;
 using TMPro;
 
 [RequireComponent(typeof(Button))]
-public class ActionButton : MonoBehaviour
+public class ActionButton : ActionButtonBase
 {
+    public override string ID => actionPrefab == null ? "none" : actionPrefab.ID;
+
     [Header("Set to configure attack")]
     public Action actionPrefab;
     [Header("Set in ActionMenu prefab")]
@@ -45,11 +47,6 @@ public class ActionButton : MonoBehaviour
 
         // Set button text
         text.text = actionPrefab.DisplayName;
-    }
-
-    private void Start()
-    {
-        
     }
 
     private void AddEntry(EventTriggerType type, UnityAction<BaseEventData> action)

@@ -19,6 +19,7 @@ public class ActionMenu : MonoBehaviour, IPausable
 
     private List<Button> buttons = null;
     private HashSet<SpecialAction> specialActionsEnabled = new HashSet<SpecialAction>();
+    private HashSet<string> actionsSoloed = new HashSet<string>();
 
     protected FMODUnity.StudioEventEmitter sfxCancel;
 
@@ -89,6 +90,12 @@ public class ActionMenu : MonoBehaviour, IPausable
     {
         foreach (var button in buttons)
         {
+            var actionButton = button.GetComponent<ActionButtonBase>();
+            if (actionsSoloed.Count > 0 && !actionsSoloed.Contains(actionButton.ID.ToLower()))
+            {
+                button.gameObject.SetActive(false);
+                continue;
+            }
             var conditions = button.GetComponents<ActionCondition>();
             // No conditions (button should be active)
             if (conditions.Length <= 0)
@@ -121,15 +128,26 @@ public class ActionMenu : MonoBehaviour, IPausable
         // Enable the action menu
         gameObject.SetActive(true);
         // Select the argument button if there is one
-        if (select != null)
-            select.Select();
-        else
-        {
-            // Select the first active button
-            var first = buttons.FirstOrDefault((b) => b.gameObject.activeSelf);
-            first?.Select();
-        }
+        //if (select != null)
+        //    select.Select();
+        //else
+        //{
+        //    // Select the first active button
+        //    var first = buttons.FirstOrDefault((b) => b.gameObject.activeSelf);
+        //    first?.Select();
+        //}
     }
+
+    public void SoloAction(Action action) => SoloAction(action.ID);
+
+    public void SoloAction(string actionID) => actionsSoloed.Add(actionID.ToLower());    
+    
+    public void UnSoloAction(Action action) => UnSoloAction(action.ID);
+
+    public void UnSoloAction(string actionID) => actionsSoloed.Remove(actionID.ToLower());
+
+    public void ClearSoloActions() => actionsSoloed.Clear();
+
 
     public bool IsSpecialActionEnabled(SpecialAction action)
     {

@@ -36,6 +36,9 @@ public class Action : MonoBehaviour
     public string DisplayName => displayName;
     [SerializeField]
     private string displayName = "display name";
+    public string ID => id;
+    [SerializeField]
+    private string id = "id";
 
     private ActionEffect[] effects;
 

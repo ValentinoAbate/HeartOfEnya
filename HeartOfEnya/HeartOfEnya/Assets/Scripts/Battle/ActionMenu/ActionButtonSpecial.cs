@@ -6,10 +6,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
 // script for playing sound effects on special action buttons
-public class ActionButtonSpecial : MonoBehaviour
+public class ActionButtonSpecial : ActionButtonBase
 {
+    public override string ID => id;
     public Button button;
     public EventTrigger trigger;
+    [SerializeField]
+    private string id;
 
     private FMODUnity.StudioEventEmitter sfxSelect;
     private FMODUnity.StudioEventEmitter sfxHighlight;

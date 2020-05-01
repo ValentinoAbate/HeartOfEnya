@@ -50,7 +50,7 @@ public class BattleEvents : MonoBehaviour
     private void Start()
     {
         tutorial = (DoNotDestroyOnLoad.Instance.persistentData.gamePhase == PersistentData.gamePhaseTutorial);
-        partyPhase = GameObject.Find("PartyPhase").GetComponent<PartyPhase>();
+        partyPhase = PhaseManager.main.PartyPhase;
     }
 
     public void IntroTrigger()

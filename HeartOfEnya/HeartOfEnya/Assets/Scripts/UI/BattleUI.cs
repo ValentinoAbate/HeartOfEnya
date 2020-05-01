@@ -25,6 +25,7 @@ public class BattleUI : MonoBehaviour
     public Color enemyColor;
 
     public bool CancelingEnabled { get; set; } = true;
+    public HashSet<Pos> MoveableTiles { get; set; } = new HashSet<Pos>();
 
     private void Awake()
     {

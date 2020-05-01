@@ -46,6 +46,9 @@ public class MouseMoveCursor : MoveCursor
             return;      
         if (!traversable.Contains(newPos))
             return;
+        var moveRestrictions = BattleUI.main.MoveableTiles;
+        if (moveRestrictions.Count > 0 && !moveRestrictions.Contains(newPos))
+            return;
             
         sfxHighlight.Play();
         Pos = newPos;

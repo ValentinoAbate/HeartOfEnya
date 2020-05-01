@@ -152,7 +152,7 @@ public class PartyMember : Combatant, IPausable
                     --DeathsDoorCounter;
                 if (damageFxPrefab != null)
                     Instantiate(damageFxPrefab, VfxSpawnPoint, Quaternion.identity).GetComponent<ActionVfx>()?.Play();
-                sfxDispatch.Dispatch().PlayAndDestroy(damageSfx);
+                damageSfxEvent.Play();
                 animator.Play("Damage");
             }              
         }
@@ -166,7 +166,7 @@ public class PartyMember : Combatant, IPausable
     {
         if (deathFxPrefab != null)
             Instantiate(deathFxPrefab, VfxSpawnPoint, Quaternion.identity).GetComponent<ActionVfx>()?.Play();
-        sfxDispatch.Dispatch().PlayAndDestroy(deathSfx);
+        deathSfxEvent.Play();
         DeathsDoor = true;
         Debug.Log(DisplayName + "Has Enetered Death's Door");
         battleTheme.SetParameter("Crisis", 1);

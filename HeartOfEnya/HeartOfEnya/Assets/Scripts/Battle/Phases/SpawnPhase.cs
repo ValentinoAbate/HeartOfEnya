@@ -275,6 +275,8 @@ public class SpawnPhase : Phase
 
     public IEnumerator DeclareNextWave()
     {
+        if (!spawnEnemies)
+            yield break;
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
 
         #region ABS0 Phase 2 Spawn Code

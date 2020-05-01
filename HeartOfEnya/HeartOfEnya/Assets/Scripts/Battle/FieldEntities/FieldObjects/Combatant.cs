@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using FMODUnity;
 
 /// <summary>
 /// A combatant is any FieldObject that is can use Actions (see Action.cs) or be affected by them.
@@ -35,9 +36,9 @@ public abstract class Combatant : FieldObject, IPausable
     public GameObject deathFxPrefab;
     // Debug Audio fields while we don't have FMOD setup
     public SfxPlayerDispatcher sfxDispatch;
-    public AudioClip damageSfx;
-    public AudioClip deathSfx;
     public AudioClip moveSfx;
+    public StudioEventEmitter damageSfxEvent;
+    public StudioEventEmitter deathSfxEvent;
     [Header("General Combatant Fields")]
     public bool invincible = false;
     public int maxHp;
@@ -134,7 +135,7 @@ public abstract class Combatant : FieldObject, IPausable
             {
                 if(damageFxPrefab != null)
                     Instantiate(damageFxPrefab, VfxSpawnPoint, Quaternion.identity).GetComponent<ActionVfx>()?.Play();
-                sfxDispatch.Dispatch().PlayAndDestroy(damageSfx);
+                damageSfxEvent.Play();
                 animator.Play("Damage");
             }
         }
@@ -155,7 +156,7 @@ public abstract class Combatant : FieldObject, IPausable
     {
         if(deathFxPrefab != null)
             Instantiate(deathFxPrefab, VfxSpawnPoint, Quaternion.identity).GetComponent<ActionVfx>()?.Play();
-        sfxDispatch.Dispatch().PlayAndDestroy(deathSfx);
+        deathSfxEvent.Play();
         animator.SetTrigger("Death");
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         Destroy(gameObject);

@@ -137,6 +137,8 @@ GameObject:
   - component: {fileID: -225921385592598223}
   - component: {fileID: 7001886260666202765}
   - component: {fileID: 6588326718544028018}
+  - component: {fileID: 6806669522555439619}
+  - component: {fileID: 1061692599890477573}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Untagged
@@ -179,15 +181,20 @@ MonoBehaviour:
     col: 0
   canMoveThrough: 0
   vfxSpawnPoint: {fileID: 2361452794203608024}
+  passiveAbility: 0
   description: Combatant description
+  passiveName: 
+  passiveDescription: 
   damageFxPrefab: {fileID: 0}
   deathFxPrefab: {fileID: 0}
   sfxDispatch: {fileID: 6588326718544028018}
-  damageSfx: {fileID: 8300000, guid: 936112434e3522346bca9074ebe5dcb9, type: 3}
-  deathSfx: {fileID: 8300000, guid: caa7bbb35f09cd043b165b8a6feb86ba, type: 3}
   moveSfx: {fileID: 8300000, guid: 1273e667312313c4e8f744eb59708eec, type: 3}
+  damageSfxEvent: {fileID: 6806669522555439619}
+  deathSfxEvent: {fileID: 1061692599890477573}
+  invincible: 0
   maxHp: 4
   move: 0
+  isMovable: 1
   animator: {fileID: 7001886260666202765}
   hpText: {fileID: 6537207338631405516}
   hpImage: {fileID: 3703697910149567519}
@@ -228,6 +235,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sfxPlayerPrefab: {fileID: 5694999867227550884, guid: 4e3cbc787db179a4e895032d270eac16,
     type: 3}
+--- !u!114 &6806669522555439619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6271636570576552739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/SFX/Battle/Obstacles/Box/Damage Box
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
+--- !u!114 &1061692599890477573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6271636570576552739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/SFX/Battle/Obstacles/Box/Destroy Box
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
 --- !u!1001 &6615416752555109236
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -163,6 +163,18 @@ public class PartyPhase : Phase
         }
     }
 
+    // overloaded disable units with only one character input
+    public void DisableUnits(string unit)
+    {
+        foreach(PartyMember member in Party)
+        {
+            if(member.GetName() == unit)
+            {
+                member.DisableUnit();
+            }
+        }
+    }
+
     // the same as disable units but in reverse
     public void EnableUnits(List<string> units)
     {
@@ -174,6 +186,18 @@ public class PartyPhase : Phase
                 {
                     member.EnableUnit();
                 }
+            }
+        }
+    }
+
+    // overload with one input
+    public void EnableUnits(string unit)
+    {
+        foreach(PartyMember member in Party)
+        {
+            if(member.GetName() == unit)
+            {
+                member.EnableUnit();
             }
         }
     }

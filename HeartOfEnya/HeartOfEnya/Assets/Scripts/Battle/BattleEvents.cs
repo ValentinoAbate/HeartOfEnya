@@ -113,8 +113,7 @@ public class BattleEvents : MonoBehaviour
             tutBapySelect.flag = true;
 
             // re-enable bapy's turn
-            string[] units = {"Bapy"};
-            partyPhase.EnableUnits(new List<string>(units));
+            partyPhase.EnableUnits("Bapy");
         }
     }
 
@@ -147,12 +146,10 @@ public class BattleEvents : MonoBehaviour
             tutSoleilSelect.flag = true;
 
             // enable soleil
-            string[] units = {"Soleil"};
-            partyPhase.EnableUnits(new List<string>(units));
+            partyPhase.EnableUnits("Soleil");
             
             // disable bapy
-            units[0] = "Bapy";
-            partyPhase.DisableUnits(new List<string>(units));
+            partyPhase.DisableUnits("Bapy");
         }
     }
 

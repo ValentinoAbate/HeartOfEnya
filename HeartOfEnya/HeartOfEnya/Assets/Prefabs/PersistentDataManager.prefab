@@ -61,12 +61,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partyLevel: 1
-  luaBossDefeated: 1
+  luaBossDefeated: 0
   absoluteZeroDefeated: 0
+  absoluteZeroPhase2Defeated: 0
   numEnemiesLeft: 0
+  numEnemiesDefeatedThisEncounter: 0
   waveNum: 0
   lastEncounter: {fileID: 0}
   listEnemiesLeft: []
+  listActiveSpawners: []
   gamePhase: A
   dayNum: 0
   gatheredIngredients: []
@@ -97,8 +100,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa03532f4f19a8f38fba212224b5c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstaclesDestroyed: 0
-  obstacleTurns: 
-  avgEnemies: 0
   stunnedEnemies: 0
-  avgPos: 0

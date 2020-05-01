@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 [DisallowMultipleComponent]
 public class BattleUI : MonoBehaviour
@@ -28,16 +29,43 @@ public class BattleUI : MonoBehaviour
     public HashSet<Pos> MoveableTiles { get; set; } = new HashSet<Pos>();
     public HashSet<Pos> TargetableTiles { get; set; } = new HashSet<Pos>();
 
+    private List<EventTileAction> runTiles;
+
     private void Awake()
     {
         if(main == null)
         {
             main = this;
-            TargetableTiles.Add(new Pos(1, 5));
         }
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        runTiles = GetComponentsInChildren<EventTileAction>().ToList();
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        if (pData.gamePhase == PersistentData.gamePhaseTutorial)
+            DisableRunTiles();
+    }
+
+    public void DisableRunTiles()
+    {
+        foreach(var tile in runTiles)
+        {
+            BattleGrid.main.RemoveEventTile(tile.Pos, tile);
+            tile.gameObject.SetActive(false);
+        }
+    }
+
+    public void EnableRunTiles()
+    {
+        foreach (var tile in runTiles)
+        {
+            BattleGrid.main.AddEventTile(tile.Pos, tile);
+            tile.gameObject.SetActive(true);
         }
     }
 

@@ -8,6 +8,7 @@ public class PartyPhase : Phase
     public Cursor Cursor { get => KeyboardMode ? keyboardCursor : mouseCursor as Cursor; }
 
     public List<PartyMember> Party { get; } = new List<PartyMember>();
+
     private bool KeyboardMode => keyboardMode;
     [SerializeField]
     private bool keyboardMode = false;
@@ -16,6 +17,11 @@ public class PartyPhase : Phase
     private SelectionListCursor keyboardCursor;
     [SerializeField]
     private MouseCursor mouseCursor;
+    [Header("Willow Action Fields")]
+    [SerializeField]
+    private Action willowStunAction;
+    [SerializeField]
+    private Willow willow;
 
     // the party members who still have a turn this phase
     private List<PartyMember> activeParty = new List<PartyMember>();
@@ -150,6 +156,11 @@ public class PartyPhase : Phase
     }
 
     #endregion
+
+    public Coroutine WillowStunAll()
+    {
+        return willow.UseAction(willowStunAction, Pos.Zero, Pos.Zero);
+    }
 
     private IEnumerator DeclareSpawnsThenFinishEndAction()
     {

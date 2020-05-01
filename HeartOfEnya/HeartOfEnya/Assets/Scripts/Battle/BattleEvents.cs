@@ -35,6 +35,9 @@ public class BattleEvents : MonoBehaviour
     [Header("Absolute Zero Events")]
     public BattleEvent abs0PhaseChange;
 
+    // references to objects that will be needed to disable certain game functions
+    private PartyPhase partyPhase;
+
     private void Awake()
     {
         if (main == null)
@@ -50,6 +53,7 @@ public class BattleEvents : MonoBehaviour
     private void Start()
     {
         tutorial = (DoNotDestroyOnLoad.Instance.persistentData.gamePhase == PersistentData.gamePhaseTutorial);
+        partyPhase = PhaseManager.main.PartyPhase;
     }
 
     public void IntroTrigger()
@@ -60,6 +64,11 @@ public class BattleEvents : MonoBehaviour
             tutorialIntro.flag = true;
             // Start the dialog (connect to ambers code)
             // Wait for finish StartCoroutine(IntroTriggerPost(runner))
+
+            // (this code should be moved into the post function once dialog merged)
+            // post-condition: disable everyone but raina
+            string[] units = {"Bapy", "Soleil"};
+            partyPhase.DisableUnits(new List<string>(units));
         }
     }
 
@@ -105,6 +114,9 @@ public class BattleEvents : MonoBehaviour
         {
             Debug.Log("Battle Triggers: select bapy");
             tutBapySelect.flag = true;
+
+            // re-enable bapy's turn
+            partyPhase.EnableUnits("Bapy");
         }
     }
 
@@ -135,6 +147,12 @@ public class BattleEvents : MonoBehaviour
         {
             Debug.Log("Battle Triggers: select soleil");
             tutSoleilSelect.flag = true;
+
+            // enable soleil
+            partyPhase.EnableUnits("Soleil");
+            
+            // disable bapy
+            partyPhase.DisableUnits("Bapy");
         }
     }
 
@@ -150,6 +168,10 @@ public class BattleEvents : MonoBehaviour
         {
             Debug.Log("Battle Triggers: soleil attack");
             tutSoleilAttack.flag = true;
+
+            // re-enable bapy (and everyone else since their turns are over anyway)
+            string[] units = {"Bapy", "Soleil", "Raina"};
+            partyPhase.EnableUnits(new List<string>(units));
         }
     }
 

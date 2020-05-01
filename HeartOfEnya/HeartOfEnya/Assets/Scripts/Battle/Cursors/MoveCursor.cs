@@ -165,6 +165,8 @@ public class MoveCursor : GridCursor
     public override void ProcessInput()
     {
         base.ProcessInput();
+        if (PauseHandle.Paused || !BattleUI.main.CancelingEnabled)
+            return;
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
         {
             ResetToLastPosition();

@@ -24,6 +24,8 @@ public class BattleUI : MonoBehaviour
     public Color neutralColor;
     public Color enemyColor;
 
+    public bool CancelingEnabled { get; set; } = true;
+
     private void Awake()
     {
         if(main == null)

@@ -74,7 +74,7 @@ public class MouseMoveCursor : MoveCursor
 
     private void HandleDeselect(InputAction.CallbackContext context)
     {
-        if (PauseHandle.Paused || BonusMode)
+        if (PauseHandle.Paused || BonusMode || !BattleUI.main.CancelingEnabled)
             return;
         sfxCancel.Play();
     	ResetToLastPosition();

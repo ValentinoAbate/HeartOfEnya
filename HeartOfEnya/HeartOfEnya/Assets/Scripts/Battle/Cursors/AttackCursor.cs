@@ -92,7 +92,7 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     private void HandleCancel(InputAction.CallbackContext context)
     {
-        if (PauseHandle.Paused)
+        if (PauseHandle.Paused || !BattleUI.main.CancelingEnabled)
             return;
         Cancel();
     }

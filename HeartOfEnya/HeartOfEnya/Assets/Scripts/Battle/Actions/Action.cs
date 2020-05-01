@@ -10,6 +10,7 @@ public class Action : MonoBehaviour
 
     public bool IsRanged => range.max > 1;
 
+    public FieldEntity.Teams targetFilter = FieldEntity.Teams.All;
     public ActionRange range;
     public bool useSecondaryRange;
     public ActionRange secondaryRange;
@@ -35,6 +36,9 @@ public class Action : MonoBehaviour
     public string DisplayName => displayName;
     [SerializeField]
     private string displayName = "display name";
+    public string ID => id;
+    [SerializeField]
+    private string id = "id";
 
     private ActionEffect[] effects;
 
@@ -114,6 +118,9 @@ public class Action : MonoBehaviour
             actionTargetPos = targetPos,
             primaryTargetPos = primaryTargetPos,
         };
+        // Initialize the effects
+        foreach (var effect in effects)
+            effect.Initialize(user);
         List<Combatant> toStun = new List<Combatant>();
         // Apply actual effects to targets and display results
         foreach (var position in targetPositions)
@@ -121,6 +128,9 @@ public class Action : MonoBehaviour
             var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
             if (target != null)
             {
+                // Don't hit filtered out targets
+                if (!targetFilter.HasFlag(target.Team))
+                    continue;
                 // Apply effects to targets
                 foreach (var effect in effects)
                 {

@@ -17,6 +17,7 @@ public class BattleEvents : MonoBehaviour
     public static BattleEvents main;
     private bool tutorial; // whether we are in the tutorial or not
 
+    [Header("Tutorial Events")]
     public BattleEvent tutorialIntro;
     public BattleEvent tutMove;
     public BattleEvent tutRainaAttack;
@@ -31,6 +32,8 @@ public class BattleEvents : MonoBehaviour
     public BattleEvent tutEnemyInfo;
     public BattleEvent tutEnemyRanged;
     public BattleEvent tutDD;
+    [Header("Absolute Zero Events")]
+    public BattleEvent abs0PhaseChange;
 
     private void Awake()
     {

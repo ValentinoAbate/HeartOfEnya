@@ -67,6 +67,14 @@ public class UIInfoPanelParty : MonoBehaviour
         statusText.text = "Status: " + (p.DeathsDoor ? "Dying." : "Doing fine!");
         if (p.Stunned)
             statusText.text = "Status: " + "Stunned.";
-        passiveText.text = p.passiveName + ": " + p.passiveDescription;
+        if (!string.IsNullOrWhiteSpace(p.passiveName))
+        {
+            passiveText.text = p.passiveName + ": " + p.passiveDescription;
+        }
+        else
+        {
+            passiveText.text = string.Empty;
+        }
+
     }
 }

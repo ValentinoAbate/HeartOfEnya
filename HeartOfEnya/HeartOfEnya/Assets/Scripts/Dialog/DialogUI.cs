@@ -18,6 +18,7 @@ namespace Dialog
         }
 
         private static readonly Regex lineRegex = new Regex(@"\s*(\w+)\s*(?:\((\w+)\))?\s*:\s*(.*)");
+        private static readonly Regex commentRegex = new Regex(@"\/\/.*");
 
         public PauseHandle PauseHandle { get; set; }
 
@@ -69,11 +70,18 @@ namespace Dialog
         {
             // Correct the formatting
             line.text = CorrectFormatting(line.text);
+
+            var commentMatch = commentRegex.Match(line.text);
+            if (commentMatch.Success)
+            {
+                Debug.Log("Comment detected: " + line);
+                yield break;
+            }
             // Split speaker name, expression, and line text
             var match = lineRegex.Match(line.text);
             if(!match.Success)
             {
-                Debug.LogError("Improperly Formatted Dialog. No \":\" character found to separate speaker and line.");
+                Debug.LogError("Improperly Formatted Dialog: " + line.text);
                 yield break;
             }
             string speaker = match.Groups[1].Value.ToLower();
@@ -122,7 +130,7 @@ namespace Dialog
             foreach (var optionString in optionsCollection.options)
             {
                 optionButtons[i].gameObject.SetActive(true);
-                optionButtons[i].GetComponentInChildren<Text>().text = optionString;
+                optionButtons[i].GetComponentInChildren<Text>().text = CorrectFormatting(optionString);
                 i++;
             }
 

@@ -92,7 +92,7 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     private void HandleCancel(InputAction.CallbackContext context)
     {
-        if (PauseHandle.Paused)
+        if (PauseHandle.Paused || !BattleUI.main.CancelingEnabled)
             return;
         Cancel();
     }
@@ -140,6 +140,7 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public void CalculateTargets()
     {
+        var targetRestrictions = BattleUI.main.TargetableTiles;
         var range = inSecondaryMode ? action.secondaryRange : action.range;
         inRange.Clear();
         var reachable = BattleGrid.main.Reachable(attacker.Pos, range.max, CanMoveThrough);
@@ -150,7 +151,10 @@ public class AttackCursor : GridAndSelectionListCursor
             var pos = kvp.Key;
             // Remove non-cardinal squares from cardinal patterns
             if (range.type == ActionRange.Type.Cardinal && attacker.Pos.row != pos.row && attacker.Pos.col != pos.col)
-                continue;        
+                continue;
+            // Apply target restrictions
+            if (targetRestrictions.Count > 0 && !targetRestrictions.Contains(kvp.Key))
+                continue;
             inRange.Add(pos);
         }
     }
@@ -185,6 +189,8 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public override void Select()
     {
+        if (!inRange.Contains(Pos))
+            return;
         sfxSelect.Play();
         if (action.useSecondaryRange && !inSecondaryMode)
         {

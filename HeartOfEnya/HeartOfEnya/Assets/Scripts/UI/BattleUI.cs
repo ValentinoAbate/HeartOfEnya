@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 [DisallowMultipleComponent]
 public class BattleUI : MonoBehaviour
@@ -24,6 +25,12 @@ public class BattleUI : MonoBehaviour
     public Color neutralColor;
     public Color enemyColor;
 
+    public bool CancelingEnabled { get; set; } = true;
+    public HashSet<Pos> MoveableTiles { get; set; } = new HashSet<Pos>();
+    public HashSet<Pos> TargetableTiles { get; set; } = new HashSet<Pos>();
+
+    private List<EventTileAction> runTiles;
+
     private void Awake()
     {
         if(main == null)
@@ -36,9 +43,53 @@ public class BattleUI : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        runTiles = GetComponentsInChildren<EventTileAction>().ToList();
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        if (pData.gamePhase == PersistentData.gamePhaseTutorial)
+            DisableRunTiles();
+    }
+
+    public void DisableRunTiles()
+    {
+        foreach(var tile in runTiles)
+        {
+            BattleGrid.main.RemoveEventTile(tile.Pos, tile);
+            tile.gameObject.SetActive(false);
+        }
+    }
+
+    public void EnableRunTiles()
+    {
+        foreach (var tile in runTiles)
+        {
+            BattleGrid.main.AddEventTile(tile.Pos, tile);
+            tile.gameObject.SetActive(true);
+        }
+    }
+
     public void UpdateEnemiesRemaining(int numRemaining)
     {
-        numEnemiesLeft.text = numRemaining.ToString() + " Enemies Remain...";
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        if (pData.InMainPhase || pData.absoluteZeroDefeated)
+        {
+            if(pData.numEnemiesLeft == 1)
+            {
+                numEnemiesLeft.text = numRemaining.ToString() + " Frost Remains!";
+            }
+            else if(pData.numEnemiesLeft <= 0)
+            {
+                numEnemiesLeft.text = "No Frost Remain";
+            }
+            else
+                numEnemiesLeft.text = numRemaining.ToString() + " Frost Remain...";
+        }
+        else
+        {
+            numEnemiesLeft.text =  "??? Frost Remain...";
+        }
+
     }
 
     public void ShowEndTurnButton() => endTurnButton.interactable = true;

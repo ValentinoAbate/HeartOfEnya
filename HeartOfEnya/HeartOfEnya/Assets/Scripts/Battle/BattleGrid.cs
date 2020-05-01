@@ -227,6 +227,22 @@ public class BattleGrid : MonoBehaviour
         return null;
     }
 
+    public T Find<T>(Predicate<T> pred) where T : FieldObject
+    {
+        //brute force foreach of field; might optimize later
+        foreach (var obj in field)
+        {
+            if (obj is T)
+            {
+                var objT = obj as T;
+                //if object matches the predicate, add it to the list
+                if (pred(objT))
+                    return objT;
+            }
+        }
+        return null;
+    }
+
     public List<Combatant> GetAllCombatants(Predicate<Combatant> pred)
     {
         var foundObjects = new List<Combatant>();

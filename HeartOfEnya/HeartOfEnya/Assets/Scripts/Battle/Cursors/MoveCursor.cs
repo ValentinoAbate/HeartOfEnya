@@ -72,8 +72,13 @@ public class MoveCursor : GridCursor
     {
         if(value)
         {
+            var moveRestrictions = BattleUI.main.MoveableTiles;
             foreach (var spot in traversable)
+            {
+                if (moveRestrictions.Count > 0 && !moveRestrictions.Contains(spot))
+                    continue;
                 tileUIEntries.Add(BattleGrid.main.SpawnTileUI(spot, TileUI.Type.MoveRangeParty));
+            }
         }
         else
         {
@@ -116,6 +121,9 @@ public class MoveCursor : GridCursor
     // Finish the move and open the action menu
     public override void Select()
     {
+        var moveRestrictions = BattleUI.main.MoveableTiles;
+        if (moveRestrictions.Count > 0 && !moveRestrictions.Contains(Pos))
+            return;
         // play Place Character sfx based on which character
         name = partyMember.GetName();
         switch(name)
@@ -165,6 +173,8 @@ public class MoveCursor : GridCursor
     public override void ProcessInput()
     {
         base.ProcessInput();
+        if (PauseHandle.Paused || !BattleUI.main.CancelingEnabled)
+            return;
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
         {
             ResetToLastPosition();

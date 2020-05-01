@@ -8,6 +8,7 @@ public class PartyPhase : Phase
     public Cursor Cursor { get => KeyboardMode ? keyboardCursor : mouseCursor as Cursor; }
 
     public List<PartyMember> Party { get; } = new List<PartyMember>();
+
     private bool KeyboardMode => keyboardMode;
     [SerializeField]
     private bool keyboardMode = false;
@@ -16,6 +17,11 @@ public class PartyPhase : Phase
     private SelectionListCursor keyboardCursor;
     [SerializeField]
     private MouseCursor mouseCursor;
+    [Header("Willow Action Fields")]
+    [SerializeField]
+    private Action willowStunAction;
+    [SerializeField]
+    private Willow willow;
 
     // the party members who still have a turn this phase
     private List<PartyMember> activeParty = new List<PartyMember>();
@@ -105,6 +111,65 @@ public class PartyPhase : Phase
             EndPhase();
             return;
         }
+        var ePhase = PhaseManager.main.EnemyPhase;
+        var sPhase = PhaseManager.main.SpawnPhase;
+        ePhase.RemoveDead();
+        if (ePhase.Enemies.Count <= 0 && !sPhase.HasActiveSpawners)
+        {
+            StartCoroutine(DeclareSpawnsThenFinishEndAction());
+        }
+        else
+        {
+            FinishEndAction();
+        }
+
+    }
+
+    #region Action Soloing Commands
+
+    public void PartyWideSoloAction(string actionID)
+    {
+        foreach(var partyMember in Party)
+        {
+            partyMember.ActionMenu.SoloAction(actionID);
+        }
+    }
+
+    public void PartyWideSoloAction(Action action) => PartyWideSoloAction(action.ID);
+
+    public void PartyWideUnSoloAction(string actionID)
+    {
+        foreach (var partyMember in Party)
+        {
+            partyMember.ActionMenu.UnSoloAction(actionID);
+        }
+    }
+
+    public void PartyWideUnSoloAction(Action action) => PartyWideUnSoloAction(action.ID);
+
+    public void PartyWideClearSoloActions()
+    {
+        foreach (var partyMember in Party)
+        {
+            partyMember.ActionMenu.ClearSoloActions();
+        }
+    }
+
+    #endregion
+
+    public Coroutine WillowStunAll()
+    {
+        return willow.UseAction(willowStunAction, Pos.Zero, Pos.Zero);
+    }
+
+    private IEnumerator DeclareSpawnsThenFinishEndAction()
+    {
+        yield return PhaseManager.main.SpawnPhase.DeclareNextWave();
+        FinishEndAction();
+    }
+
+    private void FinishEndAction()
+    {
         if (KeyboardMode)
         {
             // Remove the party member whose action ended
@@ -143,7 +208,7 @@ public class PartyPhase : Phase
     /// </summary>
     private void CleanupParty()
     {
-        // Remove all dead party members and ranaway members
+        // Remove all dead party members and runaway members
         Party.RemoveAll((obj) => obj == null || obj.RanAway);
     }
 }

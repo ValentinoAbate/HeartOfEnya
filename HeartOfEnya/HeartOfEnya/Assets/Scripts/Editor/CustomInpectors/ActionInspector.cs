@@ -10,6 +10,7 @@ public class ActionInspector : Editor
     {
         var action = target as Action;
         EditorGUILayout.LabelField(new GUIContent("Text"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("id"), new GUIContent("Action ID"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("displayName"), new GUIContent("Display Name"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("description"), new GUIContent("Description"));
         EditorGUILayout.LabelField(new GUIContent("VFX / SFX Fields"));
@@ -26,6 +27,7 @@ public class ActionInspector : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("delayAtEnd"), new GUIContent("Delay At End"));
         EditorUtils.Separator();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("chargeTurns"), new GUIContent("Charge Turns"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("targetFilter"), new GUIContent("Target Filter"));
         EditorUtils.Separator();
 
         #region Target Pattern And Range

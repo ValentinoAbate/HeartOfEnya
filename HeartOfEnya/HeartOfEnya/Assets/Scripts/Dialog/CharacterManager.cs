@@ -39,7 +39,7 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    public PhaseData GetPhaseData(string gamePhase) => phaseDict[gamePhase];
+    public PhaseData GetPhaseData(string gamePhase) => phaseDict.ContainsKey(gamePhase) ? phaseDict[gamePhase] : null;
 
     [System.Serializable]
     public class PhaseData

@@ -16,6 +16,6 @@ public class SpawnEffect : ActionEffect
         var obj = Instantiate(objPrefab.gameObject, BattleGrid.main.GetSpace(target), Quaternion.identity);
         var fObj = obj.GetComponent<FieldObject>();
         BattleGrid.main.SetObject(target, fObj);
-        yield break;
+        yield return new WaitForSeconds(effectWaitTime);
     }
 }

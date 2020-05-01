@@ -26,12 +26,14 @@ public class BattleUI : MonoBehaviour
 
     public bool CancelingEnabled { get; set; } = true;
     public HashSet<Pos> MoveableTiles { get; set; } = new HashSet<Pos>();
+    public HashSet<Pos> TargetableTiles { get; set; } = new HashSet<Pos>();
 
     private void Awake()
     {
         if(main == null)
         {
             main = this;
+            TargetableTiles.Add(new Pos(1, 5));
         }
         else
         {

@@ -59,6 +59,8 @@ public class ActionButton : ActionButtonBase
 
     public void OnSelect(BaseEventData eventData)
     {
+        if (!button.interactable)
+            return;
         sfxHighlight.Play();
         menu.cursor.SetAction(actionPrefab);
         menu.cursor.ShowTargets();
@@ -66,7 +68,9 @@ public class ActionButton : ActionButtonBase
         eventData.Use();
     }
     public void OnDeselect(BaseEventData eventData)
-    {       
+    {
+        if (!button.interactable)
+            return;
         menu.cursor.HideTargets();
         HideExtraInfoWindow();
         eventData.Use();

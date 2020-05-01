@@ -48,21 +48,15 @@ public class Character : MonoBehaviour
     {
         //retrieve date from persistent data
         string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
+        var phaseData = CharacterManager.main.GetPhaseData(phase);
         if (CharacterManager.main == null)
             return;
-        var phaseData = CharacterManager.main.GetPhaseData(phase);
-        if (anim != null && phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower())
-        {
-            anim.SetBool("Highlight", true);
-
-        //if(phaseData.monologCharacter.ToLower() == Name.ToLower()) //if the clicked character's monologue takes place in this scene
-
         //move to the door position if it's our monologue time
-        string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
-        var phaseData = CharacterManager.main.GetPhaseData(phase);
-        if (phaseData.monologCharacter.ToLower() == Name.ToLower() && CharacterManager.main != null) //second parameter makes sure we only trigger in the VN scene
+        if (phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower()) //second parameter makes sure we only trigger in the VN scene
         {
         	transform.position = doorPosition;
+            if(anim != null)
+                    anim.SetBool("Highlight", true);
         }
     }
 

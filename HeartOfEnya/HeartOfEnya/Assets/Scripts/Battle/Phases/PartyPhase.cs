@@ -211,4 +211,59 @@ public class PartyPhase : Phase
         // Remove all dead party members and runaway members
         Party.RemoveAll((obj) => obj == null || obj.RanAway);
     }
+
+    // turns off ability to select certain units for tutorial scripting
+    public void DisableUnits(List<string> units)
+    {
+        // the fabled n^2. party is never more than 4 anyway so whatever
+        foreach(string unit in units)
+        {
+            foreach(PartyMember member in Party)
+            {
+                if(member.GetName() == unit)
+                {
+                    member.DisableUnit();
+                }
+            }
+        }
+    }
+
+    // overloaded disable units with only one character input
+    public void DisableUnits(string unit)
+    {
+        foreach(PartyMember member in Party)
+        {
+            if(member.GetName() == unit)
+            {
+                member.DisableUnit();
+            }
+        }
+    }
+
+    // the same as disable units but in reverse
+    public void EnableUnits(List<string> units)
+    {
+        foreach(string unit in units)
+        {
+            foreach(PartyMember member in Party)
+            {
+                if(member.GetName() == unit)
+                {
+                    member.EnableUnit();
+                }
+            }
+        }
+    }
+
+    // overload with one input
+    public void EnableUnits(string unit)
+    {
+        foreach(PartyMember member in Party)
+        {
+            if(member.GetName() == unit)
+            {
+                member.EnableUnit();
+            }
+        }
+    }
 }

@@ -101,6 +101,23 @@ public class PartyMember : Combatant, IPausable
         }
     }
     private bool hasTurn = false;
+    public bool Disabled
+    {
+        get => disabled;
+        set
+        {
+            disabled = value;
+            if (!value)
+            {
+                sprite.color = Color.white;
+            }
+            else
+            {
+                sprite.color = noTurnColor;
+            }
+        }
+    }
+    private bool disabled = false;
 
     public bool RanAway { get; private set; }
 
@@ -196,7 +213,8 @@ public class PartyMember : Combatant, IPausable
     /// <returns> HasTurn </returns>
     public override bool Select()
     {
-        if(HasTurn)
+        // make unit unselectable if the tutorial disables them
+        if(HasTurn && !disabled)
         {
             // moveCursor.SetActive(true);
             mouseMoveCursor.SetActive(true);
@@ -362,5 +380,17 @@ public class PartyMember : Combatant, IPausable
         }
             
         return routine;
+    }
+
+    // disables the unit so the player can't select them, used for tutorial scripting
+    public void DisableUnit()
+    {
+        // might need to do more than this? not sure
+        Disabled = true;
+    }
+
+    public void EnableUnit()
+    {
+        Disabled = false;
     }
 }

@@ -186,13 +186,7 @@ public class SpawnPhase : Phase
         if (CurrEncounter != pData.lastEncounter)
         {
             waveNum = startAtWave - 1;
-            foreach (var spawnData in CurrWave.AllSpawns)
-            {
-                var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
-                obj.PrefabOrigin = spawnData.spawnObject;
-                obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
-                BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
-            }
+            SpawnAllEnemiesAndObstacles(CurrWave);
             int totalEnemies = 0;
             if (CurrEncounter == mainEncounter)
             {
@@ -233,13 +227,7 @@ public class SpawnPhase : Phase
             }
             else // No backed up stuff, spawn first wave
             {
-                foreach (var spawnData in CurrWave.AllSpawns)
-                {
-                    var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
-                    obj.PrefabOrigin = spawnData.spawnObject;
-                    obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
-                    BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
-                }
+                SpawnAllEnemiesAndObstacles(CurrWave);
             }
         }
         BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft);
@@ -271,6 +259,18 @@ public class SpawnPhase : Phase
         // Spawn the next wave if ready
         if (NextWaveReady())
             yield return StartCoroutine(DeclareNextWave());
+    }
+
+    public void SetEncounter(Encounter encounter, bool spawnFirstWaveImmediately = true)
+    {
+        CurrEncounter = encounter;
+        waveNum = 0;
+        turnsSinceLastSpawn = 0;
+        if(spawnFirstWaveImmediately)
+        {
+            SpawnAllEnemiesAndObstacles(CurrWave);
+            ++waveNum;
+        }
     }
 
     public IEnumerator DeclareNextWave()
@@ -381,6 +381,17 @@ public class SpawnPhase : Phase
             return true;
         }
         return false;
+    }
+
+    private void SpawnAllEnemiesAndObstacles(WaveData wave)
+    {
+        foreach (var spawnData in wave.enemies)
+        {
+            var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
+            obj.PrefabOrigin = spawnData.spawnObject;
+            obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
+            BattleGrid.main.SetObject(spawnData.spawnPosition, obj);
+        }
     }
 
     public override Coroutine OnPhaseEnd()

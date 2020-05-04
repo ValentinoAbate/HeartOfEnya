@@ -145,7 +145,7 @@ public class BattleGrid : MonoBehaviour
             return new TileUI.Entry() { pos = Pos.OutOfBounds, type = TileUI.Type.Empty };
         // If there is already a tile, set the secondary type
         if (tileUIManager.HasActiveTileUI(p))
-            return tileUIManager.SetSecondaryType(p, type);
+            return tileUIManager.AddType(p, type);
 
         // Calculate Vertices
         Vector2 offset = new Vector2((cellSize.x + skewXOffset) * 0.5f, -cellSize.y / 2);
@@ -159,7 +159,7 @@ public class BattleGrid : MonoBehaviour
 
     public void RemoveTileUI(TileUI.Entry entry)
     {
-        tileUIManager.ClearTileUI(entry);
+        tileUIManager.RemoveType(entry);
     }
 
     #endregion
@@ -223,6 +223,22 @@ public class BattleGrid : MonoBehaviour
             if (field.Get(pos) == null)
                 return null;
             return field.Get(pos);
+        }
+        return null;
+    }
+
+    public T Find<T>(Predicate<T> pred) where T : FieldObject
+    {
+        //brute force foreach of field; might optimize later
+        foreach (var obj in field)
+        {
+            if (obj is T)
+            {
+                var objT = obj as T;
+                //if object matches the predicate, add it to the list
+                if (pred(objT))
+                    return objT;
+            }
         }
         return null;
     }

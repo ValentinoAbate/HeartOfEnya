@@ -46,6 +46,9 @@ public class MouseMoveCursor : MoveCursor
             return;      
         if (!traversable.Contains(newPos))
             return;
+        var moveRestrictions = BattleUI.main.MoveableTiles;
+        if (moveRestrictions.Count > 0 && !moveRestrictions.Contains(newPos))
+            return;
             
         sfxHighlight.Play();
         Pos = newPos;
@@ -74,7 +77,7 @@ public class MouseMoveCursor : MoveCursor
 
     private void HandleDeselect(InputAction.CallbackContext context)
     {
-        if (PauseHandle.Paused || BonusMode)
+        if (PauseHandle.Paused || BonusMode || !BattleUI.main.CancelingEnabled)
             return;
         sfxCancel.Play();
     	ResetToLastPosition();

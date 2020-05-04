@@ -9,7 +9,6 @@ using System.Linq;
 /// </summary>
 public class Enemy : Combatant, IPausable
 {
-    public PauseHandle PauseHandle { get; set; }
     public override Teams Team => Teams.Enemy;
 
     [Header("Enemy-Specific Fields")]
@@ -149,15 +148,18 @@ public class Enemy : Combatant, IPausable
                 }
             }
         }
-        return UseAction(action, p);
+        return UseAction(action, p, Pos.OutOfBounds);
     }
     public override void Kill()
     {
         Debug.Log(DisplayName + " has died...");
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         pData.numEnemiesDefeatedThisEncounter++;
-        pData.numEnemiesLeft--;
-        BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft);
+        if(pData.InMainPhase)
+        {
+            pData.numEnemiesLeft--;
+            BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft);
+        }
         base.Kill();
     }
 }

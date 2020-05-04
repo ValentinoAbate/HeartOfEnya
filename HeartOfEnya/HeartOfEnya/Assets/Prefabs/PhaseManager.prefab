@@ -201,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goToSceneOnEnd: Camp
   goToSceneOnEndSpecial: VerticalEndScreen
-  specialPhase: C
+  specialPhase: D
 --- !u!1 &4288789010848414401
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4288789010848414400}
   - component: {fileID: 4288789010848414407}
+  - component: {fileID: 7454644736744393253}
   m_Layer: 0
   m_Name: PartyPhase
   m_TagString: Untagged
@@ -250,6 +251,47 @@ MonoBehaviour:
   keyboardMode: 0
   keyboardCursor: {fileID: 4288789010663768760}
   mouseCursor: {fileID: 140462460}
+  willowStunAction: {fileID: 8902642157473425592, guid: 930ab609b5f12a547a71b17a2b7593f4,
+    type: 3}
+  willow: {fileID: 7454644736744393253}
+--- !u!114 &7454644736744393253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288789010848414401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b24617acf45fb804caf8e1154d180a24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayName: Willow Wisp
+  pos:
+    row: 0
+    col: 0
+  canMoveThrough: 0
+  vfxSpawnPoint: {fileID: 0}
+  passiveAbility: 0
+  description: Combatant description
+  passiveName: 
+  passiveDescription: 
+  damageFxPrefab: {fileID: 0}
+  deathFxPrefab: {fileID: 0}
+  sfxDispatch: {fileID: 0}
+  damageSfx: {fileID: 0}
+  deathSfx: {fileID: 0}
+  moveSfx: {fileID: 0}
+  invincible: 1
+  maxHp: 9
+  move: 0
+  isMovable: 0
+  animator: {fileID: 0}
+  hpText: {fileID: 0}
+  hpImage: {fileID: 0}
+  chargeUI: {fileID: 0}
+  chargeText: {fileID: 0}
+  uiHelper: {fileID: 0}
 --- !u!1 &4602298723748828298
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,11 +336,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Spawn Phase
+  dialog: {fileID: 0}
   mainEncounter: {fileID: 11400000, guid: 89240a4eaf9d90c469eda75fb515c556, type: 2}
   tutorialEncounter: {fileID: 11400000, guid: 89240a4eaf9d90c469eda75fb515c556, type: 2}
   luaEncounter: {fileID: 11400000, guid: 89240a4eaf9d90c469eda75fb515c556, type: 2}
-  absoluteZeroEncounter: {fileID: 11400000, guid: 89240a4eaf9d90c469eda75fb515c556,
+  absoluteZeroEncounter: {fileID: 11400000, guid: 9cd7251f317112a4c9d8916f6bc457ca,
     type: 2}
+  levelEditorEncounter: {fileID: 0}
   spawnTileEnemyPrefab: {fileID: 6271636570576552739, guid: cceb0010f87b9eb42ba2bd38d463505f,
     type: 3}
   spawnTileObstaclePrefab: {fileID: 514688994380597365, guid: a5151b489c8927747a31e3dc2c5274ef,
@@ -344,3 +388,14 @@ MonoBehaviour:
   luaPos:
     row: 0
     col: 8
+  abs0ReinforcementSpawnPositions:
+  - row: 0
+    col: 0
+  - row: 1
+    col: 1
+  - row: 3
+    col: 1
+  - row: 4
+    col: 0
+  minAbs0Enemies: 4
+  abs0ReinforcementsSpawnNumber: 4

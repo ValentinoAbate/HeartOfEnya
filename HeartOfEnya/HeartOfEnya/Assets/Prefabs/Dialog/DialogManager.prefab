@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 6474591132739200396}
   - component: {fileID: 6474591132739200397}
   - component: {fileID: 6474591132739200398}
+  - component: {fileID: 7180361864493501721}
   m_Layer: 0
   m_Name: DialogManager
   m_TagString: Untagged
@@ -146,9 +147,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceText:
-  - {fileID: 4900000, guid: a89162331aa3dea468a7a41124e6efd2, type: 3}
+  - {fileID: 4900000, guid: 9fbae2cc29b3de84fadc696036f68904, type: 3}
   - {fileID: 4900000, guid: 7ea660a0c02c1eb489839841abc1a887, type: 3}
   - {fileID: 4900000, guid: 02f28a2cf627f4a418d9afd79a960463, type: 3}
+  - {fileID: 4900000, guid: 14a0975af5ccaa044990bf0c113c47ad, type: 3}
+  - {fileID: 4900000, guid: 8dfb1540c91996e4ea2761591231cdcd, type: 3}
+  - {fileID: 4900000, guid: 69342cf854c701a4f9f602e79b0c141d, type: 3}
   stringGroups: []
   shouldOverrideLanguage: 0
   overrideLanguage: 10
@@ -180,15 +184,6 @@ MonoBehaviour:
   - {fileID: 8097292495417214568}
   - {fileID: 8097292495497404860}
   characters: []
-  phaseData:
-    monologCharacter: 
-    monologNode: 
-    monologMusic: 
-    campfireNode: 
-    campfireMusic: 
-    extraScenes:
-      _keys: []
-      _values: []
   endAction: 0
   sceneName: 
 --- !u!114 &6474591132739200398
@@ -205,6 +200,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultVariables: []
   debugTextView: {fileID: 0}
+--- !u!114 &7180361864493501721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6474591132739200386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8af34d3754faa40bc088a3a53eff26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6474591133074023532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -306,6 +313,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2991800599505650757, guid: d356c5770293da148b9ac7d4432332b9,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 32
+      objectReference: {fileID: 0}
     - target: {fileID: 2991800599736591486, guid: d356c5770293da148b9ac7d4432332b9,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -340,6 +352,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2991800599844381712, guid: d356c5770293da148b9ac7d4432332b9,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 2991800599940696855, guid: d356c5770293da148b9ac7d4432332b9,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 2991800600059565428, guid: d356c5770293da148b9ac7d4432332b9,
         type: 3}

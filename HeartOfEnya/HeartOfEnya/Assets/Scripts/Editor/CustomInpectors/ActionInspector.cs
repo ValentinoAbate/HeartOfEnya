@@ -10,6 +10,7 @@ public class ActionInspector : Editor
     {
         var action = target as Action;
         EditorGUILayout.LabelField(new GUIContent("Text"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("id"), new GUIContent("Action ID"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("displayName"), new GUIContent("Display Name"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("description"), new GUIContent("Description"));
         EditorGUILayout.LabelField(new GUIContent("VFX / SFX Fields"));
@@ -26,7 +27,10 @@ public class ActionInspector : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("delayAtEnd"), new GUIContent("Delay At End"));
         EditorUtils.Separator();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("chargeTurns"), new GUIContent("Charge Turns"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("targetFilter"), new GUIContent("Target Filter"));
         EditorUtils.Separator();
+
+        #region Target Pattern And Range
         EditorGUILayout.PropertyField(serializedObject.FindProperty("targetPatternGenerator"), new GUIContent("Target Pattern Generator"));
         if (action.targetPatternGenerator == null && action.targetPattern.type == TargetPattern.Type.Directional)
         {
@@ -45,10 +49,19 @@ public class ActionInspector : Editor
             EditorGUILayout.LabelField(new GUIContent("Range: 1-1 (Directional)"), EditorUtils.Bold);
         }
         else
+        {
             EditorGUILayout.PropertyField(serializedObject.FindProperty("range"), new GUIContent("Range"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("useSecondaryRange"));
+            if (action.useSecondaryRange)
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("secondaryRange"), new GUIContent("Secondary Range"), true);
+        }
+
         EditorUtils.Separator();
         if(action.targetPatternGenerator == null)
             EditorGUILayout.PropertyField(serializedObject.FindProperty("targetPattern"), GUIContent.none);
+
+        #endregion
+
         serializedObject.ApplyModifiedProperties();
         EditorUtils.SetSceneDirtyIfGUIChanged(target);
     }

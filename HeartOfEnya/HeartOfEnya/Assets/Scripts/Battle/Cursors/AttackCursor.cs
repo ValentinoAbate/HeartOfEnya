@@ -27,6 +27,10 @@ public class AttackCursor : GridAndSelectionListCursor
 
     public Controls controlSys;
 
+    // Secondary mode fields
+    private Pos primaryTarget = Pos.Zero;
+    private bool inSecondaryMode = false;
+
     /// <summary>
     /// Copied From Mouse Cursor
     /// </summary>
@@ -88,7 +92,7 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     private void HandleCancel(InputAction.CallbackContext context)
     {
-        if (PauseHandle.Paused)
+        if (PauseHandle.Paused || !BattleUI.main.CancelingEnabled)
             return;
         Cancel();
     }
@@ -136,16 +140,21 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public void CalculateTargets()
     {
+        var targetRestrictions = BattleUI.main.TargetableTiles;
+        var range = inSecondaryMode ? action.secondaryRange : action.range;
         inRange.Clear();
-        var reachable = BattleGrid.main.Reachable(attacker.Pos, action.range.max, CanMoveThrough);
+        var reachable = BattleGrid.main.Reachable(attacker.Pos, range.max, CanMoveThrough);
         foreach(var kvp in reachable)
         {
-            if (kvp.Value < action.range.min)
+            if (kvp.Value < range.min)
                 continue;
             var pos = kvp.Key;
             // Remove non-cardinal squares from cardinal patterns
-            if (action.range.type == ActionRange.Type.Cardinal && attacker.Pos.row != pos.row && attacker.Pos.col != pos.col)
-                continue;        
+            if (range.type == ActionRange.Type.Cardinal && attacker.Pos.row != pos.row && attacker.Pos.col != pos.col)
+                continue;
+            // Apply target restrictions
+            if (targetRestrictions.Count > 0 && !targetRestrictions.Contains(kvp.Key))
+                continue;
             inRange.Add(pos);
         }
     }
@@ -180,10 +189,22 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public override void Select()
     {
+        if (!inRange.Contains(Pos))
+            return;
         sfxSelect.Play();
-        HideTargets();
-        action.targetPattern.Hide();
-        StartCoroutine(AttackCr());     
+        if (action.useSecondaryRange && !inSecondaryMode)
+        {
+            HideTargets();
+            primaryTarget = Pos;
+            inSecondaryMode = true;
+            ShowTargets();
+        }
+        else
+        {
+            HideTargets();
+            action.targetPattern.Hide();
+            StartCoroutine(AttackCr());
+        }  
     }
 
     /// <summary>
@@ -192,19 +213,37 @@ public class AttackCursor : GridAndSelectionListCursor
     public void Cancel()
     {
         sfxCancel.Play();
-        Highlight(attacker.Pos);
-        HideTargets();
-        action.targetPattern.Hide();
-        SetActive(false);
-        OnCancel.Invoke();
-        return;
+        if (inSecondaryMode)
+        {
+            inSecondaryMode = false;
+            HideTargets();
+            action.targetPattern.Hide();
+            ShowTargets();
+        }
+        else
+        {          
+            Highlight(attacker.Pos);
+            HideTargets();
+            action.targetPattern.Hide();
+            SetActive(false);
+            OnCancel.Invoke();
+        }
     }
 
     private IEnumerator AttackCr()
     {
         enabled = false;
-        // Wait for the attack routine to finish
-        yield return attacker.UseAction(action, Pos);
+        if(inSecondaryMode)
+        {
+            // Wait for the attack routine to finish
+            yield return attacker.UseAction(action, Pos, primaryTarget);
+            inSecondaryMode = false;
+        }
+        else
+        {
+            // Wait for the attack routine to finish
+            yield return attacker.UseAction(action, Pos, Pos.OutOfBounds);
+        }
         if(attacker is PartyMember)
         {
             var partyMember = attacker as PartyMember;

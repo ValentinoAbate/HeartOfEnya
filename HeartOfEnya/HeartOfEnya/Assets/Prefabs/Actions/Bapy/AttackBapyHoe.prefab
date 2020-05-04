@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &2650124485786147701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144936590335878937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1d3519718ec8864d848e34fc02c03bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 1
 --- !u!114 &6215657539834175457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14,19 +27,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: 1
   damage: 1
---- !u!114 &2650124485786147701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 144936590335878937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1d3519718ec8864d848e34fc02c03bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 1
 --- !u!1 &2833183833421151898
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,7 +430,7 @@ PrefabInstance:
         type: 3}
       propertyPath: cutInPrefab
       value: 
-      objectReference: {fileID: 5542415893087554733, guid: 4a49f817d73d43b4c8f77eaf208a7415,
+      objectReference: {fileID: 7869046948155591850, guid: 9c1fa930819de434596d5f16fc17b689,
         type: 3}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -454,6 +454,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4842508818842539274, guid: 145ea664703ebfc46a67fe3a9c7b461d,
         type: 3}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: id
+      value: BapyAction1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65afaea67fb0af4a84fe0702411019e, type: 3}
 --- !u!1 &144936590335878937 stripped

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SerializableCollections;
+using System.Linq;
 
 public class TileUI : MonoBehaviour
 {
-    private static readonly string colorProp1 = "_Color1";
-    private static readonly string colorProp2 = "_Color2";
-    private static readonly string texProp1 = "_DetailTex";
-    private static readonly string texProp2 = "_DetailTex2";
+    private const int colorTexWidth = 10;
+    private static readonly string colorTexProp = "_ColorTex";
+    private static readonly string numColorsProp = "_NumActiveColors";
     public enum Type
     {
         Empty,
@@ -26,7 +26,7 @@ public class TileUI : MonoBehaviour
     public ColorDict tileColors;
     public TextureDict textures;
     private Dictionary<Pos, QuadMesh> tiles = new Dictionary<Pos, QuadMesh>();
-    private Dictionary<Pos, System.Tuple<Type,Type>> tilesTypes = new Dictionary<Pos, System.Tuple<Type, Type>>();
+    private Dictionary<Pos, List<Type>> tilesTypes = new Dictionary<Pos, List<Type>>();
 
     public bool HasActiveTileUI(Pos p)
     {
@@ -43,43 +43,19 @@ public class TileUI : MonoBehaviour
         return false;
     }
 
-    public Entry SetPrimaryType(Pos p, Type t)
+    public Entry AddType(Pos p, Type t)
     {
         var qMesh = tiles[p];
+        // qMesh has been destroyed for some reason
         if (qMesh == null)
         {
             ClearNullTile(p);
             return new Entry();
         }
-        var pBlock = qMesh.PropertyBlock;
-        var color2 = pBlock.GetColor(colorProp2);
-        var color1 = tileColors[t];
-        var tex2 = pBlock.GetTexture(texProp2);
-        var tex1 = textures.ContainsKey(t) ? textures[t].texture : null;
-        tilesTypes[p] = new System.Tuple<Type, Type>(t, tilesTypes[p].Item2);
-
-        SetPropertyBlock(qMesh, color1, color2, tex1, tex2);
-
-        return new Entry { mesh = qMesh, pos = p, type = t };
-    }
-
-    public Entry SetSecondaryType(Pos p, Type t)
-    {
-        var qMesh = tiles[p];
-        if(qMesh == null)
-        {
-            ClearNullTile(p);
-            return new Entry();
-        }
-        var pBlock = qMesh.PropertyBlock;
-        var color1 = pBlock.GetColor(colorProp1);
-        var color2 = tileColors[t];
-        var tex1 = pBlock.GetTexture(texProp1);
-        var tex2 = textures.ContainsKey(t) ? textures[t].texture : null;
-        tilesTypes[p] = new System.Tuple<Type, Type>(tilesTypes[p].Item1, t);
-
-        SetPropertyBlock(qMesh, color1, color2, tex1, tex2);
-
+        var types = tilesTypes[p];
+        types.Add(t);
+        // Set property block values and return
+        UpdatePropertyBlock(p);
         return new Entry { mesh = qMesh, pos = p, type = t };
     }
 
@@ -88,63 +64,57 @@ public class TileUI : MonoBehaviour
         var obj = Instantiate(tileUIPrefab);
         var qMesh = obj.GetComponent<QuadMesh>();
         qMesh.SetMesh(v1, v2, v3, v4);
-        var pBlock = qMesh.PropertyBlock;
-        var color1 = tileColors[t];
-        var color2 = tileColors[t];
-        Texture tex1, tex2;
-        if (textures.ContainsKey(t))
-        {
-            tex1 = textures[t].texture;
-            tex2 = textures[t].texture;
-        }
-        else
-        {
-            tex1 = null;
-            tex2 = null;
-        }
+        // Log values
         tiles[p] = qMesh;
-        tilesTypes[p] = new System.Tuple<Type, Type>(t, t);
-
-        SetPropertyBlock(qMesh, color1, color2, tex1, tex2);
-
+        tilesTypes[p] = new List<Type> { t };
+        // Set property block values and return
+        UpdatePropertyBlock(p);
         return new Entry { mesh = qMesh, pos = p, type = t };
     }
 
-    private void SetPropertyBlock(QuadMesh qMesh, Color color1, Color color2, Texture tex1, Texture tex2)
+    private void UpdatePropertyBlock(Pos p)
     {
+        var types = tilesTypes[p].Distinct();
+        var count = types.Count();
+        var colors = types.Select((t) => tileColors[t]).ToArray();
+        var colorTex = new Texture2D(count, 1);
+        colorTex.SetPixels(0, 0, count, 1, colors);
+        colorTex.Apply();
+        var qMesh = tiles[p];
         var pBlock = qMesh.PropertyBlock;
-        pBlock.SetColor(colorProp1, color1);
-        pBlock.SetColor(colorProp2, color2);
-        if(tex1 != null)
-            pBlock.SetTexture(texProp1, tex1);
-        if(tex2 != null)
-            pBlock.SetTexture(texProp2, tex2);
+        pBlock.SetTexture(colorTexProp, colorTex);
+        pBlock.SetFloat(numColorsProp, count);
         qMesh.PropertyBlock = pBlock;
     }
 
-    public void ClearTileUI(Entry entry)
+    public void RemoveType(Entry entry)
     {
-        var key = entry.pos;
-        if (!tiles.ContainsKey(key))
+        var p = entry.pos;
+        var t = entry.type;
+        if (!tiles.ContainsKey(p))
             return;
-        if(tilesTypes[key].Item1 == entry.type)
+        var qMesh = tiles[p];
+        // qMesh has been destroyed for some reason
+        if (qMesh == null)
         {
-            if(tilesTypes[key].Item2 == entry.type)
+            ClearNullTile(p);
+            return;
+        }
+        var types = tilesTypes[p];
+        // Tile actually has this type in it
+        if (types.Contains(t))
+        {
+            types.Remove(t);
+            if(types.Count == 0)
             {
-                Destroy(tiles[key].gameObject);
-                tiles.Remove(key);
-                tilesTypes.Remove(key);
+                Destroy(tiles[p].gameObject);
+                ClearNullTile(p);               
             }
             else
             {
-                SetPrimaryType(key, tilesTypes[key].Item2);
+                UpdatePropertyBlock(p);
             }
-        }
-        else if(tilesTypes[key].Item2 == entry.type)
-        {
-            SetSecondaryType(key, tilesTypes[key].Item1);
-        }
-        // Else neither of the colors is actually that type. return.
+        }         
     }
 
     private void ClearNullTile(Pos p)

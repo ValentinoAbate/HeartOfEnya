@@ -9,13 +9,14 @@ using UnityEngine;
 /// </summary>
 public class PersistentData : MonoBehaviour
 {
+    public const string gamePhaseIntro = "INTRO";
     public const string gamePhaseTutorial = "A";
     public const string gamePhaseLuaBattle = "B";
     public const string gamePhaseBeginMain = "C";
     public const string gamePhaseLuaUnfrozen = "D";
     public const string gamePhaseAbsoluteZeroBattle = "E";
-    
 
+    public bool InMainPhase => gamePhase == gamePhaseBeginMain || gamePhase == gamePhaseLuaUnfrozen;
     public bool LuaUnfrozen => gamePhase == gamePhaseLuaUnfrozen || gamePhase ==  gamePhaseAbsoluteZeroBattle;
 
     [Header("Battle")]
@@ -24,10 +25,11 @@ public class PersistentData : MonoBehaviour
                                             // keys are character names e.g. wounds["Bapy"]
     public bool luaBossDefeated;
     public bool absoluteZeroDefeated;
+    public bool absoluteZeroPhase2Defeated;
     public int numEnemiesLeft; // Total in mainEncounter
     public int numEnemiesDefeatedThisEncounter = 0;
     public int waveNum;
-    public Encounter lastEncounter; // Used to determing if we are one a new encounter or returning to an old one
+    public Encounter lastEncounter; // Used to determing if we are on a new encounter or returning to an old one
     public List<SavedCombatant> listEnemiesLeft = new List<SavedCombatant>(); // data of remaining enemies
     public List<WaveData.SpawnData> listActiveSpawners = new List<WaveData.SpawnData>();
     public List<BuffStruct> buffStructures;  // buffs characters are taking into battle

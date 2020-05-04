@@ -6,7 +6,7 @@ public class ActionConditionCharge : ActionCondition
 {
     public bool enableWhenCharged;
     public bool enableWhenCharging;
-    public override bool CheckCondition(ActionMenu menu, PartyMember user)
+    protected override bool CheckConditionFn(ActionMenu menu, PartyMember user)
     {
         if(user.IsChargingAction)
         {

@@ -101,6 +101,23 @@ public class PartyMember : Combatant, IPausable
         }
     }
     private bool hasTurn = false;
+    public bool Disabled
+    {
+        get => disabled;
+        set
+        {
+            disabled = value;
+            if (!value)
+            {
+                sprite.color = Color.white;
+            }
+            else
+            {
+                sprite.color = noTurnColor;
+            }
+        }
+    }
+    private bool disabled = false;
 
     public bool RanAway { get; private set; }
 
@@ -137,6 +154,8 @@ public class PartyMember : Combatant, IPausable
 
     public override void Damage(int damage)
     {
+        if (passiveAbility == Passives.Sturdy)
+            --damage;
         // log hp change in playtest logger
         logger.testData.hp[GetName()] += damage;
         if (damage > 0)
@@ -150,7 +169,7 @@ public class PartyMember : Combatant, IPausable
                     --DeathsDoorCounter;
                 if (damageFxPrefab != null)
                     Instantiate(damageFxPrefab, VfxSpawnPoint, Quaternion.identity).GetComponent<ActionVfx>()?.Play();
-                sfxDispatch.Dispatch().PlayAndDestroy(damageSfx);
+                damageSfxEvent.Play();
                 animator.Play("Damage");
             }              
         }
@@ -164,12 +183,15 @@ public class PartyMember : Combatant, IPausable
     {
         if (deathFxPrefab != null)
             Instantiate(deathFxPrefab, VfxSpawnPoint, Quaternion.identity).GetComponent<ActionVfx>()?.Play();
-        sfxDispatch.Dispatch().PlayAndDestroy(deathSfx);
+        deathSfxEvent.Play();
         DeathsDoor = true;
         Debug.Log(DisplayName + "Has Enetered Death's Door");
         battleTheme.SetParameter("Crisis", 1);
         deathsDoorUI.SetActive(true);
         CancelChargingAction();
+
+        // invoke tutorial trigger for death's door
+        BattleEvents.main.tutDD._event.Invoke();
     }
 
     public override void Kill()
@@ -191,11 +213,25 @@ public class PartyMember : Combatant, IPausable
     /// <returns> HasTurn </returns>
     public override bool Select()
     {
-        if(HasTurn)
+        // make unit unselectable if the tutorial disables them
+        if(HasTurn && !disabled)
         {
             // moveCursor.SetActive(true);
             mouseMoveCursor.SetActive(true);
             BattleUI.main.HideEndTurnButton();
+
+            // run tutorial trigger when raina is selected
+            if(GetName() == "Raina")
+            {
+                BattleEvents.main.tutMove._event.Invoke();
+            }
+
+            // run tutorial trigger when soleil is selected on turn 2
+            if(GetName() == "Soleil" && PhaseManager.main.Turn == 2)
+            {
+                BattleEvents.main.tutSoleilChargeExplanation._event.Invoke();
+            }
+
             return true;
         }
         return false;
@@ -213,6 +249,12 @@ public class PartyMember : Combatant, IPausable
     public void OpenActionMenu()
     {
         ActionMenu.SetActive(true);
+
+        // cancel trigger for bapy
+        if(GetName() == "Bapy")
+        {
+            BattleEvents.main.tutBapyCancel._event.Invoke();
+        }
     }
 
     /// <summary>
@@ -298,11 +340,11 @@ public class PartyMember : Combatant, IPausable
     /// <summary>
     /// Use the action and reduce Fp if the action has an ActionFpCost component
     /// </summary>
-    public override Coroutine UseAction(Action action, Pos targetPos)
+    public override Coroutine UseAction(Action action, Pos targetPos, Pos primaryTarget)
     {        
         //Hide the info panel;
         BattleUI.main.HideInfoPanel();
-        var routine = base.UseAction(action, targetPos);
+        var routine = base.UseAction(action, targetPos, primaryTarget);
         var fpCost = action.GetComponent<ActionFpCost>();
         if(fpCost != null)
         {
@@ -338,5 +380,17 @@ public class PartyMember : Combatant, IPausable
         }
             
         return routine;
+    }
+
+    // disables the unit so the player can't select them, used for tutorial scripting
+    public void DisableUnit()
+    {
+        // might need to do more than this? not sure
+        Disabled = true;
+    }
+
+    public void EnableUnit()
+    {
+        Disabled = false;
     }
 }

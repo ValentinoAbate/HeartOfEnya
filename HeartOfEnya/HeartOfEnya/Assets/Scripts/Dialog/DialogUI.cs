@@ -18,6 +18,7 @@ namespace Dialog
         }
 
         private static readonly Regex lineRegex = new Regex(@"\s*(\w+)\s*(?:\((\w+)\))?\s*:\s*(.*)");
+        private static readonly Regex commentRegex = new Regex(@"\/\/.*");
 
         public PauseHandle PauseHandle { get; set; }
 
@@ -69,11 +70,18 @@ namespace Dialog
         {
             // Correct the formatting
             line.text = CorrectFormatting(line.text);
+
+            var commentMatch = commentRegex.Match(line.text);
+            if (commentMatch.Success)
+            {
+                Debug.Log("Comment detected: " + line);
+                yield break;
+            }
             // Split speaker name, expression, and line text
             var match = lineRegex.Match(line.text);
             if(!match.Success)
             {
-                Debug.LogError("Improperly Formatted Dialog. No \":\" character found to separate speaker and line.");
+                Debug.LogError("Improperly Formatted Dialog: " + line.text);
                 yield break;
             }
             string speaker = match.Groups[1].Value.ToLower();
@@ -82,7 +90,8 @@ namespace Dialog
 
             // Find speaking character
             var character = characters.Find((c) => c.Name.ToLower() == speaker);
-            if(character == default)
+            //characters.Add(character);
+            if (character == default)
             {
                 Debug.LogWarning("Character " + speaker + "not found in scene. Skipping line.");
                 yield break;
@@ -95,14 +104,14 @@ namespace Dialog
             {
                 if(dialogBox != null)
                     Destroy(dialogBox.gameObject);
-                dialogBox = Instantiate(dialogBoxPrefab, Camera.main.WorldToScreenPoint(character.DialogSpawnPoint), 
+                dialogBox = Instantiate(dialogBoxPrefab, Camera.main.WorldToScreenPoint(character.DialogSpawnPoint),
                                         Quaternion.identity, dialogCanvas.transform).GetComponent<DialogBox>();
                 lastSpeaker = character;
                 dialogBox.VoiceEvent = character.VoiceEvent;
             }
             // Set the dialogBox's portrait
             dialogBox.portrait.sprite = character.Portrait;
-            yield return StartCoroutine(dialogBox.PlayLine(text, scrollDelay, spaceDelay));            
+            yield return StartCoroutine(dialogBox.PlayLine(text, scrollDelay, spaceDelay));
         }
 
         /// Show a list of options, and wait for the player to make a selection.
@@ -121,7 +130,7 @@ namespace Dialog
             foreach (var optionString in optionsCollection.options)
             {
                 optionButtons[i].gameObject.SetActive(true);
-                optionButtons[i].GetComponentInChildren<Text>().text = optionString;
+                optionButtons[i].GetComponentInChildren<Text>().text = CorrectFormatting(optionString);
                 i++;
             }
 
@@ -144,23 +153,28 @@ namespace Dialog
                 Destroy(dialogBox.gameObject);
             if (Music != null)
                 Music.Stop();
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
             if (endAction == EndAction.EndScene)
             {
                 // Go to next game phase, if applicable.
-                string gamePhase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase.ToUpper();
+                string gamePhase = pData.gamePhase.ToUpper();
                 if (gamePhase == PersistentData.gamePhaseLuaBattle)
                 {
-                    if (DoNotDestroyOnLoad.Instance.persistentData.luaBossDefeated)
+                    if (pData.luaBossDefeated)
                         GoToNextGamePhase();
                     else
                         DoNotDestroyOnLoad.Instance.persistentData.dayNum += 1; //if lua's not defeated, we spend more time in this phase
                 }
                 else if(gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
                 {
-                    if (DoNotDestroyOnLoad.Instance.persistentData.absoluteZeroDefeated)
+                    if (pData.absoluteZeroDefeated)
                         GoToNextGamePhase();
                     else
-                        DoNotDestroyOnLoad.Instance.persistentData.dayNum += 1; //if Abs0's not defeated, we spend more time in this phase
+                        pData.dayNum += 1; //if Abs0's not defeated, we spend more time in this phase
+                }
+                else if(gamePhase == PersistentData.gamePhaseIntro)
+                {
+                    pData.gamePhase = PersistentData.gamePhaseTutorial;
                 }
                 else
                 {
@@ -171,7 +185,7 @@ namespace Dialog
             else if(endAction == EndAction.GoToCampfireScene)
             {
                 //assume we're on day 0 of the phase, in which case we should...
-                DoNotDestroyOnLoad.Instance.persistentData.dayNum += 1; //...iterate to day 1...
+                pData.dayNum += 1; //...iterate to day 1...
                 SceneTransitionManager.main.TransitionScenes(sceneName); //..and proceed to the battle scene
                 //runner.StartCampPartyScene(phaseData);
             }

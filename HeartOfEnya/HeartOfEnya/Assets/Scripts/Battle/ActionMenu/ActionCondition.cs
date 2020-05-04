@@ -10,6 +10,14 @@ public abstract class ActionCondition : MonoBehaviour
         Disable,
     }
 
+    public bool invert;
+
     public OnConditionFail onConditionFail;
-    public abstract bool CheckCondition(ActionMenu menu, PartyMember user);
+
+    public bool CheckCondition(ActionMenu menu, PartyMember user)
+    {
+        return invert ? !CheckConditionFn(menu, user) : CheckConditionFn(menu, user);
+    }
+
+    protected abstract bool CheckConditionFn(ActionMenu menu, PartyMember user);
 }

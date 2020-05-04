@@ -8,6 +8,7 @@ public class PartyPhase : Phase
     public Cursor Cursor { get => KeyboardMode ? keyboardCursor : mouseCursor as Cursor; }
 
     public List<PartyMember> Party { get; } = new List<PartyMember>();
+
     private bool KeyboardMode => keyboardMode;
     [SerializeField]
     private bool keyboardMode = false;
@@ -16,13 +17,18 @@ public class PartyPhase : Phase
     private SelectionListCursor keyboardCursor;
     [SerializeField]
     private MouseCursor mouseCursor;
+    [Header("Willow Action Fields")]
+    [SerializeField]
+    private Action willowStunAction;
+    [SerializeField]
+    private Willow willow;
 
     // the party members who still have a turn this phase
     private List<PartyMember> activeParty = new List<PartyMember>();
 
     private void Awake()
     {
-        PauseHandle = new PauseHandle(null, keyboardCursor);
+        PauseHandle = new PauseHandle(null, mouseCursor, keyboardCursor);
     }
 
     public override Coroutine OnPhaseStart()
@@ -34,7 +40,7 @@ public class PartyPhase : Phase
         {
             EndBattle();
             return null;
-        }         
+        }
         // Call on phse start function for each party member (may need to wait later for DOT effects, stunning, etc.)
         Party.ForEach((p) => p.OnPhaseStart());
         // Reset the active party
@@ -55,6 +61,14 @@ public class PartyPhase : Phase
             keyboardCursor.enabled = false;
         Cursor.SetActive(true);
         BattleUI.main.ShowEndTurnButton();
+
+        BattleEvents.main.tutorialIntro._event.Invoke(); // tutorial event at the start of battle
+
+        // tutorial event at the start of the second turn
+        if(PhaseManager.main.Turn == 2)
+        {
+            BattleEvents.main.tutSoleilChargeReminder._event.Invoke();
+        }
         return null;
     }
 
@@ -97,6 +111,65 @@ public class PartyPhase : Phase
             EndPhase();
             return;
         }
+        var ePhase = PhaseManager.main.EnemyPhase;
+        var sPhase = PhaseManager.main.SpawnPhase;
+        ePhase.RemoveDead();
+        if (ePhase.Enemies.Count <= 0 && !sPhase.HasActiveSpawners)
+        {
+            StartCoroutine(DeclareSpawnsThenFinishEndAction());
+        }
+        else
+        {
+            FinishEndAction();
+        }
+
+    }
+
+    #region Action Soloing Commands
+
+    public void PartyWideSoloAction(string actionID)
+    {
+        foreach(var partyMember in Party)
+        {
+            partyMember.ActionMenu.SoloAction(actionID);
+        }
+    }
+
+    public void PartyWideSoloAction(Action action) => PartyWideSoloAction(action.ID);
+
+    public void PartyWideUnSoloAction(string actionID)
+    {
+        foreach (var partyMember in Party)
+        {
+            partyMember.ActionMenu.UnSoloAction(actionID);
+        }
+    }
+
+    public void PartyWideUnSoloAction(Action action) => PartyWideUnSoloAction(action.ID);
+
+    public void PartyWideClearSoloActions()
+    {
+        foreach (var partyMember in Party)
+        {
+            partyMember.ActionMenu.ClearSoloActions();
+        }
+    }
+
+    #endregion
+
+    public Coroutine WillowStunAll()
+    {
+        return willow.UseAction(willowStunAction, Pos.Zero, Pos.Zero);
+    }
+
+    private IEnumerator DeclareSpawnsThenFinishEndAction()
+    {
+        yield return PhaseManager.main.SpawnPhase.DeclareNextWave();
+        FinishEndAction();
+    }
+
+    private void FinishEndAction()
+    {
         if (KeyboardMode)
         {
             // Remove the party member whose action ended
@@ -108,6 +181,9 @@ public class PartyPhase : Phase
         }
         Cursor.SetActive(true);
         BattleUI.main.ShowEndTurnButton();
+
+        // run tutorial trigger when raina's attack finishes
+        BattleEvents.main.tutBapySelect._event.Invoke();
     }
 
     /// <summary>
@@ -117,6 +193,12 @@ public class PartyPhase : Phase
     {
         Cursor.SetActive(true);
         BattleUI.main.ShowEndTurnButton();
+
+        // tutorial trigger for bapy cancelling action
+        if(p.GetName() == "Bapy")
+        {
+            BattleEvents.main.tutSoleilSelect._event.Invoke();
+        }
     }
 
     public override void OnPhaseUpdate() { }
@@ -126,7 +208,62 @@ public class PartyPhase : Phase
     /// </summary>
     private void CleanupParty()
     {
-        // Remove all dead party members and ranaway members
+        // Remove all dead party members and runaway members
         Party.RemoveAll((obj) => obj == null || obj.RanAway);
+    }
+
+    // turns off ability to select certain units for tutorial scripting
+    public void DisableUnits(List<string> units)
+    {
+        // the fabled n^2. party is never more than 4 anyway so whatever
+        foreach(string unit in units)
+        {
+            foreach(PartyMember member in Party)
+            {
+                if(member.GetName() == unit)
+                {
+                    member.DisableUnit();
+                }
+            }
+        }
+    }
+
+    // overloaded disable units with only one character input
+    public void DisableUnits(string unit)
+    {
+        foreach(PartyMember member in Party)
+        {
+            if(member.GetName() == unit)
+            {
+                member.DisableUnit();
+            }
+        }
+    }
+
+    // the same as disable units but in reverse
+    public void EnableUnits(List<string> units)
+    {
+        foreach(string unit in units)
+        {
+            foreach(PartyMember member in Party)
+            {
+                if(member.GetName() == unit)
+                {
+                    member.EnableUnit();
+                }
+            }
+        }
+    }
+
+    // overload with one input
+    public void EnableUnits(string unit)
+    {
+        foreach(PartyMember member in Party)
+        {
+            if(member.GetName() == unit)
+            {
+                member.EnableUnit();
+            }
+        }
     }
 }

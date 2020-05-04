@@ -6,13 +6,8 @@ Shader "UI/Unlit/MulticolorTile"
     {
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         [Header(Colors and Textures)] [Space]
-        [PerRendererData] _Color1 ("Color 1", Color) = (1,1,1,1)
-        [PerRendererData] _DetailTex ("Texture 1", 2D) = "white" {}
-        _Strength ("Texture 1 Strength", Range(0.0, 1.0)) = 0.2
-
-        [PerRendererData] _Color2 ("Color 2", Color) = (1,1,1,1)
-        [PerRendererData] _DetailTex2 ("Texture 2", 2D) = "white" {}
-        _Strength2 ("Texture 2 Strength", Range(0.0, 1.0)) = 0.2
+        [PerRendererData] _ColorTex ("Color Lookup Texture", 2D) = "white" {}
+        [PerRendererData] _NumColors ("Number of Active Colors", Range(1.0,10.0)) = 1
 
         [Header(Animation Options)] [Space]
         _ScrollSpeed ("Scroll Speed", Range(0.0,10.0)) = 0.0
@@ -26,7 +21,6 @@ Shader "UI/Unlit/MulticolorTile"
 		[Toggle] _WorldSpace("Worldspace", Range(0.0, 1.0)) = 1.0
 		_WScale("Worldspace X Scale", Range(0.1, 10.0)) = 1.0
 		_Offset("Worldspace Offset", Range(0.0, 10.0)) = 0.0
-
 
 		[Header(Stencil Properties)] [Space]
         _StencilComp ("Stencil Comparison", Float) = 8
@@ -102,16 +96,10 @@ Shader "UI/Unlit/MulticolorTile"
             sampler2D _MainTex;
             
             float4 _MainTex_ST;
-            float4 _DetailTex_ST;
-            float4 _DetailTex_TexelSize;
 
-            fixed4 _Color1;
-			sampler2D _DetailTex;
-			fixed _Strength;
-
-			fixed4 _Color2;
-			sampler2D _DetailTex2;
-			fixed _Strength2;
+            sampler2D _ColorTex;
+            float4 _ColorTex_TexelSize;
+            fixed _NumActiveColors;
 			
             float _ScrollSpeed;
 			float _Divisions;
@@ -120,8 +108,6 @@ Shader "UI/Unlit/MulticolorTile"
 			float _WScale;
 			float _Offset;
 			bool _WorldSpace;
-
-            
 
             fixed4 _TextureSampleAdd;
 
@@ -166,26 +152,22 @@ Shader "UI/Unlit/MulticolorTile"
                 o.moduv = TRANSFORM_TEX(o.moduv, _MainTex);
                 o.moduv.x += _ScrollSpeed * _Time;
 
-                o.uv = TRANSFORM_TEX(v.texcoord, _DetailTex);
-                o.color = v.color * _Color1;
+                o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
+                o.color = v.color;
 
                 return o;
             }
 
-            fixed4 frag (v2f i) : COLOR
+            fixed4 frag(v2f i) : COLOR
             {
-				float div = 1 /_Divisions;
-				fixed4 color;
-				fixed4 detail;
-				if(floor(i.moduv.x / div) % 2 == 0) {
-					color = _Color1;
-					detail = tex2D(_DetailTex, i.uv);
-				}
-				else {
-					color = _Color2;
-					detail = tex2D(_DetailTex2, i.uv);
-				}
-				color.rgb = lerp(color.rgb, color.rgb * detail.rgb, detail.a * _Strength);
+                float div =  1 / _Divisions;
+                float floorMod = floor(i.moduv.x / div) % (_NumActiveColors);
+                fixed4 color;
+                float x = floorMod / _ColorTex_TexelSize.z + 0.5 / _ColorTex_TexelSize.z;
+                color = tex2D(_ColorTex, float2(x, 0));
+                //fixed4 detail;
+                //detail = tex2D(_DetailTex, i.uv);
+				//color.rgb = lerp(color.rgb, color.rgb * detail.rgb, detail.a * _Strength);
 
                 #ifdef UNITY_UI_CLIP_RECT
                 color.a *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);

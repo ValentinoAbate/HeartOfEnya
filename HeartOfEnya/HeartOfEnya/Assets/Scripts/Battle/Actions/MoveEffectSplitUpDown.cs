@@ -6,19 +6,15 @@ public class MoveEffectSplitUpDown : ActionEffect
 {
     public int squares = 1;
     public bool centerIsDown = true;
+    public int moveDamage = 0;
 
-    public override IEnumerator ApplyEffect(Combatant user, Combatant target, Pos actionTargetPos)
+    public override IEnumerator ApplyEffect(Combatant user, Combatant target, ExtraData data)
     {
         Pos direction = Pos.Up;
-        if (target.Pos.row > actionTargetPos.row)
+        if (target.Pos.row > data.actionTargetPos.row)
             direction = Pos.Down;
-        else if (centerIsDown && target.Pos.row == actionTargetPos.row)
+        else if (centerIsDown && target.Pos.row == data.actionTargetPos.row)
             direction = Pos.Down;
-        for(int i = 0; i < squares; ++i)
-            if (!BattleGrid.main.MoveAndSetWorldPos(target, target.Pos + direction))
-                break;
-        var src = GetComponent<AudioSource>();
-        src.PlayOneShot(target.moveSfx);
-        yield return new WaitForSeconds(target.moveSfx.length);
+        yield return StartCoroutine(DoMove(user, target, direction, moveDamage));
     }
 }

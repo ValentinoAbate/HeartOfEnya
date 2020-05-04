@@ -11,18 +11,24 @@ public class EnemyPhase : Phase
     public override Coroutine OnPhaseEnd()
     {
         DoNotDestroyOnLoad.Instance.playtestLogger.testData.UpdateAvgEnemies(Enemies.Count);
-
+        RemoveDead();
         Enemies.ForEach((enemy) => enemy.OnPhaseEnd());
         return null;
     }
 
     public override Coroutine OnPhaseStart()
     {
+        RemoveDead();
         Enemies.ForEach((enemy) => enemy.OnPhaseStart());
-        Enemies.RemoveAll((e) => e == null);
+        RemoveDead();
         // Farthest to right takes action first
         Enemies.Sort((e, e2) => e2.Col.CompareTo(e.Col));
         return StartCoroutine(PlayTurns());
+    }
+
+    public void RemoveDead()
+    {
+        Enemies.RemoveAll((e) => e == null || e.Dead);
     }
 
     public override void OnPhaseUpdate()

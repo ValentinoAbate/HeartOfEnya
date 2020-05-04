@@ -106,9 +106,14 @@ public class BattleEvents : MonoBehaviour
     private IEnumerator MoveTriggerPost(DialogueRunner runner)
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
+
+        // restrict raina's movement to specific square
+        BattleUI.main.MoveableTiles.Add(new Pos(1, 6));
         
-        // put the post-code here
-        
+        // disable cancelling, solo raina's cleave move
+        BattleUI.main.CancelingEnabled = false;
+        partyPhase.PartyWideSoloAction("RainaAction2");
+
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
@@ -130,8 +135,9 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         
-        // put the post-code here
-        
+        // restrict raina to attacking to the left
+        BattleUI.main.TargetableTiles.Add(new Pos (1, 5));
+
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
@@ -155,6 +161,10 @@ public class BattleEvents : MonoBehaviour
         
         // re-enable bapy's turn
         partyPhase.EnableUnits("Bapy");
+
+        // unrestrict movement/targeting
+        BattleUI.main.MoveableTiles.Clear();
+        BattleUI.main.TargetableTiles.Clear();
         
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
@@ -177,7 +187,8 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         
-        // put the post-code here
+        // restrict bapy's actions to only cancel
+        BattleUI.main.CancelingEnabled = true;
         
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
@@ -207,6 +218,10 @@ public class BattleEvents : MonoBehaviour
         // disable bapy
         partyPhase.DisableUnits("Bapy");
 
+        // enable soleil's charge attack
+        partyPhase.PartyWideSoloAction("SoleilAction2");
+        BattleUI.main.CancelingEnabled = false;
+
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
@@ -231,6 +246,10 @@ public class BattleEvents : MonoBehaviour
         // re-enable bapy (and everyone else since their turns are over anyway)
         string[] units = {"Bapy", "Soleil", "Raina"};
         partyPhase.EnableUnits(new List<string>(units));
+
+        // *****likely tentative? enable bapy's hoe
+        partyPhase.PartyWideSoloAction("BapyAction1");
+        BattleUI.main.CancelingEnabled = true;
         
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
@@ -253,7 +272,8 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         
-        // put the post-code here
+        // re-enable all actions
+        partyPhase.PartyWideClearSoloActions();
         
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }

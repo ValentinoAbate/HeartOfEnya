@@ -11,11 +11,15 @@ public class SpawnPhase : Phase
     public override PauseHandle PauseHandle { get; set; } = new PauseHandle(null);
     public bool HasActiveSpawners => spawners.Count > 0;
     [SerializeField]
-    private Encounter mainEncounter;
+    private Encounter tutDay1Encounter;
     [SerializeField]
-    private Encounter tutorialEncounter;
+    private Encounter tutDay2Encounter;
+    [SerializeField]
+    private Encounter tutDay3Encounter;
     [SerializeField]
     private Encounter luaEncounter;
+    [SerializeField]
+    private Encounter mainEncounter;
     [SerializeField]
     private Encounter absoluteZeroEncounter;
     [SerializeField]
@@ -62,22 +66,26 @@ public class SpawnPhase : Phase
     private void Start()
     {
         logger = DoNotDestroyOnLoad.Instance.playtestLogger;
-
         CurrEncounter = mainEncounter;
         if (DoNotDestroyOnLoad.Instance?.persistentData?.gamePhase == null)
             return;
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
         // Go to next game phase, if applicable.
-        string gamePhase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase.ToUpper();
-        if (gamePhase == PersistentData.gamePhaseTutorial)
-            CurrEncounter = tutorialEncounter;
-        else if (gamePhase == PersistentData.gamePhaseLuaBattle)
+        string gamePhase = pData.gamePhase.ToUpper();
+        if (pData.InTutorialFirstDay)
+            CurrEncounter = tutDay1Encounter;
+        else if (pData.InTutorialSecondDay)
+            CurrEncounter = tutDay2Encounter;        
+        else if (pData.InTutorialThirdDay)
+            CurrEncounter = tutDay3Encounter;
+        else if (pData.InLuaBattle)
             CurrEncounter = luaEncounter;
         else if (gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
         {
             CurrEncounter = absoluteZeroEncounter;
             absolute0Bank = GetAbs0Bank();
         }
-        else if(gamePhase == "LE")
+        else if (gamePhase == "LE")
         {
             CurrEncounter = levelEditorEncounter;
         }

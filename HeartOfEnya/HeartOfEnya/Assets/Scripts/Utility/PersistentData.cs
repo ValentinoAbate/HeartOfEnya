@@ -9,6 +9,7 @@ using UnityEngine;
 /// </summary>
 public class PersistentData : MonoBehaviour
 {
+    public const int dayNumStart = 0;
     public const string gamePhaseIntro = "INTRO";
     public const string gamePhaseTutorial = "A";
     public const string gamePhaseLuaBattle = "B";
@@ -18,6 +19,11 @@ public class PersistentData : MonoBehaviour
 
     public bool InMainPhase => gamePhase == gamePhaseBeginMain || gamePhase == gamePhaseLuaUnfrozen;
     public bool LuaUnfrozen => gamePhase == gamePhaseLuaUnfrozen || gamePhase ==  gamePhaseAbsoluteZeroBattle;
+    public bool InTutorialFirstDay => gamePhase == gamePhaseTutorial && dayNum == dayNumStart;
+    public bool InTutorialSecondDay => gamePhase == gamePhaseTutorial && dayNum == dayNumStart + 1;
+    public bool InTutorialThirdDay => gamePhase == gamePhaseLuaBattle && dayNum == dayNumStart;
+    public bool InLuaBattle => gamePhase == gamePhaseLuaBattle && dayNum >= dayNumStart + 1;
+
 
     [Header("Battle")]
     public int partyLevel;
@@ -35,8 +41,8 @@ public class PersistentData : MonoBehaviour
     public List<BuffStruct> buffStructures;  // buffs characters are taking into battle
 
     [Header("Dialog")]
-    public string gamePhase = "A"; // GamePhase: What “day” it is.
-    public int dayNum = 0;         // DayNum: The number of days spent on the current Phase
+    public string gamePhase = gamePhaseTutorial;           // GamePhase: What “day” it is.
+    public int dayNum = dayNumStart;         // DayNum: The number of days spent on the current Phase
     
     [Header("Soup")]
     public List<string> gatheredIngredients;  // List of gathered ingredients

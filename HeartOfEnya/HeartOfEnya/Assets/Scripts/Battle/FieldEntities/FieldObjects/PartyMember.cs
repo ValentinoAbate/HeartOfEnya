@@ -90,7 +90,7 @@ public class PartyMember : Combatant, IPausable
         set
         {
             hasTurn = value;
-            if (value)
+            if (value && !disabled)
             {
                 sprite.color = Color.white;
             }

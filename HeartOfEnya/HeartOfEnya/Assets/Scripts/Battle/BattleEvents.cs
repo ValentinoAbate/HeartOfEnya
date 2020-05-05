@@ -296,7 +296,7 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         
-        // put the post-code here
+        // no end functions
         
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
@@ -319,7 +319,7 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         
-        // put the post-code here
+        // no end functions
         
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
@@ -342,7 +342,9 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         
-        // put the post-code here
+        // disable unit selecting
+        string[] units = {"Bapy", "Soleil", "Raina"};
+        partyPhase.DisableUnits(new List<string>(units));
         
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
@@ -365,7 +367,9 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         
-        // put the post-code here
+        // re-enable unit selecting
+        string[] units = {"Bapy", "Soleil", "Raina"};
+        partyPhase.EnableUnits(new List<string>(units));
         
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
@@ -388,7 +392,7 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         
-        // put the post-code here
+        // no end functions
         
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
@@ -397,8 +401,12 @@ public class BattleEvents : MonoBehaviour
     {
         if(!tutDD.flag)
         {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+
             Debug.Log("Battle Triggers: DeathsDoor");
             tutDD.flag = true;
+
+            StartCoroutine(DeathsDoorTriggerPost(DialogueManager.main.runner));
         }
     }
 
@@ -406,6 +414,10 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         
-        // put the post-code here
+        // willow stuns all enemies, run tiles appear
+        yield return partyPhase.WillowStunAll();
+        BattleUI.main.EnableRunTiles();
+
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 }

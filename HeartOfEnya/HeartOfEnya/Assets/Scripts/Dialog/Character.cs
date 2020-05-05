@@ -46,11 +46,11 @@ public class Character : MonoBehaviour
 
     private void Start()
     {
+        if (CharacterManager.main == null)
+            return;
         //retrieve date from persistent data
         string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
         var phaseData = CharacterManager.main.GetPhaseData(phase);
-        if (CharacterManager.main == null)
-            return;
         //move to the door position if it's our monologue time
         if (phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower()) //second parameter makes sure we only trigger in the VN scene
         {

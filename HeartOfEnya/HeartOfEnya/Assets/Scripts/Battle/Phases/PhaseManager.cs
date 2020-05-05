@@ -139,7 +139,9 @@ public class PhaseManager : MonoBehaviour, IPausable
     /// </summary>
     private IEnumerator NextPhaseCr()
     {
+        yield return new WaitWhile(() => PauseHandle.Paused);
         yield return ActivePhase.OnPhaseEnd();
+        yield return new WaitWhile(() => PauseHandle.Paused);
         if (++currPhase >= phases.Count)
         {
             currPhase = 0;
@@ -147,8 +149,10 @@ public class PhaseManager : MonoBehaviour, IPausable
             logger.testData.UpdateTurnCount(Turn);
             Debug.Log("It is turn " + Turn);
         }
+        yield return new WaitWhile(() => PauseHandle.Paused);
         Debug.Log("Starting Phase: " + ActivePhase.displayName);
         yield return ActivePhase.OnPhaseStart();
+        yield return new WaitWhile(() => PauseHandle.Paused);
         transitioning = false;
     }
 }

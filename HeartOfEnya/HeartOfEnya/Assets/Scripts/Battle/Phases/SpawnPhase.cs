@@ -385,7 +385,7 @@ public class SpawnPhase : Phase
 
     private void SpawnAllEnemiesAndObstacles(WaveData wave)
     {
-        foreach (var spawnData in wave.enemies)
+        foreach (var spawnData in wave.AllSpawns)
         {
             var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
             obj.PrefabOrigin = spawnData.spawnObject;

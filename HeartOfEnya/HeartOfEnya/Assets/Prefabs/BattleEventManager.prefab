@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4044083608772402107}
   - component: {fileID: 3274595405748874241}
   - component: {fileID: 740124394214506185}
+  - component: {fileID: 7797176595401580605}
+  - component: {fileID: 7450389100152843022}
   m_Layer: 0
   m_Name: BattleEventManager
   m_TagString: Untagged
@@ -268,6 +270,134 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     flag: 0
+  tutPushing:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: PushingTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutKnockOn:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: KnockOnTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutMoveDamage:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: MoveDamageTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutPulling:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: PullingTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutChokePoints:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: ChokePointsTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutEnemyPush:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: EnemyPushTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutFlameMoves:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7450389100152843022}
+          m_MethodName: FlameMovesTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutBurn:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7450389100152843022}
+          m_MethodName: BurnTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
   abs0PhaseChange:
     _event:
       m_PersistentCalls:
@@ -297,3 +427,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseManager: {fileID: 0}
+--- !u!114 &7797176595401580605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324923904088594698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad3ceccabacd57ce7961e787f29a677f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleEvents: {fileID: 3274595405748874241}
+--- !u!114 &7450389100152843022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324923904088594698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5562a33fdaa4099dda12cc232c162923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleEvents: {fileID: 3274595405748874241}

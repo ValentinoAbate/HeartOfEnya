@@ -104,7 +104,8 @@ namespace Dialog
             {
                 if(dialogBox != null)
                     Destroy(dialogBox.gameObject);
-                dialogBox = Instantiate(dialogBoxPrefab, Camera.main.WorldToScreenPoint(character.DialogSpawnPoint),
+                var dbPrefab = character.DialogBoxPrefab ?? dialogBoxPrefab;
+                dialogBox = Instantiate(dbPrefab, Camera.main.WorldToScreenPoint(character.DialogSpawnPoint),
                                         Quaternion.identity, dialogCanvas.transform).GetComponent<DialogBox>();
                 lastSpeaker = character;
                 dialogBox.VoiceEvent = character.VoiceEvent;

@@ -113,8 +113,9 @@ public class PartyPhase : Phase
         }
         var ePhase = PhaseManager.main.EnemyPhase;
         var sPhase = PhaseManager.main.SpawnPhase;
+        var isTutorial = DoNotDestroyOnLoad.Instance.persistentData.gamePhase == PersistentData.gamePhaseTutorial;
         ePhase.RemoveDead();
-        if (ePhase.Enemies.Count <= 0 && !sPhase.HasActiveSpawners)
+        if (ePhase.Enemies.Count <= 0 && !sPhase.HasActiveSpawners && !(isTutorial && PhaseManager.main.Turn <= 2))
         {
             StartCoroutine(DeclareSpawnsThenFinishEndAction());
         }

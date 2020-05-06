@@ -124,9 +124,21 @@ public class MoveCursor : GridCursor
         var moveRestrictions = BattleUI.main.MoveableTiles;
         if (moveRestrictions.Count > 0 && !moveRestrictions.Contains(Pos))
             return;
+
+        lastPosition = partyMember.Pos;
+        BattleGrid.main.Move(partyMember, Pos);
+        SetActive(false);
+        if (BonusMode)
+        {
+            partyMember.EndTurn();
+            BonusMode = false;
+        }
+        else
+            partyMember.OpenActionMenu();
+
         // play Place Character sfx based on which character
         name = partyMember.GetName();
-        switch(name)
+        switch (name)
         {
             case "Bapy":
                 placeBapy.Play();
@@ -145,17 +157,6 @@ public class MoveCursor : GridCursor
             default:
                 break;
         }
-
-        lastPosition = partyMember.Pos;
-        BattleGrid.main.Move(partyMember, Pos);
-        SetActive(false);
-        if (BonusMode)
-        {
-            partyMember.EndTurn();
-            BonusMode = false;
-        }
-        else
-            partyMember.OpenActionMenu();
     }
 
     /// <summary>

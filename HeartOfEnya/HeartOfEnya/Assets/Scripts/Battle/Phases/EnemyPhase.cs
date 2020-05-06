@@ -38,6 +38,7 @@ public class EnemyPhase : Phase
 
     private IEnumerator PlayTurns()
     {
+        yield return StartCoroutine(PlayTransition());
         foreach (var enemy in Enemies)
         {
             if (enemy == null)

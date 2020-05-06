@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Enemy Phase
+  phaseTransitionPrefab: {fileID: 7063283699177217997, guid: 5163e31afaf94724e8436a8307575cf1,
+    type: 3}
 --- !u!1 &4288789010663768763
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,7 +64,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4288789010663768762
 Transform:
   m_ObjectHideFlags: 0
@@ -248,6 +250,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Party Phase
+  phaseTransitionPrefab: {fileID: 7063283699177217997, guid: a35850bbcd4afe044b4462b39f6636b8,
+    type: 3}
   keyboardMode: 0
   keyboardCursor: {fileID: 4288789010663768760}
   mouseCursor: {fileID: 140462460}
@@ -336,6 +340,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Spawn Phase
+  phaseTransitionPrefab: {fileID: 7063283699177217997, guid: 29bad681702050d439be0f758e20321a,
+    type: 3}
   dialog: {fileID: 0}
   tutDay1Encounter: {fileID: 11400000, guid: 4335db4a3b24d8447a6330c556c1a2df, type: 2}
   tutDay2Encounter: {fileID: 11400000, guid: 4335db4a3b24d8447a6330c556c1a2df, type: 2}

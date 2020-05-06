@@ -256,8 +256,9 @@ public class SpawnPhase : Phase
 
     private IEnumerator OnPhaseStartCr()
     {
+        yield return StartCoroutine(PlayTransition());
         // If something is supposed to be spawned
-        if(HasActiveSpawners)
+        if (HasActiveSpawners)
             yield return StartCoroutine(Spawn());
         else // Increase the turns since something was last spawned
             ++turnsSinceLastSpawn;

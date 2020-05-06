@@ -79,6 +79,7 @@ public class PartyPhase : Phase
 
     private IEnumerator OnPhaseStartCr()
     {
+        SnowParticleController.main.Intensity = 0;
         yield return StartCoroutine(PlayTransition());
         InitializePhase();
     }

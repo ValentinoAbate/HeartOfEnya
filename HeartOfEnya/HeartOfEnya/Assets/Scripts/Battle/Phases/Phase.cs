@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Phase : MonoBehaviour, IPausable
 {
+    public const bool playTransitionGrahics = true;
     public abstract PauseHandle PauseHandle { get; set; }
 
     public string displayName;
@@ -22,11 +23,13 @@ public abstract class Phase : MonoBehaviour, IPausable
     {
         PhaseManager.main.EndBattle();
     }
-
     protected IEnumerator PlayTransition()
     {
-        var cutIn = Instantiate(phaseTransitionPrefab);
-        yield return new WaitForSeconds(1.5f);
-        Destroy(cutIn);
+        if (playTransitionGrahics)
+        {
+            var cutIn = Instantiate(phaseTransitionPrefab);
+            yield return new WaitForSeconds(1.5f);
+            Destroy(cutIn);
+        }
     }
 }

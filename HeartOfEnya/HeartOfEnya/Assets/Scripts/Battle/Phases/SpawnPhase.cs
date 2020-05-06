@@ -256,7 +256,8 @@ public class SpawnPhase : Phase
 
     private IEnumerator OnPhaseStartCr()
     {
-        yield return StartCoroutine(PlayTransition());
+        //SnowParticleController.main.Intensity = 0.5f;
+        //yield return StartCoroutine(PlayTransition());
         // If something is supposed to be spawned
         if (HasActiveSpawners)
             yield return StartCoroutine(Spawn());

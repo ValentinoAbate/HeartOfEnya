@@ -63,6 +63,7 @@ public class PartyPhase : Phase
         BattleUI.main.ShowEndTurnButton();
 
         BattleEvents.main.tutorialIntro._event.Invoke(); // tutorial event at the start of battle
+        BattleEvents.main.tutPushing._event.Invoke();    // day 2 event
 
         // tutorial event at the start of the second turn
         if(PhaseManager.main.Turn == 2)
@@ -185,6 +186,23 @@ public class PartyPhase : Phase
 
         // run tutorial trigger when raina's attack finishes
         BattleEvents.main.tutBapySelect._event.Invoke();
+
+        // tutorial day 2: run triggers after bapy pushes the boxes on each turn
+        switch (PhaseManager.main.Turn)
+        {
+            case 1:
+                BattleEvents.main.tutKnockOn._event.Invoke();
+                break;
+            case 2:
+                BattleEvents.main.tutMoveDamage._event.Invoke();
+                break;
+            case 3:
+                BattleEvents.main.tutPulling._event.Invoke();
+                break;
+            case 4:
+                BattleEvents.main.tutChokePoints._event.Invoke();
+                break;
+        }
     }
 
     /// <summary>

@@ -9,7 +9,7 @@ public class BattleEventsDay2 : MonoBehaviour
 
     public void PushingTrigger()
     {
-        if(battleEvents.tutorial && battleEvents.day == 2 && !battleEvents.tutPushing.flag)
+        if(battleEvents.tutorialDay2 && !battleEvents.tutPushing.flag)
         {
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
 
@@ -24,7 +24,14 @@ public class BattleEventsDay2 : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
-        // post-condition
+        // post-condition: disable everyone but bapy
+        string[] units = {"Raina", "Soleil"};
+        battleEvents.partyPhase.DisableUnits(new List<string>(units));
+
+        // make bapy push the upper right box
+        battleEvents.partyPhase.PartyWideSoloAction("BapyAction2");
+        BattleUI.main.MoveableTiles.Add(new Pos(1, 9));
+        BattleUI.main.TargetableTiles.Add(new Pos (1, 8));
 
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
         
@@ -32,46 +39,135 @@ public class BattleEventsDay2 : MonoBehaviour
 
     public void KnockOnTrigger()
     {
-        if(battleEvents.tutorial && battleEvents.day == 2 && !battleEvents.tutKnockOn.flag)
+        if(battleEvents.tutorialDay2 && !battleEvents.tutKnockOn.flag)
         {
             Debug.Log("Battle Triggers: Knock On");
             battleEvents.tutKnockOn.flag = true;
+
+            StartCoroutine(KnockOnTriggerPost(DialogueManager.main.runner));
         }
+    }
+
+    private IEnumerator KnockOnTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+
+        // post-condition: reset actions
+        BattleUI.main.MoveableTiles.Clear();
+        BattleUI.main.TargetableTiles.Clear();
+
+        // make bapy push the boxes towards the pillar
+        BattleUI.main.MoveableTiles.Add(new Pos(1, 8));
+        BattleUI.main.TargetableTiles.Add(new Pos (1, 7));
+
+        // end the turn manually
+        PhaseManager.main.NextPhase();
+
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void MoveDamageTrigger()
     {
-        if(battleEvents.tutorial && battleEvents.day == 2 && !battleEvents.tutMoveDamage.flag)
+        // only run after the previous trigger has finished
+        if(battleEvents.tutorialDay2 && battleEvents.tutKnockOn.flag && !battleEvents.tutMoveDamage.flag)
         {
             Debug.Log("Battle Triggers: Move Damage");
             battleEvents.tutMoveDamage.flag = true;
+
+            StartCoroutine(MoveDamageTriggerPost(DialogueManager.main.runner));
         }
+    }
+
+    private IEnumerator MoveDamageTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+
+        // post-condition: reset actions
+        BattleUI.main.MoveableTiles.Clear();
+        BattleUI.main.TargetableTiles.Clear();
+
+        // make bapy push the boxes into the pillar
+        BattleUI.main.MoveableTiles.Add(new Pos(1, 7));
+        BattleUI.main.TargetableTiles.Add(new Pos (1, 6));
+
+        // end the turn manually
+        PhaseManager.main.NextPhase();
+
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void PullingTrigger()
     {
-        if(battleEvents.tutorial && battleEvents.day == 2 && !battleEvents.tutPulling.flag)
+        // only run after the previous trigger has finished
+        if(battleEvents.tutorialDay2 && battleEvents.tutMoveDamage.flag && !battleEvents.tutPulling.flag)
         {
             Debug.Log("Battle Triggers: Pulling");
             battleEvents.tutPulling.flag = true;
+
+            StartCoroutine(PullingTriggerPost(DialogueManager.main.runner));
         }
+    }
+
+    private IEnumerator PullingTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+
+        // post-condition: reset actions
+        BattleUI.main.MoveableTiles.Clear();
+        BattleUI.main.TargetableTiles.Clear();
+
+        // make bapy pull the lower box to create a choke point
+        BattleUI.main.MoveableTiles.Add(new Pos(3, 6));
+        BattleUI.main.TargetableTiles.Add(new Pos (3, 4));
+
+        // end the turn manually
+        PhaseManager.main.NextPhase();
+
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void ChokePointsTrigger()
     {
-        if(battleEvents.tutorial && battleEvents.day == 2 && !battleEvents.tutChokePoints.flag)
+        // only run after the previous trigger has finished
+        if(battleEvents.tutorialDay2 && battleEvents.tutPulling.flag && !battleEvents.tutChokePoints.flag)
         {
             Debug.Log("Battle Triggers: Choke Points");
             battleEvents.tutChokePoints.flag = true;
+
+            StartCoroutine(ChokePointsTriggerPost(DialogueManager.main.runner));
         }
+    }
+
+    private IEnumerator ChokePointsTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+
+        // post-condition: re-enable all moves
+
+        BattleUI.main.MoveableTiles.Clear();
+        BattleUI.main.TargetableTiles.Clear();
+        battleEvents.partyPhase.PartyWideClearSoloActions();
+
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
     public void EnemyPushTrigger()
     {
-        if(battleEvents.tutorial && battleEvents.day == 2 && !battleEvents.tutEnemyPush.flag)
+        if(battleEvents.tutorialDay2 && !battleEvents.tutEnemyPush.flag)
         {
             Debug.Log("Battle Triggers: Enemy Push");
             battleEvents.tutEnemyPush.flag = true;
+
+           StartCoroutine(EnemyPushTriggerPost(DialogueManager.main.runner));
         }
+    }
+
+    private IEnumerator EnemyPushTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+
+        // post-condition
+
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 }

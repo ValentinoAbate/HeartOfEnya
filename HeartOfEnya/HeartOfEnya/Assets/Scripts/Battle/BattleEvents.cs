@@ -15,8 +15,9 @@ public class BattleEvents : MonoBehaviour
     }
 
     public static BattleEvents main;
-    [HideInInspector] public bool tutorial; // whether we are in the tutorial or not
-    [HideInInspector] public int day;
+    [HideInInspector] public bool tutorialDay1;
+    [HideInInspector] public bool tutorialDay2;
+    [HideInInspector] public bool tutorialDay3;
 
     [Header("Tutorial Events")]
     public BattleEvent tutorialIntro;
@@ -66,14 +67,15 @@ public class BattleEvents : MonoBehaviour
 
     private void Start()
     {
-        tutorial = (DoNotDestroyOnLoad.Instance.persistentData.gamePhase == PersistentData.gamePhaseTutorial);
-        day = DoNotDestroyOnLoad.Instance.persistentData.dayNum + 1;
+        tutorialDay1 = DoNotDestroyOnLoad.Instance.persistentData.InTutorialFirstDay;
+        tutorialDay2 = DoNotDestroyOnLoad.Instance.persistentData.InTutorialSecondDay;
+        tutorialDay3 = DoNotDestroyOnLoad.Instance.persistentData.InTutorialThirdDay;
         partyPhase = PhaseManager.main.PartyPhase;
     }
 
     public void IntroTrigger()
     {
-        if(tutorial && day == 1 && !tutorialIntro.flag)
+        if(tutorialDay1 && !tutorialIntro.flag)
         {
             Debug.Log("Battle Triggers: start of battle");
             tutorialIntro.flag = true;
@@ -101,7 +103,7 @@ public class BattleEvents : MonoBehaviour
 
     public void MoveTrigger()
     {
-        if(tutorial && day == 1 && !tutMove.flag)
+        if(tutorialDay1 && !tutMove.flag)
         {
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
             DialogueManager.main.runner.StartDialogue("TutMove");
@@ -129,7 +131,7 @@ public class BattleEvents : MonoBehaviour
 
     public void RainaAttackTrigger()
     {
-        if(tutorial && day == 1 && !tutRainaAttack.flag)
+        if(tutorialDay1 && !tutRainaAttack.flag)
         {
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
             DialogueManager.main.runner.StartDialogue("TutRainaAttack");
@@ -153,7 +155,7 @@ public class BattleEvents : MonoBehaviour
 
     public void BapySelectTrigger()
     {
-        if(tutorial && day == 1 && !tutBapySelect.flag)
+        if(tutorialDay1 && !tutBapySelect.flag)
         {
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
             DialogueManager.main.runner.StartDialogue("TutBapySelect");
@@ -181,7 +183,7 @@ public class BattleEvents : MonoBehaviour
 
     public void BapyCancelTrigger()
     {
-        if(tutorial && day == 1 && !tutBapyCancel.flag)
+        if(tutorialDay1 && !tutBapyCancel.flag)
         {
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
             DialogueManager.main.runner.StartDialogue("TutBapyCancel");
@@ -205,7 +207,7 @@ public class BattleEvents : MonoBehaviour
 
     public void SoleilSelectTrigger()
     {
-        if(tutorial && day == 1 && !tutSoleilSelect.flag)
+        if(tutorialDay1 && !tutSoleilSelect.flag)
         {
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
             DialogueManager.main.runner.StartDialogue("TutSoleilSelect");
@@ -237,7 +239,7 @@ public class BattleEvents : MonoBehaviour
 
     public void SoleilAttackTrigger()
     {
-        if(tutorial && day == 1 && !tutSoleilAttack.flag)
+        if(tutorialDay1 && !tutSoleilAttack.flag)
         {
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
             DialogueManager.main.runner.StartDialogue("TutSoleilAttack");
@@ -266,7 +268,7 @@ public class BattleEvents : MonoBehaviour
 
     public void SoleilChargeReminderTrigger()
     {
-        if(tutorial && day == 1 && !tutSoleilChargeReminder.flag)
+        if(tutorialDay1 && !tutSoleilChargeReminder.flag)
         {
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
             DialogueManager.main.runner.StartDialogue("TutSoleilChargeReminder");
@@ -290,7 +292,7 @@ public class BattleEvents : MonoBehaviour
 
     public void SoleilChargeExplanationTrigger()
     {
-        if(tutorial && day == 1 && !tutSoleilChargeExplanation.flag)
+        if(tutorialDay1 && !tutSoleilChargeExplanation.flag)
         {
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
             DialogueManager.main.runner.StartDialogue("TutSoleilChargeExplanation");
@@ -313,7 +315,7 @@ public class BattleEvents : MonoBehaviour
 
     public void EnemySpawnWarningTrigger()
     {
-        if(tutorial && day == 1 && !tutEnemySpawnWarning.flag)
+        if(tutorialDay1 && !tutEnemySpawnWarning.flag)
         {
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
             DialogueManager.main.runner.StartDialogue("TutEnemySpawnWarning");
@@ -336,7 +338,7 @@ public class BattleEvents : MonoBehaviour
 
     public void EnemySpawnTrigger()
     {
-        if(tutorial && day == 1 && !tutEnemySpawn.flag)
+        if(tutorialDay1 && !tutEnemySpawn.flag)
         {
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
             DialogueManager.main.runner.StartDialogue("TutEnemySpawn");
@@ -361,7 +363,7 @@ public class BattleEvents : MonoBehaviour
 
     public void EnemyInfoTrigger()
     {
-        if(tutorial && day == 1 && !tutEnemyInfo.flag)
+        if(tutorialDay1 && !tutEnemyInfo.flag)
         {
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
             DialogueManager.main.runner.StartDialogue("TutEnemyInfo");
@@ -386,7 +388,7 @@ public class BattleEvents : MonoBehaviour
 
     public void EnemyRangedTrigger()
     {
-        if(tutorial && day == 1 && !tutEnemyRanged.flag)
+        if(tutorialDay1 && !tutEnemyRanged.flag)
         {
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
             DialogueManager.main.runner.StartDialogue("TutEnemyRanged");

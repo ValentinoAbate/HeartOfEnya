@@ -13,8 +13,9 @@ public class Character : MonoBehaviour
     [SerializeField] private Transform dialogSpawnPoint;
     [SerializeField] private CharacterData data;
     [SerializeField] private DialogueRunner dialogManager;
-    [SerializeField] private Vector3 doorPosition;	//where to go during our monologue night
-    [SerializeField] private bool doorOverride;		//temporary control for going to the door - will be removed once I hook the system up to game time
+    [SerializeField] private Vector3 doorPosition;	//where to put the sprite during our monologue night
+    [SerializeField] private Sprite doorSprite;
+    [SerializeField] private Vector3 doorButtonPos; //where to put the button during out monologue night
 
     private FMODUnity.StudioEventEmitter sfxSelect;
     private Animator anim;
@@ -52,9 +53,21 @@ public class Character : MonoBehaviour
         string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
         var phaseData = CharacterManager.main.GetPhaseData(phase);
         //move to the door position if it's our monologue time
-        if (phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower()) //second parameter makes sure we only trigger in the VN scene
+        if (phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower())
         {
-        	transform.position = doorPosition;
+            //on the monologue day, move to the door
+            if (DoNotDestroyOnLoad.Instance.persistentData.dayNum == 0)
+            {
+                //swap the sprite to the door sprite
+                SpriteRenderer icon = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+                icon.sprite = doorSprite;
+                //move the sprite to the door
+                transform.position = doorPosition;
+                //move the button to the door
+                var button = transform.Find("Canvas").transform.Find("Button"); //Button is child of Canvas, which is child of the CampCharacter
+                button.transform.localPosition = doorButtonPos;
+            }
+
             if(anim != null)
                     anim.SetBool("Highlight", true);
         }

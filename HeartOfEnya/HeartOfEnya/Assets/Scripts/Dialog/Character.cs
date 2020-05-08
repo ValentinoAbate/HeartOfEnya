@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Yarn.Unity;
 
 public class Character : MonoBehaviour
@@ -16,6 +17,8 @@ public class Character : MonoBehaviour
     [SerializeField] private Vector3 doorPosition;	//where to put the sprite during our monologue night
     [SerializeField] private Sprite doorSprite;
     [SerializeField] private Vector3 doorButtonPos; //where to put the button during out monologue night
+    [SerializeField] private Image fadeImage;   //used in the fade-to-black transitions
+    [SerializeField] private float fadeSpeed = 1.5f; //controls the speed of fade-to-black transitions
 
     private FMODUnity.StudioEventEmitter sfxSelect;
     private Animator anim;
@@ -43,6 +46,10 @@ public class Character : MonoBehaviour
         Expression = defaultExpression;
         sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
         anim = GetComponent<Animator>();
+
+        //set up the fade-to-black image
+        fadeImage.rectTransform.localScale = new Vector2(Screen.width, Screen.height);
+        fadeImage.enabled = false; //disable temporarily
     }
 
     private void Start()
@@ -103,7 +110,12 @@ public class Character : MonoBehaviour
 	        	{
 	        		//If it's day 0 (i.e. 1st night in this phase), launch their monologue
 	            	Debug.Log(Name + " launches their monologue");
-	            	dialogManager.StartCampMonolog(phaseData);
+                    
+                    //transition to the solo monologue
+                    StartCoroutine(DoMonologueTransition(phase));
+
+                    //start the dialogue
+	            	// dialogManager.StartCampMonolog(phaseData);
 	           	}
 	            else if (day == 1)
 	            {
@@ -138,5 +150,65 @@ public class Character : MonoBehaviour
                 dialogManager.StartDialogue(scriptName);
             }
     	}
+    }
+
+    public IEnumerator DoMonologueTransition(string phase)
+    {
+        //fade to black
+        yield return StartCoroutine("FadeToBlack");
+        //replace background prefab with monologue prefab
+        Debug.Log("SWAP BACKGROUND");
+        //remove other characters
+        Debug.Log("YEET OTHER CHARACTERS");
+        //fade in
+        yield return StartCoroutine("FadeToClear");
+        //run the dialogue
+        var phaseData = CharacterManager.main.GetPhaseData(phase); //can't pass phaseData to the coroutine so let's just get it again
+        dialogManager.StartCampMonolog(phaseData);
+    }
+
+    public IEnumerator FadeToBlack()
+    {
+        fadeImage.enabled = true; //re-enable for the fade-out
+        float elapsedTime = 0; //keep track of how long we've been here
+        do
+        {
+            fadeImage.color = Color.Lerp(Color.clear, Color.black, fadeSpeed * elapsedTime);
+            //Debug.Log("ALPHA: " + fadeImage.color.a);
+            elapsedTime += Time.deltaTime;
+            if (fadeImage.color.a >= 0.95f) //if we're nearly opaque, go fully opaque and stop
+            {
+                fadeImage.color = Color.black;
+                yield break;
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+        while (true);
+    }
+
+    public IEnumerator FadeToClear()
+    {
+        fadeImage.enabled = true; //re-enable for the fade-in
+        float elapsedTime = 0; //keep track of how long we've been here
+        do
+        {
+            fadeImage.color = Color.Lerp(Color.black, Color.clear, fadeSpeed * elapsedTime);
+            //Debug.Log("ALPHA: " + fadeImage.color.a);
+            elapsedTime += Time.deltaTime;
+            if (fadeImage.color.a <= 0.05f) //if we're nearly transparent, go fully transparent, disable the image, and stop
+            {
+                fadeImage.color = Color.clear;
+                fadeImage.enabled = false;
+                yield break;
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+        while (true);
     }
 }

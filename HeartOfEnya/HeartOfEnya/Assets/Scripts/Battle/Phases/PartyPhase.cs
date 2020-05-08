@@ -64,6 +64,7 @@ public class PartyPhase : Phase
 
         BattleEvents.main.tutorialIntro._event.Invoke(); // tutorial event at the start of battle
         BattleEvents.main.tutPushing._event.Invoke();    // day 2 event
+        BattleEvents.main.tutFlameMoves._event.Invoke(); // day 3 event
 
         // tutorial event at the start of the second turn
         if(PhaseManager.main.Turn == 2)
@@ -205,7 +206,7 @@ public class PartyPhase : Phase
         }
 
         // tutorial day 3: run trigger when raina uses flame cleave
-        
+        BattleEvents.main.tutBurn._event.Invoke();
     }
 
     /// <summary>

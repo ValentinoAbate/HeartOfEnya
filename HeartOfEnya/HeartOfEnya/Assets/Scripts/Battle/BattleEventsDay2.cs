@@ -148,7 +148,7 @@ public class BattleEventsDay2 : MonoBehaviour
         battleEvents.partyPhase.PartyWideClearSoloActions();
 
         // re-enable all characters
-        string[] units = {"Raina", "Soleil", "Bapy"};
+        string[] units = {"Raina", "Soleil"};
         battleEvents.partyPhase.EnableUnits(new List<string>(units));
 
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
@@ -169,7 +169,7 @@ public class BattleEventsDay2 : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
-        // post-condition
+        // no post-condition
 
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }

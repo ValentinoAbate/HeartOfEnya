@@ -41,6 +41,12 @@ public class PartyPhase : Phase
             EndBattle();
             return null;
         }
+        return StartCoroutine(OnPhaseStartCr());
+    }
+
+    private void InitializePhase()
+    {
+
         // Call on phse start function for each party member (may need to wait later for DOT effects, stunning, etc.)
         Party.ForEach((p) => p.OnPhaseStart());
         // Reset the active party
@@ -67,11 +73,17 @@ public class PartyPhase : Phase
         BattleEvents.main.tutFlameMoves._event.Invoke(); // day 3 event
 
         // tutorial event at the start of the second turn
-        if(PhaseManager.main.Turn == 2)
+        if (PhaseManager.main.Turn == 2)
         {
             BattleEvents.main.tutSoleilChargeReminder._event.Invoke();
         }
-        return null;
+    }
+
+    private IEnumerator OnPhaseStartCr()
+    {
+        SnowParticleController.main.Intensity = 0;
+        yield return StartCoroutine(PlayTransition());
+        InitializePhase();
     }
 
     public override Coroutine OnPhaseEnd()

@@ -23,6 +23,7 @@ public class EnemyPhase : Phase
         RemoveDead();
         // Farthest to right takes action first
         Enemies.Sort((e, e2) => e2.Col.CompareTo(e.Col));
+        SnowParticleController.main.Intensity = 1;
         return StartCoroutine(PlayTurns());
     }
 
@@ -38,6 +39,7 @@ public class EnemyPhase : Phase
 
     private IEnumerator PlayTurns()
     {
+        yield return StartCoroutine(PlayTransition());
         foreach (var enemy in Enemies)
         {
             if (enemy == null)

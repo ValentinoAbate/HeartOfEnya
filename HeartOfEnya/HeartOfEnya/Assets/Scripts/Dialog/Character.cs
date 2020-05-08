@@ -36,6 +36,7 @@ public class Character : MonoBehaviour
     private string expression;
     public Sprite Portrait { get; private set; }
     public string VoiceEvent { get => data.voiceEvent; }
+    public GameObject DialogBoxPrefab => data.dialogBoxPrefab;
 
     private void Awake()
     {

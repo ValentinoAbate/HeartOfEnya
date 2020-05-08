@@ -9518,6 +9518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 530781229800171464}
   - component: {fileID: 3786782146762435659}
+  - component: {fileID: 4157873581081918639}
   m_Layer: 0
   m_Name: SnowEmitter
   m_TagString: Untagged
@@ -9555,7 +9556,7 @@ ParticleSystemForceField:
     m_StartRange: 0
     m_EndRange: 30
     m_Length: 1
-    m_GravityFocus: 0
+    m_GravityFocus: 1
     m_RotationRandomness: {x: 0, y: 0}
     m_DirectionCurveX:
       serializedVersion: 2
@@ -10037,6 +10038,41 @@ ParticleSystemForceField:
         m_RotationOrder: 4
     m_MultiplyDragByParticleSize: 1
     m_MultiplyDragByParticleVelocity: 1
+--- !u!114 &4157873581081918639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8156950549118755476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54c70e8265650c349ba835e684e92223, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  windField: {fileID: 3786782146762435659}
+  topSnow: {fileID: 689660774928573471}
+  aboveSnow: {fileID: 8391767912869836526}
+  belowSnow: {fileID: 2709110983755450749}
+  _intensity: 0
+  _windRange:
+    min: 0.1
+    max: 3
+  aboveEmissionOverTime:
+    min: 15
+    max: 75
+  topEmissionOverTime:
+    min: 30
+    max: 100
+  belowEmissionOverTime:
+    min: 15
+    max: 80
+  gravityMinMax:
+    min: 0
+    max: 0.1
+  emissionOverTimeRange:
+    min: 10
+    max: 10
 --- !u!1 &8183631511894221085
 GameObject:
   m_ObjectHideFlags: 0

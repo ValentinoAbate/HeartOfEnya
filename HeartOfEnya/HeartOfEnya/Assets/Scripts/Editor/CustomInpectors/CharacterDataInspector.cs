@@ -16,6 +16,7 @@ public class CharacterDataInspector : Editor
     public override void OnInspectorGUI()
     {
         data.voiceEvent = EditorGUILayout.TextField(new GUIContent("Voice Event"), data.voiceEvent);
+        data.dialogBoxPrefab = EditorUtils.ObjectField(new GUIContent("Dialog Box Prefab"), data.dialogBoxPrefab, false);
         data.portraits.DoGUILayout(data.portraits.ValueGUIObj, () => data.portraits.StringAddGUID(ref toAdd), "Portraits", true);
         if (GUI.changed)
             EditorUtility.SetDirty(data);

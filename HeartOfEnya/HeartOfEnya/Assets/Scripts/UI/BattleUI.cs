@@ -6,7 +6,7 @@ using TMPro;
 using System.Linq;
 
 [DisallowMultipleComponent]
-public class BattleUI : MonoBehaviour
+public class BattleUI : MonoBehaviour, IPausable
 {
     public static BattleUI main;
 
@@ -28,6 +28,7 @@ public class BattleUI : MonoBehaviour
     public bool CancelingEnabled { get; set; } = true;
     public HashSet<Pos> MoveableTiles { get; set; } = new HashSet<Pos>();
     public HashSet<Pos> TargetableTiles { get; set; } = new HashSet<Pos>();
+    public PauseHandle PauseHandle { get; set; }
 
     private List<EventTileAction> runTiles;
 
@@ -49,6 +50,32 @@ public class BattleUI : MonoBehaviour
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         if (pData.gamePhase == PersistentData.gamePhaseTutorial)
             DisableRunTiles();
+        PauseHandle = new PauseHandle(OnPause);
+        PhaseManager.main.PartyPhase.PauseHandle.Dependents.Add(this);
+    }
+    private bool savedEndTurnButtonVal = false;
+    private Enemy savedEnemyInspect = null;
+    private PartyMember savedPartyInspect = null;
+    private Combatant savedGenericInspect = null;
+    private void OnPause(bool pause)
+    {
+        if(pause)
+        {
+            savedEndTurnButtonVal = endTurnButton.interactable;
+            HideEndTurnButton();
+            HideInfoPanel(false);
+        }
+        else
+        {
+            if (savedEndTurnButtonVal)
+                ShowEndTurnButton();
+            if (savedEnemyInspect != null)
+                ShowInfoPanelEnemy(savedEnemyInspect);
+            else if (savedPartyInspect != null)
+                ShowInfoPanelParty(savedPartyInspect);
+            else if (savedGenericInspect != null)
+                ShowInfoPanelGeneric(savedGenericInspect);
+        }
     }
 
     public void DisableRunTiles()
@@ -96,12 +123,18 @@ public class BattleUI : MonoBehaviour
 
     public void HideEndTurnButton() => endTurnButton.interactable = false;
 
-    public void HideInfoPanel()
+    public void HideInfoPanel(bool clear = true)
     {
         infoPanel.SetActive(false);
         enemyInfoPanel.gameObject.SetActive(false);
         genericInfoPanel.gameObject.SetActive(false);
         partyInfoPanel.gameObject.SetActive(false);
+        if(clear)
+        {
+            savedEnemyInspect = null;
+            savedGenericInspect = null;
+            savedPartyInspect = null;
+        }
     }
 
     public void ShowInfoPanelEnemy(Enemy e)
@@ -109,6 +142,7 @@ public class BattleUI : MonoBehaviour
         InitializeInfoPanel(e);
         enemyInfoPanel.gameObject.SetActive(true);
         enemyInfoPanel.ShowUI(e);
+        savedEnemyInspect = e;
     }
 
     public void ShowInfoPanelParty(PartyMember p)
@@ -116,6 +150,7 @@ public class BattleUI : MonoBehaviour
         InitializeInfoPanel(p);
         partyInfoPanel.gameObject.SetActive(true);
         partyInfoPanel.ShowUI(p);
+        savedPartyInspect = p;
     }
 
     public void ShowInfoPanelGeneric(Combatant c)
@@ -123,6 +158,7 @@ public class BattleUI : MonoBehaviour
         InitializeInfoPanel(c);
         genericInfoPanel.gameObject.SetActive(true);
         genericInfoPanel.ShowUI(c);
+        savedGenericInspect = c;
     }
 
     private void InitializeInfoPanel(Combatant c)

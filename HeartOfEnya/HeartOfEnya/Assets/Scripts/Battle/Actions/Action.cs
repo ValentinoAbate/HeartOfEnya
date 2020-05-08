@@ -175,6 +175,7 @@ public class Action : MonoBehaviour
             // Play stun sound
             yield return new WaitForSeconds(ActionEffect.effectWaitTime);
         }
+        
         Destroy(gameObject);
     }
 

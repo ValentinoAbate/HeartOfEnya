@@ -143,10 +143,13 @@ public class BattleEventsDay2 : MonoBehaviour
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
         // post-condition: re-enable all moves
-
         BattleUI.main.MoveableTiles.Clear();
         BattleUI.main.TargetableTiles.Clear();
         battleEvents.partyPhase.PartyWideClearSoloActions();
+
+        // re-enable all characters
+        string[] units = {"Raina", "Soleil", "Bapy"};
+        battleEvents.partyPhase.EnableUnits(new List<string>(units));
 
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }

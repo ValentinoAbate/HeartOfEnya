@@ -203,6 +203,9 @@ public class PartyPhase : Phase
                 BattleEvents.main.tutChokePoints._event.Invoke();
                 break;
         }
+
+        // tutorial day 3: run trigger when raina uses flame cleave
+        
     }
 
     /// <summary>

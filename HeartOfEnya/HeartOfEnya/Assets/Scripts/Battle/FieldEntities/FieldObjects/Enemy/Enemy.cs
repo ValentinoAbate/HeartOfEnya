@@ -147,6 +147,13 @@ public class Enemy : Combatant, IPausable
                     logger.testData.enemyDmg[DisplayName] += dmg.damage;
                 }
             }
+
+            // invoke trigger when enemy pushes a party member
+            if(action.DisplayName == "Bludgeon" && target.Team == FieldEntity.Teams.Party)
+            {
+                BattleEvents.main.tutEnemyPush._event.Invoke();
+            }
+        
         }
         return UseAction(action, p, Pos.OutOfBounds);
     }

@@ -12,7 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f71fcd924926614ab041820fe749ac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowRepeats: 0
+  allowRepeatTargetRows: 0
+  secondPhase: 0
+  secondPhaseHp: 6
+  clearObstaclesAndEnemies: {fileID: 4311474093978460677, guid: 0c2ac550ee1d15f4a89627096a5bd84c,
+    type: 3}
+  moveAllToRight: {fileID: 2988961275814751673, guid: 42af7776188d63b48949768d6b7997e3,
+    type: 3}
+  clearObstacleRow: {fileID: 8902642157473425592, guid: c60d0b55082f83e4ba50bd88808f0c9f,
+    type: 3}
+  moveAllToRightRow: {fileID: 0}
+  respawnObstacles: {fileID: 8902642157473425592, guid: c2a36ac8183720e4eaf1a0bdd8eeef7f,
+    type: 3}
+  secondPhaseEnounter: {fileID: 11400000, guid: 6be806bf614f06d4eb1941ddeaa49b6e,
+    type: 2}
 --- !u!1001 &8851402608398930067
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -104,12 +117,22 @@ PrefabInstance:
         type: 3}
       propertyPath: action
       value: 
-      objectReference: {fileID: 8902642157473425592, guid: 3ed50873dbcf016408173f0053da4f6b,
+      objectReference: {fileID: 8902642157473425592, guid: d1be9f799bb64f148977c7b602684df7,
         type: 3}
     - target: {fileID: 8462303551624533822, guid: 17f7430228c302c40a43d2e6db488893,
         type: 3}
       propertyPath: isMovable
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462303551624533822, guid: 17f7430228c302c40a43d2e6db488893,
+        type: 3}
+      propertyPath: invincible
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462303551624533822, guid: 17f7430228c302c40a43d2e6db488893,
+        type: 3}
+      propertyPath: maxHp
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17f7430228c302c40a43d2e6db488893, type: 3}

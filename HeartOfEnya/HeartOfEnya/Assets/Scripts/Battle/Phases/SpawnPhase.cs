@@ -393,7 +393,7 @@ public class SpawnPhase : Phase
         return false;
     }
 
-    private void SpawnAllEnemiesAndObstacles(WaveData wave)
+    public void SpawnAllEnemiesAndObstacles(WaveData wave)
     {
         foreach (var spawnData in wave.AllSpawns)
         {

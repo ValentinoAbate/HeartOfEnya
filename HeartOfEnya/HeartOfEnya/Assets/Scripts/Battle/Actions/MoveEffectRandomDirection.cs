@@ -21,7 +21,7 @@ public class MoveEffectRandomDirection : ActionEffect
 
     private Pos perActionDirection = Pos.Zero;
 
-    public override void Initialize(Combatant user)
+    public override void Initialize(List<Pos> positions, Combatant user)
     {
         perActionDirection = RandomDirection(); ;
     }

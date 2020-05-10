@@ -14,7 +14,7 @@ public abstract class ActionEffect : MonoBehaviour
     public Target target = Target.Target;
 
     // Initialize any values that should apply to multiple effects on this attack
-    public virtual void Initialize(Combatant user)
+    public virtual void Initialize(List<Pos> targetPositions, Combatant user)
     {
 
     }

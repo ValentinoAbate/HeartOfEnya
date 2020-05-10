@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 740124394214506185}
   - component: {fileID: 7797176595401580605}
   - component: {fileID: 7450389100152843022}
+  - component: {fileID: 1978365551954952731}
   m_Layer: 0
   m_Name: BattleEventManager
   m_TagString: Untagged
@@ -46,6 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81f40383249ab010299cc5311c4144af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorialDay1: 0
+  tutorialDay2: 0
+  tutorialDay3: 0
   tutorialIntro:
     _event:
       m_PersistentCalls:
@@ -398,6 +402,38 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     flag: 0
+  luaBossPhaseChange:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1978365551954952731}
+          m_MethodName: LuaBossPhaseChange
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  luaBossPhase2Defeated:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1978365551954952731}
+          m_MethodName: LuaBossDeathTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
   abs0PhaseChange:
     _event:
       m_PersistentCalls:
@@ -414,6 +450,23 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     flag: 0
+  abs0Phase2Defeated:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 740124394214506185}
+          m_MethodName: Abs0Phase2Defeated
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  partyPhase: {fileID: 0}
 --- !u!114 &740124394214506185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,7 +479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e2658ccc4caf304db2c0c25c9642974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseManager: {fileID: 0}
 --- !u!114 &7797176595401580605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,3 +505,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleEvents: {fileID: 3274595405748874241}
+--- !u!114 &1978365551954952731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324923904088594698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d6dda9fc8c15f74c87172debabd7b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

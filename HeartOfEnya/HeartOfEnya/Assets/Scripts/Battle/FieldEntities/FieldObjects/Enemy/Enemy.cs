@@ -102,7 +102,7 @@ public class Enemy : Combatant, IPausable
             yield break;
         }
         // Else process charge and exit if charging
-        if (IsChargingAction)
+        if (IsChargingAction && aiComponent.StandardActivateChargedAction)
         {
             yield return new WaitWhile(() => PauseHandle.Paused);
             yield return ActivateChargedAction();

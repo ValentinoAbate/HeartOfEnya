@@ -47,8 +47,13 @@ public class BattleEvents : MonoBehaviour
     public BattleEvent tutFlameMoves;
     public BattleEvent tutBurn;
 
+    [Header("Lua Boss Events")]
+    public BattleEvent luaBossPhaseChange;
+    public BattleEvent luaBossPhase2Defeated;
+
     [Header("Absolute Zero Events")]
     public BattleEvent abs0PhaseChange;
+    public BattleEvent abs0Phase2Defeated;
 
     // references to objects that will be needed to disable certain game functions
     [HideInInspector] public PartyPhase partyPhase;

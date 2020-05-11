@@ -48,9 +48,13 @@ public class Character : MonoBehaviour
         sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
         anim = GetComponent<Animator>();
 
-        //set up the fade-to-black image
-        fadeImage.rectTransform.localScale = new Vector2(Screen.width, Screen.height);
-        fadeImage.enabled = false; //disable temporarily
+        //only set up the fade-to-black monologue transitions if we're in the camp scene
+        if (fadeImage != null) //assume fadeImage will only have been set in the camp scene
+        {
+            //set up the fade-to-black image
+            fadeImage.rectTransform.localScale = new Vector2(Screen.width, Screen.height);
+            fadeImage.enabled = false; //disable temporarily
+        }
     }
 
     private void Start()
@@ -113,10 +117,17 @@ public class Character : MonoBehaviour
 	            	Debug.Log(Name + " launches their monologue");
                     
                     //transition to the solo monologue
-                    StartCoroutine(DoMonologueTransition(phase));
-
-                    //start the dialogue
-	            	// dialogManager.StartCampMonolog(phaseData);
+                    if(fadeImage != null) //make sure we only trigger the monologue transition if the fadeout image is set properly
+                    {
+                        StartCoroutine(DoMonologueTransition(phase));
+                    }
+                    else
+                    {
+                        //If we don't have fadeImage, try to bypass the transition by performing the old "straight-to-dialogue" approach.
+                        //This is mostly here in case some of the battle stuff relies on the original behavior.
+                        Debug.LogWarning("ALERT: unable to transition to " + Name + "'s monologue due to lack of fadeImage.\nIf you're not in the camp scene, you can disregard this message.");
+                        dialogManager.StartCampMonolog(phaseData);
+                    }
 	           	}
 	            else if (day == 1)
 	            {
@@ -153,6 +164,7 @@ public class Character : MonoBehaviour
     	}
     }
 
+    //handles switching from the "normal" camp scene to the monologue version
     public IEnumerator DoMonologueTransition(string phase)
     {
         //fade to black
@@ -161,6 +173,7 @@ public class Character : MonoBehaviour
         Debug.Log("SWAP BACKGROUND");
         //remove other characters
         Debug.Log("YEET OTHER CHARACTERS");
+        DisableOtherCharacters();
         //fade in
         yield return StartCoroutine("FadeToClear");
         //run the dialogue
@@ -168,6 +181,8 @@ public class Character : MonoBehaviour
         dialogManager.StartCampMonolog(phaseData);
     }
 
+    //handles fading the screen to black.
+    //This and FadeToClear were based on code from https://gist.github.com/NovaSurfer/5f14e9153e7a2a07d7c5
     public IEnumerator FadeToBlack()
     {
         fadeImage.enabled = true; //re-enable for the fade-out
@@ -190,6 +205,8 @@ public class Character : MonoBehaviour
         while (true);
     }
 
+    //handles fading the screen back in after it's been faded to black.
+    //This and FadeToBlack were based on code from https://gist.github.com/NovaSurfer/5f14e9153e7a2a07d7c5
     public IEnumerator FadeToClear()
     {
         fadeImage.enabled = true; //re-enable for the fade-in
@@ -211,5 +228,24 @@ public class Character : MonoBehaviour
             }
         }
         while (true);
+    }
+
+    public void DisableOtherCharacters()
+    {
+        GameObject[] toDisable = GameObject.FindGameObjectsWithTag("CampCharacter");
+        foreach (GameObject otherCharacter in toDisable)
+        {
+            var otherScript = otherCharacter.GetComponent<Character>();
+            //Debug.Log(theirScript.Name);
+            if (otherScript.Name != Name)
+            {
+                Debug.Log(Name + " disabled " + otherScript.Name);
+                otherCharacter.SetActive(false);
+            }
+            else
+            {
+                Debug.Log(Name + " won't disable themself");
+            }
+        }
     }
 }

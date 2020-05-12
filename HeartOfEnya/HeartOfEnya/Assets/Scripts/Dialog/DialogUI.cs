@@ -117,6 +117,7 @@ namespace Dialog
                 var dbPrefab = character.DialogBoxPrefab ?? dialogBoxPrefab;
                 dialogBox = Instantiate(dbPrefab, Camera.main.WorldToScreenPoint(character.DialogSpawnPoint),
                                         Quaternion.identity, dialogCanvas.transform).GetComponent<DialogBox>();
+                dialogBox.transform.SetAsFirstSibling();
                 lastSpeaker = character;
                 dialogBox.VoiceEvent = character.VoiceEvent;
             }
@@ -129,6 +130,8 @@ namespace Dialog
         public override IEnumerator RunOptions(Yarn.Options optionsCollection,
                                                 Yarn.OptionChooser optionChooser)
         {
+            //if (dialogBox != null)
+            //    Destroy(dialogBox.gameObject);
             // Do a little bit of safety checking
             if (optionsCollection.options.Count > optionButtons.Count)
             {

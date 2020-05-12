@@ -17,7 +17,7 @@ namespace Dialog
             GoToCampfireScene,
         }
 
-        private static readonly Regex lineRegex = new Regex(@"\s*(\w+)\s*(?:\((\w+)\))?\s*:\s*(.*)");
+        private static readonly Regex lineRegex = new Regex(@"\s*(\w+)\s*(?:\(([\w\s]+)\))?\s*:\s*(.*)");
         private static readonly Regex commentRegex = new Regex(@"\/\/.*");
 
         public PauseHandle PauseHandle { get; set; }
@@ -63,6 +63,16 @@ namespace Dialog
 
         public override IEnumerator RunCommand(Command command)
         {
+            var args = command.text.ToLower().Split();
+            if(args[0] == "fadein")
+            {
+                // Find speaking character
+                var character = characters.Find((c) => c.Name.ToLower() == args[1]);
+                var anim = character.GetComponent<Animator>();
+                anim.Play("FadeIn");
+                yield return new WaitForSeconds(1f);
+            }
+            Debug.Log(command.text);
             yield break;
         }
 

@@ -96,10 +96,10 @@ public class Character : MonoBehaviour
     	else
     	{
     		sfxSelect.Play();
-
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
             //retrieve date from persistent data
-    		string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
-    		int day = DoNotDestroyOnLoad.Instance.persistentData.dayNum;
+    		string phase = pData.gamePhase;
+    		int day = pData.dayNum;
             var phaseData = CharacterManager.main.GetPhaseData(phase);
 
             if(phaseData.monologCharacter.ToLower() == Name.ToLower()) //if the clicked character's monologue takes place in this scene
@@ -108,7 +108,7 @@ public class Character : MonoBehaviour
                 {
                     anim.SetBool("Highlight", false);
                 }
-                if (day == 0)
+                if (day == 0 && phase != PersistentData.gamePhaseAbsoluteZeroBattle)
 	        	{
 	        		//If it's day 0 (i.e. 1st night in this phase), launch their monologue
 	            	Debug.Log(Name + " launches their monologue");
@@ -119,22 +119,22 @@ public class Character : MonoBehaviour
                     //start the dialogue
 	            	// dialogManager.StartCampMonolog(phaseData);
 	           	}
-	            else if (day == 1)
-	            {
-	            	//If it's day 1 (i.e. 2nd night in this phase), launch their party scene
-	            	Debug.Log(Name + " launches their party scene");
-	        		dialogManager.StartCampPartyScene(phaseData);
-	            }
 	            else
 	            {
-	            	//If it's day 2 or higher, look for "filler" dialogue
-	            	if(phaseData.extraScenes.ContainsKey(Name))
-	            	{
-	            		string scriptName = phaseData.extraScenes[Name];
-	            		//character has an appropriate script - run it
-	            		Debug.Log(Name + " launches script " + scriptName);
-	            		dialogManager.StartDialogue(scriptName);
-	            	}
+	            	//If it's day 1 or more (i.e. 2nd night in this phase), launch their party scene (unless this is a boss phase)
+	            	Debug.Log(Name + " launches their party scene");
+                    if((pData.InLuaBattle && !pData.luaBossDefeated) || 
+                        (phase == PersistentData.gamePhaseAbsoluteZeroBattle && !pData.absoluteZeroDefeated))
+                    {
+                        if((phase == PersistentData.gamePhaseAbsoluteZeroBattle && day < 1) || (pData.InLuaBattle && day == 1))
+                            dialogManager.StartDialogue(phaseData.bossWaitNode);
+                        else
+                            dialogManager.StartDialogue("BossFallback");
+                    }
+                    else
+                    {
+                        dialogManager.StartCampPartyScene(phaseData);
+                    }
 	            }
             }
             else if(phaseData.extraScenes.ContainsKey(Name))

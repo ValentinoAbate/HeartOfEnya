@@ -123,6 +123,10 @@ public class BattleUI : MonoBehaviour, IPausable
 
     public void HideEndTurnButton() => endTurnButton.interactable = false;
 
+    public void EnableEndTurnButton() => endTurnButton.gameObject.SetActive(true);
+
+    public void DisableEndTurnButton() => endTurnButton.gameObject.SetActive(false);
+
     public void HideInfoPanel(bool clear = true)
     {
         infoPanel.SetActive(false);

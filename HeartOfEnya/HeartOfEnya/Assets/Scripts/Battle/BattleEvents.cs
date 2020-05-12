@@ -27,6 +27,8 @@ public class BattleEvents : MonoBehaviour
     public BattleEvent tutBapyCancel;
     public BattleEvent tutSoleilSelect;
     public BattleEvent tutSoleilAttack;
+    public BattleEvent tutBapySelect2;
+    public BattleEvent tutBapyWait;
     public BattleEvent tutSoleilChargeReminder;
     public BattleEvent tutSoleilChargeExplanation;
     public BattleEvent tutEnemySpawnWarning;
@@ -58,6 +60,8 @@ public class BattleEvents : MonoBehaviour
     // references to objects that will be needed to disable certain game functions
     [HideInInspector] public PartyPhase partyPhase;
 
+    private Pos rainaMovePos = new Pos(1, 6);
+
     private void Awake()
     {
         if (main == null)
@@ -84,6 +88,7 @@ public class BattleEvents : MonoBehaviour
         {
             Debug.Log("Battle Triggers: start of battle");
             tutorialIntro.flag = true;
+            BattleUI.main.DisableEndTurnButton();
 
             // Start the dialog (connect to ambers code)
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
@@ -101,6 +106,8 @@ public class BattleEvents : MonoBehaviour
         // post-condition: disable everyone but raina
         string[] units = {"Bapy", "Soleil"};
         partyPhase.DisableUnits(new List<string>(units));
+        // restrict raina's movement to specific square
+        BattleUI.main.MoveableTiles.Add(rainaMovePos);
 
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
         
@@ -123,9 +130,6 @@ public class BattleEvents : MonoBehaviour
     private IEnumerator MoveTriggerPost(DialogueRunner runner)
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
-
-        // restrict raina's movement to specific square
-        BattleUI.main.MoveableTiles.Add(new Pos(1, 6));
         
         // disable cancelling, solo raina's cleave move
         BattleUI.main.CancelingEnabled = false;
@@ -153,7 +157,7 @@ public class BattleEvents : MonoBehaviour
         yield return new WaitWhile(() => runner.isDialogueRunning);
         
         // restrict raina to attacking to the left
-        BattleUI.main.TargetableTiles.Add(new Pos (1, 5));
+        BattleUI.main.TargetableTiles.Add(rainaMovePos + Pos.Left);
 
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
@@ -264,10 +268,58 @@ public class BattleEvents : MonoBehaviour
         string[] units = {"Bapy", "Soleil", "Raina"};
         partyPhase.EnableUnits(new List<string>(units));
 
-        // *****likely tentative? enable bapy's hoe
-        partyPhase.PartyWideSoloAction("BapyAction1");
+        // make it so bapy can only move next to raina
+        BattleUI.main.MoveableTiles.Add(rainaMovePos + Pos.Right);
+        BattleUI.main.MoveableTiles.Add(rainaMovePos + Pos.Right + Pos.Right);
         BattleUI.main.CancelingEnabled = true;
         
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+    }
+
+    public void BapySelect2Trigger()
+    {
+        if (tutorialDay1 && tutSoleilAttack.flag && !tutBapySelect2.flag)
+        {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutBapySelect2");
+
+            // solo wait for bapy
+            partyPhase.PartyWideSoloAction("Wait");
+
+            Debug.Log("Battle Triggers: select bapy 2");
+            tutBapySelect2.flag = true;
+
+            StartCoroutine(BapySelectTrigger2Post(DialogueManager.main.runner));
+        }
+    }
+
+    private IEnumerator BapySelectTrigger2Post(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+    }
+
+    public void BapyWaitTrigger()
+    {
+        if (tutorialDay1 && tutBapySelect2.flag && !tutBapyWait.flag)
+        {
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            DialogueManager.main.runner.StartDialogue("TutBapyWait");
+
+            Debug.Log("Battle Triggers: bapy wait");
+            tutBapyWait.flag = true;
+
+            StartCoroutine(BapyWaitTriggerPost(DialogueManager.main.runner));
+        }
+    }
+
+    private IEnumerator BapyWaitTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+
+        // unrestrict movement/targeting
+        BattleUI.main.MoveableTiles.Clear();
+
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
@@ -418,10 +470,18 @@ public class BattleEvents : MonoBehaviour
     {
         if(!tutDD.flag)
         {
-            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
-
-            Debug.Log("Battle Triggers: DeathsDoor");
             tutDD.flag = true;
+            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            var partyMemberAtDD = PhaseManager.main.PartyPhase.Party.Find((p) => p.DeathsDoor);
+            //DialogueManager.main.runner.StartDialogue("TutDD" + partyMemberAtDD.DisplayName);
+            if (partyMemberAtDD.DisplayName == "Bapy")
+                DialogueManager.main.runner.StartDialogue("TutDDBapy");
+            else if(partyMemberAtDD.DisplayName == "Soleil")
+                DialogueManager.main.runner.StartDialogue("TutDDSoleil");
+            else
+                DialogueManager.main.runner.StartDialogue("TutDDRaina");
+            Debug.Log("Battle Triggers: DeathsDoor");
+
 
             StartCoroutine(DeathsDoorTriggerPost(DialogueManager.main.runner));
         }
@@ -433,6 +493,9 @@ public class BattleEvents : MonoBehaviour
         
         // willow stuns all enemies, run tiles appear
         yield return partyPhase.WillowStunAll();
+        DialogueManager.main.runner.StartDialogue("TutStun");
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        DialogueManager.main.runner.StartDialogue("TutRun");
         BattleUI.main.EnableRunTiles();
 
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);

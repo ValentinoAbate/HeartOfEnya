@@ -142,6 +142,7 @@ public class MoveCursor : GridCursor
         {
             case "Bapy":
                 placeBapy.Play();
+                BattleEvents.main.tutBapyWait._event.Invoke();
                 break;
             case "Soleil":
                 placeSoleil.Play();

@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using Yarn;
 using Yarn.Unity;
-using System.Text.RegularExpressions;
 
 namespace Dialog
 {
@@ -35,6 +35,10 @@ namespace Dialog
         public List<Character> characters;
         public FMODUnity.StudioEventEmitter Music { get; set; }
 
+        [Header("Fixed Position Fields")]
+        public Transform fixedPosition;
+        public bool useFixedPosition = false;
+
         [Header("Scene Transition Fields")]
         public EndAction endAction = EndAction.DoNothing;
         public string sceneName = string.Empty;
@@ -43,6 +47,7 @@ namespace Dialog
         private Character lastSpeaker;
         // The currently active dialogbox
         private DialogBox dialogBox;
+        private bool newDialog = true;
 
         /// A delegate that we call to tell the dialogue system about what option
         /// the user selected
@@ -72,12 +77,18 @@ namespace Dialog
                 anim.Play("FadeIn");
                 yield return new WaitForSeconds(1f);
             }
-            Debug.Log(command.text);
             yield break;
         }
 
         public override IEnumerator RunLine(Line line)
         {
+            if(newDialog)
+            {
+                newDialog = false;
+                foreach (var chara in characters)
+                    chara.Expression = Character.defaultExpression;
+            }
+
             // Correct the formatting
             line.text = CorrectFormatting(line.text);
 
@@ -103,7 +114,7 @@ namespace Dialog
             //characters.Add(character);
             if (character == default)
             {
-                Debug.LogWarning("Character " + speaker + "not found in scene. Skipping line.");
+                Debug.LogWarning("Character " + speaker + " not found in scene. Skipping line.");
                 yield break;
             }
             // Set the character's expression if necessary
@@ -115,8 +126,13 @@ namespace Dialog
                 if(dialogBox != null)
                     Destroy(dialogBox.gameObject);
                 var dbPrefab = character.DialogBoxPrefab ?? dialogBoxPrefab;
-                dialogBox = Instantiate(dbPrefab, Camera.main.WorldToScreenPoint(character.DialogSpawnPoint),
+                // Determine if we want to use the character spawn point or the fixed one
+                var spawnPoint = !useFixedPosition || character.ignoreFixedPosition
+                    ? character.DialogSpawnPoint : (Vector2)fixedPosition.position;
+                // Actually spawn the dialog box
+                dialogBox = Instantiate(dbPrefab, Camera.main.WorldToScreenPoint(spawnPoint),
                                         Quaternion.identity, dialogCanvas.transform).GetComponent<DialogBox>();
+                // Make sure the dialog box renders below willow
                 dialogBox.transform.SetAsFirstSibling();
                 lastSpeaker = character;
                 dialogBox.VoiceEvent = character.VoiceEvent;
@@ -152,7 +168,7 @@ namespace Dialog
             SetSelectedOption = optionChooser;
 
             // Wait until the chooser has been used and then removed (see SetOption below)
-            yield return new WaitUntil(() => SetSelectedOption == null);
+            yield return new WaitUntil(() => SetSelectedOption == null || newDialog);
 
             // Hide all the buttons
             foreach (var button in optionButtons)
@@ -163,8 +179,12 @@ namespace Dialog
 
         public override IEnumerator DialogueComplete()
         {
+            newDialog = true;
             if (dialogBox != null)
+            {
+                dialogBox.Stop();
                 Destroy(dialogBox.gameObject);
+            }
             if (Music != null)
                 Music.Stop();
             var pData = DoNotDestroyOnLoad.Instance.persistentData;
@@ -172,12 +192,12 @@ namespace Dialog
             {
                 // Go to next game phase, if applicable.
                 string gamePhase = pData.gamePhase.ToUpper();
-                if (gamePhase == PersistentData.gamePhaseLuaBattle)
+                if (pData.InLuaBattle)
                 {
                     if (pData.luaBossDefeated)
                         GoToNextGamePhase();
                     else
-                        DoNotDestroyOnLoad.Instance.persistentData.dayNum += 1; //if lua's not defeated, we spend more time in this phase
+                        pData.dayNum += 1; //if lua's not defeated, we spend more time in this phase
                 }
                 else if(gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
                 {
@@ -225,7 +245,8 @@ namespace Dialog
         /// Called by buttons to make a selection.
         public void SetOption(int selectedOption)
         {
-
+            if (SetSelectedOption == null)
+                return;
             // Call the delegate to tell the dialogue system that we've
             // selected an option.
             SetSelectedOption(selectedOption);

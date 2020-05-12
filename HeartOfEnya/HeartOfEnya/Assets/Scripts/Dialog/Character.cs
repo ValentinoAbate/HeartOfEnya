@@ -6,11 +6,12 @@ using Yarn.Unity;
 
 public class Character : MonoBehaviour
 {
-    public const string defaultExpression = "normal";
+    public const string defaultExpression = "neutral";
     public static readonly Color dimColor = Color.gray;
     public string Name { get => characterName; }
     [SerializeField] private string characterName;
     public Vector2 DialogSpawnPoint => dialogSpawnPoint.position;
+    public bool ignoreFixedPosition = false;
     [SerializeField] private Transform dialogSpawnPoint;
     [SerializeField] private CharacterData data;
     [SerializeField] private DialogueRunner dialogManager;

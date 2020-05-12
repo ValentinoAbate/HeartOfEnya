@@ -287,7 +287,6 @@ public class SpawnPhase : Phase
         if(spawnFirstWaveImmediately)
         {
             SpawnAllEnemiesAndObstacles(CurrWave);
-            ++waveNum;
         }
     }
 

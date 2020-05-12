@@ -212,6 +212,8 @@ public class BattleGrid : MonoBehaviour
 
     public bool IsEmpty(Pos pos) => field.Get(pos) == null;
 
+    public bool IsEmptyEventTiles(Pos pos) => !eventTiles.ContainsKey(pos) || eventTiles[pos].Count <= 0;
+
     /// <summary>
     /// Return the FieldObject at the given grid position, or null if the position is empty
     /// </summary>

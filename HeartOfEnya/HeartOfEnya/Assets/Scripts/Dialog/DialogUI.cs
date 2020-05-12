@@ -168,7 +168,7 @@ namespace Dialog
             SetSelectedOption = optionChooser;
 
             // Wait until the chooser has been used and then removed (see SetOption below)
-            yield return new WaitUntil(() => SetSelectedOption == null || newDialog);
+            yield return new WaitUntil(() => SetSelectedOption == null);
 
             // Hide all the buttons
             foreach (var button in optionButtons)

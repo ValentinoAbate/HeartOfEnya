@@ -119,7 +119,7 @@ public class Action : MonoBehaviour
         };
         // Initialize the effects
         foreach (var effect in effects)
-            effect.Initialize(user);
+            effect.Initialize(targetPositions, user);
         List<Combatant> toStun = new List<Combatant>();
         // Apply actual effects to targets and display results
         foreach (var position in targetPositions)

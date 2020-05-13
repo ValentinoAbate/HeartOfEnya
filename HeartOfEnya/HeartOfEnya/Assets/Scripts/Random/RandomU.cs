@@ -21,6 +21,12 @@ namespace RandomUtils
         }
 
         #region General Random Functions
+        /// <summary>
+        /// Max is exclusive
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
         public int RandomInt(int min, int max) => rand.Next(min, max);
         /// <summary> Generate a double in between 0.0 (inclusive) and 1 (exclusive) </summary>
         public double RandomDouble() => rand.NextDouble();

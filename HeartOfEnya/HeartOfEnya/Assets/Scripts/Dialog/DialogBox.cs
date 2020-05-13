@@ -74,4 +74,12 @@ public class DialogBox : MonoBehaviour, IPausable
         yield return new WaitWhile(() => state == State.Waiting);
         state = State.Inactive;
     }
+
+    public void Stop()
+    {
+        StopAllCoroutines();
+        if (voiceEmitter != null)
+            voiceEmitter.Stop();
+        state = State.Inactive;         
+    }
 }

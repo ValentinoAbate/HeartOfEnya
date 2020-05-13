@@ -124,11 +124,18 @@ public abstract class Combatant : FieldObject, IPausable
             Hp = Mathf.Max(0, hp - damage);
             if (Dead)
             {
-                if(!invincible)
+                var pData = DoNotDestroyOnLoad.Instance.persistentData;
+                if (!invincible)
                     Kill();
-                else if(DoNotDestroyOnLoad.Instance.persistentData.gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
+                else if(pData.InLuaBattle)
+                {
+                    BattleEvents.main.luaBossPhaseChange._event.Invoke();
+                    BattleEvents.main.luaBossPhase2Defeated._event.Invoke();
+                }
+                else if(pData.gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
                 {
                     BattleEvents.main.abs0PhaseChange._event.Invoke();
+                    BattleEvents.main.abs0Phase2Defeated._event.Invoke();
                 }
             }
             else

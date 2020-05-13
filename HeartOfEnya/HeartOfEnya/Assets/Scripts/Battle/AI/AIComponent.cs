@@ -6,6 +6,9 @@ public abstract class AIComponent<T> : MonoBehaviour where T : Combatant
 {
     // amount of time to pause for each square moved
     public const float moveDelay = 0.1f;
+
+    public virtual bool StandardActivateChargedAction => true;
+
     public abstract IEnumerator DoTurn(T self);
 
     protected IEnumerator MoveAlongPath(T self, List<Pos> path, int distance)

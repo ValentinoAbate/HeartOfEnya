@@ -27,8 +27,6 @@ public class PhaseManager : MonoBehaviour, IPausable
     private string goToSceneOnEnd = string.Empty;
     [SerializeField]
     private string goToSceneOnEndSpecial = string.Empty;
-    [SerializeField]
-    private string specialPhase = string.Empty;
 
     private List<Phase> phases;
     private int currPhase;
@@ -127,7 +125,7 @@ public class PhaseManager : MonoBehaviour, IPausable
             });
         }
         SpawnPhase.LogPersistentData();
-        if (pData.gamePhase == specialPhase)
+        if (pData.absoluteZeroDefeated)
             SceneTransitionManager.main?.TransitionScenes(goToSceneOnEndSpecial);
         else
             SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);

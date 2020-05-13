@@ -49,6 +49,7 @@ public class CharacterManager : MonoBehaviour
         public string monologMusic;
         public string campfireNode;
         public string campfireMusic;
+        public string bossWaitNode;
         public SceneDict extraScenes;       
     }
     [System.Serializable]

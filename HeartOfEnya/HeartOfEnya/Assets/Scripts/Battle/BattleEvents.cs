@@ -468,7 +468,7 @@ public class BattleEvents : MonoBehaviour
 
     public void DeathsDoorTrigger()
     {
-        if(!tutDD.flag)
+        if(tutorialDay1 && !tutDD.flag)
         {
             tutDD.flag = true;
             PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);

@@ -82,6 +82,8 @@ public class PartyPhase : Phase
     private IEnumerator OnPhaseStartCr()
     {
         SnowParticleController.main.Intensity = 0;
+        FMODBattle.main.storm.SetParameter("Enemy Turn", 0);
+        //FMODBattle.main.music.SetParameter("Text Playing", 0);
         yield return StartCoroutine(PlayTransition());
         InitializePhase();
     }

@@ -199,6 +199,8 @@ public class PartyPhase : Phase
 
         // run tutorial trigger when raina's attack finishes
         BattleEvents.main.tutBapySelect._event.Invoke();
+        // run tutorial trigger when soleils's attack finishes
+        BattleEvents.main.tutBapySelect2._event.Invoke();
 
         // tutorial day 2: run triggers after bapy pushes the boxes on each turn
         switch (PhaseManager.main.Turn)

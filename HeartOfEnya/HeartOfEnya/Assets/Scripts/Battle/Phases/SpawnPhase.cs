@@ -126,7 +126,6 @@ public class SpawnPhase : Phase
         Vector2 bapyVec = BattleGrid.main.GetSpace(bapyPos);
         var bapy = Instantiate(bapyLvl[pData.partyLevel], bapyVec,
                                     Quaternion.identity).GetComponent<PartyMember>();
-        dialog.characters.Clear();
         dialog.characters.Add(bapy.GetComponent<Character>());
         bapy.Pos = bapyPos;
 
@@ -213,6 +212,11 @@ public class SpawnPhase : Phase
             {
                 foreach (var spawnData in pData.listEnemiesLeft)
                 {
+                    if(!BattleGrid.main.IsEmpty(spawnData.spawnPos))
+                    {
+                        pData.numEnemiesLeft--;
+                        continue;
+                    }
                     var obj = Instantiate(spawnData.prefabAsset).GetComponent<Combatant>();
                     obj.PrefabOrigin = spawnData.prefabAsset;
                     obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPos);
@@ -226,6 +230,10 @@ public class SpawnPhase : Phase
                 }
                 foreach (var spawnData in CurrWave.obstacles)
                 {
+                    if (!BattleGrid.main.IsEmpty(spawnData.spawnPosition))
+                    {
+                        continue;
+                    }
                     var obj = Instantiate(spawnData.spawnObject).GetComponent<FieldObject>();
                     obj.PrefabOrigin = spawnData.spawnObject;
                     obj.transform.position = BattleGrid.main.GetSpace(spawnData.spawnPosition);
@@ -279,7 +287,6 @@ public class SpawnPhase : Phase
         if(spawnFirstWaveImmediately)
         {
             SpawnAllEnemiesAndObstacles(CurrWave);
-            ++waveNum;
         }
     }
 

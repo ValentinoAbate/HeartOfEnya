@@ -48,7 +48,7 @@ public class BattleUI : MonoBehaviour, IPausable
     {
         runTiles = GetComponentsInChildren<EventTileAction>().ToList();
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        if (pData.gamePhase == PersistentData.gamePhaseTutorial)
+        if (pData.InTutorialFirstDay)
             DisableRunTiles();
         PauseHandle = new PauseHandle(OnPause);
         PhaseManager.main.PartyPhase.PauseHandle.Dependents.Add(this);
@@ -123,6 +123,10 @@ public class BattleUI : MonoBehaviour, IPausable
 
     public void HideEndTurnButton() => endTurnButton.interactable = false;
 
+    public void EnableEndTurnButton() => endTurnButton.gameObject.SetActive(true);
+
+    public void DisableEndTurnButton() => endTurnButton.gameObject.SetActive(false);
+
     public void HideInfoPanel(bool clear = true)
     {
         infoPanel.SetActive(false);
@@ -139,7 +143,7 @@ public class BattleUI : MonoBehaviour, IPausable
 
     public void ShowInfoPanelEnemy(Enemy e)
     {
-        InitializeInfoPanel(e);
+        InitializeInfoPanel();
         enemyInfoPanel.gameObject.SetActive(true);
         enemyInfoPanel.ShowUI(e);
         savedEnemyInspect = e;
@@ -147,7 +151,7 @@ public class BattleUI : MonoBehaviour, IPausable
 
     public void ShowInfoPanelParty(PartyMember p)
     {
-        InitializeInfoPanel(p);
+        InitializeInfoPanel();
         partyInfoPanel.gameObject.SetActive(true);
         partyInfoPanel.ShowUI(p);
         savedPartyInspect = p;
@@ -155,13 +159,13 @@ public class BattleUI : MonoBehaviour, IPausable
 
     public void ShowInfoPanelGeneric(Combatant c)
     {
-        InitializeInfoPanel(c);
+        InitializeInfoPanel();
         genericInfoPanel.gameObject.SetActive(true);
         genericInfoPanel.ShowUI(c);
         savedGenericInspect = c;
     }
 
-    private void InitializeInfoPanel(Combatant c)
+    private void InitializeInfoPanel()
     {
         infoPanel.SetActive(true);
     }

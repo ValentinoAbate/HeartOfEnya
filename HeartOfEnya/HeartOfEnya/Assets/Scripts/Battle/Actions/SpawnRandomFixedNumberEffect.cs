@@ -16,10 +16,10 @@ public class SpawnRandomFixedNumberEffect : ActionEffect
         if (luaAI != null)
             numberOfSpawns = luaAI.NumObstaclesDestroyed;
         targetPositions = new List<Pos>(positions);
-        targetPositions.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
+        targetPositions.RemoveAll((p) => !BattleGrid.main.IsEmpty(p) || !BattleGrid.main.IsEmptyEventTiles(p));
         while(targetPositions.Count > numberOfSpawns)
         {
-            targetPositions.RemoveAt(RandomU.instance.RandomInt(0, targetPositions.Count - 1));
+            targetPositions.RemoveAt(RandomU.instance.RandomInt(0, targetPositions.Count));
         }
     }
 

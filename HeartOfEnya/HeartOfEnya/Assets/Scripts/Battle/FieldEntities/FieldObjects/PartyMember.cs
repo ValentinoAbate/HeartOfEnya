@@ -309,7 +309,7 @@ public class PartyMember : Combatant, IPausable
     /// </summary>
     public override void Highlight()
     {
-        if (stunned || !hasTurn)
+        if (stunned || !hasTurn || Disabled)
             return;
         // moveCursor.CalculateTraversable();
         // moveCursor.DisplayTraversable(true);

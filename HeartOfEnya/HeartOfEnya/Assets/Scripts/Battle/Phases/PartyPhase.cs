@@ -44,6 +44,24 @@ public class PartyPhase : Phase
         return StartCoroutine(OnPhaseStartCr());
     }
 
+    private void EnableCursor()
+    {
+        if (!PauseHandle.Paused)
+        {
+            // Set the cursor's selection list to the party members with turns (Only if keyboard controls)
+            if (KeyboardMode)
+            {
+                keyboardCursor.SetSelected(activeParty);
+                keyboardCursor.HighlightFirst();
+                mouseCursor.enabled = false;
+            }
+            else
+                keyboardCursor.enabled = false;
+            Cursor.SetActive(true);
+            BattleUI.main.ShowEndTurnButton();
+        }
+    }
+
     private void InitializePhase()
     {
 
@@ -56,17 +74,8 @@ public class PartyPhase : Phase
         activeParty.RemoveAll((p) => p.Stunned || !p.HasTurn);
         // Sort the selection order from left to right and top to bottom
         activeParty.Sort((p1, p2) => Pos.CompareLeftToRightTopToBottom(p1.Pos, p2.Pos));
-        // Set the cursor's selection list to the party members with turns (Only if keyboard controls)
-        if (KeyboardMode)
-        {
-            keyboardCursor.SetSelected(activeParty);
-            keyboardCursor.HighlightFirst();
-            mouseCursor.enabled = false;
-        }
-        else
-            keyboardCursor.enabled = false;
-        Cursor.SetActive(true);
-        BattleUI.main.ShowEndTurnButton();
+
+        EnableCursor();
 
         BattleEvents.main.tutorialIntro._event.Invoke(); // tutorial event at the start of battle
         BattleEvents.main.tutPushing._event.Invoke();    // day 2 event
@@ -196,8 +205,7 @@ public class PartyPhase : Phase
             // Highlight the next member of the party
             keyboardCursor.HighlightNext();
         }
-        Cursor.SetActive(true);
-        BattleUI.main.ShowEndTurnButton();
+        EnableCursor();
 
         // run tutorial trigger when raina's attack finishes
         BattleEvents.main.tutBapySelect._event.Invoke();

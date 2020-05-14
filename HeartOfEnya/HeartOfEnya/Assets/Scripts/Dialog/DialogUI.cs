@@ -90,6 +90,10 @@ namespace Dialog
                 if(dialogBox != null)
                     Destroy(dialogBox.gameObject);
             }
+            else if(args[0] == "progresstheme")
+            {
+                Music.SetParameter("Progress Theme", 1);
+            }
             yield break;
         }
 

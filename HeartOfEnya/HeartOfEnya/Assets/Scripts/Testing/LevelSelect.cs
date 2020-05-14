@@ -50,6 +50,12 @@ public class LevelSelect : MonoBehaviour
         {
             SceneTransitionManager.main.TransitionScenes("IntroCamp");
         }
+        else if(phase == PersistentData.gamePhaseAbsoluteZeroBattle)
+        {
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
+            pData.absoluteZeroDefeated = true;
+            SceneTransitionManager.main.TransitionScenes("OutroCamp");
+        }
         else
         {
             SceneTransitionManager.main.TransitionScenes("Camp");

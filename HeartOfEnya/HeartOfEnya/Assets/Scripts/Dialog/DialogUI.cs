@@ -75,7 +75,20 @@ namespace Dialog
                 var character = characters.Find((c) => c.Name.ToLower() == args[1]);
                 var anim = character.GetComponent<Animator>();
                 anim.Play("FadeIn");
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(1.75f);
+            }
+            else if (args[0] == "fadeout")
+            {
+                // Find speaking character
+                var character = characters.Find((c) => c.Name.ToLower() == args[1]);
+                var anim = character.GetComponent<Animator>();
+                anim.Play("FadeOut");
+                yield return new WaitForSeconds(1.75f);
+            }
+            else if(args[0] == "cleartb")
+            {
+                if(dialogBox != null)
+                    Destroy(dialogBox.gameObject);
             }
             yield break;
         }

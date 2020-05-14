@@ -63,10 +63,11 @@ public class Character : MonoBehaviour
         if (CharacterManager.main == null)
             return;
         //retrieve date from persistent data
-        string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        string phase = pData.gamePhase;
         var phaseData = CharacterManager.main.GetPhaseData(phase);
         //move to the door position if it's our monologue time
-        if (phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower())
+        if (phaseData != null && !pData.absoluteZeroDefeated && phaseData.monologCharacter.ToLower() == Name.ToLower())
         {
             //on the monologue day, move to the door
             if (DoNotDestroyOnLoad.Instance.persistentData.dayNum == 0)

@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
     [SerializeField] private Image fadeImage;   //used in the fade-to-black transitions
     [SerializeField] private float fadeSpeed = 1.5f; //controls the speed of fade-to-black transitions
     [SerializeField] private GameObject soloBackgroundPrefab; //prefab for the solo background
+    [SerializeField] private GameObject originalBg;
 
     private FMODUnity.StudioEventEmitter sfxSelect;
     private Animator anim;
@@ -259,9 +260,9 @@ public class Character : MonoBehaviour
     public void SwapBackground()
     {
         //turn off the old background
-        var oldBG = GameObject.Find("BgVN");
-        Vector3 backgroundPos = oldBG.transform.Find("BgVN").transform.localPosition; //get the position so we can align the new one
-        oldBG.SetActive(false);
+        //var originalBg = GameObject.Find("BgVN");
+        Vector3 backgroundPos = originalBg.transform.Find("BgVN").transform.localPosition; //get the position so we can align the new one
+        originalBg.SetActive(false);
 
         //make new background
         var newBG = Instantiate(soloBackgroundPrefab);

@@ -23,6 +23,7 @@ public class PersistentData : MonoBehaviour
     public bool InTutorialSecondDay => gamePhase == gamePhaseTut1And2 && dayNum == dayNumStart + 1;
     public bool InTutorialThirdDay => gamePhase == gamePhaseTut3AndLuaBattle && dayNum == dayNumStart;
     public bool InLuaBattle => gamePhase == gamePhaseTut3AndLuaBattle && dayNum >= dayNumStart + 1;
+    public bool InAbs0Battle => gamePhase == gamePhaseAbsoluteZeroBattle && !absoluteZeroDefeated;
 
     public int PartyLevel
     {

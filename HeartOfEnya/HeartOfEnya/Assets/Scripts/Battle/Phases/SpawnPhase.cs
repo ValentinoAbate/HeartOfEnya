@@ -186,8 +186,8 @@ public class SpawnPhase : Phase
         if (!spawnEnemies)
             return;
 
-        // This is a fresh encounter, just spawn everything
-        if (CurrEncounter != pData.lastEncounter)
+        // This is a fresh encounter or a boss fight, just spawn everything
+        if (CurrEncounter != pData.lastEncounter || pData.InLuaBattle || pData.InAbs0Battle)
         {
             waveNum = startAtWave - 1;
             SpawnAllEnemiesAndObstacles(CurrWave);

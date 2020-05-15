@@ -17,6 +17,7 @@ public class CharacterDataInspector : Editor
     {
         data.voiceEvent = EditorGUILayout.TextField(new GUIContent("Voice Event"), data.voiceEvent);
         data.dialogBoxPrefab = EditorUtils.ObjectField(new GUIContent("Dialog Box Prefab"), data.dialogBoxPrefab, false);
+        data.soloBackground = EditorUtils.ObjectField(new GUIContent("Solo Scene Background"), data.soloBackground, false);
         data.portraits.DoGUILayout(data.portraits.ValueGUIObj, () => data.portraits.StringAddGUID(ref toAdd), "Portraits", true);
         if (GUI.changed)
             EditorUtility.SetDirty(data);

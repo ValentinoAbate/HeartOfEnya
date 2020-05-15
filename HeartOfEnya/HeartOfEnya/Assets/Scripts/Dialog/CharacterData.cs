@@ -8,6 +8,7 @@ public class CharacterData : ScriptableObject
     public string voiceEvent;
     public PortraitDict portraits;
     public GameObject dialogBoxPrefab;
+    public Sprite soloBackground;
 
     [System.Serializable]  public class PortraitDict : SerializableCollections.SDictionary<string, Sprite> { }
 }

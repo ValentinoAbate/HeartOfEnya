@@ -286,6 +286,16 @@ public class SpawnPhase : Phase
             SpawnAllEnemiesAndObstacles(CurrWave);
         }
     }
+    
+    public void ClearActiveSpawns()
+    {
+        foreach(var spawn in spawners)
+        {
+            BattleGrid.main.RemoveEventTile(spawn.Pos, spawn);
+            Destroy(spawn.gameObject);
+        }
+        spawners.Clear();
+    }
 
     public IEnumerator DeclareNextWave()
     {

@@ -75,7 +75,24 @@ namespace Dialog
                 var character = characters.Find((c) => c.Name.ToLower() == args[1]);
                 var anim = character.GetComponent<Animator>();
                 anim.Play("FadeIn");
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(1.75f);
+            }
+            else if (args[0] == "fadeout")
+            {
+                // Find speaking character
+                var character = characters.Find((c) => c.Name.ToLower() == args[1]);
+                var anim = character.GetComponent<Animator>();
+                anim.Play("FadeOut");
+                yield return new WaitForSeconds(1.75f);
+            }
+            else if(args[0] == "cleartb")
+            {
+                if(dialogBox != null)
+                    Destroy(dialogBox.gameObject);
+            }
+            else if(args[0] == "progresstheme")
+            {
+                Music.SetParameter("Progress Theme", 1);
             }
             yield break;
         }
@@ -208,7 +225,8 @@ namespace Dialog
                 }
                 else if(gamePhase == PersistentData.gamePhaseIntro)
                 {
-                    pData.gamePhase = PersistentData.gamePhaseTutorial;
+                    pData.gamePhase = PersistentData.gamePhaseTut1And2;
+                    pData.dayNum = 0;
                 }
                 else
                 {
@@ -231,15 +249,6 @@ namespace Dialog
             var pData = DoNotDestroyOnLoad.Instance.persistentData;
             pData.gamePhase = ((char)(pData.gamePhase[0] + 1)).ToString(); //switch to next phase
             pData.dayNum = 0; //reset the day to 0 to signifiy new phase
-            LevelUp();
-        }
-
-        private void LevelUp()
-        {
-            var pData = DoNotDestroyOnLoad.Instance.persistentData;
-            Debug.Log("Leveling up characters...");
-            pData.partyLevel += 1;
-            Debug.Log("Characters are now level " + pData.partyLevel);
         }
 
         /// Called by buttons to make a selection.

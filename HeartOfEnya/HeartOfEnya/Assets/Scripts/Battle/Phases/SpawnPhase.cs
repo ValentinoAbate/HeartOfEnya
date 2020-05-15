@@ -122,22 +122,20 @@ public class SpawnPhase : Phase
     private void Initialize()
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        int level = pData.PartyLevel;
         // Spawn party members
         Vector2 bapyVec = BattleGrid.main.GetSpace(bapyPos);
-        var bapy = Instantiate(bapyLvl[pData.partyLevel], bapyVec,
-                                    Quaternion.identity).GetComponent<PartyMember>();
+        var bapy = Instantiate(bapyLvl[level], bapyVec, Quaternion.identity).GetComponent<PartyMember>();
         dialog.characters.Add(bapy.GetComponent<Character>());
         bapy.Pos = bapyPos;
 
         Vector2 soleilVec = BattleGrid.main.GetSpace(soleilPos);
-        var soleil = Instantiate(soleilLvl[pData.partyLevel], soleilVec,
-                                    Quaternion.identity).GetComponent<PartyMember>();
+        var soleil = Instantiate(soleilLvl[level], soleilVec, Quaternion.identity).GetComponent<PartyMember>();
         dialog.characters.Add(soleil.GetComponent<Character>());
         soleil.Pos = soleilPos;
 
         Vector2 rainaVec = BattleGrid.main.GetSpace(rainaPos);
-        var raina = Instantiate(rainaLvl[pData.partyLevel], rainaVec,
-                                    Quaternion.identity).GetComponent<PartyMember>();
+        var raina = Instantiate(rainaLvl[level], rainaVec, Quaternion.identity).GetComponent<PartyMember>();
         dialog.characters.Add(raina.GetComponent<Character>());
         raina.Pos = rainaPos;
 
@@ -148,8 +146,7 @@ public class SpawnPhase : Phase
         if (enableLua)
         {
             Vector2 luaVec = BattleGrid.main.GetSpace(luaPos);
-            lua = Instantiate(luaLvl[pData.partyLevel], luaVec,
-                                Quaternion.identity).GetComponent<PartyMember>();
+            lua = Instantiate(luaLvl[level], luaVec, Quaternion.identity).GetComponent<PartyMember>();
             dialog.characters.Add(lua.GetComponent<Character>());
             lua.Pos = luaPos;
         }
@@ -189,8 +186,8 @@ public class SpawnPhase : Phase
         if (!spawnEnemies)
             return;
 
-        // This is a fresh encounter, just spawn everything
-        if (CurrEncounter != pData.lastEncounter)
+        // This is a fresh encounter or a boss fight, just spawn everything
+        if (CurrEncounter != pData.lastEncounter || pData.InLuaBattle || pData.InAbs0Battle)
         {
             waveNum = startAtWave - 1;
             SpawnAllEnemiesAndObstacles(CurrWave);
@@ -288,6 +285,16 @@ public class SpawnPhase : Phase
         {
             SpawnAllEnemiesAndObstacles(CurrWave);
         }
+    }
+    
+    public void ClearActiveSpawns()
+    {
+        foreach(var spawn in spawners)
+        {
+            BattleGrid.main.RemoveEventTile(spawn.Pos, spawn);
+            Destroy(spawn.gameObject);
+        }
+        spawners.Clear();
     }
 
     public IEnumerator DeclareNextWave()

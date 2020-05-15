@@ -26,6 +26,7 @@ public class BattleEventsLuaBoss : MonoBehaviour
     private IEnumerator LuaPhaseChangeRoutine(Combatant luaBoss, EnemyAILuaBoss aiComponent)
     {
         yield return luaBoss.UseAction(aiComponent.clearObstaclesAndEnemies, Pos.Zero, Pos.Zero);
+        PhaseManager.main.SpawnPhase.ClearActiveSpawns();
         yield return luaBoss.UseAction(aiComponent.moveAllToRight, Pos.Zero, Pos.Zero);
         PhaseManager.main.SpawnPhase.SetEncounter(aiComponent.secondPhaseEnounter, true);
         // Unpause

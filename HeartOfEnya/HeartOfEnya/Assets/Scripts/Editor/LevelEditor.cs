@@ -205,7 +205,7 @@ public class LevelEditor : EditorWindow
         if (partyLevel != oldPartyLevel)
         {
             Undo.RecordObject(PersistantData, "Set party level");
-            PersistantData.partyLevel = partyLevel;
+            PersistantData.levelEditorPartyLevel = partyLevel;
             PrefabUtility.RecordPrefabInstancePropertyModifications(PersistantData);
             EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }

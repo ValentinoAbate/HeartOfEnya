@@ -20,6 +20,8 @@ public class Character : MonoBehaviour
     [SerializeField] private Vector3 doorButtonPos; //where to put the button during out monologue night
     [SerializeField] private Image fadeImage;   //used in the fade-to-black transitions
     [SerializeField] private float fadeSpeed = 1.5f; //controls the speed of fade-to-black transitions
+    [SerializeField] private GameObject soloBackgroundPrefab; //prefab for the solo background
+    [SerializeField] private GameObject originalBg;
 
     private FMODUnity.StudioEventEmitter sfxSelect;
     private Animator anim;
@@ -63,10 +65,11 @@ public class Character : MonoBehaviour
         if (CharacterManager.main == null)
             return;
         //retrieve date from persistent data
-        string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        string phase = pData.gamePhase;
         var phaseData = CharacterManager.main.GetPhaseData(phase);
         //move to the door position if it's our monologue time
-        if (phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower())
+        if (phaseData != null && !pData.absoluteZeroDefeated && phaseData.monologCharacter.ToLower() == Name.ToLower())
         {
             //on the monologue day, move to the door
             if (DoNotDestroyOnLoad.Instance.persistentData.dayNum == 0)
@@ -172,6 +175,7 @@ public class Character : MonoBehaviour
         yield return StartCoroutine("FadeToBlack");
         //replace background prefab with monologue prefab
         Debug.Log("SWAP BACKGROUND");
+        SwapBackground();
         //remove other characters
         Debug.Log("YEET OTHER CHARACTERS");
         DisableOtherCharacters();
@@ -233,20 +237,37 @@ public class Character : MonoBehaviour
 
     public void DisableOtherCharacters()
     {
-        GameObject[] toDisable = GameObject.FindGameObjectsWithTag("CampCharacter");
+        GameObject[] toDisable = GameObject.FindGameObjectsWithTag("CampCharacter"); //find all the characters
         foreach (GameObject otherCharacter in toDisable)
         {
             var otherScript = otherCharacter.GetComponent<Character>();
             //Debug.Log(theirScript.Name);
             if (otherScript.Name != Name)
             {
+                //disable everyone who isn't us
                 Debug.Log(Name + " disabled " + otherScript.Name);
                 otherCharacter.SetActive(false);
             }
             else
             {
-                Debug.Log(Name + " won't disable themself");
+                //since we still need to be active for at least the fade back in, become invisible instead of disabled
+                Debug.Log(Name + " won't disable themself, but they will hide");
+                otherCharacter.transform.Find("Sprite").GetComponent<SpriteRenderer>().enabled = false; //turn off the sprite
             }
         }
+    }
+
+    public void SwapBackground()
+    {
+        //turn off the old background
+        //var originalBg = GameObject.Find("BgVN");
+        Vector3 backgroundPos = originalBg.transform.Find("BgVN").transform.localPosition; //get the position so we can align the new one
+        originalBg.SetActive(false);
+
+        //make new background
+        var newBG = Instantiate(soloBackgroundPrefab);
+        var newBGSprite = newBG.transform.Find("BgVN"); //get the sprite component
+        newBGSprite.transform.localPosition = backgroundPos; //re-align the BG
+        newBGSprite.GetComponent<SpriteRenderer>().sprite = data.soloBackground;
     }
 }

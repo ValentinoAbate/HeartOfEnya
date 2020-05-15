@@ -24,6 +24,8 @@ public class EnemyPhase : Phase
         // Farthest to right takes action first
         Enemies.Sort((e, e2) => e2.Col.CompareTo(e.Col));
         SnowParticleController.main.Intensity = 1;
+        FMODBattle.main.storm.SetParameter("Enemy Turn", 1);
+        //FMODBattle.main.music.SetParameter("Text Playing", 1);
         return StartCoroutine(PlayTurns());
     }
 

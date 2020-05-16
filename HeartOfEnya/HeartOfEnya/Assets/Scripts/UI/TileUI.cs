@@ -20,6 +20,7 @@ public class TileUI : MonoBehaviour
         TargetPreviewEnemy,
         ChargingAttackParty,
         ChargingAttackEnemy,
+        ChargingAttackBoss,
     }
 
     public GameObject tileUIPrefab;

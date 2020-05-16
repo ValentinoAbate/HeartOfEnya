@@ -15,7 +15,7 @@ public class SoupButton : MonoBehaviour
     public Color enabledColor; //color when have enough ingredients for soup
 
     private bool clickEnabled = false; //whether we're active (i.e. have a valid recipe)
-    private List<int> ingredientList = new List<int>(); //contains ID numbers of all currently selected ingredients
+    private List<Ingredient> ingredientList = new List<Ingredient>(); //contains all currently selected ingredients
 
     public EventTrigger trigger;
     private FMODUnity.StudioEventEmitter sfxSelect;
@@ -26,7 +26,7 @@ public class SoupButton : MonoBehaviour
     {
     	//initialize variables
         clickEnabled = false;
-        UpdateRecipe(new List<int>()); //pass UpdateRecipe an empty list to set all icons to the "empty" image
+        UpdateRecipe(new List<Ingredient>()); //pass UpdateRecipe an empty list to set all icons to the "empty" image
 
         sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
         sfxHighlight = GameObject.Find("UIHighlight").GetComponent<FMODUnity.StudioEventEmitter>();
@@ -38,7 +38,7 @@ public class SoupButton : MonoBehaviour
     /// <summary>
     /// Updates images & enabled status whenever the current recipe changes.
     /// </summary>
-    public void UpdateRecipe(List<int> ingredients)
+    public void UpdateRecipe(List<Ingredient> ingredients)
     {
     	//update ingredientList to match the new set of ingredients
     	ingredientList = ingredients;
@@ -54,9 +54,7 @@ public class SoupButton : MonoBehaviour
     		if (i < ingredientList.Count)
     		{
     			//if there's enough ingredients to fill up to this slot, grab the sprite from the respective ingredient
-    			int ingID = ingredientList[i]; //get the target ingredient's index in the Soup Manager's master ingredient list
-    			Ingredient tgtIng = SoupManager.main.ingredients[ingID]; //grab a reference to the target ingredient
-    			ingIcon.sprite = tgtIng.ingredientIcon; //update the icon with the ingredient's image
+    			ingIcon.sprite = ingredientList[i].ingredientIcon;
     		}
     		else
     		{
@@ -99,8 +97,7 @@ public class SoupButton : MonoBehaviour
             List<BuffStruct> buffs = new List<BuffStruct>(); //stores the buff structures used in persistent data
             for (int i = 0; i < ingredientList.Count; i++)
             {
-                int ingID = ingredientList[i]; //get the target ingredient's index in the Soup Manager's master ingredient list
-                Ingredient tgtIng = SoupManager.main.ingredients[ingID]; //grab a reference to the target ingredient
+                Ingredient tgtIng = ingredientList[i]; //grab a reference to the target ingredient
                 if (tgtIng.name == SoupManager.main.defaultIngredient.name)
                 {
                     Debug.Log("Skipping BuffStruct formation for default ingredient");

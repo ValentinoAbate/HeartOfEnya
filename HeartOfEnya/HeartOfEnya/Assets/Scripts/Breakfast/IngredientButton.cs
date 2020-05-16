@@ -13,7 +13,7 @@ public class IngredientButton : MonoBehaviour
     public Color deselectedColor; //color when not selected
     
     private bool selected; //whether or not the button is selected
-    private int myID; //what number button we are. Used to help SoupManager keep track of what ingredients are selected
+    //private int myID; //what number button we are. Used to help SoupManager keep track of what ingredients are selected
 
     private void Awake()
     {
@@ -27,11 +27,11 @@ public class IngredientButton : MonoBehaviour
     public void UpdateData()
     {
     	//if ingredient isn't set, give an error message & abort
-    	if(!ingredient)
-    	{
-    		Debug.Log("ERROR: No ingredient specified for button " + myID);
-    		return;
-    	}
+    	// if(!ingredient)
+    	// {
+    	// 	Debug.Log("ERROR: No ingredient specified for button " + myID);
+    	// 	return;
+    	// }
 
     	//set name text based on ingredient
         Text nameTxt = transform.Find("NameText").GetComponent<Text>();
@@ -50,10 +50,10 @@ public class IngredientButton : MonoBehaviour
     /// <summary>
     /// Sets ID number. Should only be called once during initialization.
     /// </summary>
-    public void SetID(int num)
-    {
-    	myID = num;
-    }
+    // public void SetID(int num)
+    // {
+    // 	myID = num;
+    // }
 
     /// <summary>
     /// ToggleSelected will toggle whether the ingredient is selected.
@@ -64,7 +64,7 @@ public class IngredientButton : MonoBehaviour
     	if (selected)
     	{
     		//if already selected, tell the Soup Manager to remove us from the soup
-    		SoupManager.main.DisableIngredient(myID);
+    		SoupManager.main.DisableIngredient(ingredient);
     		//return to "disabled" color
     		GetComponent<Image>().color = deselectedColor;
     		//update selected
@@ -73,7 +73,7 @@ public class IngredientButton : MonoBehaviour
     	else
     	{
     		//if not already selected, ask the Soup Manager if we can be added to the soup
-    		bool added = SoupManager.main.EnableIngredient(myID);
+    		bool added = SoupManager.main.EnableIngredient(ingredient);
     		
     		if (added)
     		{

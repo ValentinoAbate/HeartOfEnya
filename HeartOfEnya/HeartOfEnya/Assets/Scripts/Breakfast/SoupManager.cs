@@ -26,7 +26,7 @@ public class SoupManager : MonoBehaviour
     public SoupButton soupButton; //reference to the "make soup" button
 
     //internal variables used for state tracking, etc.
-    private List<int> activeIngredients = new List<int>(); //stores ID numbers of selected ingredients
+    private List<Ingredient> activeIngredients = new List<Ingredient>(); // selected ingredients
 
     private FMODUnity.StudioEventEmitter sfxSelect;
     private FMODUnity.StudioEventEmitter sfxCancel;
@@ -56,21 +56,12 @@ public class SoupManager : MonoBehaviour
 
     	//spawn ingredient buttons
     	int totalSpawned = 0; //how many buttons we've currently spawned
-        //create a boolean array to keep track of which ingredients we've already spawned (to prevent duplicates)
-    	bool[] enabledIngredients = new bool[ingredients.Count];
-    	for (int i = 0; i < 6; i++)
+        //make sure we don't spawn FP ingredients before they're introduced, or Lua ingredients before she unfreezes
+        ingredients = ingredients.FindAll(IsValidIng);
+        while(totalSpawned < 6 && ingredients.Count > 0)
     	{
-    		//Random.Range(0, ingredients.Length)
     		//pick a random ingredient that we haven't spawned yet
     		int choice = Random.Range(0, ingredients.Count);
-    		while (enabledIngredients[choice])
-    		{
-    			Debug.Log("already spawned " + ingredients[choice].name + ", skipping");
-    			choice = Random.Range(0, ingredients.Count); //re-roll if already enabled
-
-    			//if we have problems with this looping infinitely, add logic to detect if there's no remaining options
-    		}
-    		enabledIngredients[choice] = true; //set the ingredient to active
     		Debug.Log("chosen ingredient " + choice + ", AKA " + ingredients[choice].name);
     		
     		//spawn the button
@@ -78,11 +69,11 @@ public class SoupManager : MonoBehaviour
             //connect it to the UI canvas and move it to the next open slot
             button.transform.SetParent(parentCanvas.transform, false);
             button.transform.localPosition = new Vector3(buttonX, buttonY - (totalSpawned * buttonOffset), 0);
-            //set its ingredient & ID
-            button.ingredient = ingredients[choice];
-            button.SetID(choice); //use i instead of totalSpawned so that we can use the ID as an index to retrieve its ingredient from the ingredients list
+            button.ingredient = ingredients[choice]; //set its ingredient
             button.UpdateData(); //tell the button to refresh its images with data from the new ingredient
 
+            //remove the chosen ingredient from our options & increment totalSpawned
+            ingredients.RemoveAt(choice);
             totalSpawned++;
     	}
 
@@ -94,10 +85,7 @@ public class SoupManager : MonoBehaviour
             //connect it to the UI canvas and move it to the next open slot
             button.transform.SetParent(parentCanvas.transform, false);
             button.transform.localPosition = new Vector3(buttonX, buttonY - (totalSpawned * buttonOffset), 0);
-            //set its ingredient & ID
-            ingredients.Add(defaultIngredient); //work around the ID system by appending copies of the default ingredient to the end of the master list
-            button.ingredient = defaultIngredient;
-            button.SetID(ingredients.Count - 1);
+            button.ingredient = defaultIngredient; //set its ingredient
             button.UpdateData(); //tell the button to refresh its images with data from the new ingredient
 
             totalSpawned++;
@@ -106,24 +94,24 @@ public class SoupManager : MonoBehaviour
 
     /// <summary>
     /// Called when the user de-selects an ingredient.
-    /// Removes its ID from the list of active ingredients and tells the "make soup" button to update itself
+    /// Removes its ingredient from the list of active ingredients and tells the "make soup" button to update itself
     /// </summary>
-    public void DisableIngredient(int ingID)
+    public void DisableIngredient(Ingredient ing)
     {
     	sfxCancel.Play();
-        activeIngredients.Remove(ingID);
+        activeIngredients.Remove(ing);
     	soupButton.UpdateRecipe(activeIngredients);
     }
 
     /// <summary>
     /// Called when the user selects an ingredient.
-    /// If there's still room in the soup, adds its ID from the list of active ingredients, tells the "make soup" button to update itself,
+    /// If there's still room in the soup, adds its ingredient to the list of active ingredients, tells the "make soup" button to update itself,
     /// and returns true.
     /// If there's no more room in the soup, returns false.
     /// </summary>
-    public bool EnableIngredient(int ingID)
+    public bool EnableIngredient(Ingredient ing)
     {
-    	if (activeIngredients.Contains(ingID))
+    	if (activeIngredients.Contains(ing))
     	{
     		//fail if already enabled
     		return false;
@@ -138,9 +126,38 @@ public class SoupManager : MonoBehaviour
     		sfxSelect.Play();
 
             //add ingredients to soup and tell the soup button to update its images
-    		activeIngredients.Add(ingID);
+    		activeIngredients.Add(ing);
     		soupButton.UpdateRecipe(activeIngredients);
     		return true; //report success
     	}
+    }
+
+    /// <summary>
+    /// Function that checks whether an ingredient is valid for the current game phase
+    /// (i.e. no FP before that mechanic is introduced & no Lua before she's found).
+    /// Used in filtering the ingredients prior to spawning them
+    /// </summary>
+    private static bool IsValidIng(Ingredient ing)
+    {
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        if (pData.InTutorialFirstDay || pData.InTutorialSecondDay)
+        {
+            if (ing.effectType == Ingredient.Effect.restore)
+            {
+                return false;
+            }
+        }
+
+        //filter Lua ingredients if she's not free
+        if (!pData.LuaUnfrozen)
+        {
+            if (ing.target == Ingredient.Character.lua)
+            {
+                return false;
+            }
+        }
+
+        //if neither of the above is true, the ingredient is valid
+        return true;
     }
 }

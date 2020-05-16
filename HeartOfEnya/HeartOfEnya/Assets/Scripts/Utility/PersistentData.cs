@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -11,24 +10,38 @@ public class PersistentData : MonoBehaviour
 {
     public const int dayNumStart = 0;
     public const string gamePhaseIntro = "INTRO";
-    public const string gamePhaseTutorial = "A";
-    public const string gamePhaseLuaBattle = "B";
+    public const string gamePhaseTut1And2 = "A";
+    public const string gamePhaseTut3AndLuaBattle = "B";
     public const string gamePhaseBeginMain = "C";
     public const string gamePhaseLuaUnfrozen = "D";
     public const string gamePhaseAbsoluteZeroBattle = "E";
+    public const string gamePhaseLevelEditor = "LE";
 
     public bool InMainPhase => gamePhase == gamePhaseBeginMain || gamePhase == gamePhaseLuaUnfrozen;
     public bool LuaUnfrozen => gamePhase == gamePhaseLuaUnfrozen || gamePhase ==  gamePhaseAbsoluteZeroBattle;
-    public bool InTutorialFirstDay => gamePhase == gamePhaseTutorial && dayNum == dayNumStart;
-    public bool InTutorialSecondDay => gamePhase == gamePhaseTutorial && dayNum == dayNumStart + 1;
-    public bool InTutorialThirdDay => gamePhase == gamePhaseLuaBattle && dayNum == dayNumStart;
-    public bool InLuaBattle => gamePhase == gamePhaseLuaBattle && dayNum >= dayNumStart + 1;
+    public bool InTutorialFirstDay => gamePhase == gamePhaseTut1And2 && dayNum == dayNumStart;
+    public bool InTutorialSecondDay => gamePhase == gamePhaseTut1And2 && dayNum == dayNumStart + 1;
+    public bool InTutorialThirdDay => gamePhase == gamePhaseTut3AndLuaBattle && dayNum == dayNumStart;
+    public bool InLuaBattle => gamePhase == gamePhaseTut3AndLuaBattle && dayNum >= dayNumStart + 1;
+    public bool InAbs0Battle => gamePhase == gamePhaseAbsoluteZeroBattle && !absoluteZeroDefeated;
 
+    public int PartyLevel
+    {
+        get
+        {
+            if (gamePhase == gamePhaseLevelEditor)
+                return levelEditorPartyLevel;
+            if (LuaUnfrozen)
+                return 4;
+            if (gamePhase == gamePhaseBeginMain)
+                return 3;
+            if (gamePhase == gamePhaseTut3AndLuaBattle)
+                return 2;
+            return 1;
+        }
+    }
 
     [Header("Battle")]
-    public int partyLevel;
-    public Dictionary<string, int> wounds;  // number of times character was hit at 0 hp,
-                                            // keys are character names e.g. wounds["Bapy"]
     public bool luaBossDefeated;
     public bool absoluteZeroDefeated;
     public bool absoluteZeroPhase2Defeated;
@@ -41,20 +54,17 @@ public class PersistentData : MonoBehaviour
     public List<BuffStruct> buffStructures;  // buffs characters are taking into battle
 
     [Header("Dialog")]
-    public string gamePhase = gamePhaseTutorial;           // GamePhase: What “day” it is.
+    public string gamePhase = gamePhaseTut1And2;           // GamePhase: What “day” it is.
     public int dayNum = dayNumStart;         // DayNum: The number of days spent on the current Phase
-    
-    [Header("Soup")]
-    public List<string> gatheredIngredients;  // List of gathered ingredients
-    // public List<Soup> soupPool;            // List of soups in inventory
 
-    private void Awake()
+    [Header("Level Editor")]
+    public int levelEditorPartyLevel = 1;
+
+    public string IntToGamePhase(int phaseNum)
     {
-        // initialize variables
-        wounds = new Dictionary<string, int>();
-        // buffStructures = new List<
-        gatheredIngredients = new List<string>();
-        // soupPool = new List<Soup
+        if (phaseNum == 0)
+            return gamePhaseIntro;
+        return ((char)('A' + phaseNum - 1)).ToString();
     }
 
     [System.Serializable]

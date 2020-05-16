@@ -27,6 +27,7 @@ public class BattleEventsAbs0 : MonoBehaviour
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         yield return abs0.UseAction(aiComponent.clearObstaclesAndEnemies, Pos.Zero, Pos.Zero);
+        PhaseManager.main.SpawnPhase.ClearActiveSpawns();
         yield return abs0.UseAction(aiComponent.moveAllToRight, Pos.Zero, Pos.Zero);
         yield return abs0.UseAction(aiComponent.spawnObstacles, Pos.Zero, Pos.Zero);
         yield return StartCoroutine(PhaseManager.main.SpawnPhase.DeclareNextWave());

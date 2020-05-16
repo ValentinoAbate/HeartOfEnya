@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
     [SerializeField] private Image fadeImage;   //used in the fade-to-black transitions
     [SerializeField] private float fadeSpeed = 1.5f; //controls the speed of fade-to-black transitions
     [SerializeField] private GameObject soloBackgroundPrefab; //prefab for the solo background
+    [SerializeField] private GameObject originalBg;
 
     private FMODUnity.StudioEventEmitter sfxSelect;
     private Animator anim;
@@ -64,10 +65,11 @@ public class Character : MonoBehaviour
         if (CharacterManager.main == null)
             return;
         //retrieve date from persistent data
-        string phase = DoNotDestroyOnLoad.Instance.persistentData.gamePhase;
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        string phase = pData.gamePhase;
         var phaseData = CharacterManager.main.GetPhaseData(phase);
         //move to the door position if it's our monologue time
-        if (phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower())
+        if (phaseData != null && !pData.absoluteZeroDefeated && phaseData.monologCharacter.ToLower() == Name.ToLower())
         {
             //on the monologue day, move to the door
             if (DoNotDestroyOnLoad.Instance.persistentData.dayNum == 0)
@@ -258,9 +260,9 @@ public class Character : MonoBehaviour
     public void SwapBackground()
     {
         //turn off the old background
-        var oldBG = GameObject.Find("BgVN");
-        Vector3 backgroundPos = oldBG.transform.Find("BgVN").transform.localPosition; //get the position so we can align the new one
-        oldBG.SetActive(false);
+        //var originalBg = GameObject.Find("BgVN");
+        Vector3 backgroundPos = originalBg.transform.Find("BgVN").transform.localPosition; //get the position so we can align the new one
+        originalBg.SetActive(false);
 
         //make new background
         var newBG = Instantiate(soloBackgroundPrefab);

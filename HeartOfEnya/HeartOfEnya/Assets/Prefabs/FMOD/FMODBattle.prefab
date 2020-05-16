@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CollisionTag: 
-  Event: event:/SFX/Voices/Bapy/Bapy Normal
+  Event: event:/SFX/Voices/Bapy/Bapy Speach
   PlayEvent: 0
   StopEvent: 0
   AllowFadeout: 1
@@ -784,6 +784,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8938799820228471625}
+  - component: {fileID: 1733533177826063645}
   m_Layer: 0
   m_Name: FMODBattle
   m_TagString: Untagged
@@ -807,3 +808,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1733533177826063645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938799820228471626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44c6cad45a20aa7428f94193debca708, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music: {fileID: 6326528829966886475}
+  storm: {fileID: 652576428286471297}

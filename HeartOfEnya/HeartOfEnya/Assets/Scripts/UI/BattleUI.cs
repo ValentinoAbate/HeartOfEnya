@@ -30,6 +30,7 @@ public class BattleUI : MonoBehaviour, IPausable
     public HashSet<Pos> TargetableTiles { get; set; } = new HashSet<Pos>();
     public PauseHandle PauseHandle { get; set; }
 
+    public GameObject runTileContainer;
     private List<EventTileAction> runTiles;
 
     private void Awake()
@@ -46,7 +47,7 @@ public class BattleUI : MonoBehaviour, IPausable
 
     private void Start()
     {
-        runTiles = GetComponentsInChildren<EventTileAction>().ToList();
+        runTiles = runTileContainer.GetComponentsInChildren<EventTileAction>().ToList();
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         if (pData.InTutorialFirstDay)
             DisableRunTiles();

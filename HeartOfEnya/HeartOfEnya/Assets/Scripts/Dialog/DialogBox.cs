@@ -47,7 +47,8 @@ public class DialogBox : MonoBehaviour, IPausable
         if (scrollDelay > 0)
         {
             // Start the text scroll effect
-            voiceEmitter.Play();
+            if (!voiceEmitter.IsPlaying())
+                voiceEmitter.Play();
             state = State.Scrolling;
             text.text = string.Empty;
             for (int i = 0; state != State.Cancel && i < line.Length - 1; ++i)
@@ -70,7 +71,7 @@ public class DialogBox : MonoBehaviour, IPausable
         text.text = line;
         // Wait until the player continues
         state = State.Waiting;
-        voiceEmitter.Stop();
+        voiceEmitter.SetParameter("Space", 1);
         yield return new WaitWhile(() => state == State.Waiting);
         state = State.Inactive;
     }

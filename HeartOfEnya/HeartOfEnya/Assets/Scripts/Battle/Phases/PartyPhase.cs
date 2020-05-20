@@ -77,14 +77,22 @@ public class PartyPhase : Phase
 
         EnableCursor();
 
-        BattleEvents.main.tutorialIntro._event.Invoke(); // tutorial event at the start of battle
-        BattleEvents.main.tutPushing._event.Invoke();    // day 2 event
-        BattleEvents.main.tutFlameMoves._event.Invoke(); // day 3 event
 
-        // tutorial event at the start of the second turn
-        if (PhaseManager.main.Turn == 2)
+        if(PhaseManager.main.Turn == 1)
         {
+            BattleEvents.main.tutorialIntro._event.Invoke(); // tutorial event at the start of battle
+            BattleEvents.main.tutPushing._event.Invoke();    // day 2 event
+            BattleEvents.main.tutFlameMoves._event.Invoke(); // day 3 event
+        }
+        else if (PhaseManager.main.Turn == 2)
+        {
+            // tutorial event at the start of the second turn
             BattleEvents.main.tutSoleilChargeReminder._event.Invoke();
+        }
+        else if(PhaseManager.main.Turn == 3)
+        {
+            // tutorial event at the start of the third turn
+            BattleEvents.main.tutEndTurnButton._event.Invoke();
         }
     }
 

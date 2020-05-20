@@ -11,7 +11,7 @@ public class SetPrimaryTargetPositionEffect : ActionEffect
 
     public override IEnumerator ApplyEffect(Combatant user, Pos target, ExtraData data)
     {
-        var targetCombatant = BattleGrid.main.GetObject(data.primaryTargetPos).GetComponent<Combatant>();
+        var targetCombatant = BattleGrid.main.Get<Combatant>(data.primaryTargetPos);
         if (targetCombatant == null || !targetCombatant.isMovable)
             yield break;
         BattleGrid.main.MoveAndSetWorldPos(targetCombatant, target);

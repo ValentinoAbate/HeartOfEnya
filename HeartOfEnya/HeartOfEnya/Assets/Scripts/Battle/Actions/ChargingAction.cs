@@ -38,7 +38,6 @@ public class ChargingAction
         }
         if (action.targetPattern.type == TargetPattern.Type.Spread)
         {
-            var obj = BattleGrid.main.GetObject(target);
             TargetType = Type.TargetSquare;
             targetSquare = target;
             displayPattern.Show(tileType);

@@ -22,10 +22,10 @@ public class GridCursor : Cursor
         if (!BattleGrid.main.IsLegal(newPos))
             return;
 
-        BattleGrid.main.GetObject(Pos)?.Highlight();
+        BattleGrid.main.Get<FieldObject>(Pos)?.Highlight();
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(Pos);
-        BattleGrid.main.GetObject(Pos)?.UnHighlight();
+        BattleGrid.main.Get<FieldObject>(Pos)?.UnHighlight();
     }
 
     public override void ProcessInput()

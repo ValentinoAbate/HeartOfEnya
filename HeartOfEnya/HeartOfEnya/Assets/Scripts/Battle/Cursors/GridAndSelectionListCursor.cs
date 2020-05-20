@@ -13,7 +13,7 @@ public class GridAndSelectionListCursor : SelectionListCursor
     public override void Highlight(Pos newPos)
     {
         base.Highlight(newPos);
-        var highlightedObj = BattleGrid.main.GetObject(Pos);
+        var highlightedObj = BattleGrid.main.Get<FieldObject>(Pos);
         if (highlightedObj != null)
         {
             int index = SelectionList.IndexOf(highlightedObj);

@@ -154,6 +154,7 @@ public class BattleUI : MonoBehaviour, IPausable
 
     public void ShowInfoPanelEnemy(Enemy e)
     {
+        return;
         InitializeInfoPanel();
         enemyInfoPanel.gameObject.SetActive(true);
         enemyInfoPanel.ShowUI(e);
@@ -162,6 +163,7 @@ public class BattleUI : MonoBehaviour, IPausable
 
     public void ShowInfoPanelParty(PartyMember p)
     {
+        return;
         InitializeInfoPanel();
         partyInfoPanel.gameObject.SetActive(true);
         partyInfoPanel.ShowUI(p);
@@ -170,6 +172,7 @@ public class BattleUI : MonoBehaviour, IPausable
 
     public void ShowInfoPanelGeneric(Combatant c)
     {
+        return;
         InitializeInfoPanel();
         genericInfoPanel.gameObject.SetActive(true);
         genericInfoPanel.ShowUI(c);

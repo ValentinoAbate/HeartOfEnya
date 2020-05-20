@@ -44,10 +44,10 @@ public class MouseCursor : Cursor
             return;
 
         sfxHighlight.Play();
-        BattleGrid.main.GetObject(Pos)?.UnHighlight();
+        BattleGrid.main.Get<FieldObject>(Pos)?.UnHighlight();
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(Pos);
-        FieldObject newObject = BattleGrid.main.GetObject(Pos);
+        FieldObject newObject = BattleGrid.main.Get<FieldObject>(Pos);
         newObject?.Highlight();
 
         // check if the object is an enemy

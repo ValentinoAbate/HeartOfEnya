@@ -27,7 +27,7 @@ public class EnemyAILuaBoss : AIComponent<Enemy>
             yield return new WaitWhile(() => self.PauseHandle.Paused);
             var target = new Pos(lastRowTargeted, self.Col + 1);
             // Get the number of obstacles in the targeted row
-            NumObstaclesDestroyed = BattleGrid.main.GetAllCombatants((c) => c.Row == lastRowTargeted && c is Obstacle).Count;
+            NumObstaclesDestroyed = BattleGrid.main.FindAll<Obstacle>((c) => c.Row == lastRowTargeted).Count;
             // Clear the obstacles in the row
             yield return self.UseAction(clearObstacleRow, target, target);
             // Activate main move

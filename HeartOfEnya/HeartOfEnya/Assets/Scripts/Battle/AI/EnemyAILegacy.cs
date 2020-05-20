@@ -8,8 +8,8 @@ public class EnemyAILegacy : AIComponent<Enemy>
     {
         // Sort targets by distance
         var targetList = new List<FieldObject>(PhaseManager.main.PartyPhase.Party);
-        var lureList = new List<FieldObject>(BattleGrid.main.GetAllObjects((obj) => obj is Lure));   //get list of all lures
-        var obstacleList = new List<FieldObject>(BattleGrid.main.GetAllObjects((obj) => obj is Obstacle));   //get list of all obstacles
+        var lureList = new List<FieldObject>(BattleGrid.main.FindAll<Lure>());   //get list of all lures
+        var obstacleList = new List<FieldObject>(BattleGrid.main.FindAll<Obstacle>());   //get list of all obstacles
 
         // Remove all dead targets (just in case)
         targetList.RemoveAll((t) => t == null);

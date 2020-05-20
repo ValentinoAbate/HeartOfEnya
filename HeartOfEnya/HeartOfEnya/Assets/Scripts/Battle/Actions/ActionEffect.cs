@@ -26,7 +26,7 @@ public abstract class ActionEffect : MonoBehaviour
     protected IEnumerator DoMove(Combatant user, Combatant target, Pos direction, int moveDamage = 2)
     {
         Pos destination = target.Pos + direction; //where are we trying to push the object to?
-        Combatant thingAtDestination = BattleGrid.main.GetObject(destination) as Combatant; //what is in our way?
+        Combatant thingAtDestination = BattleGrid.main.Get<Combatant>(destination); //what is in our way?
         Debug.Log("moving: " + thingAtDestination);
 
         //compile a list of all the objects to move
@@ -65,7 +65,7 @@ public abstract class ActionEffect : MonoBehaviour
                 //if there's a movable object in our way, iterate the loop
                 target = thingAtDestination;
                 destination = target.Pos + direction;
-                thingAtDestination = BattleGrid.main.GetObject(destination) as Combatant;
+                thingAtDestination = BattleGrid.main.Get<Combatant>(destination);
             }
         } while (keepGoing);
 

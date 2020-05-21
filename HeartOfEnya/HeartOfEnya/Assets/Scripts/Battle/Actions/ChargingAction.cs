@@ -29,13 +29,8 @@ public class ChargingAction
         else
             displayPattern = action.targetPatternGenerator.Generate();
         displayPattern.Target(user.Pos, target);
-        tileType = TileUI.Type.ChargingAttackParty;
-        if(user.Team == FieldEntity.Teams.Enemy)
-        {
-            var enemy = user as Enemy;
-            tileType = enemy == null || !enemy.isBoss ? TileUI.Type.ChargingAttackEnemy
-                : TileUI.Type.ChargingAttackBoss;
-        }
+        tileType = user.Team == FieldEntity.Teams.Party ? TileUI.Type.ChargingAttackParty
+                        : TileUI.Type.ChargingAttackEnemy;
         if (action.targetPattern.type == TargetPattern.Type.Spread)
         {
             var obj = BattleGrid.main.GetObject(target);

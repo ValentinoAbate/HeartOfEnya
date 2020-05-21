@@ -9,9 +9,6 @@ public class EndTurn : MonoBehaviour
         if (PhaseManager.main.Transitioning)
             return;
         if (PhaseManager.main.ActivePhase == PhaseManager.main.PartyPhase)
-        {
-            BattleUI.main.HideInfoPanel();
             PhaseManager.main.NextPhase();
-        }
     }
 }

@@ -120,23 +120,13 @@ public class BattleUI : MonoBehaviour, IPausable
 
     }
 
-    private bool hideEndTurnButtonHighPriority = false;
+    public void ShowEndTurnButton() => endTurnButton.interactable = true;
 
-    public void ShowEndTurnButton(bool highPriority = false)
-    {
-        if (highPriority)
-            hideEndTurnButtonHighPriority = false;
-        if (hideEndTurnButtonHighPriority)
-            return;
-        endTurnButton.interactable = true;
-    }
+    public void HideEndTurnButton() => endTurnButton.interactable = false;
 
-    public void HideEndTurnButton(bool highPriority = false)
-    {
-        endTurnButton.interactable = false;
-        if (highPriority)
-            hideEndTurnButtonHighPriority = true;
-    }
+    public void EnableEndTurnButton() => endTurnButton.gameObject.SetActive(true);
+
+    public void DisableEndTurnButton() => endTurnButton.gameObject.SetActive(false);
 
     public void HideInfoPanel(bool clear = true)
     {

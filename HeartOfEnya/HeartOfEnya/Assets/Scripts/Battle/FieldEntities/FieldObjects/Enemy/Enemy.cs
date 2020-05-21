@@ -14,7 +14,6 @@ public class Enemy : Combatant, IPausable
     [Header("Enemy-Specific Fields")]
     public Action action;
     public SpriteRenderer sprite;
-    public bool isBoss = false;
     public override Sprite DisplaySprite => sprite.sprite;
     public override Color DisplaySpriteColor => sprite.color;
 

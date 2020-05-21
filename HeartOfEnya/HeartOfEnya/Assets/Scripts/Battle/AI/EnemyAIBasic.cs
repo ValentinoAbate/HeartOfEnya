@@ -77,7 +77,7 @@ public class EnemyAIBasic : AIComponent<Enemy>
             foreach(var direction in Pos.Directions)
             {
                 var obstacle = BattleGrid.main.Get<Obstacle>(self.Pos + direction);
-                if (obstacle != null || (!targetImmovableObstacles && !obstacle.isMovable))
+                if (obstacle != null && (targetImmovableObstacles || obstacle.isMovable))
                     targetableObstacles.Add(obstacle);
             }
             if(targetableObstacles.Count > 0)

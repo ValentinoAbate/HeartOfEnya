@@ -79,10 +79,12 @@ public class ActionButton : ActionButtonBase
     public void HideExtraInfoWindow()
     {
         extraInfoWindow.gameObject.SetActive(false);
+        BattleUI.main.RestoreInfoPanel();
     }
 
     public void ShowExtraInfoWindow()
     {
         extraInfoWindow.gameObject.SetActive(true);
+        BattleUI.main.HideInfoPanel(false);
     }
 }

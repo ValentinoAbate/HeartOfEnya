@@ -11,9 +11,10 @@ public class BattleEventsDay3 : MonoBehaviour
     {
         if(battleEvents.tutorialDay3 && !battleEvents.tutFlameMoves.flag)
         {
+            battleEvents.Pause();
             Debug.Log("Battle Triggers: Flame Moves");
             battleEvents.tutFlameMoves.flag = true;
-
+            DialogueManager.main.runner.StartDialogue("TutFlameMoves");
             StartCoroutine(FlameMovesTriggerPost(DialogueManager.main.runner));
         }
     }
@@ -26,19 +27,25 @@ public class BattleEventsDay3 : MonoBehaviour
         string[] units = {"Soleil", "Bapy"};
         battleEvents.partyPhase.DisableUnits(new List<string>(units));
 
+        // Restrict movement
+        var rainaPos = new Pos(2, 7);
+        BattleUI.main.MoveableTiles.Add(rainaPos);
+        BattleUI.main.TargetableTiles.Add(rainaPos + Pos.Left);
+
         // solo raina's flame move
         battleEvents.partyPhase.PartyWideSoloAction("RainaAction2_Flame");
 
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Unpause();
     }
 
     public void BurnTrigger()
     {
         if(battleEvents.tutorialDay3 && !battleEvents.tutBurn.flag)
         {
+            battleEvents.Pause();
             Debug.Log("Battle Triggers: Burn");
-            battleEvents.tutFlameMoves.flag = true;
-
+            battleEvents.tutBurn.flag = true;
+            DialogueManager.main.runner.StartDialogue("TutBurn");
             StartCoroutine(BurnTriggerPost(DialogueManager.main.runner));
         }
     }
@@ -51,7 +58,11 @@ public class BattleEventsDay3 : MonoBehaviour
         string[] units = {"Soleil", "Bapy"};
         battleEvents.partyPhase.EnableUnits(new List<string>(units));
         battleEvents.partyPhase.PartyWideClearSoloActions();
+        // lift movement restriction
+        BattleUI.main.MoveableTiles.Clear();
+        // lift targeting restrictions
+        BattleUI.main.TargetableTiles.Clear();
 
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);     
+        battleEvents.Unpause();    
     }
 }

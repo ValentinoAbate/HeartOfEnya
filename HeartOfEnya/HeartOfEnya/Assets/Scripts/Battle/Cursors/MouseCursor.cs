@@ -41,7 +41,11 @@ public class MouseCursor : Cursor
         if (newPos == Pos)
             return;
         if (!BattleGrid.main.IsLegal(newPos))
+        {
+            BattleGrid.main.Get<FieldObject>(Pos)?.UnHighlight();
+            Pos = Pos.OutOfBounds;
             return;
+        }
 
         sfxHighlight.Play();
         BattleGrid.main.Get<FieldObject>(Pos)?.UnHighlight();

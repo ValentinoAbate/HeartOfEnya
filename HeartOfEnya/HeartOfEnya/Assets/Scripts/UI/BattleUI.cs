@@ -70,12 +70,7 @@ public class BattleUI : MonoBehaviour, IPausable
         {
             if (savedEndTurnButtonVal)
                 ShowEndTurnButton();
-            if (savedEnemyInspect != null)
-                ShowInfoPanelEnemy(savedEnemyInspect);
-            else if (savedPartyInspect != null)
-                ShowInfoPanelParty(savedPartyInspect);
-            else if (savedGenericInspect != null)
-                ShowInfoPanelGeneric(savedGenericInspect);
+            RestoreInfoPanel();
         }
     }
 
@@ -150,6 +145,16 @@ public class BattleUI : MonoBehaviour, IPausable
             savedGenericInspect = null;
             savedPartyInspect = null;
         }
+    }
+
+    public void RestoreInfoPanel()
+    {
+        if (savedEnemyInspect != null)
+            ShowInfoPanelEnemy(savedEnemyInspect);
+        else if (savedPartyInspect != null)
+            ShowInfoPanelParty(savedPartyInspect);
+        else if (savedGenericInspect != null)
+            ShowInfoPanelGeneric(savedGenericInspect);
     }
 
     public void ShowInfoPanelEnemy(Enemy e)

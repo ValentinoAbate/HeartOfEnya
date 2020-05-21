@@ -147,15 +147,17 @@ public class PartyPhase : Phase
         }
         var ePhase = PhaseManager.main.EnemyPhase;
         var sPhase = PhaseManager.main.SpawnPhase;
-        var isTutorial = DoNotDestroyOnLoad.Instance.persistentData.InTutorialFirstDay;
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        bool waitForDay1Tut = pData.InTutorialFirstDay && PhaseManager.main.Turn <= 2;
+        bool waitForDay2Tut = pData.InTutorialSecondDay && PhaseManager.main.Turn <= 4;
         ePhase.RemoveDead();
-        if (ePhase.Enemies.Count <= 0 && !sPhase.HasActiveSpawners && !(isTutorial && PhaseManager.main.Turn <= 2))
+        if (ePhase.Enemies.Count > 0 || sPhase.HasActiveSpawners || waitForDay1Tut || waitForDay2Tut)
         {
-            StartCoroutine(DeclareSpawnsThenFinishEndAction());
+            FinishEndAction();
         }
         else
         {
-            FinishEndAction();
+            StartCoroutine(DeclareSpawnsThenFinishEndAction());
         }
 
     }

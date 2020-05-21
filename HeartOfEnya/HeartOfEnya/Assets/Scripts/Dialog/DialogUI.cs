@@ -131,7 +131,7 @@ namespace Dialog
             //characters.Add(character);
             if (character == default)
             {
-                Debug.LogWarning("Character " + speaker + " not found in scene. Skipping line.");
+                Debug.LogWarning("Character \"" + speaker + "\" not found in scene. Skipping line.");
                 yield break;
             }
             // Set the character's expression if necessary

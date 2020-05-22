@@ -1115,6 +1115,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 279450291}
   m_CullTransparentMesh: 0
+--- !u!114 &394965868 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6120777202377938410, guid: 1a00c200a13ef9a27b8391587a6a0b66,
+    type: 3}
+  m_PrefabInstance: {fileID: 843808892}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9d1f45dd8674778bb58674513e8c5da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &405834381
 GameObject:
   m_ObjectHideFlags: 0
@@ -2948,6 +2960,11 @@ PrefabInstance:
     - target: {fileID: 7243930662405243379, guid: 1a00c200a13ef9a27b8391587a6a0b66,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7825716619185035859, guid: 1a00c200a13ef9a27b8391587a6a0b66,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9201877924975715861, guid: 1a00c200a13ef9a27b8391587a6a0b66,
@@ -5837,8 +5854,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6120777202377938410, guid: 1a00c200a13ef9a27b8391587a6a0b66,
-          type: 3}
+      - m_Target: {fileID: 394965868}
         m_MethodName: TransitionScenes
         m_Mode: 5
         m_Arguments:

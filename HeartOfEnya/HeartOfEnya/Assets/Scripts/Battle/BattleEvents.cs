@@ -31,6 +31,7 @@ public class BattleEvents : MonoBehaviour
     public BattleEvent tutBapyWait;
     public BattleEvent tutSoleilChargeReminder;
     public BattleEvent tutSoleilChargeExplanation;
+    public BattleEvent tutEndTurnButton;
     public BattleEvent tutEnemySpawnWarning;
     public BattleEvent tutEnemySpawn;
     public BattleEvent tutEnemyInfo;
@@ -98,7 +99,7 @@ public class BattleEvents : MonoBehaviour
         {
             Debug.Log("Battle Triggers: start of battle");
             tutorialIntro.flag = true;
-            BattleUI.main.DisableEndTurnButton();
+            BattleUI.main.HideEndTurnButton(true);
 
             // Start the dialog (connect to ambers code)
             Pause();
@@ -402,6 +403,32 @@ public class BattleEvents : MonoBehaviour
         
         Unpause();
     }
+
+
+    public void TutEndTurnButtonTrigger()
+    {
+        if (tutorialDay1 && !tutEndTurnButton.flag)
+        {
+            Pause();
+            DialogueManager.main.runner.StartDialogue("TutEndTurnButton");
+
+            Debug.Log("Battle Triggers: TutEndTurnButton");
+            tutEndTurnButton.flag = true;
+
+            StartCoroutine(TutEndTurnButtonTriggerPost(DialogueManager.main.runner));
+        }
+    }
+
+    private IEnumerator TutEndTurnButtonTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+
+        // no enable the end turn button
+        BattleUI.main.ShowEndTurnButton(true);
+
+        Unpause();
+    }
+
 
     public void EnemySpawnTrigger()
     {

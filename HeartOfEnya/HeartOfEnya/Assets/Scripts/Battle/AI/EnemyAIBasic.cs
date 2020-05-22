@@ -6,6 +6,7 @@ using System.Linq;
 public class EnemyAIBasic : AIComponent<Enemy>
 {
     public bool stayAway = true;
+    public bool targetImmovableObstacles = true;
     public override IEnumerator DoTurn(Enemy self)
     {
         // ref to the action
@@ -47,26 +48,41 @@ public class EnemyAIBasic : AIComponent<Enemy>
         // Initialize party path
         List<PathData<Combatant>> attackablePathData;
         List<PathData<Combatant>> reachablePathData;
+        List<PathData<Combatant>> reachableThroughAllyPathData;
         // Get path data about party members
-        GetPathData(self, targetList, out attackablePathData, out reachablePathData);
+        GetPathData(self, targetList, out attackablePathData, out reachablePathData, out reachableThroughAllyPathData, true);
         // Attack a party member if possible
         if(attackablePathData.Count > 0)
         {
+            // Choose the party member with the highest priority
             attackablePathData.Sort((p, p2) => CompareTargetPriority(p.obj, p.path.Count, p2.obj, p2.path.Count));
             yield return StartCoroutine(MoveAndAttackIfAble(self, attackablePathData[0]));
         }
-        else if(reachablePathData.Count > 0) // Else more towards a party member
+        else if(reachablePathData.Count > 0) // Else more towards a party member if one is unblocked
         {
+            // Chose the path that gets the enemy closest to a target
             reachablePathData.Sort((p, p2) => Pos.Distance(p.path[p.path.Count - 1], p.obj.Pos)
                                         .CompareTo(Pos.Distance(p2.path[p2.path.Count - 1], p2.obj.Pos)));
             yield return StartCoroutine(MoveAndAttackIfAble(self, reachablePathData[0]));
+        }
+        else if(reachableThroughAllyPathData.Count > 0) // Else move towards a party member behind an ally if possible
+        {
+            // Choose the path that gets the enemy closest to a target
+            reachableThroughAllyPathData.Sort((p, p2) => Pos.Distance(p.path[p.path.Count - 1], p.obj.Pos)
+                                        .CompareTo(Pos.Distance(p2.path[p2.path.Count - 1], p2.obj.Pos)));
+            yield return StartCoroutine(MoveAndAttackIfAble(self, reachableThroughAllyPathData[0]));
+
         }
         else // Try and fight an obstacle
         {
             // Get all obstacles
             var obstacleList = BattleGrid.main.GetAllCombatants((obj) => obj is Obstacle);   //get list of all obstacles
             obstacleList.RemoveAll((t) => t == null);
-            GetPathData(self, obstacleList, out attackablePathData, out reachablePathData);
+            // Remove immovable obstacles if they aren't considered viable targets
+            if (!targetImmovableObstacles)
+                obstacleList.RemoveAll((t) => !t.isMovable);
+            // Get path data about obstacles
+            GetPathData(self, obstacleList, out attackablePathData, out reachablePathData, out reachableThroughAllyPathData, false);
             if(attackablePathData.Count > 0) // Fight an obstacle if possible
             {
                 var partyAvg = Pos.Average(targetList.Select((t) => t.Pos));
@@ -82,9 +98,6 @@ public class EnemyAIBasic : AIComponent<Enemy>
                 yield return StartCoroutine(MoveAlongPath(self, path, path.Count));
             }
         }
-
-        // No target is attackable, move towards closest target
-        Debug.Log("No attackable target");
     }
 
     List<Pos> PathToAttackRange(Enemy self, Combatant target, Action action)
@@ -99,10 +112,11 @@ public class EnemyAIBasic : AIComponent<Enemy>
         return BattleGrid.main.Path(self.Pos, validPosList[0].Item1, self.CanMoveThrough);
     }
 
-    void GetPathData(Enemy self, List<Combatant> targets, out List<PathData<Combatant>> attackable, out List<PathData<Combatant>> reachable)
+    void GetPathData(Enemy self, List<Combatant> targets, out List<PathData<Combatant>> attackable, out List<PathData<Combatant>> reachable, out List<PathData<Combatant>> reachableThroughAlly, bool findThroughAllyPaths)
     {
         attackable = new List<PathData<Combatant>>();
         reachable = new List<PathData<Combatant>>();
+        reachableThroughAlly = new List<PathData<Combatant>>();
         var action = self.action;
         // Calculate the paths to all party members
         foreach (var target in targets)
@@ -129,8 +143,23 @@ public class EnemyAIBasic : AIComponent<Enemy>
             else
             {
                 path = BattleGrid.main.Path(self.Pos, target.Pos, (obj) => self.CanMoveThrough(obj) || obj == target);
-                if (path == null)
+                if (path == null) // No path, check if there is a reachableThroughAlly Path
+                {
+                    if(findThroughAllyPaths)
+                    {
+                        path = BattleGrid.main.Path(self.Pos, target.Pos, (obj) => self.CanMoveThrough(obj) || obj == target || obj.Team == self.Team);
+                        if (path != null)
+                        {
+                            // Remove the last node (the position of the target)
+                            path.RemoveAt(path.Count - 1);
+                            // Remove the first node (our current position)
+                            path.RemoveAt(0);
+                            var pathData = new PathData<Combatant>(target, PathThroughAllyTrimmed(self, path));
+                            reachableThroughAlly.Add(pathData);
+                        }
+                    }
                     continue;
+                }
                 // Remove the last node (the position of the target)
                 path.RemoveAt(path.Count - 1);
                 // Remove the first node (our current position)
@@ -144,6 +173,21 @@ public class EnemyAIBasic : AIComponent<Enemy>
                 attackable.Add(new PathData<Combatant>(target, path));
             }
         }
+    }
+
+    List<Pos> PathThroughAllyTrimmed(Enemy self, List<Pos> path)
+    {
+        bool Predicate(Pos p)
+        {
+            var obj = BattleGrid.main.GetObject(p);
+            return obj != null && obj.Team == self.Team;
+        }
+        int ind = path.FindIndex(Predicate);
+        if (ind == 0)
+            return new List<Pos>();
+        var newPath = new Pos[ind + 1];
+        path.CopyTo(0, newPath, 0, ind + 1);
+        return newPath.ToList();
     }
 
     IEnumerator MoveAndAttackIfAble(Enemy self, PathData<Combatant> pathData)

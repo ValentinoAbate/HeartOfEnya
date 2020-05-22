@@ -23,7 +23,7 @@ public class EnemyAIDirectionalCharge : AIComponent<Enemy>
         foreach(var spaceEntry in spacesInRange)
         {
             var space = spaceEntry.Key;
-            int distanceFactor = Pos.Distance(space, partyPosAvg) - partyDist;
+            int distanceFactor = partyDist - Pos.Distance(space, partyPosAvg);
             int targetFactor = 0;
             Pos bestDirection = Pos.Right;
             foreach(var direction in directions)

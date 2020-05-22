@@ -20,12 +20,13 @@ public class Character : MonoBehaviour
     [SerializeField] private Vector3 doorButtonPos; //where to put the button during out monologue night
     [SerializeField] private Image fadeImage;   //used in the fade-to-black transitions
     [SerializeField] private float fadeSpeed = 1.5f; //controls the speed of fade-to-black transitions
-    [SerializeField] private GameObject soloBackgroundPrefab; //prefab for the solo background
+
     [SerializeField] private GameObject originalBg;
     [SerializeField] private SwapData swapData; //used for the soleil data/sprite swap. Other characters can leave this as null
 
     private FMODUnity.StudioEventEmitter sfxSelect;
     private Animator anim;
+    private GameObject soloBgOverridePrefab = null; //prefab for the solo background
 
     public string Expression
     {
@@ -52,6 +53,8 @@ public class Character : MonoBehaviour
         if (Name == "Soleil" && DoNotDestroyOnLoad.Instance.persistentData.LuaUnfrozen) //only Soleil can swap, and only if her GF isn't rectangular
         {
             swapCharData(); //outsource swapping to this bitch so we don't clutter up Awake()
+            if(swapData != null)
+                soloBgOverridePrefab = swapData.replacementSoloBg;
         }
 
         Expression = defaultExpression;
@@ -270,9 +273,9 @@ public class Character : MonoBehaviour
         //var originalBg = GameObject.Find("BgVN");
         Vector3 backgroundPos = originalBg.transform.Find("BgVN").transform.localPosition; //get the position so we can align the new one
         originalBg.SetActive(false);
-
+        var bgPrefab = soloBgOverridePrefab == null ? data.soloBackground : soloBgOverridePrefab;
         //make new background
-        var newBG = Instantiate(data.soloBackground);
+        var newBG = Instantiate(bgPrefab);
         var newBGSprite = newBG.transform.Find("BgVN"); //get the sprite component
         newBGSprite.transform.localPosition = backgroundPos; //re-align the BG
     }

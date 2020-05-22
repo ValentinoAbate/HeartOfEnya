@@ -6,6 +6,7 @@ using UnityEngine;
 public class SwapData : ScriptableObject
 {
     public CharacterData replacementData;
+    public GameObject replacementSoloBg;
     public Sprite replacementSprite;
     public Sprite replacementShadow;
 }

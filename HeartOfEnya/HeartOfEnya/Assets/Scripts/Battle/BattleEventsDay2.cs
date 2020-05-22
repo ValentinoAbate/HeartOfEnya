@@ -34,7 +34,7 @@ public class BattleEventsDay2 : MonoBehaviour
         BattleUI.main.TargetableTiles.Add(new Pos (1, 7));
 
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
-        
+
     }
 
     public void KnockOnTrigger()
@@ -147,12 +147,13 @@ public class BattleEventsDay2 : MonoBehaviour
         BattleUI.main.TargetableTiles.Clear();
         battleEvents.partyPhase.PartyWideClearSoloActions();
 
-        // re-enable all characters
+        // re-enable all characters and run tiles
         string[] units = {"Raina", "Soleil"};
         battleEvents.partyPhase.EnableUnits(new List<string>(units));
         // Declare next wave and end the phase to prevent waiting around
         yield return StartCoroutine(PhaseManager.main.SpawnPhase.DeclareNextWave());
         PhaseManager.main.NextPhase();
+        BattleUI.main.EnableRunTiles();
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 

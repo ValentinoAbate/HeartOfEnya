@@ -62,7 +62,7 @@ public class BattleEventsDay3 : MonoBehaviour
         BattleUI.main.MoveableTiles.Clear();
         // lift targeting restrictions
         BattleUI.main.TargetableTiles.Clear();
-
-        battleEvents.Unpause();    
+        BattleUI.main.EnableRunTiles();
+        battleEvents.Unpause();
     }
 }

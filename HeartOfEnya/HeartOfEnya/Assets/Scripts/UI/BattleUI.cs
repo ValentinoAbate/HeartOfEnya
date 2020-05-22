@@ -51,7 +51,7 @@ public class BattleUI : MonoBehaviour, IPausable
     {
         runTiles = runTileContainer.GetComponentsInChildren<EventTileAction>().ToList();
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        if (pData.InTutorialFirstDay)
+        if (pData.InTutorialFirstDay || pData.InTutorialSecondDay || pData.InTutorialThirdDay)
             DisableRunTiles();
         PauseHandle = new PauseHandle(OnPause);
         PhaseManager.main.PartyPhase.PauseHandle.Dependents.Add(this);

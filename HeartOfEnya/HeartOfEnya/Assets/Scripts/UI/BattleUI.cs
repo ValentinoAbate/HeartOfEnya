@@ -19,6 +19,8 @@ public class BattleUI : MonoBehaviour, IPausable
     public UIInfoPanelEnemy enemyInfoPanel;
     public UIInfoPanelGeneric genericInfoPanel;
     public UIInfoPanelParty partyInfoPanel;
+    public GameObject attackInfoContainer;
+    private AttackDescriptionUI attackInfoPanel;
 
     [Header("Colors")]
     public Color partyColor;
@@ -155,6 +157,26 @@ public class BattleUI : MonoBehaviour, IPausable
             ShowInfoPanelParty(savedPartyInspect);
         else if (savedGenericInspect != null)
             ShowInfoPanelGeneric(savedGenericInspect);
+    }
+
+    public void ShowAttackDescriptionPanel(GameObject panelPrefab, Action action)
+    {
+        var panel = Instantiate(panelPrefab, attackInfoContainer.transform);
+        //panel.transform.localPosition = Vector3.zero;
+        var ui = panel.GetComponent<AttackDescriptionUI>();
+        if(ui != null)
+        {
+            HideAttackDescriptionPanel();
+            attackInfoPanel = ui;
+            ui.ShowAttack(action);
+        }
+    }
+
+    public void HideAttackDescriptionPanel()
+    {
+        if (attackInfoPanel == null)
+            return;
+        Destroy(attackInfoPanel.gameObject);
     }
 
     public void ShowInfoPanelEnemy(Enemy e)

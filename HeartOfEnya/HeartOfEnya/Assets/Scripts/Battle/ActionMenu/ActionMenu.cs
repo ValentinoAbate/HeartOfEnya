@@ -26,6 +26,9 @@ public class ActionMenu : MonoBehaviour, IPausable
     public GameObject confirmationPrompt;
     private bool inConfirmationPrompt = false;
 
+    public void SetSkipOneCancel() => skipOneCancel = true;
+    private bool skipOneCancel = false;
+
     private void Awake()
     {
         PauseHandle = new PauseHandle(OnPause);
@@ -38,10 +41,15 @@ public class ActionMenu : MonoBehaviour, IPausable
 
     private void Update()
     {
-        if (PauseHandle.Paused || !BattleUI.main.CancelingEnabled)
+        if (PauseHandle.Paused || !BattleUI.main.CancelingEnabled || cursor.isActiveAndEnabled)
             return;
         if (Input.GetKeyDown(cancelKey) || Input.GetMouseButtonDown(1))
         {
+            if(skipOneCancel)
+            {
+                skipOneCancel = false;
+                return;
+            }
             Cancel();
         }
             

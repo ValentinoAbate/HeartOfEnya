@@ -19,7 +19,7 @@ public class ActionButton : ActionButtonBase
     public Button button;
     public EventTrigger trigger;
     public TextMeshProUGUI text;
-    public AttackDescriptionUI extraInfoWindow;
+    public GameObject extraInfoWindowPrefab;
 
     private FMODUnity.StudioEventEmitter sfxSelect;
     private FMODUnity.StudioEventEmitter sfxHighlight;
@@ -29,12 +29,10 @@ public class ActionButton : ActionButtonBase
         sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
         sfxHighlight = GameObject.Find("UIHighlight").GetComponent<FMODUnity.StudioEventEmitter>();
         
-        extraInfoWindow.ShowAttack(actionPrefab);
         // Set up click listeners
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(sfxSelect.Play);        
         button.onClick.AddListener(menu.cursor.CalculateTargets);
-        button.onClick.AddListener(HideExtraInfoWindow);
         button.onClick.AddListener(menu.Close);
         button.onClick.AddListener(() => menu.cursor.SetActive(true));
 
@@ -78,13 +76,13 @@ public class ActionButton : ActionButtonBase
 
     public void HideExtraInfoWindow()
     {
-        extraInfoWindow.gameObject.SetActive(false);
+        BattleUI.main.HideAttackDescriptionPanel();
         BattleUI.main.RestoreInfoPanel();
     }
 
     public void ShowExtraInfoWindow()
     {
-        extraInfoWindow.gameObject.SetActive(true);
+        BattleUI.main.ShowAttackDescriptionPanel(extraInfoWindowPrefab, actionPrefab);
         BattleUI.main.HideInfoPanel(false);
     }
 }

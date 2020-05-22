@@ -202,6 +202,7 @@ public class AttackCursor : GridAndSelectionListCursor
         else
         {
             HideTargets();
+            BattleUI.main.HideAttackDescriptionPanel();
             action.targetPattern.Hide();
             StartCoroutine(AttackCr());
         }  
@@ -227,6 +228,7 @@ public class AttackCursor : GridAndSelectionListCursor
             action.targetPattern.Hide();
             SetActive(false);
             OnCancel.Invoke();
+            BattleUI.main.HideAttackDescriptionPanel();
         }
     }
 

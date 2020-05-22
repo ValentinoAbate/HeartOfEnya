@@ -29,7 +29,6 @@ public class AttackDescriptionUI : MonoBehaviour
 
     public void ShowAttack(Action action)
     {
-        transform.position = new Vector3(-1, -4.5f);
         var pattern = action.targetPattern;
         var effects = action.GetComponents<ActionEffect>();
         int damage = effects.Sum((effect) => effect is DamageEffect ? (effect as DamageEffect).damage : 0);

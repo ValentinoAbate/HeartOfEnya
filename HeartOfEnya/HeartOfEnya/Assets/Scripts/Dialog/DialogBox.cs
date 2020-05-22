@@ -16,7 +16,7 @@ public class DialogBox : MonoBehaviour, IPausable
         Cancel,
         Waiting,
     }
-    public PauseHandle PauseHandle { get; set; } = new PauseHandle();
+    public PauseHandle PauseHandle { get; set; }
     public TextMeshProUGUI text;
     public Image portrait;
     public string VoiceEvent { get => voiceEmitter.Event; set => voiceEmitter = GameObject.Find(value).GetComponent<FMODUnity.StudioEventEmitter>(); }
@@ -24,6 +24,17 @@ public class DialogBox : MonoBehaviour, IPausable
     private State state = State.Inactive;
     private bool finishedWithStartAnimation = true;
     private FMODUnity.StudioEventEmitter voiceEmitter;
+
+    private void Awake()
+    {
+        PauseHandle = new PauseHandle(OnPause);
+    }
+
+    private void OnPause(bool b)
+    {
+        if(b)
+            voiceEmitter?.SetParameter("Space", 1);
+    }
 
     private void OnConfirm()
     {

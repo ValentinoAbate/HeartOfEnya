@@ -162,6 +162,8 @@ public class Action : MonoBehaviour
         }
         // Remove all dead combatants
         toStun.RemoveAll((c) => c == null || c.Dead);
+        // Bosses can't be stunned
+        toStun.RemoveAll((c) => c is Enemy && (c as Enemy).isBoss);
         if(toStun.Count > 0)
         {
             yield return new WaitForSeconds(ActionEffect.effectWaitTime);

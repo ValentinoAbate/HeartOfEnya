@@ -51,6 +51,7 @@ public class BattleEventsDay3 : MonoBehaviour
         string[] units = {"Soleil", "Bapy"};
         battleEvents.partyPhase.EnableUnits(new List<string>(units));
         battleEvents.partyPhase.PartyWideClearSoloActions();
+        BattleUI.main.EnableRunTiles();
 
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);     
     }

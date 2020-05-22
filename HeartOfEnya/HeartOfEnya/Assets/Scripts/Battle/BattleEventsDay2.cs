@@ -147,9 +147,10 @@ public class BattleEventsDay2 : MonoBehaviour
         BattleUI.main.TargetableTiles.Clear();
         battleEvents.partyPhase.PartyWideClearSoloActions();
 
-        // re-enable all characters
+        // re-enable all characters and run tiles
         string[] units = {"Raina", "Soleil"};
         battleEvents.partyPhase.EnableUnits(new List<string>(units));
+        BattleUI.main.EnableRunTiles();
 
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }

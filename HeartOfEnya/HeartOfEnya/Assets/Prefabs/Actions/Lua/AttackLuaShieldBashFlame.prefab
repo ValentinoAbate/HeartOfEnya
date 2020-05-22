@@ -25,6 +25,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bfc6b107e685545927a6495f380b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: 1
 --- !u!1001 &6331864159131863933
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35,7 +36,7 @@ PrefabInstance:
     - target: {fileID: 4221800355855424386, guid: e072880907575f648bcd0fead4902fcd,
         type: 3}
       propertyPath: m_Name
-      value: AttackLuaShieldPushFlame
+      value: AttackLuaShieldBashFlame
       objectReference: {fileID: 0}
     - target: {fileID: 4221800355855424412, guid: e072880907575f648bcd0fead4902fcd,
         type: 3}
@@ -102,6 +103,12 @@ PrefabInstance:
       propertyPath: squares
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4958605868067797195, guid: e072880907575f648bcd0fead4902fcd,
+        type: 3}
+      propertyPath: cutInPrefab
+      value: 
+      objectReference: {fileID: 7869046948155591850, guid: bd8b4219e6472614aa8f95aaba446899,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e072880907575f648bcd0fead4902fcd, type: 3}
 --- !u!1 &7874990253683265791 stripped

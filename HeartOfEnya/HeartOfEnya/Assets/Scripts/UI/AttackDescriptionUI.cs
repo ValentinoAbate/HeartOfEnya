@@ -43,23 +43,23 @@ public class AttackDescriptionUI : MonoBehaviour
         }
         else
         {
-            userPos = new Pos(2, 3 - pattern.maxReach.x / 2);
-            targetPos = userPos + Pos.Right;
+            userPos = new Pos(2, 5 + pattern.maxReach.x / 2);
+            targetPos = userPos + Pos.Left;
             rangeTypeText.text = "Directional";
         }
-        pattern.Target(userPos, targetPos);
+        var positions = action.HitPositions(userPos, targetPos);
         for (int row = 0; row <= 4; ++row)
         {
             for (int col = 0; col <= 9; ++col)
             {
                 var pos = new Pos(row, col);
                 var icon = Instantiate(squarePrefab, gridLayout.transform);
-                if(pattern.type == TargetPattern.Type.Directional && pos == targetPos)
+                if(pattern.type == TargetPattern.Type.Directional && pos == userPos)
                 {
                     var image = icon.GetComponent<Image>();
                     image.sprite = attackIconUser;
                 }
-                if (pattern.Positions.Contains(new Pos(row, col)))
+                if (positions.Contains(new Pos(row, col)))
                 {
                     var image = icon.GetComponent<Image>();
                     image.sprite = attackIconHit;

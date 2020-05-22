@@ -22,6 +22,7 @@ public class Character : MonoBehaviour
     [SerializeField] private float fadeSpeed = 1.5f; //controls the speed of fade-to-black transitions
     [SerializeField] private GameObject soloBackgroundPrefab; //prefab for the solo background
     [SerializeField] private GameObject originalBg;
+    [SerializeField] private SwapData swapData; //used for the soleil data/sprite swap. Other characters can leave this as null
 
     private FMODUnity.StudioEventEmitter sfxSelect;
     private Animator anim;
@@ -47,6 +48,12 @@ public class Character : MonoBehaviour
 
     private void Awake()
     {
+        //if necessary, swap the character data *before* all the expression setup
+        if (Name == "Soleil" && DoNotDestroyOnLoad.Instance.persistentData.LuaUnfrozen) //only Soleil can swap, and only if her GF isn't rectangular
+        {
+            swapCharData(); //outsource swapping to this bitch so we don't clutter up Awake()
+        }
+
         Expression = defaultExpression;
         sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
         anim = GetComponent<Animator>();
@@ -269,5 +276,26 @@ public class Character : MonoBehaviour
         var newBGSprite = newBG.transform.Find("BgVN"); //get the sprite component
         newBGSprite.transform.localPosition = backgroundPos; //re-align the BG
         newBGSprite.GetComponent<SpriteRenderer>().sprite = data.soloBackground;
+    }
+
+    //replaces the character data with a new one.
+    //Mostly intended for the Soleil characterData swap
+    public void swapCharData()
+    {
+        if (swapData) //let's avoid a null reference exception
+        {
+            //swap data
+            data = swapData.replacementData;
+            //swap sprite
+            SpriteRenderer icon = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+            icon.sprite = swapData.replacementSprite;
+            //swap the shadow. Why the fuck is this it's own sprite? Because god hates me.
+            SpriteRenderer shadow = transform.Find("Shadow").GetComponent<SpriteRenderer>(); //I really wanted to name this variable "shadowTheHedgehog"
+            shadow.sprite = swapData.replacementShadow;
+        }
+        else
+        {
+            Debug.LogError("Character " + Name + " tried to swap, but lacks a swap data!"); //oopsie woopsie! we made a fucky wucky! UwU
+        }
     }
 }

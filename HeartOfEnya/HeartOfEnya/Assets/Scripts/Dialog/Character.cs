@@ -285,6 +285,11 @@ public class Character : MonoBehaviour
         {
             //swap data
             data = swapData.replacementData;
+            //avoid swapping the sprite it we're in battle
+            if (CharacterManager.main == null)
+            {
+                return;
+            }
             //swap sprite
             SpriteRenderer icon = transform.Find("Sprite").GetComponent<SpriteRenderer>();
             icon.sprite = swapData.replacementSprite;

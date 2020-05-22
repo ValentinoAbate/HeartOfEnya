@@ -272,10 +272,9 @@ public class Character : MonoBehaviour
         originalBg.SetActive(false);
 
         //make new background
-        var newBG = Instantiate(soloBackgroundPrefab);
+        var newBG = Instantiate(data.soloBackground);
         var newBGSprite = newBG.transform.Find("BgVN"); //get the sprite component
         newBGSprite.transform.localPosition = backgroundPos; //re-align the BG
-        newBGSprite.GetComponent<SpriteRenderer>().sprite = data.soloBackground;
     }
 
     //replaces the character data with a new one.

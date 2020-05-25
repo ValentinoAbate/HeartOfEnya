@@ -7,6 +7,11 @@ using System.Linq;
 
 public class AttackDescriptionUI : MonoBehaviour
 {
+    private const int maxPatternCols = 9;
+    private const int maxPatternRows = 4;
+    private const int patternMiddleRow = maxPatternRows / 2 + maxPatternRows % 2;
+    private const int patternMiddleCol = maxPatternCols / 2 + maxPatternCols % 2;
+
     [Header("UI References")]
     public TextMeshProUGUI damageNumberText;
     public TextMeshProUGUI rangeTypeText;
@@ -35,30 +40,30 @@ public class AttackDescriptionUI : MonoBehaviour
             Destroy(icon);
         attackIcons.Clear();
         var userPos = Pos.Zero;
-        var targetPos = new Pos(2, 5);
+        var targetPos = new Pos(patternMiddleRow, patternMiddleCol);
         if (pattern.type == TargetPattern.Type.Spread)
         {
             rangeTypeText.text = action.range.ToString();
         }
         else
         {
-            userPos = new Pos(2, 3 - pattern.maxReach.x / 2);
-            targetPos = userPos + Pos.Right;
+            userPos = new Pos(patternMiddleRow, patternMiddleCol + pattern.maxReach.x / 2);
+            targetPos = userPos + Pos.Left;
             rangeTypeText.text = "Directional";
         }
-        pattern.Target(userPos, targetPos);
-        for (int row = 0; row <= 4; ++row)
+        var positions = action.HitPositions(userPos, targetPos);
+        for (int row = 0; row <= maxPatternRows; ++row)
         {
-            for (int col = 0; col <= 9; ++col)
+            for (int col = 0; col <= maxPatternCols; ++col)
             {
                 var pos = new Pos(row, col);
                 var icon = Instantiate(squarePrefab, gridLayout.transform);
-                if(pattern.type == TargetPattern.Type.Directional && pos == targetPos)
+                if(pattern.type == TargetPattern.Type.Directional && pos == userPos)
                 {
                     var image = icon.GetComponent<Image>();
                     image.sprite = attackIconUser;
                 }
-                if (pattern.Positions.Contains(new Pos(row, col)))
+                if (positions.Contains(new Pos(row, col)))
                 {
                     var image = icon.GetComponent<Image>();
                     image.sprite = attackIconHit;

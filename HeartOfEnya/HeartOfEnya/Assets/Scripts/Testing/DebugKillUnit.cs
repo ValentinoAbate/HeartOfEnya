@@ -18,7 +18,7 @@ public class DebugKillUnit : MonoBehaviour
         if(Input.GetMouseButtonDown(2))
         {
             var targetPos = BattleGrid.main.GetPos(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            var target = BattleGrid.main.GetObject(targetPos) as Combatant;
+            var target = BattleGrid.main.Get<Combatant>(targetPos);
             if(target != null)
             {
                 if (Input.GetKey(KeyCode.LeftShift))

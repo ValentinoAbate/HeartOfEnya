@@ -354,7 +354,7 @@ public class SpawnPhase : Phase
         turnsSinceLastSpawn = 0;
         foreach (var spawner in spawners)
         {
-            var objInSquare = BattleGrid.main.GetObject(spawner.Pos);
+            var objInSquare = BattleGrid.main.Get<FieldObject>(spawner.Pos);
             // The square is empty! Spawn the enemy.
             if (objInSquare == null)
             {

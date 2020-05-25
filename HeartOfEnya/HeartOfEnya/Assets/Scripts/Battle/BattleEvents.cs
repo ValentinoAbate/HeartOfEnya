@@ -83,12 +83,12 @@ public class BattleEvents : MonoBehaviour
         partyPhase = PhaseManager.main.PartyPhase;
     }
 
-    private void Pause()
+    public void Pause()
     {
         PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
-    private void Unpause()
+    public void Unpause()
     {
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }

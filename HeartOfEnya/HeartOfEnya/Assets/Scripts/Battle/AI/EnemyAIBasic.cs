@@ -70,13 +70,26 @@ public class EnemyAIBasic : AIComponent<Enemy>
             // Choose the path that gets the enemy closest to a target
             reachableThroughAllyPathData.Sort((p, p2) => Pos.Distance(p.path[p.path.Count - 1], p.obj.Pos)
                                         .CompareTo(Pos.Distance(p2.path[p2.path.Count - 1], p2.obj.Pos)));
-            yield return StartCoroutine(MoveAndAttackIfAble(self, reachableThroughAllyPathData[0]));
-
+            var path = reachableThroughAllyPathData[0].path;
+            yield return StartCoroutine(MoveAlongPath(self, path));
+            // Attack an adjacent obstacle if able to
+            var targetableObstacles = new List<Obstacle>();
+            foreach(var direction in Pos.Directions)
+            {
+                var obstacle = BattleGrid.main.Get<Obstacle>(self.Pos + direction);
+                if (obstacle != null && (targetImmovableObstacles || obstacle.isMovable))
+                    targetableObstacles.Add(obstacle);
+            }
+            if(targetableObstacles.Count > 0)
+            {
+                targetableObstacles.Sort((o1, o2) => o1.Hp.CompareTo(o2.Hp));
+                yield return self.Attack(targetableObstacles[0].Pos);
+            }
         }
         else // Try and fight an obstacle
         {
             // Get all obstacles
-            var obstacleList = BattleGrid.main.GetAllCombatants((obj) => obj is Obstacle);   //get list of all obstacles
+            var obstacleList = new List<Combatant>(BattleGrid.main.FindAll<Obstacle>());   //get list of all obstacles
             obstacleList.RemoveAll((t) => t == null);
             // Remove immovable obstacles if they aren't considered viable targets
             if (!targetImmovableObstacles)
@@ -179,7 +192,7 @@ public class EnemyAIBasic : AIComponent<Enemy>
     {
         bool Predicate(Pos p)
         {
-            var obj = BattleGrid.main.GetObject(p);
+            var obj = BattleGrid.main.Get<FieldObject>(p);
             return obj != null && obj.Team == self.Team;
         }
         int ind = path.FindIndex(Predicate);

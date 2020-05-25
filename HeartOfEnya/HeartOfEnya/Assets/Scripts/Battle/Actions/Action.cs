@@ -124,7 +124,7 @@ public class Action : MonoBehaviour
         // Apply actual effects to targets and display results
         foreach (var position in targetPositions)
         {
-            var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
+            var target = BattleGrid.main.Get<Combatant>(position);
             if (target != null)
             {
                 // Don't hit filtered out targets
@@ -162,6 +162,8 @@ public class Action : MonoBehaviour
         }
         // Remove all dead combatants
         toStun.RemoveAll((c) => c == null || c.Dead);
+        // Bosses can't be stunned
+        toStun.RemoveAll((c) => c is Enemy && (c as Enemy).isBoss);
         if(toStun.Count > 0)
         {
             yield return new WaitForSeconds(ActionEffect.effectWaitTime);
@@ -205,7 +207,7 @@ public class Action : MonoBehaviour
             foreach (var position in batch)
             {
                 // Check if a target is in this square
-                var target = BattleGrid.main.GetObject(position)?.GetComponent<Combatant>();
+                var target = BattleGrid.main.Get<Combatant>(position);
                 if (target != null)
                 {
                     routine = PlayActionVfx(tileFxPrefab, target.VfxSpawnPoint);

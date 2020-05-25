@@ -23,6 +23,12 @@ public class ActionMenu : MonoBehaviour, IPausable
 
     protected FMODUnity.StudioEventEmitter sfxCancel;
 
+    public GameObject confirmationPrompt;
+    private bool inConfirmationPrompt = false;
+
+    public void SetSkipOneCancel() => skipOneCancel = true;
+    private bool skipOneCancel = false;
+
     private void Awake()
     {
         PauseHandle = new PauseHandle(OnPause);
@@ -35,22 +41,52 @@ public class ActionMenu : MonoBehaviour, IPausable
 
     private void Update()
     {
-        if (PauseHandle.Paused || !BattleUI.main.CancelingEnabled)
+        if (PauseHandle.Paused || !BattleUI.main.CancelingEnabled || cursor.isActiveAndEnabled)
             return;
         if (Input.GetKeyDown(cancelKey) || Input.GetMouseButtonDown(1))
         {
-            sfxCancel.Play();
-            if(buttons.Count > 0)
-                buttons[buttons.Count - 1].Select();
-            foreach(var button in buttons)
+            if(skipOneCancel)
             {
-                var actionComp = button.GetComponent<ActionButton>();
-                actionComp?.HideExtraInfoWindow();
+                skipOneCancel = false;
+                return;
             }
-            cursor.HideTargets();
-            user.CancelActionMenu();
+            Cancel();
         }
             
+    }
+
+    public void Cancel()
+    {
+        sfxCancel.Play();
+        if (inConfirmationPrompt)
+        {
+            HideConfirmationPrompt();
+            return;
+        }
+        //if(buttons.Count > 0)
+        //    buttons[buttons.Count - 1].Select();
+        foreach (var button in buttons)
+        {
+            var actionComp = button.GetComponent<ActionButton>();
+            actionComp?.HideExtraInfoWindow();
+        }
+        cursor.HideTargets();
+        user.CancelActionMenu();
+    }
+
+    public void ShowConfirmationPrompt()
+    {
+        foreach (var button in buttons)
+            button.interactable = false;
+        confirmationPrompt.SetActive(true);
+        inConfirmationPrompt = true;
+    }
+
+    public void HideConfirmationPrompt()
+    {
+        confirmationPrompt.SetActive(false);
+        InitializeMenu();
+        inConfirmationPrompt = false;
     }
 
     private void OnPause(bool pause)
@@ -61,9 +97,17 @@ public class ActionMenu : MonoBehaviour, IPausable
         {
             foreach (var button in buttons)
                 button.interactable = false;
+            if (inConfirmationPrompt)
+                confirmationPrompt.SetActive(false);
+        }
+        else if (inConfirmationPrompt)
+        {
+            confirmationPrompt.SetActive(true);
         }
         else
+        {
             InitializeMenu();
+        }
     }
 
     private void FindButtons()

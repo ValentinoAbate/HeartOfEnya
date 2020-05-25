@@ -215,16 +215,16 @@ public class BattleGrid : MonoBehaviour
     public bool IsEmptyEventTiles(Pos pos) => !eventTiles.ContainsKey(pos) || eventTiles[pos].Count <= 0;
 
     /// <summary>
-    /// Return the FieldObject at the given grid position, or null if the position is empty
+    /// Return the object of type T at the given grid position, or null if the position is empty or filled with an object that is not of type T
     /// </summary>
-    public FieldObject GetObject(Pos pos)
+    public T Get<T>(Pos pos) where T : FieldObject
     {
         if (IsLegal(pos))
         {
             // Avoid references to destroyed GameObjects not working with the ?. operator (return a ture null value)
             if (field.Get(pos) == null)
                 return null;
-            return field.Get(pos);
+            return field.Get(pos) as T;
         }
         return null;
     }
@@ -245,37 +245,21 @@ public class BattleGrid : MonoBehaviour
         return null;
     }
 
-    public List<Combatant> GetAllCombatants(Predicate<Combatant> pred)
+    public List<T> FindAll<T>(Predicate<T> pred = null) where T : FieldObject
     {
-        var foundObjects = new List<Combatant>();
+        var objects = new List<T>();
         //brute force foreach of field; might optimize later
         foreach (var obj in field)
         {
-            if(obj is Combatant)
+            if (obj is T)
             {
-                var c = obj as Combatant;
-                //if object matches the predicate, add it to the list
-                if (pred(c))
-                    foundObjects.Add(c);
+                var objT = obj as T;
+                //if there is no predicate or object matches the predicate, add it to the list
+                if (pred == null || pred(objT))
+                    objects.Add(objT);
             }
         }
-        return foundObjects;
-    }
-
-    /// <summary>
-    /// Return all FieldObjects that match the given predicate
-    /// </summary>
-    public List<FieldObject> GetAllObjects(Predicate<FieldObject> pred)
-    {
-        var foundObjects = new List<FieldObject>();
-        //brute force foreach of field; might optimize later
-        foreach(var obj in field)
-        {
-            //if object matches the predicate, add it to the list
-            if(pred(obj))
-                foundObjects.Add(obj);
-        }
-        return foundObjects;
+        return objects;
     }
 
     /// <summary>

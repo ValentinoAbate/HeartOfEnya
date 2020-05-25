@@ -259,9 +259,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: 
+  ignoreFixedPosition: 0
   dialogSpawnPoint: {fileID: 3993437439246907230}
   data: {fileID: 0}
   dialogManager: {fileID: 0}
+  doorPosition: {x: 0, y: 0, z: 0}
+  doorSprite: {fileID: 0}
+  doorButtonPos: {x: 0, y: 0, z: 0}
+  fadeImage: {fileID: 0}
+  fadeSpeed: 1.5
+  soloBackgroundPrefab: {fileID: 0}
+  originalBg: {fileID: 0}
 --- !u!95 &7116945294850344080
 Animator:
   serializedVersion: 3
@@ -472,6 +480,17 @@ MonoBehaviour:
   OnCancel:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 4821603187498920911}
+        m_MethodName: SetSkipOneCancel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 4821603187498920911}
         m_MethodName: SetActive
         m_Mode: 6

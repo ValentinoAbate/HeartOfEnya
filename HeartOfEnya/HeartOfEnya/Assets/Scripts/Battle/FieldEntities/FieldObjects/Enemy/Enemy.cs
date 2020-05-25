@@ -119,7 +119,7 @@ public class Enemy : Combatant, IPausable
     /// </summary>
     public Coroutine Attack(Pos p)
     {
-        var target = BattleGrid.main.GetObject(p) as Combatant;
+        var target = BattleGrid.main.Get<Combatant>(p);
         if (action.chargeTurns > 0)
         {
             Debug.Log(name + " begins charging " + action.name);

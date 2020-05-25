@@ -51,10 +51,10 @@ public class SelectionListCursor : Cursor
             return;
         if (!BattleGrid.main.IsLegal(newPos))
             return;
-        BattleGrid.main.GetObject(Pos)?.UnHighlight();
+        BattleGrid.main.Get<FieldObject>(Pos)?.UnHighlight();
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(Pos);
-        BattleGrid.main.GetObject(Pos)?.Highlight();
+        BattleGrid.main.Get<FieldObject>(Pos)?.Highlight();
     }
 
     // public override void Select()

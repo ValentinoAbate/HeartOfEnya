@@ -51,7 +51,7 @@ public abstract class Cursor : MonoBehaviour, IPausable
     /// </summary>
     public virtual void Select()
     {
-        var highlighted = BattleGrid.main.GetObject(Pos);
+        var highlighted = BattleGrid.main.Get<FieldObject>(Pos);
         if (highlighted != null)
         {
             if (highlighted.Select())

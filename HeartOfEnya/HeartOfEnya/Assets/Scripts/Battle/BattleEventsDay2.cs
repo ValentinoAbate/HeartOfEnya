@@ -15,7 +15,7 @@ public class BattleEventsDay2 : MonoBehaviour
 
             Debug.Log("Battle Triggers: Pushing");
             battleEvents.tutPushing.flag = true;
-
+            DialogueManager.main.runner.StartDialogue("TutPush");
             StartCoroutine(PushingTriggerPost(DialogueManager.main.runner));
         }
     }
@@ -30,11 +30,11 @@ public class BattleEventsDay2 : MonoBehaviour
 
         // make bapy push the upper right box
         battleEvents.partyPhase.PartyWideSoloAction("BapyAction2");
-        BattleUI.main.MoveableTiles.Add(new Pos(1, 9));
-        BattleUI.main.TargetableTiles.Add(new Pos (1, 8));
+        BattleUI.main.MoveableTiles.Add(new Pos(1, 8));
+        BattleUI.main.TargetableTiles.Add(new Pos (1, 7));
 
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
-        
+
     }
 
     public void KnockOnTrigger()
@@ -43,7 +43,7 @@ public class BattleEventsDay2 : MonoBehaviour
         {
             Debug.Log("Battle Triggers: Knock On");
             battleEvents.tutKnockOn.flag = true;
-
+            DialogueManager.main.runner.StartDialogue("TutChainedMovement");
             StartCoroutine(KnockOnTriggerPost(DialogueManager.main.runner));
         }
     }
@@ -57,8 +57,8 @@ public class BattleEventsDay2 : MonoBehaviour
         BattleUI.main.TargetableTiles.Clear();
 
         // make bapy push the boxes towards the pillar
-        BattleUI.main.MoveableTiles.Add(new Pos(1, 8));
-        BattleUI.main.TargetableTiles.Add(new Pos (1, 7));
+        BattleUI.main.MoveableTiles.Add(new Pos(1, 7));
+        BattleUI.main.TargetableTiles.Add(new Pos (1, 6));
 
         // end the turn manually
         PhaseManager.main.NextPhase();
@@ -73,7 +73,7 @@ public class BattleEventsDay2 : MonoBehaviour
         {
             Debug.Log("Battle Triggers: Move Damage");
             battleEvents.tutMoveDamage.flag = true;
-
+            DialogueManager.main.runner.StartDialogue("TutMoveDamage");
             StartCoroutine(MoveDamageTriggerPost(DialogueManager.main.runner));
         }
     }
@@ -87,8 +87,8 @@ public class BattleEventsDay2 : MonoBehaviour
         BattleUI.main.TargetableTiles.Clear();
 
         // make bapy push the boxes into the pillar
-        BattleUI.main.MoveableTiles.Add(new Pos(1, 7));
-        BattleUI.main.TargetableTiles.Add(new Pos (1, 6));
+        BattleUI.main.MoveableTiles.Add(new Pos(1, 6));
+        BattleUI.main.TargetableTiles.Add(new Pos (1, 5));
 
         // end the turn manually
         PhaseManager.main.NextPhase();
@@ -103,7 +103,7 @@ public class BattleEventsDay2 : MonoBehaviour
         {
             Debug.Log("Battle Triggers: Pulling");
             battleEvents.tutPulling.flag = true;
-
+            DialogueManager.main.runner.StartDialogue("TutPull");
             StartCoroutine(PullingTriggerPost(DialogueManager.main.runner));
         }
     }
@@ -117,8 +117,8 @@ public class BattleEventsDay2 : MonoBehaviour
         BattleUI.main.TargetableTiles.Clear();
 
         // make bapy pull the lower box to create a choke point
-        BattleUI.main.MoveableTiles.Add(new Pos(3, 6));
-        BattleUI.main.TargetableTiles.Add(new Pos (3, 4));
+        BattleUI.main.MoveableTiles.Add(new Pos(3, 5));
+        BattleUI.main.TargetableTiles.Add(new Pos (3, 3));
 
         // end the turn manually
         PhaseManager.main.NextPhase();
@@ -133,7 +133,7 @@ public class BattleEventsDay2 : MonoBehaviour
         {
             Debug.Log("Battle Triggers: Choke Points");
             battleEvents.tutChokePoints.flag = true;
-
+            DialogueManager.main.runner.StartDialogue("TutChokepoint");
             StartCoroutine(ChokePointsTriggerPost(DialogueManager.main.runner));
         }
     }
@@ -147,10 +147,13 @@ public class BattleEventsDay2 : MonoBehaviour
         BattleUI.main.TargetableTiles.Clear();
         battleEvents.partyPhase.PartyWideClearSoloActions();
 
-        // re-enable all characters
+        // re-enable all characters and run tiles
         string[] units = {"Raina", "Soleil"};
         battleEvents.partyPhase.EnableUnits(new List<string>(units));
-
+        // Declare next wave and end the phase to prevent waiting around
+        yield return StartCoroutine(PhaseManager.main.SpawnPhase.DeclareNextWave());
+        PhaseManager.main.NextPhase();
+        BattleUI.main.EnableRunTiles();
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }
 
@@ -160,8 +163,8 @@ public class BattleEventsDay2 : MonoBehaviour
         {
             Debug.Log("Battle Triggers: Enemy Push");
             battleEvents.tutEnemyPush.flag = true;
-
-           StartCoroutine(EnemyPushTriggerPost(DialogueManager.main.runner));
+            DialogueManager.main.runner.StartDialogue("TutEnemyPush");
+            StartCoroutine(EnemyPushTriggerPost(DialogueManager.main.runner));
         }
     }
 

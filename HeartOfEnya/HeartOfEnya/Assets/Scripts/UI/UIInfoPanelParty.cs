@@ -54,7 +54,7 @@ public class UIInfoPanelParty : MonoBehaviour
     {
         nameText.text = p.DisplayName;
         descriptionText.text = p.description;
-        statusText.text = "status";
+        //statusText.text = "status";
         moveNumberText.text = p.Move.ToString();
         hpNumberText.text = p.Hp.ToString();
         hpBarImage.fillAmount = p.Hp / (float)p.maxHp;
@@ -64,7 +64,7 @@ public class UIInfoPanelParty : MonoBehaviour
         unitImage.color = p.DisplaySpriteColor;
         unitImageBg.sprite = spriteDict[p.DisplayName.ToLower()];
         unitImageBg.color = colorDict[p.DisplayName.ToLower()];
-        statusText.text = "Status: " + (p.DeathsDoor ? "Dying." : "Doing fine!");
+        //statusText.text = "Status: " + (p.DeathsDoor ? "Dying." : "Doing fine!");
         if (p.Stunned)
             statusText.text = "Status: " + "Stunned.";
         if (!string.IsNullOrWhiteSpace(p.passiveName))

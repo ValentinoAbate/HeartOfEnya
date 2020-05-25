@@ -11,10 +11,10 @@ public abstract class AIComponent<T> : MonoBehaviour where T : Combatant
 
     public abstract IEnumerator DoTurn(T self);
 
-    protected IEnumerator MoveAlongPath(T self, List<Pos> path, int distance)
+    protected IEnumerator MoveAlongPath(T self, List<Pos> path, int maxDistance = int.MaxValue)
     {
         // Move along the path until within range
-        for (int i = 0; i < distance && i < path.Count; ++i)
+        for (int i = 0; i < maxDistance && i < path.Count; ++i)
         {
             yield return new WaitWhile(() => self.PauseHandle.Paused);
             BattleGrid.main.MoveAndSetWorldPos(self, path[i]);

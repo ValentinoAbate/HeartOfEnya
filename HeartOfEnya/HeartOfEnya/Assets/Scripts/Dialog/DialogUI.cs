@@ -21,6 +21,7 @@ namespace Dialog
         private static readonly Regex commentRegex = new Regex(@"\/\/.*");
 
         public PauseHandle PauseHandle { get; set; }
+        public bool SoloMode { get; private set; } = false;
 
 
         [Header("General Config")]
@@ -29,14 +30,20 @@ namespace Dialog
         public float spaceDelay;
         public Canvas dialogCanvas;
         public GameObject dialogBoxPrefab;
+        public bool battleMode = false;
+        public List<Button> optionButtonsNormal;
+        public List<Button> optionButtonsSolo;
+        public List<Button> optionButtonsBattle;
         /// The buttons that let the user choose an option
-        public List<Button> optionButtons;
+        private List<Button> optionButtons;
         /// The characters currently in the scene
         public List<Character> characters;
         public FMODUnity.StudioEventEmitter Music { get; set; }
 
         [Header("Fixed Position Fields")]
-        public Transform fixedPosition;
+        [SerializeField] private Transform fixedPosition;
+        [SerializeField] private Transform fixedPositionNormal;
+        [SerializeField] private Transform fixedPositionSolo;
         public bool useFixedPosition = false;
 
         [Header("Scene Transition Fields")]
@@ -142,7 +149,8 @@ namespace Dialog
             {
                 if(dialogBox != null)
                     Destroy(dialogBox.gameObject);
-                var dbPrefab = character.DialogBoxPrefab ?? dialogBoxPrefab;
+                var dbType = battleMode ? Character.DialogType.Battle : (SoloMode ? Character.DialogType.Solo : Character.DialogType.Normal);
+                var dbPrefab = character.GetDialogBoxPrefab(dbType);               
                 // Determine if we want to use the character spawn point or the fixed one
                 var spawnPoint = !useFixedPosition || character.ignoreFixedPosition
                     ? character.DialogSpawnPoint : (Vector2)fixedPosition.position;
@@ -163,8 +171,7 @@ namespace Dialog
         public override IEnumerator RunOptions(Yarn.Options optionsCollection,
                                                 Yarn.OptionChooser optionChooser)
         {
-            //if (dialogBox != null)
-            //    Destroy(dialogBox.gameObject);
+            optionButtons = battleMode ? optionButtonsBattle : SoloMode ? optionButtonsSolo : optionButtonsNormal;
             // Do a little bit of safety checking
             if (optionsCollection.options.Count > optionButtons.Count)
             {
@@ -271,6 +278,12 @@ namespace Dialog
             line = Regex.Replace(line, @"\[\w*\]" , string.Empty);
             // Correct google doc formatting
             return line.Replace("…", "...").Replace('“', '"').Replace('”', '"');
+        }
+
+        public void SetSoloMode(bool solo)
+        {
+            SoloMode = solo;
+            fixedPosition = solo ? fixedPositionSolo : fixedPositionNormal;
         }
     }
 }

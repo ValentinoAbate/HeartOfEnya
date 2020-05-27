@@ -6,6 +6,13 @@ using Yarn.Unity;
 
 public class Character : MonoBehaviour
 {
+    public enum DialogType
+    { 
+        Normal,
+        Battle,
+        Solo,
+    }
+
     public const string defaultExpression = "neutral";
     public static readonly Color dimColor = Color.gray;
     public string Name { get => characterName; }
@@ -45,7 +52,21 @@ public class Character : MonoBehaviour
     private string expression;
     public Sprite Portrait { get; private set; }
     public string VoiceEvent { get => data.voiceEvent; }
-    public GameObject DialogBoxPrefab => data.dialogBoxPrefab;
+
+    public GameObject GetDialogBoxPrefab(DialogType type)
+    {
+        switch (type)
+        {
+            case DialogType.Normal:
+                return data.dialogBoxPrefab;
+            case DialogType.Battle:
+                return data.dialogBoxBattle ?? data.dialogBoxPrefab;
+            case DialogType.Solo:
+                return data.dialogBoxSolo ?? data.dialogBoxPrefab;
+            default:
+                return data.dialogBoxPrefab;
+        }
+    }
 
     private void Awake()
     {
@@ -189,6 +210,7 @@ public class Character : MonoBehaviour
         //remove other characters
         Debug.Log("YEET OTHER CHARACTERS");
         DisableOtherCharacters();
+        DialogueManager.main.ui.SetSoloMode(true);
         //fade in
         yield return StartCoroutine("FadeToClear");
         //run the dialogue

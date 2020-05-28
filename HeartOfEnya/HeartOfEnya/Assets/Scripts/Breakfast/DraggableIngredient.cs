@@ -24,15 +24,16 @@ public class DraggableIngredient : MonoBehaviour
 
         //drag-&-drop stuff
         startPos = transform.position; //store our initial position
+        //get some quick references to the pot & ingredient colliders
         potCollider = pot.GetComponent<BoxCollider2D>();
         if(!potCollider)
         {
-        	Debug.Log("OH GOD");
+        	Debug.LogError("ERROR! Pot has no collider!");
         }
         myCollider = GetComponent<BoxCollider2D>();
         if(!myCollider)
         {
-        	Debug.Log("OH FUCK");
+        	Debug.LogError("ERROR! Ingredient has no collider!");
         }
     }
 
@@ -57,7 +58,8 @@ public class DraggableIngredient : MonoBehaviour
     	//if we're in the soup, remove ourselves
     	if(inSoup)
     	{
-    		pot.RemoveIngredient(this);
+    		pot.RemoveIngredient(this); //get out of the pot
+    		SoupManager.main.DisableIngredient(ingredient); //get out of the soup manager
     		inSoup = false;
     	}
     }
@@ -76,7 +78,17 @@ public class DraggableIngredient : MonoBehaviour
     		{
     			//b e c o m e   s o u p
     			inSoup = true; //only have to update inSoup - AddIngredient took care of our position for us
-    			Debug.Log("IN DA SOUP");
+    			bool added = SoupManager.main.EnableIngredient(ingredient); //tell the soup manager to add us
+    			//Error checking just on the offchance that somehow the ingredient could be added to the pot but not the soup manager.
+    			//That should be impossible, but better safe than sorry. 
+    			if (added) //success
+    			{
+    				Debug.Log("Ingredient " + ingredient.name + " successfully added to soup!");
+    			}
+    			else //failure
+    			{
+    				Debug.LogWarning("Ingredient " + ingredient.name + " can fit in soup, but wasn't added properly!");
+    			}
     		}
     		else
     		{
@@ -88,9 +100,20 @@ public class DraggableIngredient : MonoBehaviour
     	else
     	{
     		//we were not dropped in the soup
-    		Debug.Log("NOT IN DA SOUP");
     		transform.position = startPos; //go back home and cry because you missed the pot
     	}
+    }
+
+    //detect mouse over & display the target/effect data
+    private void OnMouseEnter()
+    {
+    	Debug.Log("Moused over " + ingredient.name);
+    }
+
+    //detect mouse no longer over & hide the target/effect data
+    private void OnMouseExit()
+    {
+    	Debug.Log("Mouse left " + ingredient.name);
     }
 
     /// <summary>
@@ -98,6 +121,8 @@ public class DraggableIngredient : MonoBehaviour
     /// </summary>
     public void UpdateData()
     {
+    	/***ADD THE REST OF THIS ONCE THE UI IS ADDED***/
+
     	//if ingredient isn't set, give an error message & abort
     	// if(!ingredient)
     	// {

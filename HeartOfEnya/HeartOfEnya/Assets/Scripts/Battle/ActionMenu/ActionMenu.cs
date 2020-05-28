@@ -60,7 +60,7 @@ public class ActionMenu : MonoBehaviour, IPausable
         sfxCancel.Play();
         if (inConfirmationPrompt)
         {
-            HideConfirmationPrompt();
+            CancelConfirmationPrompt();
             return;
         }
         //if(buttons.Count > 0)
@@ -82,10 +82,15 @@ public class ActionMenu : MonoBehaviour, IPausable
         inConfirmationPrompt = true;
     }
 
+    public void CancelConfirmationPrompt()
+    {
+        HideConfirmationPrompt();
+        InitializeMenu();
+    }
+
     public void HideConfirmationPrompt()
     {
         confirmationPrompt.SetActive(false);
-        InitializeMenu();
         inConfirmationPrompt = false;
     }
 

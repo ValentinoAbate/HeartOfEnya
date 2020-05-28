@@ -50,7 +50,8 @@ public class PartyMember : Combatant, IPausable
     [SerializeField]
     private Character chara;
     [Header("Party Member Specific Fields")]
-    public ActionMenu ActionMenu;
+    [SerializeField] private ActionMenu actionMenuRight;
+    [SerializeField] private ActionMenu actionMenuLeft;
     public AttackCursor attackCursor;
     public int maxFp;
     public int level;
@@ -64,7 +65,16 @@ public class PartyMember : Combatant, IPausable
     private PlaytestLogger logger;
 
     public bool DeathsDoor { get; private set; }
-    
+    public ActionMenu ActionMenu
+    {
+        get
+        {
+            if (Pos.col == BattleGrid.main.Cols - 1)
+                return actionMenuLeft;
+            return actionMenuRight;
+        }
+    }
+
     public int DeathsDoorCounter
     {
         get => deathsDoorCounter;

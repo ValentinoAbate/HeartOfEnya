@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 7797176595401580605}
   - component: {fileID: 7450389100152843022}
   - component: {fileID: 1978365551954952731}
+  - component: {fileID: 7400720262534053760}
+  - component: {fileID: 2275520191734268552}
   m_Layer: 0
   m_Name: BattleEventManager
   m_TagString: Untagged
@@ -50,6 +52,9 @@ MonoBehaviour:
   tutorialDay1: 0
   tutorialDay2: 0
   tutorialDay3: 0
+  luaBattle: 0
+  luaUnfrozen: 0
+  mainPhase: 0
   tutorialIntro:
     _event:
       m_PersistentCalls:
@@ -482,6 +487,54 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     flag: 0
+  tutPassives:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7400720262534053760}
+          m_MethodName: PassivesTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutMove3:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2275520191734268552}
+          m_MethodName: Move3Trigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutLua:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2275520191734268552}
+          m_MethodName: LuaTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
   abs0PhaseChange:
     _event:
       m_PersistentCalls:
@@ -565,3 +618,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6dda9fc8c15f74c87172debabd7b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7400720262534053760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324923904088594698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108ffd1f1cd0f431295b6aa6145e38a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleEvents: {fileID: 3274595405748874241}
+--- !u!114 &2275520191734268552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324923904088594698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b17fda71374d802b89260920fe52602d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleEvents: {fileID: 3274595405748874241}

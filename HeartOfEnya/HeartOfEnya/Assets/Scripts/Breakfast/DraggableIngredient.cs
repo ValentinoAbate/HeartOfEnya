@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// A replacement for the old ingredient button that will (hopefully) support drag-&-drop
@@ -10,15 +11,22 @@ public class DraggableIngredient : MonoBehaviour
 	public Ingredient ingredient; //ingredient we're using
 	public Vector3 startPos; //where we originally spawned, and where to return to if not dropped in the pot
 	public Pot pot;
+	public Vector3 infoCanvasOffset; //offset for the UI canvas
 
 	private bool inSoup = false; //are we in da soup?
 	private bool dragging = false; //whether we're currently being dragged
-	private BoxCollider2D potCollider; //stores the pot's collider component for quick access. Set automatically in Start()
-	private BoxCollider2D myCollider; //stores our collider component for quick access. Set automatically in Start()
+	private BoxCollider2D potCollider; //stores a reference to the pot's collider component for quick access. Set automatically in Start()
+	private BoxCollider2D myCollider; //stores a reference to our collider component for quick access. Set automatically in Start()
+	private GameObject hoverUI; //stores a reference to the group for the hover-over UI for quick access. Set automatically in Start()
+	private Canvas myCanvas; //stores a reference to the child canvas object for quick access. Set automatically in Start()
 
     // Start is called before the first frame update
     void Start()
     {
+    	//set up some references we'll need later
+    	hoverUI = transform.Find("HoverUI").gameObject; //store a reference for later use so we don't have a fuckton of Find() calls
+        myCanvas = transform.Find("HoverUI").transform.Find("Canvas").GetComponent<Canvas>(); //store this bastard, we're gonna use it a lot
+        
     	//update text & images from ingredient
         UpdateData();
 
@@ -35,6 +43,19 @@ public class DraggableIngredient : MonoBehaviour
         {
         	Debug.LogError("ERROR! Ingredient has no collider!");
         }
+
+        //turn off the UI on startup so it only appears when moused over
+        hoverUI.SetActive(false);
+
+        //For reasons no sane person can explain, the only way to get the fucking UI to show up is if we switch the UI Canvas
+        //from "WorldSpace" render mode to "SceenSpace - Camera" and then switch it back.
+        //This is probably the single dumbest thing I have ever done in my life, and that counts all the times I intentionally electrocuted myself
+        //just to see if my braces were conductive.
+        myCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+        myCanvas.renderMode = RenderMode.WorldSpace;
+        //adjust it's fucking coords because who the fuck cares what I entered in the inspector, toss it out at the first opportunity
+        //and make me do it again. Keep the original Z value though - it's magic and I don't want to poke it lest I invite the wrath of god
+        myCanvas.transform.localPosition = new Vector3(infoCanvasOffset.x, infoCanvasOffset.y, myCanvas.transform.localPosition.z);
     }
 
     // Update is called once per frame
@@ -107,13 +128,13 @@ public class DraggableIngredient : MonoBehaviour
     //detect mouse over & display the target/effect data
     private void OnMouseEnter()
     {
-    	Debug.Log("Moused over " + ingredient.name);
+    	hoverUI.SetActive(true); //turn on UI
     }
 
     //detect mouse no longer over & hide the target/effect data
     private void OnMouseExit()
     {
-    	Debug.Log("Mouse left " + ingredient.name);
+    	hoverUI.SetActive(false); //turn off UI
     }
 
     /// <summary>
@@ -130,17 +151,21 @@ public class DraggableIngredient : MonoBehaviour
     	// 	return;
     	// }
 
+    	//
+
     	//set name text based on ingredient
         // Text nameTxt = transform.Find("NameText").GetComponent<Text>();
         // nameTxt.text = ingredient.name;
         //set effect text based on ingredient
         // Text effectTxt = transform.Find("EffectText").GetComponent<Text>();
-        // effectTxt.text = ingredient.GetEffectText();
+        Text effectTxt = myCanvas.transform.Find("EffectText").GetComponent<Text>();
+        effectTxt.text = ingredient.GetEffectText();
         //set ingredient icon based on ingredient
         SpriteRenderer ingIcon = GetComponent<SpriteRenderer>();
         ingIcon.sprite = ingredient.ingredientIcon;
     	//set character icon based on ingredient
         // Image charIcon = transform.Find("CharacterIcon").GetComponent<Image>();
-        // charIcon.sprite = ingredient.characterIcon;
+        Image charIcon = myCanvas.transform.Find("CharacterIcon").GetComponent<Image>();
+        charIcon.sprite = ingredient.characterIcon;
     }
 }

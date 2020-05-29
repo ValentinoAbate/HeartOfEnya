@@ -26,9 +26,31 @@ public class ActionInspector : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("userFxPrefab"), new GUIContent("User Fx Prefab"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("delayAtEnd"), new GUIContent("Delay At End"));
         EditorUtils.Separator();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("singleStartup"), new GUIContent("Single Startup SFX"));
+        if(action.singleStartup)
+        {
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("startupOverride"), new GUIContent("Startup SFX"));
+        }
+        else
+        {
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("startupEnemy"), new GUIContent("Startup SFX (Enemy)"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("startupWood"), new GUIContent("Startup SFX (Wood)"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("startupStone"), new GUIContent("Startup SFX (Stone)"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("startupParty"), new GUIContent("Startup SFX (Party)"));
+        }
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("hasImpacts"), new GUIContent("Has impact SFX"));
+        if(action.hasImpacts)
+        {
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("impactEnemy"), new GUIContent("Impact SFX (Enemy)"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("impactWood"), new GUIContent("Impact SFX (Wood)"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("impactStone"), new GUIContent("Impact SFX (Stone)"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("impactParty"), new GUIContent("Impact SFX (Party)"));
+        }
+        EditorUtils.Separator();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("chargeTurns"), new GUIContent("Charge Turns"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("targetFilter"), new GUIContent("Target Filter"));
         EditorUtils.Separator();
+
 
         #region Target Pattern And Range
         EditorGUILayout.PropertyField(serializedObject.FindProperty("targetPatternGenerator"), new GUIContent("Target Pattern Generator"));

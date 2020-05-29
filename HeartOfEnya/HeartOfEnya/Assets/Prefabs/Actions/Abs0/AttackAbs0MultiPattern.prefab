@@ -68,20 +68,6 @@ MonoBehaviour:
   - 2
   numChoices: 2
   noDuplicateTargets: 1
---- !u!114 &4362507590128544397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 417375792446999537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7951daf7713baef45b162066c21c9919, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: 1
-  damage: 2
 --- !u!114 &1596124406641089430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,6 +82,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 0
   numPerBatch: 5
+--- !u!114 &4362507590128544397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417375792446999537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7951daf7713baef45b162066c21c9919, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: 1
+  damage: 2
 --- !u!1001 &711754725206007827
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -249,6 +249,11 @@ PrefabInstance:
         type: 3}
       propertyPath: description
       value: Freezes multple locations on the battlefield
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: hasImpacts
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65afaea67fb0af4a84fe0702411019e, type: 3}

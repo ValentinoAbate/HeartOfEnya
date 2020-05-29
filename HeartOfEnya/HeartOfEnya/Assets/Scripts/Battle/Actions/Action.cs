@@ -2,9 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using FMODUnity;
 
 public class Action : MonoBehaviour
 {
+    public enum SfxCategory
+    { 
+        Enemy,
+        Wood,
+        Stone,
+        Party,
+        Override,
+        None,
+    }
+
     public const float targetHighlightSeconds = 0.25f;
     public const float cutInSeconds = 2.25f;
 
@@ -29,6 +40,23 @@ public class Action : MonoBehaviour
     public float delayAtEnd = 0.25f;
     #endregion
 
+    #region SFX Fields
+    public bool singleStartup = true;
+    public StudioEventEmitter startupOverride = null;
+    public StudioEventEmitter startupEnemy;
+    public StudioEventEmitter startupWood;
+    public StudioEventEmitter startupStone;
+    public StudioEventEmitter startupParty;
+    public bool hasImpacts = true;
+    public StudioEventEmitter impactEnemy;
+    public StudioEventEmitter impactWood;
+    public StudioEventEmitter impactStone;
+    public StudioEventEmitter impactParty;
+
+    private Dictionary<SfxCategory, StudioEventEmitter> startupEmitters;
+    private Dictionary<SfxCategory, StudioEventEmitter> impactEmitters;
+
+    #endregion
     public string Description => description;
     [SerializeField]
     private string description = "description";
@@ -54,6 +82,21 @@ public class Action : MonoBehaviour
 
     private void Awake()
     {
+        startupEmitters = new Dictionary<SfxCategory, StudioEventEmitter>()
+        {
+            {SfxCategory.Enemy, startupEnemy },
+            {SfxCategory.Wood, startupWood },
+            {SfxCategory.Stone, startupStone },
+            {SfxCategory.Party, startupParty },
+            {SfxCategory.Override, startupOverride },
+        };
+        impactEmitters = new Dictionary<SfxCategory, StudioEventEmitter>()
+        {
+            {SfxCategory.Enemy, impactEnemy },
+            {SfxCategory.Wood, impactWood },
+            {SfxCategory.Stone, impactStone },
+            {SfxCategory.Party, impactParty },
+        };
         effects = GetComponentsInChildren<ActionEffect>();
         if (targetPatternGenerator != null)
             targetPattern = targetPatternGenerator.Generate();
@@ -75,14 +118,37 @@ public class Action : MonoBehaviour
         return targetPositions;
     }
 
+    private SfxCategory GetSfxCategory(Combatant target)
+    {
+        if (target == null)
+            return SfxCategory.None;
+        else if (target.Team == FieldEntity.Teams.Enemy)
+            return SfxCategory.Enemy;
+        else if (target.Team == FieldEntity.Teams.Party)
+            return SfxCategory.Party;
+        else if (!target.isMovable)
+            return SfxCategory.Stone;
+        else
+            return SfxCategory.Wood;
+    }
+
     public IEnumerator Activate(Combatant user, Pos targetPos, Pos primaryTargetPos)
     {
         // Get the target positions, with rotating applied
         var targetPositions = HitPositions(user.Pos, targetPos);
-
         //Play cut-in if applicable
         if(cutInPrefab != null)
         {
+            var sfxCat = SfxCategory.Override;
+            if(!singleStartup && targetPositions.Count > 0)
+            {
+                var target = BattleGrid.main.Get<Combatant>(targetPositions[0]);
+                if(primaryTargetPos != Pos.OutOfBounds)
+                    target = BattleGrid.main.Get<Combatant>(primaryTargetPos);
+                sfxCat = GetSfxCategory(target);
+            }
+            if(startupEmitters.ContainsKey(sfxCat))
+                startupEmitters[sfxCat].Play();
             var cutIn = Instantiate(cutInPrefab);
             yield return new WaitForSeconds(cutInSeconds);
             Destroy(cutIn);
@@ -190,7 +256,6 @@ public class Action : MonoBehaviour
     {
         var targetPositionBatches = new List<List<Pos>>() { targetPositions };
         bool useBatches = false;
-
         var customSortingOrder = GetComponent<VfxOrder>();
         if (customSortingOrder == null)
             targetPositions.Sort((p1, p2) => Pos.CompareTopToBottomLeftToRight(p1, p2));
@@ -210,6 +275,12 @@ public class Action : MonoBehaviour
                 var target = BattleGrid.main.Get<Combatant>(position);
                 if (target != null)
                 {
+                    if(hasImpacts)
+                    {
+                        var sfxCat = GetSfxCategory(target);
+                        if (impactEmitters.ContainsKey(sfxCat) && (!useBatches || !impactEmitters[sfxCat].IsPlaying()))
+                            impactEmitters[sfxCat].Play();
+                    }
                     routine = PlayActionVfx(tileFxPrefab, target.VfxSpawnPoint);
                 }
                 else
@@ -217,10 +288,15 @@ public class Action : MonoBehaviour
                     routine = PlayActionVfx(tileFxPrefab, BattleGrid.main.GetSpace(position));
                 }
                 if (!useBatches)
+                {
                     yield return routine;
+                }
+
             }
             if (useBatches)
+            {
                 yield return routine;
+            }
         }
     }
 

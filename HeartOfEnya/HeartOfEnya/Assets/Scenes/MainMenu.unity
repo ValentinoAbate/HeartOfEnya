@@ -850,7 +850,7 @@ PrefabInstance:
     - target: {fileID: 3664866112556615899, guid: bed6991e8dca43a4ab10b076a9dfceb9,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bed6991e8dca43a4ab10b076a9dfceb9, type: 3}
@@ -1189,18 +1189,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 279450291}
   m_CullTransparentMesh: 0
---- !u!114 &394965868 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6120777202377938410, guid: 1a00c200a13ef9a27b8391587a6a0b66,
-    type: 3}
-  m_PrefabInstance: {fileID: 843808892}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9d1f45dd8674778bb58674513e8c5da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &405834381
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,7 +1334,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Camp -Raina Monolog
+  m_Text: Camp - Raina Monolog
 --- !u!222 &414636684
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1981,7 +1969,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Camp -Intro
+  m_Text: Camp - Intro
 --- !u!222 &575235974
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2985,11 +2973,11 @@ PrefabInstance:
         type: 3}
       propertyPath: fade
       value: 
-      objectReference: {fileID: 1341056430}
+      objectReference: {fileID: 1426206740}
     - target: {fileID: 6120777202377938410, guid: 1a00c200a13ef9a27b8391587a6a0b66,
         type: 3}
       propertyPath: fadeTime
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7243930662405243379, guid: 1a00c200a13ef9a27b8391587a6a0b66,
         type: 3}
@@ -3049,7 +3037,7 @@ PrefabInstance:
     - target: {fileID: 7823845723423261931, guid: 1a00c200a13ef9a27b8391587a6a0b66,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7825716619185035859, guid: 1a00c200a13ef9a27b8391587a6a0b66,
         type: 3}
@@ -3590,7 +3578,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Camp -Bapy Monolog
+  m_Text: Camp - Bapy Monolog
 --- !u!222 &1058056695
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4309,12 +4297,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1340030299}
   m_CullTransparentMesh: 0
---- !u!95 &1341056430 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 150686136351316371, guid: bed6991e8dca43a4ab10b076a9dfceb9,
-    type: 3}
-  m_PrefabInstance: {fileID: 228200379}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1361511254
 GameObject:
   m_ObjectHideFlags: 0
@@ -4679,7 +4661,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Camp -Raina Party Scene
+  m_Text: Camp - Raina Party Scene
 --- !u!222 &1403748074
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4771,6 +4753,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 843808892}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1426206740 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6654211705316070819, guid: 1a00c200a13ef9a27b8391587a6a0b66,
+    type: 3}
+  m_PrefabInstance: {fileID: 843808892}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1492039917
 GameObject:
   m_ObjectHideFlags: 0
@@ -4839,7 +4827,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Camp -Bapy Party Scene
+  m_Text: Camp - Bapy Party Scene
 --- !u!222 &1492039920
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5954,6 +5942,7 @@ GameObject:
   - component: {fileID: 1997552496}
   - component: {fileID: 1997552495}
   - component: {fileID: 1997552494}
+  - component: {fileID: 1997552497}
   m_Layer: 5
   m_Name: Start
   m_TagString: Untagged
@@ -6024,7 +6013,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 394965868}
+      - m_Target: {fileID: 1997552497}
         m_MethodName: TransitionScenes
         m_Mode: 5
         m_Arguments:
@@ -6071,6 +6060,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1997552492}
   m_CullTransparentMesh: 0
+--- !u!114 &1997552497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997552492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c624fac760b04845816fe2681a28c70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2022270929
 GameObject:
   m_ObjectHideFlags: 0

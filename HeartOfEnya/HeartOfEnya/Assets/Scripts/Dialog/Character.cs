@@ -215,7 +215,7 @@ public class Character : MonoBehaviour
         yield return StartCoroutine("FadeToClear");
         //run the dialogue
         var phaseData = CharacterManager.main.GetPhaseData(phase); //can't pass phaseData to the coroutine so let's just get it again
-        dialogManager.StartCampMonolog(phaseData);
+        //dialogManager.StartCampMonolog(phaseData);
     }
 
     //handles fading the screen to black.

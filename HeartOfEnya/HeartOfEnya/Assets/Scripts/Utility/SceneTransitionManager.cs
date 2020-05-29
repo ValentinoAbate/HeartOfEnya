@@ -31,7 +31,9 @@ public class SceneTransitionManager : MonoBehaviour
     /// </summary>
     public void TransitionScenes(string sceneName)
     {
-       
+        // If scene is Battle, do the special to battle transition
+        // If scene is camp, campIntro, or campOutro, do the special to camp transition
+        // else do the normal fade
         StartCoroutine(StartFade(sceneName));
         
     }

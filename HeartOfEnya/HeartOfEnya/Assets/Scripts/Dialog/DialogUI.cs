@@ -75,6 +75,7 @@ namespace Dialog
 
         public override IEnumerator RunCommand(Command command)
         {
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
             var args = command.text.ToLower().Split();
             if(args[0] == "fadein")
             {
@@ -100,6 +101,12 @@ namespace Dialog
             else if(args[0] == "progresstheme")
             {
                 Music.SetParameter("Progress Theme", 1);
+            }
+            else if(args[0] == "gotosolo")
+            {
+                // Find speaking character
+                var character = characters.Find((c) => c.Name.ToLower() == args[1]);
+                yield return StartCoroutine(character.DoMonologueTransition(pData.gamePhase));
             }
             yield break;
         }

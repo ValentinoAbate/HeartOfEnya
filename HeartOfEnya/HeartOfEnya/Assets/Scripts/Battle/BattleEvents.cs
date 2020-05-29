@@ -18,6 +18,10 @@ public class BattleEvents : MonoBehaviour
     [HideInInspector] public bool tutorialDay1;
     [HideInInspector] public bool tutorialDay2;
     [HideInInspector] public bool tutorialDay3;
+    [HideInInspector] public bool luaBattle;
+    [HideInInspector] public bool luaUnfrozen;
+    [HideInInspector] public bool mainPhase;
+    [HideInInspector] public bool abs0Battle;
 
     [Header("Tutorial Events")]
     public BattleEvent tutorialIntro;
@@ -54,6 +58,13 @@ public class BattleEvents : MonoBehaviour
     public BattleEvent luaBossPhaseChange;
     public BattleEvent luaBossPhase2Defeated;
 
+    [Header("Main Phase Events")]
+    public BattleEvent tutPassives;
+
+    [Header("Lua Joins Events")]
+    public BattleEvent tutMove3;
+    public BattleEvent tutLua;
+
     [Header("Absolute Zero Events")]
     public BattleEvent abs0PhaseChange;
     public BattleEvent abs0Phase2Defeated;
@@ -80,6 +91,11 @@ public class BattleEvents : MonoBehaviour
         tutorialDay1 = DoNotDestroyOnLoad.Instance.persistentData.InTutorialFirstDay;
         tutorialDay2 = DoNotDestroyOnLoad.Instance.persistentData.InTutorialSecondDay;
         tutorialDay3 = DoNotDestroyOnLoad.Instance.persistentData.InTutorialThirdDay;
+        luaBattle = DoNotDestroyOnLoad.Instance.persistentData.InLuaBattle;
+        mainPhase = DoNotDestroyOnLoad.Instance.persistentData.InMainPhase;
+        luaUnfrozen = DoNotDestroyOnLoad.Instance.persistentData.LuaUnfrozen;
+        abs0Battle = DoNotDestroyOnLoad.Instance.persistentData.InAbs0Battle;
+
         partyPhase = PhaseManager.main.PartyPhase;
     }
 

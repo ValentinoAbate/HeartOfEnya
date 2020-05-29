@@ -225,11 +225,15 @@ public class PartyMember : Combatant, IPausable
             {
                 BattleEvents.main.tutMove._event.Invoke();
             }
-
             // run tutorial trigger when soleil is selected on turn 2
-            if(GetName() == "Soleil" && PhaseManager.main.Turn == 2)
+            else if(GetName() == "Soleil" && PhaseManager.main.Turn == 2)
             {
                 BattleEvents.main.tutSoleilChargeExplanation._event.Invoke();
+            }
+            // run tutorial trigger when lua is selected
+            else if(GetName() == "Lua")
+            {
+                BattleEvents.main.tutLua._event.Invoke();
             }
 
             return true;

@@ -158,6 +158,7 @@ public class DraggableIngredient : MonoBehaviour
         // nameTxt.text = ingredient.name;
         //set effect text based on ingredient
         // Text effectTxt = transform.Find("EffectText").GetComponent<Text>();
+        Debug.Log(ingredient.name + ", " + myCanvas);
         Text effectTxt = myCanvas.transform.Find("EffectText").GetComponent<Text>();
         effectTxt.text = ingredient.GetEffectText();
         //set ingredient icon based on ingredient

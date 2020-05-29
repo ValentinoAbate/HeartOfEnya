@@ -102,11 +102,13 @@ public class BattleEvents : MonoBehaviour
     public void Pause()
     {
         PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+        FMODBattle.main.TextPlaying = true;
     }
 
     public void Unpause()
     {
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        FMODBattle.main.TextPlaying = false;
     }
 
     public void IntroTrigger()

@@ -135,6 +135,8 @@ public class PartyPhase : Phase
 
     public void EndAction(PartyMember p)
     {
+        if (PhaseManager.main.Transitioning || PhaseManager.main.ActivePhase != this)
+            return;
         // Remove the party member whose action ended
         activeParty.Remove(p);
         // Remove any members who were killed as a result of the action or otherwise no longer have a turn

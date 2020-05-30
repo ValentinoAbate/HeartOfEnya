@@ -11,10 +11,16 @@ public class EnemyAIAbs0Boss : AIComponent<Enemy>
     public Action moveUnits;
     public Action moveAllToRight;
     private bool wasLastActionResetObstacles = true;
+    private bool skipSecondPhaseTurn = true;
     public override IEnumerator DoTurn(Enemy self)
     {
         if(secondPhase)
         {
+            if(skipSecondPhaseTurn)
+            {
+                skipSecondPhaseTurn = false;
+                yield break;
+            }
             yield return new WaitWhile(() => self.PauseHandle.Paused);
             if (wasLastActionResetObstacles)
             {

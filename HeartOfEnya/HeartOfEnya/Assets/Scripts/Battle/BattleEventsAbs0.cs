@@ -26,6 +26,7 @@ public class BattleEventsAbs0 : MonoBehaviour
     private IEnumerator Abs0PhaseChangeRoutine(Combatant abs0, EnemyAIAbs0Boss aiComponent)
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        abs0.CancelChargingAction();
         yield return abs0.UseAction(aiComponent.clearObstaclesAndEnemies, Pos.Zero, Pos.Zero);
         PhaseManager.main.SpawnPhase.ClearActiveSpawns();
         yield return abs0.UseAction(aiComponent.moveAllToRight, Pos.Zero, Pos.Zero);
@@ -39,6 +40,7 @@ public class BattleEventsAbs0 : MonoBehaviour
         }
         // Update the counter to actually show the number that remain +1 for abs0
         BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft + 1);
+        PhaseManager.main.NextPhase();
         // Unpause here
         PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
     }

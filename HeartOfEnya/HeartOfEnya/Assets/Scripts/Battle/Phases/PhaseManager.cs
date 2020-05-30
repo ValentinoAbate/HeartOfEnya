@@ -135,12 +135,16 @@ public class PhaseManager : MonoBehaviour, IPausable
     /// Go to the next phase, waiting for the phases to end and start
     /// If the current phase is the last phase, go to the next turn
     /// </summary>
-    private IEnumerator NextPhaseCr()
+    private IEnumerator NextPhaseCr(int nextPhase = -1)
     {
         yield return new WaitWhile(() => PauseHandle.Paused);
         yield return ActivePhase.OnPhaseEnd();
         yield return new WaitWhile(() => PauseHandle.Paused);
-        if (++currPhase >= phases.Count)
+        if(nextPhase >= 0)
+        {
+            currPhase = nextPhase;
+        }
+        else if (++currPhase >= phases.Count)
         {
             currPhase = 0;
             ++Turn;

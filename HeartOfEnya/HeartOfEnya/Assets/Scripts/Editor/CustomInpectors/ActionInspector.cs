@@ -13,6 +13,7 @@ public class ActionInspector : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("id"), new GUIContent("Action ID"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("displayName"), new GUIContent("Display Name"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("description"), new GUIContent("Description"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("detailTexts"), new GUIContent("Detail Texts"), true);
         EditorGUILayout.LabelField(new GUIContent("VFX / SFX Fields"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("cutInPrefab"), new GUIContent("Cut-In Prefab"));
         if(action.targetPattern.type == TargetPattern.Type.Spread)

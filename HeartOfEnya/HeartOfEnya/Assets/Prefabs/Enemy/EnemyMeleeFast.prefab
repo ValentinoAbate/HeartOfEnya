@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stayAway: 1
+  targetImmovableObstacles: 1
 --- !u!1001 &6016613264502088977
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -308,7 +309,7 @@ PrefabInstance:
     - target: {fileID: 8462303551624533822, guid: 17f7430228c302c40a43d2e6db488893,
         type: 3}
       propertyPath: displayName
-      value: Swiper
+      value: Crusher
       objectReference: {fileID: 0}
     - target: {fileID: 8462303551624533822, guid: 17f7430228c302c40a43d2e6db488893,
         type: 3}
@@ -326,6 +327,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4503195748058479320, guid: 60b6e0dd6a47c244e8cfdb2367e8b3ce,
         type: 3}
+    - target: {fileID: 8462303551624533822, guid: 17f7430228c302c40a43d2e6db488893,
+        type: 3}
+      propertyPath: description
+      value: Rushes and slashes a single enemy for 2 damage.
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17f7430228c302c40a43d2e6db488893, type: 3}
 --- !u!1 &7429941194639937236 stripped

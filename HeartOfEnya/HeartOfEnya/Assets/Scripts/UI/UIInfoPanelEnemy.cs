@@ -7,26 +7,44 @@ using TMPro;
 public class UIInfoPanelEnemy : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
-    public Image unitImage;
     public TextMeshProUGUI descriptionText;
-    public TextMeshProUGUI statusText;
+    public TextMeshProUGUI unitPropertiesText;
+    public TextMeshProUGUI[] effectTexts = new TextMeshProUGUI[4];
     public TextMeshProUGUI moveNumberText;
     public TextMeshProUGUI hpNumberText;
+    public TextMeshProUGUI damageNumberText;
     public Image hpBarImage;
-    public AttackDescriptionUI attackUI;
 
     public void ShowUI(Enemy e)
     {
         nameText.text = e.DisplayName;
         descriptionText.text = e.description;
-        statusText.text = e.IsChargingAction ? "Status: Charging" : "Status: Normal";
-        if(e.Stunned)
-            statusText.text = "Status: Burning";
         moveNumberText.text = e.Move.ToString();
         hpNumberText.text = e.Hp.ToString();
-        attackUI.ShowAttack(e.action);
-        unitImage.sprite = e.DisplaySprite;
-        unitImage.color = e.DisplaySpriteColor;
+        descriptionText.text = e.description;
+        unitPropertiesText.text = e.isBoss ? "Immovable, Unburnable, Defeat to End Battle" : string.Empty;
+        int damage = e.action.TotalDamage;
+        damageNumberText.text = damage > 0 ? damage.ToString() : "N/A";
+        int i = 0;
+        while(i < e.action.detailTexts.Length && i < effectTexts.Length)
+        {
+            effectTexts[i].text = e.action.detailTexts[i];
+            effectTexts[i].fontStyle = FontStyles.Normal;
+            ++i;
+        }
+        if(i < effectTexts.Length && e.action.chargeTurns > 0)
+        {
+            effectTexts[i].text = "Charged";
+            effectTexts[i].fontStyle = FontStyles.Italic;
+            ++i;
+        }
+        while(i < effectTexts.Length)
+        {
+            effectTexts[i].text = string.Empty;
+            effectTexts[i].fontStyle = FontStyles.Normal;
+            ++i;
+        }
+        
     }
 
 }

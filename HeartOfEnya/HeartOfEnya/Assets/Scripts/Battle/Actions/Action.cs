@@ -18,7 +18,7 @@ public class Action : MonoBehaviour
 
     public const float targetHighlightSeconds = 0.25f;
     public const float cutInSeconds = 2.25f;
-
+    public int TotalDamage => GetComponentsInChildren<ActionEffect>().Sum((effect) => effect is DamageEffect ? (effect as DamageEffect).damage : 0);
     public bool IsRanged => range.max > 1;
 
     public FieldEntity.Teams targetFilter = FieldEntity.Teams.All;
@@ -66,6 +66,7 @@ public class Action : MonoBehaviour
     public string ID => id;
     [SerializeField]
     private string id = "id";
+    public string[] detailTexts;
 
     private ActionEffect[] effects;
 

@@ -17,6 +17,8 @@ public class UIInfoPanelParty : MonoBehaviour
     public TextMeshProUGUI fpNumberText;
     public Image fpBarImage;
     public TextMeshProUGUI passiveText;
+    public TextMeshProUGUI passiveNameText;
+    public Image nameplate;
 
     [Header("Unit Display Background Colors")]
     public Color bapyColor;
@@ -28,8 +30,14 @@ public class UIInfoPanelParty : MonoBehaviour
     public Sprite rainaSprite;
     public Sprite soleilSprite;
     public Sprite luaSprite;
+    [Header("Unit Display Nameplate Images")]
+    public Sprite bapyNameplate;
+    public Sprite rainaNameplate;
+    public Sprite soleilNameplate;
+    public Sprite luaNameplate;
 
     private Dictionary<string, Sprite> spriteDict;
+    private Dictionary<string, Sprite> nameplateDict;
     private Dictionary<string, Color> colorDict;
 
     private void Awake()
@@ -40,6 +48,13 @@ public class UIInfoPanelParty : MonoBehaviour
             {"raina", rainaSprite },
             {"soleil", soleilSprite },
             {"lua", luaSprite },
+        }; 
+        nameplateDict = new Dictionary<string, Sprite>
+        {
+            {"bapy", bapyNameplate },
+            {"raina", rainaNameplate },
+            {"soleil", soleilNameplate },
+            {"lua", luaNameplate },
         };
         colorDict = new Dictionary<string, Color>
         {
@@ -64,17 +79,19 @@ public class UIInfoPanelParty : MonoBehaviour
         unitImage.color = p.DisplaySpriteColor;
         unitImageBg.sprite = spriteDict[p.DisplayName.ToLower()];
         unitImageBg.color = colorDict[p.DisplayName.ToLower()];
+        nameplate.sprite = nameplateDict[p.DisplayName.ToLower()];
         //statusText.text = "Status: " + (p.DeathsDoor ? "Dying." : "Doing fine!");
         if (p.Stunned)
             statusText.text = "Status: " + "Stunned.";
         if (!string.IsNullOrWhiteSpace(p.passiveName))
         {
-            passiveText.text = p.passiveName + ": " + p.passiveDescription;
+            passiveNameText.text = p.passiveName + ": ";
+            passiveText.text = p.passiveDescription;
         }
         else
         {
             passiveText.text = string.Empty;
+            passiveNameText.text = string.Empty;
         }
-
     }
 }

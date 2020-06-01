@@ -35,12 +35,23 @@ public class SceneTransitionManager : MonoBehaviour
         // If scene is Battle, do the special to battle transition
         // If scene is camp, campIntro, or campOutro, do the special to camp transition
         // else do the normal fade
-        StartCoroutine(StartFade(sceneName));
-        
+        if (sceneName == "Battle")
+        {
+            StartCoroutine(BattleTransition(sceneName));
+        }else if(sceneName == "Camp" || sceneName == "OutroCamp" || sceneName == "IntroCamp")
+        {
+            StartCoroutine(CampTransition(sceneName));
+        }
+        else
+        {
+            StartCoroutine(StartFade(sceneName));
+        }
+
     }
 
-    IEnumerator StartFade(string name)
+    IEnumerator BattleTransition(string name)
     {
+        Debug.Log("Battle Transition");
         if (!(click))
         {
             click = true;
@@ -51,6 +62,34 @@ public class SceneTransitionManager : MonoBehaviour
             click = false;
         }
         
+    }
+    IEnumerator CampTransition(string name)
+    {
+        Debug.Log("Camp Transition");
+        if (!(click))
+        {
+            click = true;
+            fade.SetTrigger("Start");
+            yield return new WaitForSeconds(fadeTime);
+            SceneManager.LoadScene(name);
+            fade.SetTrigger("End");
+            click = false;
+        }
+
+    }
+    IEnumerator StartFade(string name)
+    {
+        Debug.Log("Fade Transition");
+        if (!(click))
+        {
+            click = true;
+            fade.SetTrigger("Start");
+            yield return new WaitForSeconds(fadeTime);
+            SceneManager.LoadScene(name);
+            fade.SetTrigger("End");
+            click = false;
+        }
+
     }
     /// <summary>
     /// Exit Functionality for Exit Button

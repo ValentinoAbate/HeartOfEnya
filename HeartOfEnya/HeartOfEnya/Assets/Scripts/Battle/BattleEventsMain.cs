@@ -11,6 +11,8 @@ public class BattleEventsMain : MonoBehaviour
     {
         if(battleEvents.mainPhase && !battleEvents.luaUnfrozen && !battleEvents.tutPassives.flag)
         {
+            battleEvents.Pause();
+
             Debug.Log("Battle Triggers: Passives");
             battleEvents.tutPassives.flag = true;
 
@@ -22,6 +24,6 @@ public class BattleEventsMain : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Unpause();
     }
 }

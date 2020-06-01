@@ -12,6 +12,7 @@ public class BattleEventsDay3 : MonoBehaviour
         if(battleEvents.tutorialDay3 && !battleEvents.tutFlameMoves.flag)
         {
             battleEvents.Pause();
+            
             Debug.Log("Battle Triggers: Flame Moves");
             battleEvents.tutFlameMoves.flag = true;
             DialogueManager.main.runner.StartDialogue("TutFlameMoves");
@@ -43,6 +44,7 @@ public class BattleEventsDay3 : MonoBehaviour
         if(battleEvents.tutorialDay3 && !battleEvents.tutBurn.flag)
         {
             battleEvents.Pause();
+            
             Debug.Log("Battle Triggers: Burn");
             battleEvents.tutBurn.flag = true;
             DialogueManager.main.runner.StartDialogue("TutBurn");

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BattleEventsAbs0 : MonoBehaviour
 {
+    public BattleEvents battleEvents;
+
     public void Abs0PhaseChange()
     {
         if (BattleEvents.main.abs0PhaseChange.flag)
@@ -15,7 +17,7 @@ public class BattleEventsAbs0 : MonoBehaviour
         var abs0 = BattleGrid.main.Find<Combatant>((c) => c.GetComponent<EnemyAIAbs0Boss>() != null);
         if (abs0 == null || !abs0.Dead)
             return;
-        PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Pause();
         pData.absoluteZeroDefeated = true;
         abs0.Hp = 9;
         var aiComponent = abs0.GetComponent<EnemyAIAbs0Boss>();
@@ -40,7 +42,7 @@ public class BattleEventsAbs0 : MonoBehaviour
         // Update the counter to actually show the number that remain +1 for abs0
         BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft + 1);
         // Unpause here
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Unpause();
     }
 
     public void Abs0Phase2Defeated()
@@ -53,7 +55,7 @@ public class BattleEventsAbs0 : MonoBehaviour
         var abs0 = BattleGrid.main.Find<Combatant>((c) => c.GetComponent<EnemyAIAbs0Boss>() != null);
         if (abs0 == null || !abs0.Dead)
             return;
-        PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Pause();
         abs0.invincible = false;
         abs0.Damage(10);
         pData.absoluteZeroPhase2Defeated = true;
@@ -63,6 +65,6 @@ public class BattleEventsAbs0 : MonoBehaviour
     private IEnumerator Abs0Phase2DefeatedRoutine()
     {
         yield return new WaitForSeconds(1);
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Unpause();
     }
 }

@@ -8,6 +8,7 @@ public class SceneTransitionManager : MonoBehaviour
     public static SceneTransitionManager main;
     public Animator fade;
     public float fadeTime = 1f;
+    private bool click = false;
     
     /// <summary>
     /// Implements the singleton pattern
@@ -40,10 +41,16 @@ public class SceneTransitionManager : MonoBehaviour
 
     IEnumerator StartFade(string name)
     {
-        fade.SetTrigger("Start");
-        yield return new WaitForSeconds(fadeTime);
-        SceneManager.LoadScene(name);
-        fade.SetTrigger("End");
+        if (!(click))
+        {
+            click = true;
+            fade.SetTrigger("Start");
+            yield return new WaitForSeconds(fadeTime);
+            SceneManager.LoadScene(name);
+            fade.SetTrigger("End");
+            click = false;
+        }
+        
     }
     /// <summary>
     /// Exit Functionality for Exit Button

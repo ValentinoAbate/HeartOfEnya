@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5394862806546005078}
   - component: {fileID: 2605888714712373605}
   m_Layer: 0
-  m_Name: Cabbage
+  m_Name: SFXCabbage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 7205223521336079292}
   - component: {fileID: 760959819204179161}
   m_Layer: 0
-  m_Name: Carrots
+  m_Name: SFXCarrots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 825393957439934168}
   - component: {fileID: 7078073041295700281}
   m_Layer: 0
-  m_Name: Mushroom
+  m_Name: SFXMushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,9 +190,64 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 395853992199868148}
+  - {fileID: 5000207866841508296}
   m_Father: {fileID: 8938799820228471625}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1056402982209813649
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5000207866841508296}
+  - component: {fileID: 7910128536622635745}
+  m_Layer: 0
+  m_Name: SoupBubble
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5000207866841508296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056402982209813649}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1070800874668672959}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7910128536622635745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056402982209813649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/SFX/Ambient/Soup Scene/Soup Bubbling
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
 --- !u!1 &1883910607322924177
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +259,7 @@ GameObject:
   - component: {fileID: 3859814271865563273}
   - component: {fileID: 1461278752409432713}
   m_Layer: 0
-  m_Name: Onions
+  m_Name: SFXOnions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -459,7 +514,7 @@ GameObject:
   - component: {fileID: 8151497628017484663}
   - component: {fileID: 4290978780170306655}
   m_Layer: 0
-  m_Name: Walnuts
+  m_Name: SFXWalnuts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -513,7 +568,7 @@ GameObject:
   - component: {fileID: 4885512330310089370}
   - component: {fileID: 4348925196386224051}
   m_Layer: 0
-  m_Name: Chicken
+  m_Name: SFXChicken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -621,7 +676,7 @@ GameObject:
   - component: {fileID: 6414040439945614441}
   - component: {fileID: 3944233173889139907}
   m_Layer: 0
-  m_Name: Tomatoes
+  m_Name: SFXTomatoes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -675,7 +730,7 @@ GameObject:
   - component: {fileID: 1167633068477339950}
   - component: {fileID: 8262966511410977931}
   m_Layer: 0
-  m_Name: Potatoes
+  m_Name: SFXPotatoes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -818,7 +873,7 @@ GameObject:
   - component: {fileID: 4661798501317008752}
   - component: {fileID: 6607755801047560562}
   m_Layer: 0
-  m_Name: Noodles
+  m_Name: SFXNoodles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -21,6 +21,18 @@ public class DraggableIngredient : MonoBehaviour
 	private GameObject hoverUI; //stores a reference to the group for the hover-over UI for quick access. Set automatically in Start()
 	private Canvas myCanvas; //stores a reference to the child canvas object for quick access. Set automatically in Start()
 
+    private FMODUnity.StudioEventEmitter sfxHighlight;
+    private FMODUnity.StudioEventEmitter sfxCancel;
+    private FMODUnity.StudioEventEmitter sfxCabbage;
+    private FMODUnity.StudioEventEmitter sfxCarrots;
+    private FMODUnity.StudioEventEmitter sfxChicken;
+    private FMODUnity.StudioEventEmitter sfxMushroom;
+    private FMODUnity.StudioEventEmitter sfxNoodles;
+    private FMODUnity.StudioEventEmitter sfxOnions;
+    private FMODUnity.StudioEventEmitter sfxPotatoes;
+    private FMODUnity.StudioEventEmitter sfxTomatoes;
+    private FMODUnity.StudioEventEmitter sfxWalnuts;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +40,18 @@ public class DraggableIngredient : MonoBehaviour
     	hoverUI = transform.Find("HoverUI").gameObject; //store a reference for later use so we don't have a fuckton of Find() calls
         myCanvas = transform.Find("HoverUI").transform.Find("Canvas").GetComponent<Canvas>(); //store this bastard, we're gonna use it a lot
         
+        sfxHighlight = GameObject.Find("UIHighlight").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxCancel = GameObject.Find("UICancel").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxCabbage = GameObject.Find("SFXCabbage").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxCarrots = GameObject.Find("SFXCarrots").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxChicken = GameObject.Find("SFXChicken").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxMushroom = GameObject.Find("SFXMushroom").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxNoodles = GameObject.Find("SFXNoodles").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxOnions = GameObject.Find("SFXOnions").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxPotatoes = GameObject.Find("SFXPotatoes").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxTomatoes = GameObject.Find("SFXTomatoes").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxWalnuts = GameObject.Find("SFXWalnuts").GetComponent<FMODUnity.StudioEventEmitter>();
+
     	//update text & images from ingredient
         UpdateData();
 
@@ -85,6 +109,40 @@ public class DraggableIngredient : MonoBehaviour
     		pot.RemoveIngredient(this); //get out of the pot. Assume the pot will handle everything with the soup manager.
     		inSoup = false;
     	}
+        else
+        {
+            // play correct sfx based on which ingredience
+            switch(ingredient.name)
+            {
+                case "Cabbage":
+                    sfxCabbage.Play();
+                    break;
+                case "Carrot":
+                    sfxCarrots.Play();
+                    break;
+                case "Chicken":
+                    sfxChicken.Play();
+                    break;
+                case "Mushroom":
+                    sfxMushroom.Play();
+                    break;
+                case "Noodles":
+                    sfxNoodles.Play();
+                    break;
+                case "Onions":
+                    sfxOnions.Play();
+                    break;
+                case "Potato":
+                    sfxPotatoes.Play();
+                    break;
+                case "Tomato":
+                    sfxTomatoes.Play();
+                    break;
+                case "Walnuts":
+                    sfxWalnuts.Play();
+                    break;
+            }
+        }
     }
 
     //if unclicked, stop dragging
@@ -131,6 +189,7 @@ public class DraggableIngredient : MonoBehaviour
     private void OnMouseEnter()
     {
     	hoverUI.SetActive(true); //turn on UI
+        sfxHighlight.Play();
     }
 
     //detect mouse no longer over & hide the target/effect data
@@ -183,5 +242,6 @@ public class DraggableIngredient : MonoBehaviour
     	transform.position = startPos;
     	inSoup = false; //it's safe to assume that if we're resetting our position, we're not in the soup
     	hoverUI.SetActive(false); //turn off the hover UI too
+        sfxCancel.Play();
     }
 }

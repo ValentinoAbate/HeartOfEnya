@@ -304,14 +304,14 @@ public class Character : MonoBehaviour
 
     //replaces the character data with a new one.
     //Mostly intended for the Soleil characterData swap
-    public void swapCharData()
+    public void swapCharData(bool swapSprite = true)
     {
         if (swapData) //let's avoid a null reference exception
         {
             //swap data
             data = swapData.replacementData;
             //avoid swapping the sprite it we're in battle
-            if (CharacterManager.main == null)
+            if (CharacterManager.main == null || !swapSprite)
             {
                 return;
             }

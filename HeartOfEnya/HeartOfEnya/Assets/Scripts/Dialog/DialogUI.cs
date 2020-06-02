@@ -108,6 +108,12 @@ namespace Dialog
                 var character = characters.Find((c) => c.Name.ToLower() == args[1]);
                 yield return StartCoroutine(character.DoMonologueTransition(pData.gamePhase));
             }
+            else if(args[0] == "swapcharacterdata")
+            {
+                // Find speaking character
+                var character = characters.Find((c) => c.Name.ToLower() == args[1]);
+                character.swapCharData(false);
+            }
             yield break;
         }
 

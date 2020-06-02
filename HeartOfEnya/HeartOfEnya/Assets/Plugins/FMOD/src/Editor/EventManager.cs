@@ -665,11 +665,11 @@ namespace FMODUnity
                 lastCheckTime = Time.realtimeSinceStartup;
             }
 
-            if (lastCheckTime + FilePollTimeSeconds < Time.realtimeSinceStartup)
-            {
-                RefreshBanks();
-                lastCheckTime = Time.realtimeSinceStartup;
-            }
+            //if (lastCheckTime + FilePollTimeSeconds < Time.realtimeSinceStartup)
+            //{
+            //    RefreshBanks();
+            //    lastCheckTime = Time.realtimeSinceStartup;
+            //}
         }
 
         public static List<EditorEventRef> Events

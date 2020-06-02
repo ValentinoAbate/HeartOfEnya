@@ -7,7 +7,11 @@ public class SceneTransitionManager : MonoBehaviour
 {
     public static SceneTransitionManager main;
     public Animator fade;
+    public Animator campTransition;
+    public Animator battleTransition;
     public float fadeTime = 1f;
+    public float battleTransitionTime = 1f;
+    public float campTransitionTime = 1f;
     private bool click = false;
     
     /// <summary>
@@ -55,10 +59,10 @@ public class SceneTransitionManager : MonoBehaviour
         if (!(click))
         {
             click = true;
-            fade.SetTrigger("Start");
-            yield return new WaitForSeconds(fadeTime);
+            battleTransition.SetTrigger("Start");
+            yield return new WaitForSeconds(battleTransitionTime);
             SceneManager.LoadScene(name);
-            fade.SetTrigger("End");
+            battleTransition.SetTrigger("End");
             click = false;
         }
         
@@ -69,10 +73,10 @@ public class SceneTransitionManager : MonoBehaviour
         if (!(click))
         {
             click = true;
-            fade.SetTrigger("Start");
-            yield return new WaitForSeconds(fadeTime);
+            campTransition.SetTrigger("Start");
+            yield return new WaitForSeconds(campTransitionTime);
             SceneManager.LoadScene(name);
-            fade.SetTrigger("End");
+            campTransition.SetTrigger("End");
             click = false;
         }
 

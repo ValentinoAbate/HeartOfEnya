@@ -82,8 +82,7 @@ public class DraggableIngredient : MonoBehaviour
     	//if we're in the soup, remove ourselves
     	if(inSoup)
     	{
-    		pot.RemoveIngredient(this); //get out of the pot
-    		SoupManager.main.DisableIngredient(ingredient); //get out of the soup manager
+    		pot.RemoveIngredient(this); //get out of the pot. Assume the pot will handle everything with the soup manager.
     		inSoup = false;
     	}
     }
@@ -118,13 +117,13 @@ public class DraggableIngredient : MonoBehaviour
     		{
     			//no more room
     			Debug.Log("Oh no! Pot is full");
-    			transform.position = startPos; //go back home and cry because the popular kids rejected us yet again
+    			ResetPosition();//transform.position = startPos; //go back home and cry because the popular kids rejected us yet again
     		}
     	}
     	else
     	{
     		//we were not dropped in the soup
-    		transform.position = startPos; //go back home and cry because you missed the pot
+    		ResetPosition();//transform.position = startPos; //go back home and cry because you missed the pot
     	}
     }
 
@@ -174,5 +173,15 @@ public class DraggableIngredient : MonoBehaviour
         // Image charIcon = transform.Find("CharacterIcon").GetComponent<Image>();
         Image charIcon = myCanvas.transform.Find("CharacterIcon").GetComponent<Image>();
         charIcon.sprite = ingredient.characterIcon;
+    }
+
+    /// <summary>
+    /// Resets the ingredient to its initial position (stored in startPos)
+    /// </summary>
+    public void ResetPosition()
+    {
+    	transform.position = startPos;
+    	inSoup = false; //it's safe to assume that if we're resetting our position, we're not in the soup
+    	hoverUI.SetActive(false); //turn off the hover UI too
     }
 }

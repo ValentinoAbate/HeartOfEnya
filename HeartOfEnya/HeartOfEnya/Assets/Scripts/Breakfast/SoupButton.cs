@@ -13,6 +13,7 @@ public class SoupButton : MonoBehaviour
     public Sprite emptyIcon; //icon to use for unfilled slot
     public Color disabledColor; //color when not enough ingredients for soup
     public Color enabledColor; //color when have enough ingredients for soup
+    public Text ingredientCountText; //text object for the "#/3 ingredients" text
 
     private bool clickEnabled = false; //whether we're active (i.e. have a valid recipe)
     private List<Ingredient> ingredientList = new List<Ingredient>(); //contains all currently selected ingredients
@@ -64,8 +65,7 @@ public class SoupButton : MonoBehaviour
     	}
 
     	//update the ingredient count text
-    	Text nameTxt = transform.Find("IngredientCountText").GetComponent<Text>();
-        nameTxt.text = "Selected Ingredients: " + ingredientList.Count + "/" + SoupManager.main.ingredientsPerSoup;
+    	ingredientCountText.text = "Selected Ingredients: " + ingredientList.Count + "/" + SoupManager.main.ingredientsPerSoup;
 
     	//check if we have enough ingredients for a full recipe, & enable/disable ourselves accordingly
     	if (ingredientList.Count >= SoupManager.main.ingredientsPerSoup)

@@ -12,6 +12,7 @@ public class DraggableIngredient : MonoBehaviour
 	public Vector3 startPos; //where we originally spawned, and where to return to if not dropped in the pot
 	public Pot pot;
 	public Vector3 infoCanvasOffset; //offset for the UI canvas
+	public float infoCanvasScale; //controls the size of the UI canvas
 
 	private bool inSoup = false; //are we in da soup?
 	private bool dragging = false; //whether we're currently being dragged
@@ -56,6 +57,8 @@ public class DraggableIngredient : MonoBehaviour
         //adjust it's fucking coords because who the fuck cares what I entered in the inspector, toss it out at the first opportunity
         //and make me do it again. Keep the original Z value though - it's magic and I don't want to poke it lest I invite the wrath of god
         myCanvas.transform.localPosition = new Vector3(infoCanvasOffset.x, infoCanvasOffset.y, myCanvas.transform.localPosition.z);
+        //we also gotta adjust it's scale - the one it chooses by itself is a bit too large
+        myCanvas.transform.localScale = new Vector3(infoCanvasScale, infoCanvasScale, 0.0f);
     }
 
     // Update is called once per frame
@@ -79,8 +82,7 @@ public class DraggableIngredient : MonoBehaviour
     	//if we're in the soup, remove ourselves
     	if(inSoup)
     	{
-    		pot.RemoveIngredient(this); //get out of the pot
-    		SoupManager.main.DisableIngredient(ingredient); //get out of the soup manager
+    		pot.RemoveIngredient(this); //get out of the pot. Assume the pot will handle everything with the soup manager.
     		inSoup = false;
     	}
     }
@@ -115,13 +117,13 @@ public class DraggableIngredient : MonoBehaviour
     		{
     			//no more room
     			Debug.Log("Oh no! Pot is full");
-    			transform.position = startPos; //go back home and cry because the popular kids rejected us yet again
+    			ResetPosition();//transform.position = startPos; //go back home and cry because the popular kids rejected us yet again
     		}
     	}
     	else
     	{
     		//we were not dropped in the soup
-    		transform.position = startPos; //go back home and cry because you missed the pot
+    		ResetPosition();//transform.position = startPos; //go back home and cry because you missed the pot
     	}
     }
 
@@ -134,7 +136,10 @@ public class DraggableIngredient : MonoBehaviour
     //detect mouse no longer over & hide the target/effect data
     private void OnMouseExit()
     {
-    	hoverUI.SetActive(false); //turn off UI
+    	if(!inSoup)
+    	{
+    		hoverUI.SetActive(false); //turn off UI
+    	}
     }
 
     /// <summary>
@@ -168,5 +173,15 @@ public class DraggableIngredient : MonoBehaviour
         // Image charIcon = transform.Find("CharacterIcon").GetComponent<Image>();
         Image charIcon = myCanvas.transform.Find("CharacterIcon").GetComponent<Image>();
         charIcon.sprite = ingredient.characterIcon;
+    }
+
+    /// <summary>
+    /// Resets the ingredient to its initial position (stored in startPos)
+    /// </summary>
+    public void ResetPosition()
+    {
+    	transform.position = startPos;
+    	inSoup = false; //it's safe to assume that if we're resetting our position, we're not in the soup
+    	hoverUI.SetActive(false); //turn off the hover UI too
     }
 }

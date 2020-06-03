@@ -11,7 +11,7 @@ public class BattleEventsDay2 : MonoBehaviour
     {
         if(battleEvents.tutorialDay2 && !battleEvents.tutPushing.flag)
         {
-            PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+            battleEvents.Pause();
 
             Debug.Log("Battle Triggers: Pushing");
             battleEvents.tutPushing.flag = true;
@@ -33,14 +33,15 @@ public class BattleEventsDay2 : MonoBehaviour
         BattleUI.main.MoveableTiles.Add(new Pos(1, 8));
         BattleUI.main.TargetableTiles.Add(new Pos (1, 7));
 
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
-
+        battleEvents.Unpause();
     }
 
     public void KnockOnTrigger()
     {
         if(battleEvents.tutorialDay2 && !battleEvents.tutKnockOn.flag)
         {
+            battleEvents.Pause();
+
             Debug.Log("Battle Triggers: Knock On");
             battleEvents.tutKnockOn.flag = true;
             DialogueManager.main.runner.StartDialogue("TutChainedMovement");
@@ -63,7 +64,7 @@ public class BattleEventsDay2 : MonoBehaviour
         // end the turn manually
         PhaseManager.main.NextPhase();
 
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Unpause();
     }
 
     public void MoveDamageTrigger()
@@ -71,6 +72,8 @@ public class BattleEventsDay2 : MonoBehaviour
         // only run after the previous trigger has finished
         if(battleEvents.tutorialDay2 && battleEvents.tutKnockOn.flag && !battleEvents.tutMoveDamage.flag)
         {
+            battleEvents.Pause();
+
             Debug.Log("Battle Triggers: Move Damage");
             battleEvents.tutMoveDamage.flag = true;
             DialogueManager.main.runner.StartDialogue("TutMoveDamage");
@@ -93,7 +96,7 @@ public class BattleEventsDay2 : MonoBehaviour
         // end the turn manually
         PhaseManager.main.NextPhase();
 
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Unpause();
     }
 
     public void PullingTrigger()
@@ -101,6 +104,8 @@ public class BattleEventsDay2 : MonoBehaviour
         // only run after the previous trigger has finished
         if(battleEvents.tutorialDay2 && battleEvents.tutMoveDamage.flag && !battleEvents.tutPulling.flag)
         {
+            battleEvents.Pause();
+
             Debug.Log("Battle Triggers: Pulling");
             battleEvents.tutPulling.flag = true;
             DialogueManager.main.runner.StartDialogue("TutPull");
@@ -123,7 +128,7 @@ public class BattleEventsDay2 : MonoBehaviour
         // end the turn manually
         PhaseManager.main.NextPhase();
 
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Unpause();
     }
 
     public void ChokePointsTrigger()
@@ -131,6 +136,8 @@ public class BattleEventsDay2 : MonoBehaviour
         // only run after the previous trigger has finished
         if(battleEvents.tutorialDay2 && battleEvents.tutPulling.flag && !battleEvents.tutChokePoints.flag)
         {
+            battleEvents.Pause();
+
             Debug.Log("Battle Triggers: Choke Points");
             battleEvents.tutChokePoints.flag = true;
             DialogueManager.main.runner.StartDialogue("TutChokepoint");
@@ -150,17 +157,21 @@ public class BattleEventsDay2 : MonoBehaviour
         // re-enable all characters and run tiles
         string[] units = {"Raina", "Soleil"};
         battleEvents.partyPhase.EnableUnits(new List<string>(units));
+        
         // Declare next wave and end the phase to prevent waiting around
         yield return StartCoroutine(PhaseManager.main.SpawnPhase.DeclareNextWave());
         PhaseManager.main.NextPhase();
+        
         BattleUI.main.EnableRunTiles();
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Unpause();
     }
 
     public void EnemyPushTrigger()
     {
         if(battleEvents.tutorialDay2 && !battleEvents.tutEnemyPush.flag)
         {
+            battleEvents.Pause();
+
             Debug.Log("Battle Triggers: Enemy Push");
             battleEvents.tutEnemyPush.flag = true;
             DialogueManager.main.runner.StartDialogue("TutEnemyPush");
@@ -174,6 +185,6 @@ public class BattleEventsDay2 : MonoBehaviour
 
         // no post-condition
 
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Unpause();
     }
 }

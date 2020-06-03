@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BattleEventsLuaBoss : MonoBehaviour
 {
+    public BattleEvents battleEvents;
+
     public void LuaBossPhaseChange()
     {
         if (BattleEvents.main.luaBossPhaseChange.flag)
@@ -15,7 +17,7 @@ public class BattleEventsLuaBoss : MonoBehaviour
         var luaBoss = BattleGrid.main.Find<Combatant>((c) => c.GetComponent<EnemyAILuaBoss>() != null);
         if (luaBoss == null || !luaBoss.Dead)
             return;
-        PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Pause();
         var aiComponent = luaBoss.GetComponent<EnemyAILuaBoss>();
         aiComponent.secondPhase = true;
         luaBoss.Hp = aiComponent.secondPhaseHp;
@@ -32,7 +34,7 @@ public class BattleEventsLuaBoss : MonoBehaviour
         PhaseManager.main.SpawnPhase.SetEncounter(aiComponent.secondPhaseEnounter, true);
         PhaseManager.main.NextPhase();
         // Unpause
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Unpause();
     }
 
     public void LuaBossDeathTrigger()

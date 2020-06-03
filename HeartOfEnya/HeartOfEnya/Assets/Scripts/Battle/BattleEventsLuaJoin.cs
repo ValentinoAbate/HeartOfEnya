@@ -11,6 +11,8 @@ public class BattleEventsLuaJoin : MonoBehaviour
     {
         if(battleEvents.luaUnfrozen && !battleEvents.abs0Battle && !battleEvents.tutMove3.flag)
         {
+            battleEvents.Pause();
+
             Debug.Log("Battle Triggers: Move 3");
             battleEvents.tutMove3.flag = true;
 
@@ -22,13 +24,15 @@ public class BattleEventsLuaJoin : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Unpause();
     }
 
     public void LuaTrigger()
     {
         if(battleEvents.luaUnfrozen && !battleEvents.abs0Battle && !battleEvents.tutLua.flag)
         {
+            battleEvents.Pause();
+
             Debug.Log("Battle Triggers: Lua");
             battleEvents.tutLua.flag = true;
 
@@ -40,6 +44,6 @@ public class BattleEventsLuaJoin : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
-        PhaseManager.main.PauseHandle.Unpause(PauseHandle.PauseSource.BattleInterrupt);
+        battleEvents.Unpause();
     }
 }

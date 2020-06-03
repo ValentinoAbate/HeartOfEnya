@@ -30,8 +30,8 @@ public class SoupManager : MonoBehaviour
     //internal variables used for state tracking, etc.
     private List<Ingredient> activeIngredients = new List<Ingredient>(); // selected ingredients
 
-    private FMODUnity.StudioEventEmitter sfxSelect;
     private FMODUnity.StudioEventEmitter sfxCancel;
+    private FMODUnity.StudioEventEmitter sfxPlaceItem;
 
     /// <summary>
     /// Implements the singleton pattern
@@ -53,8 +53,8 @@ public class SoupManager : MonoBehaviour
     /// </summary>
     private void Initialize()
     {
-        sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
         sfxCancel = GameObject.Find("UICancel").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxPlaceItem = GameObject.Find("PlaceItem").GetComponent<FMODUnity.StudioEventEmitter>();
 
         //spawn ingredient buttons
         int totalSpawned = 0; //how many buttons we've currently spawned
@@ -159,7 +159,7 @@ public class SoupManager : MonoBehaviour
         }
         else
         {
-            sfxSelect.Play();
+            sfxPlaceItem.Play();
 
             //add ingredients to soup and tell the soup button to update its images
             activeIngredients.Add(ing);

@@ -69,8 +69,11 @@ public class PartyMember : Combatant, IPausable
     {
         get
         {
-            if (Pos.col == BattleGrid.main.Cols - 1)
+            if (Pos.col == BattleGrid.main.Cols - 1 
+                || Pos == new Pos(BattleGrid.main.Rows - 1, BattleGrid.main.Cols - 2))
+            {
                 return actionMenuLeft;
+            }
             return actionMenuRight;
         }
     }

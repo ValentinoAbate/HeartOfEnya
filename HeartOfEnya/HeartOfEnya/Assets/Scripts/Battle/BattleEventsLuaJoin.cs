@@ -9,7 +9,7 @@ public class BattleEventsLuaJoin : MonoBehaviour
 
     public void Move3Trigger()
     {
-        if(battleEvents.luaUnfrozen && !battleEvents.abs0Battle && !battleEvents.tutMove3.flag)
+        if(battleEvents.tutLuaJoin && !battleEvents.abs0Battle && !battleEvents.tutMove3.flag)
         {
             battleEvents.Pause();
 
@@ -30,7 +30,7 @@ public class BattleEventsLuaJoin : MonoBehaviour
 
     public void LuaTrigger()
     {
-        if(battleEvents.luaUnfrozen && !battleEvents.abs0Battle && !battleEvents.tutLua.flag)
+        if(battleEvents.tutLuaJoin && !battleEvents.abs0Battle && !battleEvents.tutLua.flag)
         {
             battleEvents.Pause();
 

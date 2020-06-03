@@ -22,6 +22,8 @@ public class PersistentData : MonoBehaviour
     public bool InTutorialFirstDay => gamePhase == gamePhaseTut1And2 && dayNum == dayNumStart;
     public bool InTutorialSecondDay => gamePhase == gamePhaseTut1And2 && dayNum == dayNumStart + 1;
     public bool InTutorialThirdDay => gamePhase == gamePhaseTut3AndLuaBattle && dayNum == dayNumStart;
+    public bool InTutorialMainPhase => gamePhase == gamePhaseBeginMain && dayNum == dayNumStart;
+    public bool InTutorialLuaJoin => gamePhase ==gamePhaseLuaUnfrozen && dayNum == dayNumStart;
     public bool InLuaBattle => gamePhase == gamePhaseTut3AndLuaBattle && dayNum >= dayNumStart + 1;
     public bool InAbs0Battle => gamePhase == gamePhaseAbsoluteZeroBattle && !absoluteZeroDefeated;
 

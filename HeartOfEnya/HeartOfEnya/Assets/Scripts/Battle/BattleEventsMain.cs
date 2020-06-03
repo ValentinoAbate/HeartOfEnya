@@ -9,7 +9,8 @@ public class BattleEventsMain : MonoBehaviour
 
     public void PassivesTrigger()
     {
-        if(battleEvents.mainPhase && !battleEvents.luaUnfrozen && !battleEvents.tutPassives.flag)
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        if(battleEvents.tutMainPhase && !battleEvents.tutLuaJoin && !battleEvents.tutPassives.flag)
         {
             battleEvents.Pause();
 

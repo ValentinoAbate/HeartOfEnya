@@ -1,0 +1,132 @@
+Event: Bossfight intro
+Node name: LuaBossIntro
+Trigger: 
+* Start of battle
+Dialog:
+* Soleil identifies the new frost as having lua frozen in it
+* The party recognizes the unit as being dangerous, but willow lets them know they may be able to save her if they can defeat it
+* Non-diegetic explanation of bosses
+Ending functions:
+* None
+
+
+===
+
+
+title:LuaBossIntro
+Tags:
+---
+-> I sense… something different about this wave.
+        -> Please be careful.
+Raina (battle): Are they getting stronger?
+Bapy: Oh no...
+-> Not quite... it seems as if-
+Soleil: Lua!
+Raina: What?
+Bapy: Is that-
+Soleil: It’s her! That’s Lua, in the Frost! 
+Raina: She’s who you came here for, right?
+Bapy: But... What do we do?
+-> There’s still life in there... 
+        -> It’s weak, but I can still feel it.
+Bapy: If we get to her... do you think...
+-> You would have to break through the ice around her.
+Bapy: Will it hurt her?
+-> I’m not sure.
+Raina: Soleil? This is your call.
+Soleil (frustrated): ... 
+Soleil: Let’s do it.
+Soleil: Lua, wait for me.
+Soleil (neutral): We’ll save you.
+//NON-DIEGETIC: Explanation of boss fights and how you need to defeat the unit to progress
+Tutorial: The Frost before you is particularly powerful and must be defeated.
+Tutorial: If things get dangerous, you may flee and continue the fight tomorrow.
+===
+
+
+
+
+
+
+Event: Bossfight phase 2
+Node name: LuaBossPhase2-1, LuaBossPhase2-2
+Trigger: 
+* Luicicle is brought to 0 health the first time
+Dialog:
+* The party has a couple of lines like “did we do it?” (LuaBossPhase2-1)
+* Phase change happens
+* The party recognizes that the ice is cracked and that the only need to win one more time (LuaBossPhase2-2)
+Ending functions:
+* None (Phase transition has already completed)
+
+
+===
+
+
+title:LuaBossPhase2-1
+Tags:
+
+
+---
+Bapy: ...did we do it?
+Raina (battle): Something’s wrong...
+-> Watch out!
+// Just a line or two before the phase transition
+
+
+
+
+
+
+
+
+===
+
+
+title:LuaBossPhase2-2
+Tags:
+
+
+---
+Soleil: Lua!
+Raina: The ice is cracked.
+-> I can hear her more clearly now... 
+        -> We’re almost there… just one more time.
+Soleil: Alright. Here we go.
+===
+Event: Bossfight outro
+Node name: LuaBossOutro
+Trigger: 
+* Luicicle is brought to 0 health the second time
+Dialog:
+* The party is like “We did it”
+* The party is then like “wait she is still frozen”
+* Willow explains that their fire isn’t strong enough to thaw the ice completely, and that they should bring lua back. Maybe one day they will be strong enough to melt the ice.
+Ending functions:
+* The battle ends
+
+
+===
+
+
+title:LuaBossOutro
+Tags:
+
+
+---
+
+
+Bapy: ...did we do it…? 
+Raina (battle): I think so.
+Soleil (frustrated): But the ice…
+-> I can hear her heartbeat…
+-> But my fire is too weak to melt through the ice.
+Bapy: What if we bring her to the campfire?
+-> My flames are not strong enough yet…
+        -> But if we grow stronger, perhaps I will be able to thaw her.
+Raina: Let’s bring her back.
+Raina: We should get out of here.
+Soleil: I finally got you back.
+Soleil: Lua... 
+===
+check with art if the lua boss has visual change with phases???

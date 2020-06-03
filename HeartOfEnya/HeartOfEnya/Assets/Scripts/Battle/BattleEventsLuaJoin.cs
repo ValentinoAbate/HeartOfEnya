@@ -22,6 +22,7 @@ public class BattleEventsLuaJoin : MonoBehaviour
 
     private IEnumerator Move3Post(DialogueRunner runner)
     {
+        runner.StartDialogue("TutMove3");
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
         battleEvents.Unpause();
@@ -42,6 +43,7 @@ public class BattleEventsLuaJoin : MonoBehaviour
 
     private IEnumerator LuaPost(DialogueRunner runner)
     {
+        runner.StartDialogue("TutLuaSelect");
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
         battleEvents.Unpause();

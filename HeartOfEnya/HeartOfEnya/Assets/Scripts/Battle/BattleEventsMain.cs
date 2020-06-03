@@ -22,6 +22,7 @@ public class BattleEventsMain : MonoBehaviour
 
     private IEnumerator PassivesTriggerPost(DialogueRunner runner)
     {
+        runner.StartDialogue("TutPassivesAndMainPhase");
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
         battleEvents.Unpause();

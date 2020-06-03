@@ -15,6 +15,7 @@ public class BattleEventsDay2 : MonoBehaviour
 
             Debug.Log("Battle Triggers: Pushing");
             battleEvents.tutPushing.flag = true;
+            BattleUI.main.HideEndTurnButton(true);
             DialogueManager.main.runner.StartDialogue("TutPush");
             StartCoroutine(PushingTriggerPost(DialogueManager.main.runner));
         }
@@ -162,7 +163,7 @@ public class BattleEventsDay2 : MonoBehaviour
         // Declare next wave and end the phase to prevent waiting around
 
         PhaseManager.main.NextPhase();
-        
+        BattleUI.main.ShowEndTurnButton(true);
         BattleUI.main.EnableRunTiles();
         battleEvents.Unpause();
     }

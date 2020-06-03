@@ -14,6 +14,7 @@ public class BattleEventsDay3 : MonoBehaviour
             battleEvents.Pause();
             
             Debug.Log("Battle Triggers: Flame Moves");
+            BattleUI.main.HideEndTurnButton(true);
             battleEvents.tutFlameMoves.flag = true;
             DialogueManager.main.runner.StartDialogue("TutFlameMoves");
             StartCoroutine(FlameMovesTriggerPost(DialogueManager.main.runner));
@@ -65,6 +66,7 @@ public class BattleEventsDay3 : MonoBehaviour
         // lift targeting restrictions
         BattleUI.main.TargetableTiles.Clear();
         BattleUI.main.EnableRunTiles();
+        BattleUI.main.ShowEndTurnButton(true);
         battleEvents.Unpause();
     }
 }

@@ -140,13 +140,14 @@ public class BattleEventsDay2 : MonoBehaviour
 
             Debug.Log("Battle Triggers: Choke Points");
             battleEvents.tutChokePoints.flag = true;
-            DialogueManager.main.runner.StartDialogue("TutChokepoint");
             StartCoroutine(ChokePointsTriggerPost(DialogueManager.main.runner));
         }
     }
 
     private IEnumerator ChokePointsTriggerPost(DialogueRunner runner)
     {
+        yield return StartCoroutine(PhaseManager.main.SpawnPhase.DeclareNextWave());
+        DialogueManager.main.runner.StartDialogue("TutChokepoint");
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
         // post-condition: re-enable all moves
@@ -159,7 +160,7 @@ public class BattleEventsDay2 : MonoBehaviour
         battleEvents.partyPhase.EnableUnits(new List<string>(units));
         
         // Declare next wave and end the phase to prevent waiting around
-        yield return StartCoroutine(PhaseManager.main.SpawnPhase.DeclareNextWave());
+
         PhaseManager.main.NextPhase();
         
         BattleUI.main.EnableRunTiles();

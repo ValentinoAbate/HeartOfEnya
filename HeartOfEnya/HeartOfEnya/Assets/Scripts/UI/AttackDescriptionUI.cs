@@ -16,7 +16,7 @@ public class AttackDescriptionUI : MonoBehaviour
     [Header("UI References")]
     public TextMeshProUGUI damageNumberText;
     public TextMeshProUGUI rangeTypeText;
-    public TextMeshProUGUI[] effectTexts = new TextMeshProUGUI[3];
+    public TextMeshProUGUI[] effectTexts;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI burnDescriptionText;

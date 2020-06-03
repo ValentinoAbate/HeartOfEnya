@@ -96,6 +96,10 @@ public class PartyPhase : Phase
             // tutorial event at the start of the third turn
             BattleEvents.main.tutEndTurnButton._event.Invoke();
         }
+        if(PhaseManager.main.EnemyPhase.Enemies.Find((e) => e.action.DisplayName == "Bludgeon") != null)
+        {
+            BattleEvents.main.tutEnemyPush._event.Invoke();
+        }
     }
 
     private IEnumerator OnPhaseStartCr()

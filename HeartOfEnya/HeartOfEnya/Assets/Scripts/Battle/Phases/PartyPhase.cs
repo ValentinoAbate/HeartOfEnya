@@ -86,6 +86,7 @@ public class PartyPhase : Phase
             BattleEvents.main.luaBossIntro._event.Invoke();  // lua boss intro event
             BattleEvents.main.tutPassives._event.Invoke();   // main phase event
             BattleEvents.main.tutMove3._event.Invoke();      // lua unfrozen event
+            BattleEvents.main.abs0Intro._event.Invoke();     // abs0 boss intro event
         }
         else if (PhaseManager.main.Turn == 2)
         {

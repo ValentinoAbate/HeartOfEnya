@@ -14,10 +14,10 @@ public class BattleEventsLuaBoss : MonoBehaviour
             return;
         battleEvents.luaBossIntro.flag = true;
         battleEvents.Pause();
-        StartCoroutine(LuaPhaseChangeRoutine());
+        StartCoroutine(LuaBossIntroRoutine());
     }
 
-    private IEnumerator LuaPhaseChangeRoutine()
+    private IEnumerator LuaBossIntroRoutine()
     {
         var runner = DialogueManager.main.runner;
         runner.StartDialogue("LuaBossIntro");
@@ -35,6 +35,16 @@ public class BattleEventsLuaBoss : MonoBehaviour
         if (luaBoss == null || !luaBoss.Dead)
             return;
         battleEvents.Pause();
+        // cancel bonus moves
+        foreach (var partyMember in PhaseManager.main.PartyPhase.Party)
+        {
+            var moveCursor = partyMember.GetComponent<MouseMoveCursor>();
+            if (moveCursor.BonusMode)
+            {
+                moveCursor.CancelBonusMode();
+                moveCursor.SetActive(false);
+            }
+        }
         StartCoroutine(LuaPhaseChangeRoutine(luaBoss));
     }
 
@@ -44,22 +54,24 @@ public class BattleEventsLuaBoss : MonoBehaviour
         aiComponent.secondPhase = true;
         luaBoss.CancelChargingAction();
         var runner = DialogueManager.main.runner;
+        var pManager = PhaseManager.main;
         // Pre-transition
         runner.StartDialogue("LuaBossPhase2-1");
         yield return new WaitWhile(() => runner.isDialogueRunning);
         // Transition
         yield return luaBoss.UseAction(aiComponent.clearObstaclesAndEnemies, Pos.Zero, Pos.Zero);
-        PhaseManager.main.SpawnPhase.ClearActiveSpawns();
+        pManager.SpawnPhase.ClearActiveSpawns();
         yield return luaBoss.UseAction(aiComponent.moveAllToRight, Pos.Zero, Pos.Zero);
-        PhaseManager.main.SpawnPhase.SetEncounter(aiComponent.secondPhaseEnounter, true);
+        pManager.SpawnPhase.SetEncounter(aiComponent.secondPhaseEnounter, true);
         // Revive Luicicle
         luaBoss.Hp = aiComponent.secondPhaseHp;
-        PhaseManager.main.EnemyPhase.Enemies.Add(luaBoss as Enemy);
+        if (!pManager.EnemyPhase.Enemies.Contains(luaBoss as Enemy))
+            pManager.EnemyPhase.Enemies.Add(luaBoss as Enemy);
         // Post-Transition
         runner.StartDialogue("LuaBossPhase2-2");
         yield return new WaitWhile(() => runner.isDialogueRunning);
         battleEvents.luaBossPhaseChange.flag = true;
-        PhaseManager.main.NextPhase();
+        pManager.NextPhase();
         // Unpause
         battleEvents.Unpause();
     }

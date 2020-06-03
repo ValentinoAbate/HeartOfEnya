@@ -1,14 +1,3 @@
-Event: Bossfight intro
-Node name: Abs0BossIntro
-Trigger: 
-* Start of battle
-Dialog:
-* Willow explains that this is the final fight
-* Absolute 0 talks? (maybe mistakes willow for Enya)
-Ending functions:
-* None
-
-
 ===
 
 
@@ -21,38 +10,15 @@ Bapy: It’s so cold...
 Raina (battle): Is that…?
 Lua: That’s him.
 -> Absolute Zero. It’s him... at the heart of the Frost. 
--> This will be your final fight. 
--> I am with you. We can do this. 
+        -> This will be your final fight. 
+                    -> I am with you. We can do this. 
 //absolute 0 dialogue is a choice
 Abs0: That voice... I heard it, long ago...
 Abs0: Is that... Enya?
 -> No, although Enya lives on within me.
         -> I am born of the heroes who laid down their lives to stop you.
                 -> And the heroes who stand before you.
-                        
-
-
-
-
-
-
-
-
-
-
-===
-Event: Bossfight phase 2
-Node name: Abs0BossPhase2-1, Abs0BossPhase2-2
-Trigger: 
-* Abs0 is brought to 0 health the first time
-Dialog:
-* The party has a couple of lines like “take that” (Abs0BossPhase2-1)
-* Phase change happens
-* Willow explains that they’ve done enough and the blizzard should stop, but that they can stay and try to deal a stronger blow, but that abs0 will be calling reinforcements and they may just want to run (Abs0BossPhase2-2)
-Ending functions:
-* None (Phase transition has already completed)
-
-
+// Spacer
 ===
 
 
@@ -87,25 +53,7 @@ Soleil: But what happens here?
                 -> However, be warned that there will be more enemies to face.
                         -> And we can only try this once before the storm returns.
                                 -> Be careful.
-
-
-   
-
-
-
-
-Event: Bossfight outro
-Node name: Abs0BossOutro
-Trigger: 
-* Abs0 is brought to 0 health the second time
-Dialog:
-* Absolute 0 runs
-* The party is like “We did it”
-* Willow is lets them know that Abs0 will recover, and they can’t fully be defeated while the world’s heart is frozen, but there will be some time where the frost are severely weakened
-Ending functions:
-* The battle ends
-
-
+// Spacer
 ===
 
 
@@ -124,13 +72,8 @@ Raina: Is he gone?
         -> He will never truly be gone, as long as the world’s heart is frozen.
                 -> But the storm has stopped, and the Frost has retreated as well.
 Bapy: We... we actually did it!
-// Add one more lines that’s like -> Let’s return to camp
-
-
+-> Let's return to the Outpost.
+// Spacer
 
 
 ===
-abs 0 or abs zero
-Should be written as "Absolute Zero"
-very up to revision it gives the vibe squad gonna die to and i Don't Like that
-is this presented in a "reach the escape tiles" or do 2 buttons show up yes/no and the player picks?

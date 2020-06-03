@@ -60,7 +60,7 @@ public class SpawnPhase : Phase
     private List<GameObject> absolute0Bank = new List<GameObject>();
     [Header("Abs0 encounter spawn parameters")]
     public List<Pos> abs0ReinforcementSpawnPositions = new List<Pos>();
-    public int minAbs0Enemies = 4;
+    public int minAbs0Enemies = 5;
     public int abs0ReinforcementsSpawnNumber = 4;
 
     private void Start()

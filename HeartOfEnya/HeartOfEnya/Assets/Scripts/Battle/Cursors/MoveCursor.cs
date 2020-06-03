@@ -48,6 +48,12 @@ public class MoveCursor : GridCursor
         bonusMoveRange = range;
     }
 
+    public void CancelBonusMode()
+    {
+        BonusMode = false;
+        bonusMoveRange = 0;
+    }
+
     /// <summary>
     /// Calculates which squares can be moved to by the cursor, based on the BattleGrid's reachability algorithm
     /// </summary>

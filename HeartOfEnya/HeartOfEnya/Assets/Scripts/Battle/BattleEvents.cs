@@ -67,6 +67,7 @@ public class BattleEvents : MonoBehaviour
     public BattleEvent tutLua;
 
     [Header("Absolute Zero Events")]
+    public BattleEvent abs0Intro;
     public BattleEvent abs0PhaseChange;
     public BattleEvent abs0Phase2Defeated;
 

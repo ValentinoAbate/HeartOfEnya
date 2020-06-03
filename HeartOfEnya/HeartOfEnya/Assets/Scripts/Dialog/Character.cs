@@ -110,9 +110,6 @@ public class Character : MonoBehaviour
                 icon.sprite = doorSprite;
                 //move the sprite to the door
                 transform.position = doorPosition;
-                //move the button to the door
-                var button = transform.Find("Canvas").transform.Find("Button"); //Button is child of Canvas, which is child of the CampCharacter
-                button.transform.localPosition = doorButtonPos;
             }
 
             if(anim != null)

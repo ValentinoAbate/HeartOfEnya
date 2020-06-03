@@ -118,6 +118,12 @@ public class Character : MonoBehaviour
             if(anim != null)
                     anim.SetBool("Highlight", true);
         }
+
+        //automatically start the scene - if it's our monologue scene, launch RunDialogue() now instead of waiting for player click
+        if(phaseData.monologCharacter.ToLower() == Name.ToLower())
+        {
+            RunDialogue();
+        }
     }
 
     //runs whenever the character gets clicked on
@@ -133,7 +139,7 @@ public class Character : MonoBehaviour
     	}
     	else
     	{
-    		sfxSelect.Play();
+    		//sfxSelect.Play(); //since RunDialogue is now run automatically instead of on click, don't play the sound
             var pData = DoNotDestroyOnLoad.Instance.persistentData;
             //retrieve date from persistent data
     		string phase = pData.gamePhase;
@@ -154,7 +160,8 @@ public class Character : MonoBehaviour
                     //transition to the solo monologue
                     if(fadeImage != null) //make sure we only trigger the monologue transition if the fadeout image is set properly
                     {
-                        StartCoroutine(DoMonologueTransition(phase));
+                        dialogManager.StartCampMonolog(phaseData); //start the dialogue without doing the monologue transition
+                        //StartCoroutine(DoMonologueTransition(phase)); //assume the monologue script will call the monologue script when it's ready to do so.
                     }
                     else
                     {

@@ -39,11 +39,7 @@ public class BattleEventsAbs0 : MonoBehaviour
         foreach (var partyMember in PhaseManager.main.PartyPhase.Party)
         {
             var moveCursor = partyMember.GetComponent<MouseMoveCursor>();
-            if(moveCursor.BonusMode)
-            {
-                moveCursor.CancelBonusMode();
-                moveCursor.SetActive(false);
-            }
+            moveCursor.CancelBonusMode();
         }
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         pData.absoluteZeroDefeated = true;

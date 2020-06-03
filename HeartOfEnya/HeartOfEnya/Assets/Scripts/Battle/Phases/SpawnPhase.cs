@@ -62,6 +62,7 @@ public class SpawnPhase : Phase
     public List<Pos> abs0ReinforcementSpawnPositions = new List<Pos>();
     public int minAbs0Enemies = 5;
     public int abs0ReinforcementsSpawnNumber = 4;
+    private bool endAfterFirstSpawnAbs0 = true;
 
     private void Start()
     {
@@ -265,7 +266,16 @@ public class SpawnPhase : Phase
         //yield return StartCoroutine(PlayTransition());
         // If something is supposed to be spawned
         if (HasActiveSpawners)
+        {
             yield return StartCoroutine(Spawn());
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
+            // End after the first spawn in the abs0 phasechange
+            if (pData.absoluteZeroDefeated && endAfterFirstSpawnAbs0)
+            {
+                endAfterFirstSpawnAbs0 = false;
+                yield break;
+            }
+        }
         else // Increase the turns since something was last spawned
             ++turnsSinceLastSpawn;
         // If there isn't a next wave, just yeet out of there

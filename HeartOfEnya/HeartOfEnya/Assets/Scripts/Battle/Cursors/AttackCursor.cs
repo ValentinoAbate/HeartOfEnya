@@ -235,7 +235,14 @@ public class AttackCursor : GridAndSelectionListCursor
     private IEnumerator AttackCr()
     {
         enabled = false;
-        if(inSecondaryMode)
+        var partyMember = attacker as PartyMember;
+        var bonusMove = action.GetComponent<BonusMove>();
+        if (partyMember != null && bonusMove != null)
+        {
+            var moveCuror = partyMember.GetComponent<MoveCursor>();
+            moveCuror.SetBonusMode(bonusMove.range);
+        }
+        if (inSecondaryMode)
         {
             // Wait for the attack routine to finish
             yield return attacker.UseAction(action, Pos, primaryTarget);
@@ -246,15 +253,13 @@ public class AttackCursor : GridAndSelectionListCursor
             // Wait for the attack routine to finish
             yield return attacker.UseAction(action, Pos, Pos.OutOfBounds);
         }
-        if(attacker is PartyMember)
+        if(partyMember != null)
         {
-            var partyMember = attacker as PartyMember;
-            var bonusMove = action.GetComponent<BonusMove>();
-            if (bonusMove != null)
+            if (bonusMove != null )
             {
                 var moveCuror = partyMember.GetComponent<MoveCursor>();
-                moveCuror.SetBonusMode(bonusMove.range);
-                moveCuror.SetActive(true);
+                if(moveCuror.BonusMode)
+                    moveCuror.SetActive(true);
             }
             else
             {

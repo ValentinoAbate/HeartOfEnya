@@ -50,8 +50,12 @@ public class MoveCursor : GridCursor
 
     public void CancelBonusMode()
     {
+        if (!BonusMode)
+            return;
         BonusMode = false;
         bonusMoveRange = 0;
+        DisplayTraversable(false);
+        SetActive(false);
     }
 
     /// <summary>

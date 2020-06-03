@@ -39,11 +39,7 @@ public class BattleEventsLuaBoss : MonoBehaviour
         foreach (var partyMember in PhaseManager.main.PartyPhase.Party)
         {
             var moveCursor = partyMember.GetComponent<MouseMoveCursor>();
-            if (moveCursor.BonusMode)
-            {
-                moveCursor.CancelBonusMode();
-                moveCursor.SetActive(false);
-            }
+            moveCursor.CancelBonusMode();
         }
         StartCoroutine(LuaPhaseChangeRoutine(luaBoss));
     }

@@ -83,6 +83,7 @@ public class PartyPhase : Phase
             BattleEvents.main.tutorialIntro._event.Invoke(); // tutorial event at the start of battle
             BattleEvents.main.tutPushing._event.Invoke();    // day 2 event
             BattleEvents.main.tutFlameMoves._event.Invoke(); // day 3 event
+            BattleEvents.main.luaBossIntro._event.Invoke();  // lua boss intro event
             BattleEvents.main.tutPassives._event.Invoke();   // main phase event
             BattleEvents.main.tutMove3._event.Invoke();      // lua unfrozen event
         }

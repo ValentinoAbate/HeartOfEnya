@@ -55,6 +55,7 @@ public class BattleEvents : MonoBehaviour
     public BattleEvent tutBurn;
 
     [Header("Lua Boss Events")]
+    public BattleEvent luaBossIntro;
     public BattleEvent luaBossPhaseChange;
     public BattleEvent luaBossPhase2Defeated;
 

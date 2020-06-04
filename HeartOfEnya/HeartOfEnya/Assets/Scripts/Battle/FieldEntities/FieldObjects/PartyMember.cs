@@ -70,7 +70,7 @@ public class PartyMember : Combatant, IPausable
         get
         {
             if (Pos.col == BattleGrid.main.Cols - 1 
-                || Pos == new Pos(BattleGrid.main.Rows - 1, BattleGrid.main.Cols - 2))
+                || (Pos.col == BattleGrid.main.Cols - 2 && Pos.row >= BattleGrid.main.Rows - 2))
             {
                 return actionMenuLeft;
             }

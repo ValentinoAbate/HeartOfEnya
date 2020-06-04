@@ -77,8 +77,8 @@ public class UIInfoPanelParty : MonoBehaviour
         fpBarImage.fillAmount = p.Fp / (float)p.maxFp;
         unitImage.sprite = p.DisplaySprite;
         unitImage.color = p.DisplaySpriteColor;
-        unitImageBg.sprite = spriteDict[p.DisplayName.ToLower()];
-        unitImageBg.color = colorDict[p.DisplayName.ToLower()];
+        //unitImageBg.sprite = spriteDict[p.DisplayName.ToLower()];
+        //unitImageBg.color = colorDict[p.DisplayName.ToLower()];
         nameplate.sprite = nameplateDict[p.DisplayName.ToLower()];
         //statusText.text = "Status: " + (p.DeathsDoor ? "Dying." : "Doing fine!");
         if (p.Stunned)

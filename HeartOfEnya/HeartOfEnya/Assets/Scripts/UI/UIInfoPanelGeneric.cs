@@ -19,7 +19,7 @@ public class UIInfoPanelGeneric : MonoBehaviour
     {
         nameText.text = e.DisplayName;
         descriptionText.text = e.description;
-        moveNumberText.text = e.Move.ToString();
+        //moveNumberText.text = e.Move.ToString();
         hpNumberText.text = e.Hp.ToString();
         descriptionText.text = e.description;
         unitPropertiesText.text = e.isMovable ? string.Empty : "Immovable";

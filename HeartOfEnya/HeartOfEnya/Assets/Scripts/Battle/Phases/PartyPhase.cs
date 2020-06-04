@@ -178,7 +178,7 @@ public class PartyPhase : Phase
     {
         foreach(var partyMember in Party)
         {
-            partyMember.ActionMenu.SoloAction(actionID);
+            partyMember.SoloAction(actionID);
         }
     }
 
@@ -188,7 +188,7 @@ public class PartyPhase : Phase
     {
         foreach (var partyMember in Party)
         {
-            partyMember.ActionMenu.UnSoloAction(actionID);
+            partyMember.UnSoloAction(actionID);
         }
     }
 
@@ -198,7 +198,7 @@ public class PartyPhase : Phase
     {
         foreach (var partyMember in Party)
         {
-            partyMember.ActionMenu.ClearSoloActions();
+            partyMember.ClearSoloActions();
         }
     }
 

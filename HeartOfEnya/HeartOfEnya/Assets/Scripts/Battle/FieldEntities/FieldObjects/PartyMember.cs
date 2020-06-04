@@ -150,7 +150,7 @@ public class PartyMember : Combatant, IPausable
         Fp = maxFp;
         DeathsDoorCounter = maxDeathsDoorCounter;
         // Initialize the pause handle with the cursors and action menu as dependents
-        PauseHandle = new PauseHandle(null, moveCursor, mouseMoveCursor, attackCursor, ActionMenu);
+        PauseHandle = new PauseHandle(null, moveCursor, mouseMoveCursor, attackCursor, actionMenuRight, actionMenuLeft);
 
         // Find reference to FMOD event emitter
         battleTheme = GameObject.Find("BattleTheme").GetComponent<FMODUnity.StudioEventEmitter>();
@@ -285,6 +285,24 @@ public class PartyMember : Combatant, IPausable
         // moveCursor.SetActive(true);
         mouseMoveCursor.ResetToLastPosition();
         mouseMoveCursor.SetActive(true);
+    }
+
+    public void ClearSoloActions()
+    {
+        actionMenuLeft.ClearSoloActions();
+        actionMenuRight.ClearSoloActions();
+    }
+
+    public void SoloAction(string actionID)
+    {
+        actionMenuLeft.SoloAction(actionID);
+        actionMenuRight.SoloAction(actionID);
+    }
+
+    public void UnSoloAction(string actionID)
+    {
+        actionMenuLeft.UnSoloAction(actionID);
+        actionMenuRight.UnSoloAction(actionID);
     }
 
     new public void ActivateChargedAction()

@@ -241,7 +241,9 @@ public class BattleEvents : MonoBehaviour
         
         // restrict bapy's actions to only cancel
         BattleUI.main.CancelingEnabled = true;
-        
+        // enable soleil's charge attack
+        partyPhase.PartyWideClearSoloActions();
+        partyPhase.PartyWideSoloAction("SoleilAction2");
         Unpause();
     }
 
@@ -254,7 +256,9 @@ public class BattleEvents : MonoBehaviour
             
             Debug.Log("Battle Triggers: select soleil");
             tutSoleilSelect.flag = true;
-            
+            // Turn Cancelling back off
+            BattleUI.main.CancelingEnabled = false;
+
             StartCoroutine(SoleilSelectTriggerPost(DialogueManager.main.runner));
         }
     }
@@ -269,10 +273,6 @@ public class BattleEvents : MonoBehaviour
 
         // disable bapy
         partyPhase.DisableUnits("Bapy");
-
-        // enable soleil's charge attack
-        partyPhase.PartyWideSoloAction("SoleilAction2");
-        BattleUI.main.CancelingEnabled = false;
 
         Unpause();
     }
@@ -302,7 +302,6 @@ public class BattleEvents : MonoBehaviour
         // make it so bapy can only move next to raina
         BattleUI.main.MoveableTiles.Add(rainaMovePos + Pos.Right);
         BattleUI.main.MoveableTiles.Add(rainaMovePos + Pos.Right + Pos.Right);
-        BattleUI.main.CancelingEnabled = true;
         
         Unpause();
     }
@@ -319,7 +318,7 @@ public class BattleEvents : MonoBehaviour
 
             Debug.Log("Battle Triggers: select bapy 2");
             tutBapySelect2.flag = true;
-
+            BattleUI.main.CancelingEnabled = true;
             StartCoroutine(BapySelectTrigger2Post(DialogueManager.main.runner));
         }
     }
@@ -348,9 +347,6 @@ public class BattleEvents : MonoBehaviour
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
-        // unrestrict movement/targeting
-        BattleUI.main.MoveableTiles.Clear();
-
         Unpause();
     }
 
@@ -374,7 +370,9 @@ public class BattleEvents : MonoBehaviour
         
         // re-enable all actions
         partyPhase.PartyWideClearSoloActions();
-        
+        // unrestrict movement/targeting
+        BattleUI.main.MoveableTiles.Clear();
+
         Unpause();
     }
 

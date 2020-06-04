@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -200,7 +200,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 6474591132893712965}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 6474591132893712967}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bec29c0a230741bdac901dba8da47ee, type: 3}
@@ -1362,6 +1362,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8871244540835398731, guid: 74bfb196dbfc61f478bd91cfb3d8c737,
+        type: 3}
+      propertyPath: toPause.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8871244540835398731, guid: 74bfb196dbfc61f478bd91cfb3d8c737,
+        type: 3}
+      propertyPath: toPause.Array.data[0]
+      value: 
+      objectReference: {fileID: 6474591132893712967}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74bfb196dbfc61f478bd91cfb3d8c737, type: 3}
 --- !u!4 &1563076944 stripped
@@ -1852,6 +1862,12 @@ PrefabInstance:
 --- !u!4 &6474591132893712966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6474591132739200399, guid: 15963c80f4dc1154e8d888ca633d8b6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 6474591132893712965}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6474591132893712967 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6474591132739200386, guid: 15963c80f4dc1154e8d888ca633d8b6d,
     type: 3}
   m_PrefabInstance: {fileID: 6474591132893712965}
   m_PrefabAsset: {fileID: 0}

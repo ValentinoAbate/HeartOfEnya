@@ -107,6 +107,7 @@ namespace Dialog
                 // Find speaking character
                 var character = characters.Find((c) => c.Name.ToLower() == args[1]);
                 yield return StartCoroutine(character.DoMonologueTransition(pData.gamePhase));
+                Music.Play();
             }
             else if(args[0] == "swapcharacterdata")
             {

@@ -219,7 +219,6 @@ namespace Yarn.Unity
             }
             ui.endAction = Dialog.DialogUI.EndAction.GoToCampfireScene;
             monologMusic = GameObject.Find(data.monologMusic).GetComponent<FMODUnity.StudioEventEmitter>();
-            monologMusic.Play();
             ui.Music = monologMusic;
             StartDialogue(data.monologNode);
         }

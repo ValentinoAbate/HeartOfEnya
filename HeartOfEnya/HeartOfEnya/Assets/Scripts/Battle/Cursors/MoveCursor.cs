@@ -11,6 +11,10 @@ using System.Linq;
 [RequireComponent(typeof(PartyMember))]
 public class MoveCursor : GridCursor
 {
+    public GameObject shadowPrefab;
+    public SpriteRenderer shadowSprite;
+    public Transform shadowTransform;
+    private GameObject shadow;
     private Pos lastPosition;
     protected PartyMember partyMember;
     protected List<Pos> traversable;
@@ -38,6 +42,17 @@ public class MoveCursor : GridCursor
         if(value)
         {
             CalculateTraversable();
+            shadow = Instantiate(shadowPrefab);
+            Vector2 epsilon = new Vector2(0, -0.0000001f);
+            shadow.transform.position = BattleGrid.main.GetSpace(lastPosition) + epsilon;
+            shadow.GetComponent<SpriteRenderer>().sprite = shadowSprite.sprite;
+            var shadowShadow = shadow.transform.GetChild(0);
+            shadowShadow.localPosition = shadowTransform.localPosition * 4;
+            shadowShadow.localScale = shadowTransform.localScale * 4;
+        }
+        if(!value)
+        {
+            Destroy(shadow.gameObject);
         }
         DisplayTraversable(value);
     }

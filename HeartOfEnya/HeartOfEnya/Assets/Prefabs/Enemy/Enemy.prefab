@@ -147,8 +147,6 @@ MonoBehaviour:
   deathFxPrefab: {fileID: 6830531661545233957, guid: a753e91888ea16d429569a2bb8a0b91b,
     type: 3}
   sfxDispatch: {fileID: 6828270947839061727}
-  damageSfx: {fileID: 8300000, guid: 511223e2928f59642814ceda00932dd3, type: 3}
-  deathSfx: {fileID: 8300000, guid: 0a1f966b24e6a5640af05fb3fd39f60d, type: 3}
   moveSfx: {fileID: 8300000, guid: 1273e667312313c4e8f744eb59708eec, type: 3}
   damageSfxEvent: {fileID: 475481051391737112}
   deathSfxEvent: {fileID: 7497094162304794799}
@@ -157,6 +155,7 @@ MonoBehaviour:
   move: 1
   isMovable: 1
   animator: {fileID: 2722116574915268752}
+  statsUI: {fileID: 2396410866390319305}
   hpText: {fileID: 6148674228738051900}
   hpImage: {fileID: 4362444815303312623}
   chargeUI: {fileID: 2030661290250173828}
@@ -164,6 +163,7 @@ MonoBehaviour:
   uiHelper: {fileID: 7542843401683968119}
   action: {fileID: 0}
   sprite: {fileID: 4872893542316293579}
+  isBoss: 0
 --- !u!95 &2722116574915268752
 Animator:
   serializedVersion: 3
@@ -487,6 +487,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d53f44c3694bbc54785ebb683b96bf72, type: 3}
+--- !u!1 &2396410866390319305 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 336811875278498303, guid: d53f44c3694bbc54785ebb683b96bf72,
+    type: 3}
+  m_PrefabInstance: {fileID: 2732939924982425910}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8355347167324871904 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6204128066998400470, guid: d53f44c3694bbc54785ebb683b96bf72,

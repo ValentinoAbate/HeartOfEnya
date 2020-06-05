@@ -96,6 +96,7 @@ public abstract class Combatant : FieldObject, IPausable
     private int hp = 0;
     [Header("UI References")]
     public Animator animator;
+    public GameObject statsUI;
     public TextMeshProUGUI hpText;
     public Image hpImage;
     public GameObject chargeUI;

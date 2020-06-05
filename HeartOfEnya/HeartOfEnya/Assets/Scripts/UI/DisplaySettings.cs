@@ -1,12 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DisplaySettings : MonoBehaviour
 {
     private FullScreenMode mode;
-    private int resolutionW = 1920;
-    private int resolutionH = 1080;
+    private Resolution resolution;
+    public TextMeshProUGUI selectorText;
+
+    private void Awake()
+    {
+        resolution = Screen.currentResolution;
+        selectorText.text = resolution.ToString();
+    }
+
     public void SetFullScreenModeWindowed()
     {
         mode = FullScreenMode.Windowed;
@@ -25,11 +34,17 @@ public class DisplaySettings : MonoBehaviour
         Apply();
     }
 
-    public void SetResolutionWidth(int w) => resolutionW = w;
-    public void SetResolutionHeight(int h) => resolutionH = h;
+    public void NextResolution()
+    {
+        int ind = Array.IndexOf(Screen.resolutions, resolution);
+        if(++ind >= Screen.resolutions.Length)
+            ind = 0;
+            resolution = Screen.resolutions[ind];
+        selectorText.text = resolution.ToString();
+    }
 
     public void Apply()
     {
-        Screen.SetResolution(resolutionW, resolutionH, mode);
+        Screen.SetResolution(resolution.width, resolution.height, mode);
     }
 }

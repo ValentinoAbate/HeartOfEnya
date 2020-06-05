@@ -862,7 +862,7 @@ PrefabInstance:
     - target: {fileID: 3664866112556615899, guid: bed6991e8dca43a4ab10b076a9dfceb9,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bed6991e8dca43a4ab10b076a9dfceb9, type: 3}
@@ -2934,6 +2934,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 735039522}
   m_CullTransparentMesh: 0
+--- !u!95 &745267762 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 150686136351316371, guid: bed6991e8dca43a4ab10b076a9dfceb9,
+    type: 3}
+  m_PrefabInstance: {fileID: 228200379}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &767982123
 GameObject:
   m_ObjectHideFlags: 0
@@ -3170,6 +3176,16 @@ PrefabInstance:
       propertyPath: fadeTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6120777202377938410, guid: 1a00c200a13ef9a27b8391587a6a0b66,
+        type: 3}
+      propertyPath: battleTransition
+      value: 
+      objectReference: {fileID: 745267762}
+    - target: {fileID: 6120777202377938410, guid: 1a00c200a13ef9a27b8391587a6a0b66,
+        type: 3}
+      propertyPath: campTransition
+      value: 
+      objectReference: {fileID: 745267762}
     - target: {fileID: 7243930662405243379, guid: 1a00c200a13ef9a27b8391587a6a0b66,
         type: 3}
       propertyPath: m_LocalPosition.x

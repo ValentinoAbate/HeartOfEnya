@@ -8,13 +8,6 @@ using UnityEngine;
 /// </summary>
 public class GridCursor : Cursor
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        base.Start();
-        Highlight(Pos);
-    }
-
     public override void Highlight(Pos newPos)
     {
         if (newPos == Pos)

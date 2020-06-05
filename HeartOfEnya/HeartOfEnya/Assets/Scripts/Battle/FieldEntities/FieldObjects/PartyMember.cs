@@ -263,8 +263,10 @@ public class PartyMember : Combatant, IPausable
         PhaseManager.main.PartyPhase.EndAction(this);
     }
 
-    public void OpenActionMenu()
+    public void OpenActionMenu(bool skipOneCancel = false)
     {
+        if (skipOneCancel)
+            ActionMenu.SetSkipOneCancel();
         ActionMenu.SetActive(true);
 
         // cancel trigger for bapy

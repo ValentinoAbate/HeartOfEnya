@@ -31,19 +31,13 @@ public class AttackCursor : GridAndSelectionListCursor
     private Pos primaryTarget = Pos.Zero;
     private bool inSecondaryMode = false;
 
-    /// <summary>
-    /// Copied From Mouse Cursor
-    /// </summary>
-    void Awake()
-    {
-        controlSys = new Controls();
-    }
-
  /// <summary>
  /// Copied from Mouse Cursor
  /// </summary>
     private void OnEnable()
     {
+        if (controlSys == null)
+            controlSys = new Controls();
         controlSys.BattleUI.MousePos.performed += FollowMouse;
         controlSys.BattleUI.MousePos.Enable();
         controlSys.BattleUI.Select.performed += HandleSelect;
@@ -57,11 +51,13 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     private void OnDisable()
     {
+        if (controlSys == null)
+            controlSys = new Controls();
         controlSys.BattleUI.MousePos.performed -= FollowMouse;
         controlSys.BattleUI.MousePos.Disable();
         controlSys.BattleUI.Select.performed -= HandleSelect;
         controlSys.BattleUI.Select.Disable();
-        controlSys.BattleUI.Deselect.performed += HandleCancel;
+        controlSys.BattleUI.Deselect.performed -= HandleCancel;
         controlSys.BattleUI.Deselect.Disable();
     }
 
@@ -103,7 +99,28 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public override void SetActive(bool value)
     {
-        base.SetActive(value);            
+        base.SetActive(value);
+        if (value)
+        {
+            HighlightInitialize();
+        }
+    }
+
+    private void HighlightInitialize()
+    {
+        var temp = Pos;
+        Pos = Pos.OutOfBounds;
+        Highlight(BattleGrid.main.GetPos(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+        if (Pos == Pos.OutOfBounds)
+            Highlight(temp);
+        if (Pos == Pos.OutOfBounds)
+            Highlight(attacker.Pos + Pos.Left);
+        if (Pos == Pos.OutOfBounds)
+            Highlight(attacker.Pos + Pos.Left + Pos.Left);
+        if (Pos == Pos.OutOfBounds)
+            Highlight(attacker.Pos + Pos.Right);
+        if (Pos == Pos.OutOfBounds)
+            Highlight(attacker.Pos + Pos.Right + Pos.Right);
     }
 
     /// <summary>
@@ -220,6 +237,7 @@ public class AttackCursor : GridAndSelectionListCursor
             HideTargets();
             action.targetPattern.Hide();
             ShowTargets();
+            HighlightInitialize();
         }
         else
         {          

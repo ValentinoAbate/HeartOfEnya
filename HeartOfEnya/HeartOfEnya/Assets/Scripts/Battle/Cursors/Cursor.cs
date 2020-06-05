@@ -20,7 +20,7 @@ public abstract class Cursor : MonoBehaviour, IPausable
     protected FMODUnity.StudioEventEmitter sfxCancel;
     protected FMODUnity.StudioEventEmitter sfxHighlight;
 
-    public void Start()
+    private void Awake()
     {
         // find references to FMOD objects
         placeBapy = GameObject.Find("PlaceBapy").GetComponent<FMODUnity.StudioEventEmitter>();

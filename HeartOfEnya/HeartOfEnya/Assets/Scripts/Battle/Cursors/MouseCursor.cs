@@ -12,15 +12,11 @@ public class MouseCursor : Cursor
 	//get a Controls object to access the input system
 	public Controls controlSys;
 
-	//set up controlSys
-	void Awake()
+    //set up & enable the actions we'll be using
+    private void OnEnable()
 	{
-		controlSys = new Controls();
-	}
-
-	//set up & enable the actions we'll be using
-	private void OnEnable()
-	{
+        if (controlSys == null)
+            controlSys = new Controls();
 		controlSys.BattleUI.MousePos.performed += FollowMouse;
 		controlSys.BattleUI.MousePos.Enable();
 		controlSys.BattleUI.Select.performed += HandleSelect;
@@ -30,7 +26,9 @@ public class MouseCursor : Cursor
 	//clean up the actions once we're done (to avoid memory leaks)
 	private void OnDisable()
 	{
-		controlSys.BattleUI.MousePos.performed -= FollowMouse;
+        if (controlSys == null)
+            controlSys = new Controls();
+        controlSys.BattleUI.MousePos.performed -= FollowMouse;
 		controlSys.BattleUI.MousePos.Disable();
 		controlSys.BattleUI.Select.performed -= HandleSelect;
         controlSys.BattleUI.Select.Disable();

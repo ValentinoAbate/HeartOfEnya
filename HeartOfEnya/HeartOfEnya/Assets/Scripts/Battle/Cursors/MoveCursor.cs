@@ -29,7 +29,6 @@ public class MoveCursor : GridCursor
 
     private void Start()
     {
-        base.Start();
         partyMember = GetComponent<PartyMember>();
         Pos = partyMember.Pos;
         lastPosition = Pos;

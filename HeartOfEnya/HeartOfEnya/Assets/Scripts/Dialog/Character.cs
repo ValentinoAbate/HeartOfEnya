@@ -117,7 +117,7 @@ public class Character : MonoBehaviour
         }
 
         //automatically start the scene - if it's our monologue scene, launch RunDialogue() now instead of waiting for player click
-        if(phaseData.monologCharacter.ToLower() == Name.ToLower())
+        if(phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower())
         {
             RunDialogue();
         }

@@ -71,6 +71,9 @@ public class BattleEvents : MonoBehaviour
     public BattleEvent abs0PhaseChange;
     public BattleEvent abs0Phase2Defeated;
 
+    [Header("Generic Battle Events")]
+    public BattleEvent graveInjury;
+
     // references to objects that will be needed to disable certain game functions
     [HideInInspector] public PartyPhase partyPhase;
 
@@ -554,5 +557,20 @@ public class BattleEvents : MonoBehaviour
         BattleUI.main.EnableRunTiles();
         yield return new WaitWhile(() => runner.isDialogueRunning);
         Unpause();
+    }
+
+    public void GraveInjuryTrigger()
+    {
+        Pause();
+        var injuredPartyMember = PhaseManager.main.PartyPhase.Party.Find((p) => p.DeathsDoor && p.DeathsDoorCounter <= 0);
+        DialogueManager.main.runner.StartDialogue("GraveInjury" + injuredPartyMember.DisplayName);
+        Debug.Log("Battle Triggers: GraveInjury");
+        StartCoroutine(GraveInjuryTriggerPost(DialogueManager.main.runner));
+    }
+
+    private IEnumerator GraveInjuryTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        SceneTransitionManager.main.TransitionScenes("Camp");
     }
 }

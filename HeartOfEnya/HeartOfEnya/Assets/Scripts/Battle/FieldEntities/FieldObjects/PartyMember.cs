@@ -210,8 +210,7 @@ public class PartyMember : Combatant, IPausable
     public override void Kill()
     {
         Debug.Log(DisplayName + " has died");
-        // Decide waht to do here but just do this for now.
-        SceneTransitionManager.main.TransitionScenes("Breakfast");
+        BattleEvents.main.graveInjury._event.Invoke();
     }
 
     private void OnDestroy()

@@ -544,11 +544,15 @@ public class BattleGrid : MonoBehaviour
 
         public void Set(Pos p, FieldObject value)
         {
+            if (!Contains(p.row, p.col))
+                return;
             this[p.row, p.col] = value;
         }
 
         public FieldObject Get(Pos p)
         {
+            if (!Contains(p.row, p.col))
+                return null;
             return this[p.row, p.col];
         }
     };

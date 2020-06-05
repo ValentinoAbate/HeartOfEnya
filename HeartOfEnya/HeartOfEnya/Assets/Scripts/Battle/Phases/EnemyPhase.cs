@@ -21,13 +21,24 @@ public class EnemyPhase : Phase
         RemoveDead();
         Enemies.ForEach((enemy) => enemy.OnPhaseStart());
         RemoveDead();
-        // Farthest to right takes action first
-        Enemies.Sort((e, e2) => e2.Col.CompareTo(e.Col));
+        // Sort by turn order
+        Enemies.Sort(CompareTurnOrder);
         SnowParticleController.main.Intensity = 1;
         FMODBattle.main.storm.SetParameter("Enemy Turn", 1);
         FMODBattle.main.InEnemyTurn = true;
         //FMODBattle.main.music.SetParameter("Text Playing", 1);
         return StartCoroutine(PlayTurns());
+    }
+
+    private int CompareTurnOrder(Enemy e1, Enemy e2)
+    {
+        if (e1.isBoss)
+            return -1;
+        if (e2.isBoss)
+            return 1;
+        if (e1.Col != e2.Col)
+            return e2.Col.CompareTo(e1.Col);
+        return e2.Row.CompareTo(e1.Row);
     }
 
     public void RemoveDead()

@@ -22,7 +22,7 @@ public class UIInfoPanelEnemy : MonoBehaviour
         moveNumberText.text = e.Move.ToString();
         hpNumberText.text = e.Hp.ToString();
         descriptionText.text = e.description;
-        unitPropertiesText.text = e.isBoss ? "Immovable, Unburnable, Defeat to End Battle" : string.Empty;
+        unitPropertiesText.text = e.isBoss ? "Immovable, Unburnable, Acts First, Defeat to End Battle" : string.Empty;
         int damage = e.action.TotalDamage;
         damageNumberText.text = damage > 0 ? damage.ToString() : "N/A";
         int i = 0;

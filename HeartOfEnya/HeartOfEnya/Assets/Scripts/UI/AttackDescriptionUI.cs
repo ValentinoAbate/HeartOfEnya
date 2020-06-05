@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 public class AttackDescriptionUI : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class AttackDescriptionUI : MonoBehaviour
         var userPos = Pos.Zero;
         var targetPos = new Pos(patternMiddleRow - 1, patternMiddleCol - 1);
         // Main panel code
-        nameText.text = action.DisplayName;
+        nameText.text = action.DisplayName.Replace("F ", "Flame ");
         descriptionText.text = action.Description;
         burnDescriptionText.gameObject.SetActive(burns);
         // Detail panel code

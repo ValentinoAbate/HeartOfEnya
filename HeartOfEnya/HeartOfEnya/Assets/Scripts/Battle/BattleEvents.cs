@@ -247,6 +247,7 @@ public class BattleEvents : MonoBehaviour
         // enable soleil's charge attack
         partyPhase.PartyWideClearSoloActions();
         partyPhase.PartyWideSoloAction("SoleilAction2");
+        BattleUI.main.cancelReminderUI.SetActive(true);
         Unpause();
     }
 
@@ -255,13 +256,12 @@ public class BattleEvents : MonoBehaviour
         if(tutorialDay1 && !tutSoleilSelect.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutSoleilSelect");
-            
+            BattleUI.main.cancelReminderUI.SetActive(false);   
             Debug.Log("Battle Triggers: select soleil");
             tutSoleilSelect.flag = true;
             // Turn Cancelling back off
             BattleUI.main.CancelingEnabled = false;
-
+            DialogueManager.main.runner.StartDialogue("TutSoleilSelect");
             StartCoroutine(SoleilSelectTriggerPost(DialogueManager.main.runner));
         }
     }

@@ -26,6 +26,8 @@ public class BattleUI : MonoBehaviour, IPausable
     public Color partyColor;
     public Color neutralColor;
     public Color enemyColor;
+    [Header("Misc")]
+    public GameObject cancelReminderUI;
 
     public bool CancelingEnabled { get; set; } = true;
     public HashSet<Pos> MoveableTiles { get; set; } = new HashSet<Pos>();

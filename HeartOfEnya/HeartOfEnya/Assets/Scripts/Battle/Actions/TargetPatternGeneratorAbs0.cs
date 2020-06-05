@@ -42,6 +42,7 @@ public class TargetPatternGeneratorAbs0 : TargetPatternGenerator
             }
             output.Add(pattern);
         }
+        output.RemoveDuplicates();
         return output;
     }
 }

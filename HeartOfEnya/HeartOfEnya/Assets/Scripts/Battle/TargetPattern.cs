@@ -68,6 +68,11 @@ public class TargetPattern
         offsets.AddRange(other.Positions);
     }
 
+    public void RemoveDuplicates()
+    {
+        offsets = offsets.Distinct().ToList();
+    }
+
     /// <summary>
     /// Display the targeting UI at the current target position
     /// </summary>

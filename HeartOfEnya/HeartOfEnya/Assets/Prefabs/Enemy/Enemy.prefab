@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 6828270947839061727}
   - component: {fileID: 475481051391737112}
   - component: {fileID: 7497094162304794799}
+  - component: {fileID: 8495436319680051392}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -150,6 +151,7 @@ MonoBehaviour:
   moveSfx: {fileID: 8300000, guid: 1273e667312313c4e8f744eb59708eec, type: 3}
   damageSfxEvent: {fileID: 475481051391737112}
   deathSfxEvent: {fileID: 7497094162304794799}
+  chargeSfxEvent: {fileID: 8495436319680051392}
   invincible: 0
   maxHp: 1
   move: 1
@@ -234,6 +236,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CollisionTag: 
   Event: event:/SFX/Battle/Enemy/Common/Destroy Enemy
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
+--- !u!114 &8495436319680051392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3774924428069235653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/SFX/Battle/Enemy/Common/Enemy Charge Attack
   PlayEvent: 0
   StopEvent: 0
   AllowFadeout: 1

@@ -61,15 +61,13 @@ public class EnemyAIBasic : AIComponent<Enemy>
         else if(reachablePathData.Count > 0) // Else more towards a party member if one is unblocked
         {
             // Chose the path that gets the enemy closest to a target
-            reachablePathData.Sort((p, p2) => Pos.Distance(p.path[p.path.Count - 1], p.obj.Pos)
-                                        .CompareTo(Pos.Distance(p2.path[p2.path.Count - 1], p2.obj.Pos)));
+            reachablePathData.Sort((p1, p2) => ComparePathDist(self, p1, p2));
             yield return StartCoroutine(MoveAndAttackIfAble(self, reachablePathData[0]));
         }
         else if(reachableThroughAllyPathData.Count > 0) // Else move towards a party member behind an ally if possible
         {
             // Choose the path that gets the enemy closest to a target
-            reachableThroughAllyPathData.Sort((p, p2) => Pos.Distance(p.path[p.path.Count - 1], p.obj.Pos)
-                                        .CompareTo(Pos.Distance(p2.path[p2.path.Count - 1], p2.obj.Pos)));
+            reachableThroughAllyPathData.Sort((p1, p2) => ComparePathDist(self, p1, p2));
             var path = reachableThroughAllyPathData[0].path;
             yield return StartCoroutine(MoveAlongPath(self, path));
             // Attack an adjacent obstacle if able to
@@ -111,6 +109,13 @@ public class EnemyAIBasic : AIComponent<Enemy>
                 yield return StartCoroutine(MoveAlongPath(self, path, path.Count));
             }
         }
+    }
+
+    private int ComparePathDist(Enemy self, PathData<Combatant> p1, PathData<Combatant> p2)
+    {
+        var dist1 = Pos.Distance(p1.path.Count > 0 ? p1.path[p1.path.Count - 1] : self.Pos, p1.obj.Pos);
+        var dist2 = Pos.Distance(p2.path.Count > 0 ? p2.path[p2.path.Count - 1] : self.Pos, p2.obj.Pos);
+        return dist1.CompareTo(dist2);
     }
 
     List<Pos> PathToAttackRange(Enemy self, Combatant target, Action action)

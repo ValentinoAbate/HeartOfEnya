@@ -39,6 +39,7 @@ public abstract class Combatant : FieldObject, IPausable
     public AudioClip moveSfx;
     public StudioEventEmitter damageSfxEvent;
     public StudioEventEmitter deathSfxEvent;
+    public StudioEventEmitter chargeSfxEvent;
     [Header("General Combatant Fields")]
     public bool invincible = false;
     public int maxHp;
@@ -184,9 +185,8 @@ public abstract class Combatant : FieldObject, IPausable
         }
         else // The action is a charged action, start charging
         {
-            SetChargingAction(action, targetPos);
+            return StartCoroutine(SetChargingAction(action, targetPos));
         }
-        return null;
     }
 
     public override void OnPhaseEnd()
@@ -206,19 +206,32 @@ public abstract class Combatant : FieldObject, IPausable
     /// <summary>
     /// Set the charging action and associated UI parameters
     /// </summary>
-    private void SetChargingAction(Action action, Pos target)
+    private IEnumerator SetChargingAction(Action action, Pos target)
     {
-        chargingAction = new ChargingAction(action, this, target);
+        bool enemyMode = Team == Teams.Enemy;
+        if(!enemyMode)
+        {
+            chargingAction = new ChargingAction(action, this, target);
+        }
         animator.SetBool("Charging", true);
-        //chargeUI.SetActive(true);
         uiHelper.SetCharge(true);
+        if (chargeSfxEvent != null && chargeSfxEvent.Event != "None")
+        {
+            chargeSfxEvent.Play();
+        }
+        yield return new WaitForSeconds(2f);
+
+        //chargeUI.SetActive(true);
 
         // check if unit is an enemy
-        if(Team == Teams.Enemy)
+        if(enemyMode)
         {
             // run tutorial trigger for enemy charging action
             BattleEvents.main.tutEnemyRanged._event.Invoke();
+            chargingAction = new ChargingAction(action, this, target);
         }
+
+
     }
 
     /// <summary>

@@ -106,6 +106,8 @@ public struct Pos : IEquatable<Pos>
             sum += pos;
             ++count;
         }
+        if (count == 0)
+            return OutOfBounds;
         return new Pos(sum.row / count, sum.col / count);
     }
 

@@ -15,12 +15,17 @@ public class CreditsAnimation : MonoBehaviour
     [SerializeField]
     float scrollSpeed;
 
+    [SerializeField]
+    SceneTransitionManager sm;
+
     bool started = false;
     bool finished = false;
+    bool transitioning = false;
 
     void Start()
     {
         tf = gameObject.GetComponent<RectTransform>();
+        sm = FindObjectOfType<SceneTransitionManager>();
     }
 
     // Update is called once per frame
@@ -28,13 +33,9 @@ public class CreditsAnimation : MonoBehaviour
     {
         if(started)
         {
-            if(!finished)
+            if (!finished)
             {
                 ScrollCredits();
-            }
-            else
-            {
-                Debug.Log("Credits finished");
             }
         }
         else if(!finished)
@@ -51,10 +52,13 @@ public class CreditsAnimation : MonoBehaviour
 
     void ScrollCredits()
     {
-        float speed = (Input.GetMouseButton(0) && !Input.GetMouseButtonDown(0)) ? scrollSpeed * 2 : scrollSpeed;
         tf.anchoredPosition = new Vector2(tf.anchoredPosition.x,
-                                          tf.anchoredPosition.y + Time.deltaTime * speed);
-        if (endobj.TransformPoint(endobj.localPosition).y > 0) finished = true;
+                                          tf.anchoredPosition.y + Time.deltaTime * scrollSpeed);
+        if (endobj.TransformPoint(endobj.localPosition).y > -200)
+        {
+            sm.TransitionScenes("MainMenu");
+            finished = true;
+        }
     }
 
     IEnumerator SpeedUp(float topspeed)

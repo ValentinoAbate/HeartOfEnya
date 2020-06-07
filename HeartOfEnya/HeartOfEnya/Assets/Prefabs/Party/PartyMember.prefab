@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 7649253792842341975}
   - component: {fileID: 4728739854517241226}
   - component: {fileID: 3014986940448015175}
+  - component: {fileID: 629191863079778173}
   m_Layer: 0
   m_Name: PartyMember
   m_TagString: Untagged
@@ -246,6 +247,7 @@ MonoBehaviour:
   moveSfx: {fileID: 8300000, guid: 1273e667312313c4e8f744eb59708eec, type: 3}
   damageSfxEvent: {fileID: 4728739854517241226}
   deathSfxEvent: {fileID: 3014986940448015175}
+  chargeSfxEvent: {fileID: 629191863079778173}
   invincible: 0
   maxHp: 0
   move: 0
@@ -378,6 +380,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CollisionTag: 
   Event: event:/SFX/Battle/Enemy/Common/Destroy Enemy
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
+--- !u!114 &629191863079778173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5997579284185976457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/SFX/Battle/Soleil/Soleil Charge attack
   PlayEvent: 0
   StopEvent: 0
   AllowFadeout: 1

@@ -149,7 +149,11 @@ public class Action : MonoBehaviour
                 sfxCat = GetSfxCategory(target);
             }
             if(startupEmitters.ContainsKey(sfxCat))
+            {
                 startupEmitters[sfxCat].Play();
+                startupEmitters[sfxCat].SetParameter("Fire", GetComponent<StunEffect>() != null ? 1 : 0);
+            }
+
             var cutIn = Instantiate(cutInPrefab);
             yield return new WaitForSeconds(cutInSeconds);
             Destroy(cutIn);

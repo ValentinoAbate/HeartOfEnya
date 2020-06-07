@@ -46,18 +46,20 @@ public class LevelSelect : MonoBehaviour
     public void GoToCamp(string phase, int dayNum)
     {
         SetPersistantData(phase, dayNum);
-        if(phase == PersistentData.gamePhaseIntro)
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        if (phase == PersistentData.gamePhaseIntro)
         {
             SceneTransitionManager.main.TransitionScenes("IntroCamp");
         }
         else if(phase == PersistentData.gamePhaseAbsoluteZeroBattle)
         {
-            var pData = DoNotDestroyOnLoad.Instance.persistentData;
             pData.absoluteZeroDefeated = true;
             SceneTransitionManager.main.TransitionScenes("OutroCamp");
         }
         else
         {
+            if (pData.InLuaBattle)
+                pData.luaBossDefeated = true;
             SceneTransitionManager.main.TransitionScenes("Camp");
         }
     }
@@ -67,6 +69,8 @@ public class LevelSelect : MonoBehaviour
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         pData.dayNum = dayNum;
         pData.gamePhase = phase;
+        if (pData.InMainPhase)
+            pData.luaBossDefeated = true;
         
     }
 

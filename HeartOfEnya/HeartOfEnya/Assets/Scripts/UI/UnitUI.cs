@@ -43,6 +43,7 @@ public class UnitUI : MonoBehaviour
         var pBlock = PropertyBlock;
         pBlock.SetColor(chargeColorProp, chargeColor);
         pBlock.SetFloat(chargeProp, value ? 1 : 0);
+        pBlock.SetTexture("_MainTex", sprRenderer.sprite.texture);
         PropertyBlock = pBlock;
     }
 }

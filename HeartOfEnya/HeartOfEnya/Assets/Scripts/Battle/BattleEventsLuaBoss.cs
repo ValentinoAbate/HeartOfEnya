@@ -31,7 +31,7 @@ public class BattleEventsLuaBoss : MonoBehaviour
             return;
         if (battleEvents.luaBossPhaseChange.flag)
             return;
-        var luaBoss = BattleGrid.main.Find<Combatant>((c) => c.GetComponent<EnemyAILuaBoss>() != null);
+        var luaBoss = BattleGrid.main.Find<Enemy>((c) => c.GetComponent<EnemyAILuaBoss>() != null);
         if (luaBoss == null || !luaBoss.Dead)
             return;
         battleEvents.Pause();
@@ -44,9 +44,10 @@ public class BattleEventsLuaBoss : MonoBehaviour
         StartCoroutine(LuaPhaseChangeRoutine(luaBoss));
     }
 
-    private IEnumerator LuaPhaseChangeRoutine(Combatant luaBoss)
+    private IEnumerator LuaPhaseChangeRoutine(Enemy luaBoss)
     {
         var aiComponent = luaBoss.GetComponent<EnemyAILuaBoss>();
+        luaBoss.sprite.sprite = aiComponent.secondPhaseSprite;
         aiComponent.secondPhase = true;
         luaBoss.CancelChargingAction();
         var runner = DialogueManager.main.runner;

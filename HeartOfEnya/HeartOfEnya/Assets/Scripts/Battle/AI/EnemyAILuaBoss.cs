@@ -17,6 +17,7 @@ public class EnemyAILuaBoss : AIComponent<Enemy>
     public Action clearObstacleRow;
     public Action respawnObstacles;
     public Encounter secondPhaseEnounter;
+    public Sprite secondPhaseSprite;
 
     private int lastRowTargeted = -1;
     public int NumObstaclesDestroyed { get; set; }

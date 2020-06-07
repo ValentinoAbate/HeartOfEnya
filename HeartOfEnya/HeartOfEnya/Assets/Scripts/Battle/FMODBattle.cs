@@ -27,8 +27,20 @@ public class FMODBattle : MonoBehaviour
         }
     }
 
-    public StudioEventEmitter music;
+    public StudioEventEmitter Music
+    {
+        get
+        {
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
+            return pData.gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle ? abs0Music : music;
+        }
+    }
+
+    [SerializeField]
+    private StudioEventEmitter music;
     public StudioEventEmitter storm;
+    [SerializeField]
+    private StudioEventEmitter abs0Music;
     [SerializeField]
     private StudioGlobalParameterTrigger textPlaying;
     [SerializeField]
@@ -44,5 +56,10 @@ public class FMODBattle : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        Music.Play();
     }
 }

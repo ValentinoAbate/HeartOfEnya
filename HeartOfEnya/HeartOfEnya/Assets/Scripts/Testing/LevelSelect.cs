@@ -54,13 +54,13 @@ public class LevelSelect : MonoBehaviour
         }
         else if(phase == PersistentData.gamePhaseAbsoluteZeroBattle)
         {
-            pData.absoluteZeroDefeated = true;
+            pData.absoluteZeroPhase1Defeated = true;
             SceneTransitionManager.main.TransitionScenes("OutroCamp");
         }
         else
         {
             if (pData.InLuaBattle)
-                pData.luaBossDefeated = true;
+                pData.luaBossPhase2Defeated = true;
             SceneTransitionManager.main.TransitionScenes("Camp");
         }
     }
@@ -71,7 +71,7 @@ public class LevelSelect : MonoBehaviour
         pData.dayNum = dayNum;
         pData.gamePhase = phase;
         if (pData.InMainPhase)
-            pData.luaBossDefeated = true;
+            pData.luaBossPhase2Defeated = true;
         
     }
 

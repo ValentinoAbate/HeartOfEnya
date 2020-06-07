@@ -8,6 +8,6 @@ public class FrozenLua : MonoBehaviour
     void Start()
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        gameObject.SetActive(pData.luaBossDefeated && !pData.LuaUnfrozen);
+        gameObject.SetActive(pData.luaBossPhase2Defeated && !pData.LuaUnfrozen);
     }
 }

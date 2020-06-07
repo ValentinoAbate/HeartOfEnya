@@ -35,9 +35,6 @@ public class PhaseManager : MonoBehaviour, IPausable
 
     private PlaytestLogger logger;
 
-    private FMODUnity.StudioEventEmitter battleTheme;
-    private FMODUnity.StudioEventEmitter abs0Theme;
-
     /// <summary>
     /// Singleton pattern implementation
     /// </summary>
@@ -81,20 +78,6 @@ public class PhaseManager : MonoBehaviour, IPausable
         Turn = 1;
         logger = DoNotDestroyOnLoad.Instance.playtestLogger;
         logger.testData.UpdateTurnCount(Turn);
-
-        // check if we are in absolute 0 battle
-        if(DoNotDestroyOnLoad.Instance.persistentData.InAbs0Battle)
-        {
-            Debug.Log("Abs0 Theme");
-            
-            // find battle theme objects
-            battleTheme = GameObject.Find("BattleTheme").GetComponent<FMODUnity.StudioEventEmitter>();
-            abs0Theme = GameObject.Find("AbsoluteZeroTheme").GetComponent<FMODUnity.StudioEventEmitter>();
-
-            // switch the theme
-            battleTheme.Stop();
-            abs0Theme.Play();
-        }
 
         yield return StartCoroutine(StartBattle());
         yield return ActivePhase.OnPhaseStart();
@@ -143,7 +126,7 @@ public class PhaseManager : MonoBehaviour, IPausable
             });
         }
         SpawnPhase.LogPersistentData();
-        if (pData.absoluteZeroDefeated)
+        if (pData.absoluteZeroPhase1Defeated)
             SceneTransitionManager.main?.TransitionScenes(goToSceneOnEndSpecial);
         else
             SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);

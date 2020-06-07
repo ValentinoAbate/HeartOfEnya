@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Dialog;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +21,15 @@ public class BattleEventsAbs0 : MonoBehaviour
     private IEnumerator Abs0IntroRoutine()
     {
         var runner = DialogueManager.main.runner;
-        runner.StartDialogue("Abs0BossIntro");
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        if (pData.dayNum == PersistentData.dayNumStart)
+        {
+            runner.StartDialogue("Abs0BossIntro");
+        }
+        else
+        {
+            runner.StartDialogue("Abs0BossIntroRepeat");
+        }
         yield return new WaitWhile(() => runner.isDialogueRunning);
         battleEvents.Unpause();
     }
@@ -42,7 +51,7 @@ public class BattleEventsAbs0 : MonoBehaviour
             moveCursor.CancelBonusMode();
         }
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        pData.absoluteZeroDefeated = true;
+        pData.absoluteZeroPhase1Defeated = true;
         var aiComponent = abs0.GetComponent<EnemyAIAbs0Boss>();
         aiComponent.secondPhase = true;
         StartCoroutine(Abs0PhaseChangeRoutine(abs0, aiComponent));
@@ -97,7 +106,12 @@ public class BattleEventsAbs0 : MonoBehaviour
         abs0.invincible = false;
         abs0.Damage(10);
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        FMODBattle.main.Music.AllowFadeout = true;
+        FMODBattle.main.Music.Stop();
+        FMODBattle.main.storm.AllowFadeout = true;
+        FMODBattle.main.storm.Stop();
         pData.absoluteZeroPhase2Defeated = true;
+        SnowParticleController.main.Stop();
         StartCoroutine(Abs0Phase2DefeatedRoutine());
     }
 

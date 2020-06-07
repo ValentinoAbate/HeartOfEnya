@@ -17,7 +17,9 @@ public class SpawnPhase : Phase
     [SerializeField]
     private Encounter tutDay3Encounter;
     [SerializeField]
-    private Encounter luaEncounter;
+    private Encounter luaEncounter;    
+    [SerializeField]
+    private Encounter luaEncounterPhase2Standalone;
     [SerializeField]
     private Encounter mainEncounter;
     [SerializeField]
@@ -80,7 +82,7 @@ public class SpawnPhase : Phase
         else if (pData.InTutorialThirdDay)
             CurrEncounter = tutDay3Encounter;
         else if (pData.InLuaBattle)
-            CurrEncounter = luaEncounter;
+            CurrEncounter = pData.luaBossPhase1Defeated ? luaEncounterPhase2Standalone : luaEncounter;
         else if (gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
         {
             CurrEncounter = absoluteZeroEncounter;
@@ -270,7 +272,7 @@ public class SpawnPhase : Phase
             yield return StartCoroutine(Spawn());
             var pData = DoNotDestroyOnLoad.Instance.persistentData;
             // End after the first spawn in the abs0 phasechange
-            if (pData.absoluteZeroDefeated && endAfterFirstSpawnAbs0)
+            if (pData.absoluteZeroPhase1Defeated && endAfterFirstSpawnAbs0)
             {
                 endAfterFirstSpawnAbs0 = false;
                 yield break;
@@ -315,7 +317,7 @@ public class SpawnPhase : Phase
 
         #region ABS0 Phase 2 Spawn Code
 
-        if (pData.absoluteZeroDefeated)
+        if (pData.absoluteZeroPhase1Defeated)
         {
             for(int i = 0; i < abs0ReinforcementsSpawnNumber; ++i)
             {
@@ -402,7 +404,7 @@ public class SpawnPhase : Phase
     private bool NextWaveReady()
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        if(pData.absoluteZeroDefeated)
+        if(pData.absoluteZeroPhase1Defeated)
             return PhaseManager.main.EnemyPhase.Enemies.Count <= minAbs0Enemies;
         if(CurrWave.spawnWhenNumberOfEnemiesRemain &&
             PhaseManager.main.EnemyPhase.Enemies.Count <= CurrWave.numEnemies)

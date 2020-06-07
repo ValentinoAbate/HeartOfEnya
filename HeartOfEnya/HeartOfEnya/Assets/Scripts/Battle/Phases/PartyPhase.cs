@@ -150,6 +150,12 @@ public class PartyPhase : Phase
         // If there are no more party members with turns, end the phase
         if (activeParty.Count <= 0)
         {
+            CleanupParty();
+            if (Party.Count <= 0) // All characters have run, don't go to enemy phase
+            {
+                EndBattle();
+                return;
+            }
             //Hide the info panel;
             BattleUI.main.HideInfoPanel();
             EndPhase();

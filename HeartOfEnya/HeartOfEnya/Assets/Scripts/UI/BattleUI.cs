@@ -99,7 +99,7 @@ public class BattleUI : MonoBehaviour, IPausable
     public void UpdateEnemiesRemaining(int numRemaining)
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        if (pData.InMainPhase || pData.absoluteZeroDefeated)
+        if (pData.InMainPhase || pData.absoluteZeroPhase1Defeated)
         {
             if(pData.numEnemiesLeft == 1)
             {

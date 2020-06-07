@@ -232,14 +232,14 @@ namespace Dialog
                 string gamePhase = pData.gamePhase.ToUpper();
                 if (pData.InLuaBattle)
                 {
-                    if (pData.luaBossDefeated)
+                    if (pData.luaBossPhase2Defeated)
                         GoToNextGamePhase();
                     else
                         pData.dayNum += 1; //if lua's not defeated, we spend more time in this phase
                 }
                 else if(gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle)
                 {
-                    if (pData.absoluteZeroDefeated)
+                    if (pData.absoluteZeroPhase1Defeated)
                         GoToNextGamePhase();
                     else
                         pData.dayNum += 1; //if Abs0's not defeated, we spend more time in this phase

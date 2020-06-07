@@ -38,6 +38,13 @@ public class SnowParticleController : MonoBehaviour
 
     }
 
+    public void Stop()
+    {
+        topSnow.Stop();
+        aboveSnow.Stop();
+        belowSnow.Stop();
+    }
+
     private void SetIntensity(float intensity)
     {
         _intensity = intensity;

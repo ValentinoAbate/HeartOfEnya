@@ -25,7 +25,7 @@ public class PersistentData : MonoBehaviour
     public bool InTutorialMainPhase => gamePhase == gamePhaseBeginMain && dayNum == dayNumStart;
     public bool InTutorialLuaJoin => gamePhase ==gamePhaseLuaUnfrozen && dayNum == dayNumStart;
     public bool InLuaBattle => gamePhase == gamePhaseTut3AndLuaBattle && dayNum >= dayNumStart + 1;
-    public bool InAbs0Battle => gamePhase == gamePhaseAbsoluteZeroBattle && !absoluteZeroDefeated;
+    public bool InAbs0Battle => gamePhase == gamePhaseAbsoluteZeroBattle && !absoluteZeroPhase1Defeated;
 
     public int PartyLevel
     {
@@ -44,8 +44,9 @@ public class PersistentData : MonoBehaviour
     }
 
     [Header("Battle")]
-    public bool luaBossDefeated;
-    public bool absoluteZeroDefeated;
+    public bool luaBossPhase1Defeated;
+    public bool luaBossPhase2Defeated;
+    public bool absoluteZeroPhase1Defeated;
     public bool absoluteZeroPhase2Defeated;
     public int numEnemiesLeft; // Total in mainEncounter
     public int numEnemiesDefeatedThisEncounter = 0;
@@ -60,7 +61,7 @@ public class PersistentData : MonoBehaviour
     public int dayNum = dayNumStart;         // DayNum: The number of days spent on the current Phase
 
     [Header("Level Editor")]
-    public int levelEditorPartyLevel = 1;
+    public int levelEditorPartyLevel = PartyMember.minLevel;
 
     public string IntToGamePhase(int phaseNum)
     {

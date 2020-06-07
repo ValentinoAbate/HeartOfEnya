@@ -20,7 +20,19 @@ public class BattleEventsLuaBoss : MonoBehaviour
     private IEnumerator LuaBossIntroRoutine()
     {
         var runner = DialogueManager.main.runner;
-        runner.StartDialogue("LuaBossIntro");
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        if (pData.luaBossPhase1Defeated)
+        {
+            runner.StartDialogue("LuaBossIntroPhase2");
+        }
+        else if(pData.dayNum > PersistentData.dayNumStart + 1)
+        {
+            runner.StartDialogue("LuaBossIntroRepeat");
+        }
+        else
+        {
+            runner.StartDialogue("LuaBossIntro");
+        }
         yield return new WaitWhile(() => runner.isDialogueRunning);
         battleEvents.Unpause();
     }
@@ -34,6 +46,14 @@ public class BattleEventsLuaBoss : MonoBehaviour
         var luaBoss = BattleGrid.main.Find<Enemy>((c) => c.GetComponent<EnemyAILuaBoss>() != null);
         if (luaBoss == null || !luaBoss.Dead)
             return;
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        if (pData.luaBossPhase1Defeated)
+        {
+            // Skip the transition
+            battleEvents.luaBossPhaseChange.flag = true;
+            return;
+        }
+        pData.luaBossPhase1Defeated = true;
         battleEvents.Pause();
         // cancel bonus moves
         foreach (var partyMember in PhaseManager.main.PartyPhase.Party)
@@ -84,7 +104,7 @@ public class BattleEventsLuaBoss : MonoBehaviour
         if (luaBoss == null || !luaBoss.Dead)
             return;
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        pData.luaBossDefeated = true;
+        pData.luaBossPhase2Defeated = true;
         battleEvents.Pause();
         StartCoroutine(LuaPhaseDeathRoutine());
     }

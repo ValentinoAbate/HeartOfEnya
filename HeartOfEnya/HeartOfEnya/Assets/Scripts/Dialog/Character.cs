@@ -100,10 +100,10 @@ public class Character : MonoBehaviour
         string phase = pData.gamePhase;
         var phaseData = CharacterManager.main.GetPhaseData(phase);
         //move to the door position if it's our monologue time
-        if (phaseData != null && !pData.absoluteZeroDefeated && phaseData.monologCharacter.ToLower() == Name.ToLower())
+        if (phaseData != null && !pData.InAbs0Battle && !pData.absoluteZeroPhase1Defeated && phaseData.monologCharacter.ToLower() == Name.ToLower())
         {
             //on the monologue day, move to the door
-            if (DoNotDestroyOnLoad.Instance.persistentData.dayNum == 0)
+            if (pData.dayNum == 0)
             {
                 //swap the sprite to the door sprite
                 SpriteRenderer icon = transform.Find("Sprite").GetComponent<SpriteRenderer>();
@@ -149,7 +149,7 @@ public class Character : MonoBehaviour
                 {
                     anim.SetBool("Highlight", false);
                 }
-                if (day == 0 && phase != PersistentData.gamePhaseAbsoluteZeroBattle)
+                if (day == 0 && !pData.InAbs0Battle)
 	        	{
 	        		//If it's day 0 (i.e. 1st night in this phase), launch their monologue
 	            	Debug.Log(Name + " launches their monologue");
@@ -172,8 +172,7 @@ public class Character : MonoBehaviour
 	            {
 	            	//If it's day 1 or more (i.e. 2nd night in this phase), launch their party scene (unless this is a boss phase)
 	            	Debug.Log(Name + " launches their party scene");
-                    if((pData.InLuaBattle && !pData.luaBossDefeated) || 
-                        (phase == PersistentData.gamePhaseAbsoluteZeroBattle && !pData.absoluteZeroDefeated))
+                    if((pData.InLuaBattle && !pData.luaBossPhase2Defeated) || pData.InAbs0Battle)
                     {
                         if((phase == PersistentData.gamePhaseAbsoluteZeroBattle && day < 1) || (pData.InLuaBattle && day == 1))
                             dialogManager.StartDialogue(phaseData.bossWaitNode);

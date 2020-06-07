@@ -12,12 +12,12 @@ public class LevelSelect : MonoBehaviour
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         buttons = GetComponentsInChildren<Button>();
-        for(int i = 0; i < buttons.Length; ++i)
+        for (int i = 0; i < buttons.Length - 1; ++i)
         {
             var button = buttons[i];
             int phase = (i + 3) / 4;
             int day = ((i - 1) % 4) / 2;
-            if(i % 2 == 0) // Button goes to camp scene
+            if (i % 2 == 0) // Button goes to camp scene
             {
                 button.onClick.AddListener(() => GoToCamp(pData.IntToGamePhase(phase), day));
             }
@@ -26,6 +26,7 @@ public class LevelSelect : MonoBehaviour
                 button.onClick.AddListener(() => GoToBattle(pData.IntToGamePhase(phase), day));
             }
         }
+        buttons[buttons.Length - 1].onClick.AddListener(() => SceneTransitionManager.main.TransitionScenes("Credits"));
     }
 
     public void SetGoToSoup(bool b) => goToSoup = b;

@@ -15,14 +15,15 @@ public class UIInfoPanelGeneric : MonoBehaviour
     public TextMeshProUGUI damageNumberText;
     public Image hpBarImage;
 
-    public void ShowUI(Combatant e)
+    public void ShowUI(Combatant c)
     {
-        nameText.text = e.DisplayName;
-        descriptionText.text = e.description;
+        nameText.text = c.DisplayName;
+        descriptionText.text = c.description;
         //moveNumberText.text = e.Move.ToString();
-        hpNumberText.text = e.Hp.ToString();
-        descriptionText.text = e.description;
-        unitPropertiesText.text = e.isMovable ? string.Empty : "Immovable";
+        hpNumberText.text = c.Hp.ToString();
+        hpBarImage.fillAmount = c.Hp / (float)c.maxHp;
+        descriptionText.text = c.description;
+        unitPropertiesText.text = c.isMovable ? string.Empty : "Immovable";
         damageNumberText.text = "N/A";
         effectTexts[0].text = "No Actions";
 

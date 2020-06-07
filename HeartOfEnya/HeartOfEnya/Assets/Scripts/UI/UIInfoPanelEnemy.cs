@@ -21,6 +21,7 @@ public class UIInfoPanelEnemy : MonoBehaviour
         descriptionText.text = e.description;
         moveNumberText.text = e.Move.ToString();
         hpNumberText.text = e.Hp.ToString();
+        hpBarImage.fillAmount = e.Hp / (float)e.maxHp;
         descriptionText.text = e.description;
         unitPropertiesText.text = e.isBoss ? "Immovable, Unburnable, Acts First, Defeat to End Battle" : string.Empty;
         int damage = e.action.TotalDamage;

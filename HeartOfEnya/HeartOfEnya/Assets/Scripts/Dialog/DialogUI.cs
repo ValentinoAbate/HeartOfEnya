@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,7 +39,9 @@ namespace Dialog
         private List<Button> optionButtons;
         /// The characters currently in the scene
         public List<Character> characters;
-        public FMODUnity.StudioEventEmitter Music { get; set; }
+
+        [SerializeField] private FMODUnity.StudioEventEmitter music;
+        public FMODUnity.StudioEventEmitter Music { get => music; set => music = value; }
 
         [Header("Fixed Position Fields")]
         [SerializeField] private Transform fixedPosition;
@@ -101,6 +104,44 @@ namespace Dialog
             else if(args[0] == "progresstheme")
             {
                 Music.SetParameter("Progress Theme", 1);
+            }
+            else if (args[0] == "solomusic")
+            {
+                var characterNames = characters.Select((c) => c.Name).ToArray();
+                Music.SetParameter("Solo", 1);
+                foreach (var character in characterNames)
+                {
+                    string key = character.ToLower();
+                    bool on = key == args[1] || (args.Length >= 3 && key == args[2]);
+                    Music.SetParameter(character + " Solo", on ? 1 : 0);
+                }
+            }
+            else if (args[0] == "endsolomusic")
+            {
+                var characterNames = characters.Select((c) => c.Name).ToArray();
+                Music.SetParameter("Solo", 0);
+                foreach (var character in characterNames)
+                {
+                    Music.SetParameter("Solo " + character, 0);
+                }
+            }
+            else if (args[0] == "instrumentfadeout")
+            {
+                if (args[1] == "all")
+                    Music.SetParameter("Everyone Gone", 1);
+                else
+                {
+                    var charaName = args[1].Substring(0, 1).ToUpper() + args[1].Substring(1, args[1].Length - 1);
+                    Music.SetParameter(charaName + " Gone", 1);
+                }
+            }
+            else if (args[0] == "instrumentfadeoutall")
+            {
+                Music.SetParameter("Everyone Gone", 1);
+            }
+            else if (args[0] == "waitwhilemusicplaying")
+            {
+                yield return new WaitWhile(Music.IsPlaying);
             }
             else if (args[0] == "playtheme")
             {

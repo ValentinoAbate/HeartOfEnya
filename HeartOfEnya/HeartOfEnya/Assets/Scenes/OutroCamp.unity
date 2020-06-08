@@ -1066,16 +1066,36 @@ PrefabInstance:
     - target: {fileID: 3296149169747409232, guid: 97c7f3dab84fefd92b403b20c37ab40c,
         type: 3}
       propertyPath: dayNum
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3296149169747409232, guid: 97c7f3dab84fefd92b403b20c37ab40c,
         type: 3}
       propertyPath: gamePhase
-      value: B
+      value: E
       objectReference: {fileID: 0}
     - target: {fileID: 3296149169747409232, guid: 97c7f3dab84fefd92b403b20c37ab40c,
         type: 3}
       propertyPath: absoluteZeroDefeated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3296149169747409232, guid: 97c7f3dab84fefd92b403b20c37ab40c,
+        type: 3}
+      propertyPath: absoluteZeroPhase1Defeated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3296149169747409232, guid: 97c7f3dab84fefd92b403b20c37ab40c,
+        type: 3}
+      propertyPath: luaBossPhase1Defeated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3296149169747409232, guid: 97c7f3dab84fefd92b403b20c37ab40c,
+        type: 3}
+      propertyPath: luaBossPhase2Defeated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3296149169747409232, guid: 97c7f3dab84fefd92b403b20c37ab40c,
+        type: 3}
+      propertyPath: absoluteZeroPhase2Defeated
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1736,7 +1756,7 @@ GameObject:
   - component: {fileID: 2052203847}
   - component: {fileID: 2052203846}
   m_Layer: 0
-  m_Name: IntroCampTheme
+  m_Name: OutroCampTheme
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1755,7 +1775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CollisionTag: 
-  Event: event:/Music/Camp Solo Willow
+  Event: event:/Music/Ending Theme
   PlayEvent: 1
   StopEvent: 2
   AllowFadeout: 1
@@ -1846,6 +1866,31 @@ PrefabInstance:
       propertyPath: endAction
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6474591132739200397, guid: 15963c80f4dc1154e8d888ca633d8b6d,
+        type: 3}
+      propertyPath: music
+      value: 
+      objectReference: {fileID: 2052203846}
+    - target: {fileID: 6474591132739200398, guid: 15963c80f4dc1154e8d888ca633d8b6d,
+        type: 3}
+      propertyPath: defaultVariables.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6474591132739200398, guid: 15963c80f4dc1154e8d888ca633d8b6d,
+        type: 3}
+      propertyPath: defaultVariables.Array.data[0].name
+      value: abs0Defeated
+      objectReference: {fileID: 0}
+    - target: {fileID: 6474591132739200398, guid: 15963c80f4dc1154e8d888ca633d8b6d,
+        type: 3}
+      propertyPath: defaultVariables.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6474591132739200398, guid: 15963c80f4dc1154e8d888ca633d8b6d,
+        type: 3}
+      propertyPath: defaultVariables.Array.data[0].type
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6474591132739200399, guid: 15963c80f4dc1154e8d888ca633d8b6d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1915,6 +1960,31 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6474591132893712965}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6474591132893712968 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6474591132739200398, guid: 15963c80f4dc1154e8d888ca633d8b6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 6474591132893712965}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6474591132893712967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 610c541718d694070a21327d1ae62e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6474591132893712969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6474591132893712967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 515306f1c4506cc40afda009fee0661c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storage: {fileID: 6474591132893712968}
 --- !u!1001 &6832639800378780693
 PrefabInstance:
   m_ObjectHideFlags: 0

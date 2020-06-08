@@ -325,6 +325,7 @@ public class Action : MonoBehaviour
             {
                 prefab = actionFxPrefabVertical;
                 flipY = true;
+                flipX = true;
             }
             flipX = !flipX;
             var actionVfx = prefab.GetComponent<ActionVfx>();
@@ -351,11 +352,11 @@ public class Action : MonoBehaviour
                 fx.transform.localScale = Vector3.Scale(fx.transform.localScale, scaleVec);
                 foreach (Transform t in fx.transform)
                 {
-                    t.localScale = Vector3.Scale(t.localScale, scaleVec);
+                    //t.localScale = Vector3.Scale(t.localScale, scaleVec);
                     if(t.childCount > 0)
                     {
-                        foreach(Transform t2 in t)
-                            t2.localScale = Vector3.Scale(t2.localScale, scaleVec);
+                        //foreach(Transform t2 in t)
+                        //    t2.localScale = Vector3.Scale(t2.localScale, scaleVec);
                     }
                 }
                     

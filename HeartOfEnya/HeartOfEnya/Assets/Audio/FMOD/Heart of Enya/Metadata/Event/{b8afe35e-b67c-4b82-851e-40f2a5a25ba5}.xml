@@ -163,6 +163,9 @@
 			<destination>{8f2b733c-0362-4927-bffc-6282b1827bb5}</destination>
 			<destination>{60e8c65d-d25d-4e1b-8d64-012cd6f0e937}</destination>
 			<destination>{2bef18ef-1811-43e9-b53f-ccfef517e41d}</destination>
+			<destination>{62c6bbdc-cb03-4331-a93f-c56d157f1e78}</destination>
+			<destination>{faabbfb5-3583-4758-a134-88ef7ff06509}</destination>
+			<destination>{4ee0e6bf-c56f-4ed2-a4aa-c4999834801e}</destination>
 		</relationship>
 	</object>
 	<object class="ParameterProxy" id="{8d8568c7-f4a0-4712-bcda-5cd4ba08264e}">
@@ -530,6 +533,57 @@
 			<destination>{47d52270-e31f-4fb3-a75d-973cd2f8fc88}</destination>
 		</relationship>
 	</object>
+	<object class="TransitionMarker" id="{62c6bbdc-cb03-4331-a93f-c56d157f1e78}">
+		<property name="position">
+			<value>41.600000000000001</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{a803c016-794e-4f2c-8c00-67c98064b108}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{3ccac4d2-77a0-4610-9f50-53d17379f465}</destination>
+		</relationship>
+		<relationship name="destination">
+			<destination>{3f710547-5447-4607-93e9-df12d189c6b3}</destination>
+		</relationship>
+		<relationship name="triggerConditions">
+			<destination>{139a975f-a9d4-4d74-93ef-37619a28fd0f}</destination>
+		</relationship>
+	</object>
+	<object class="TransitionMarker" id="{faabbfb5-3583-4758-a134-88ef7ff06509}">
+		<property name="position">
+			<value>54.600000000000001</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{a803c016-794e-4f2c-8c00-67c98064b108}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{3ccac4d2-77a0-4610-9f50-53d17379f465}</destination>
+		</relationship>
+		<relationship name="destination">
+			<destination>{3f710547-5447-4607-93e9-df12d189c6b3}</destination>
+		</relationship>
+		<relationship name="triggerConditions">
+			<destination>{c9911852-d788-487a-967e-c74dcb9cb0a7}</destination>
+		</relationship>
+	</object>
+	<object class="TransitionMarker" id="{4ee0e6bf-c56f-4ed2-a4aa-c4999834801e}">
+		<property name="position">
+			<value>65.25</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{a803c016-794e-4f2c-8c00-67c98064b108}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{3ccac4d2-77a0-4610-9f50-53d17379f465}</destination>
+		</relationship>
+		<relationship name="destination">
+			<destination>{3f710547-5447-4607-93e9-df12d189c6b3}</destination>
+		</relationship>
+		<relationship name="triggerConditions">
+			<destination>{64b6a759-fd89-42b3-a02a-8b5dc756ac5c}</destination>
+		</relationship>
+	</object>
 	<object class="ADSRModulator" id="{9adfe339-2095-41e7-a667-b35bd45203f7}">
 		<property name="nameOfPropertyBeingModulated">
 			<value>volume</value>
@@ -672,6 +726,39 @@
 		</relationship>
 	</object>
 	<object class="ParameterCondition" id="{47d52270-e31f-4fb3-a75d-973cd2f8fc88}">
+		<property name="minimum">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>1</value>
+		</property>
+		<relationship name="parameter">
+			<destination>{1db019d2-66b7-47e8-bd63-510260b02d73}</destination>
+		</relationship>
+	</object>
+	<object class="ParameterCondition" id="{139a975f-a9d4-4d74-93ef-37619a28fd0f}">
+		<property name="minimum">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>1</value>
+		</property>
+		<relationship name="parameter">
+			<destination>{1db019d2-66b7-47e8-bd63-510260b02d73}</destination>
+		</relationship>
+	</object>
+	<object class="ParameterCondition" id="{c9911852-d788-487a-967e-c74dcb9cb0a7}">
+		<property name="minimum">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>1</value>
+		</property>
+		<relationship name="parameter">
+			<destination>{1db019d2-66b7-47e8-bd63-510260b02d73}</destination>
+		</relationship>
+	</object>
+	<object class="ParameterCondition" id="{64b6a759-fd89-42b3-a02a-8b5dc756ac5c}">
 		<property name="minimum">
 			<value>1</value>
 		</property>

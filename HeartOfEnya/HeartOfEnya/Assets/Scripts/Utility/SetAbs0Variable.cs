@@ -9,6 +9,7 @@ public class SetAbs0Variable : MonoBehaviour
     void Awake()
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        storage.SetNumber("$abs0Defeated", pData.absoluteZeroPhase2Defeated ? 1 : 0);
+        var abs0Val = new Yarn.Value(pData.absoluteZeroPhase2Defeated ? 1 : 0);
+        storage.SetValue("$abs0Defeated", abs0Val);
     }
 }

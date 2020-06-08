@@ -100,7 +100,7 @@ public class Character : MonoBehaviour
         string phase = pData.gamePhase;
         var phaseData = CharacterManager.main.GetPhaseData(phase);
         //move to the door position if it's our monologue time
-        if (phaseData != null && !pData.InAbs0Battle && !pData.absoluteZeroPhase1Defeated && phaseData.monologCharacter.ToLower() == Name.ToLower())
+        if (phaseData != null && !pData.LuaUnfrozen && phaseData.monologCharacter.ToLower() == Name.ToLower())
         {
             //on the monologue day, move to the door
             if (pData.dayNum == 0)

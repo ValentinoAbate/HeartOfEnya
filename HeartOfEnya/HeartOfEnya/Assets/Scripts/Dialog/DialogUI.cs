@@ -102,6 +102,10 @@ namespace Dialog
             {
                 Music.SetParameter("Progress Theme", 1);
             }
+            else if (args[0] == "playtheme")
+            {
+                Music.Play();
+            }
             else if(args[0] == "gotosolo")
             {
                 // Find speaking character

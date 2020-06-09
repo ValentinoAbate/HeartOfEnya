@@ -10,6 +10,6 @@ public class SetAbs0Variable : MonoBehaviour
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         var abs0Val = new Yarn.Value(pData.absoluteZeroPhase2Defeated ? 1 : 0);
-        storage.SetValue("$abs0Defeated", abs0Val);
+        storage.SetValue("abs0Defeated", abs0Val);
     }
 }

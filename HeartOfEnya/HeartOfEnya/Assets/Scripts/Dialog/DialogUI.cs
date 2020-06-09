@@ -160,6 +160,11 @@ namespace Dialog
                 var character = characters.Find((c) => c.Name.ToLower() == args[1]);
                 character.swapCharData(false);
             }
+            else if(args[0] == "setabs0data")
+            {
+                var abs0Val = new Yarn.Value(pData.absoluteZeroPhase2Defeated ? 1 : 0);
+                runner.variableStorage.SetValue("$abs0Defeated", abs0Val);
+            }
             yield break;
         }
 

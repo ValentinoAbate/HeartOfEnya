@@ -8,6 +8,7 @@ public class CreditsAnimation : MonoBehaviour
 
     [SerializeField]
     Animator logoanim;
+    Animator thisanim;
 
     [SerializeField]
     RectTransform endobj;
@@ -26,10 +27,11 @@ public class CreditsAnimation : MonoBehaviour
     {
         tf = gameObject.GetComponent<RectTransform>();
         sm = FindObjectOfType<SceneTransitionManager>();
+        thisanim = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(started)
         {
@@ -45,30 +47,18 @@ public class CreditsAnimation : MonoBehaviour
             {
                 Debug.Log("Logo finished");
                 started = true;
-                StartCoroutine(SpeedUp(scrollSpeed));
+                thisanim.SetTrigger("Start");
             }
         }
     }
 
     void ScrollCredits()
     {
-        tf.anchoredPosition = new Vector2(tf.anchoredPosition.x,
-                                          tf.anchoredPosition.y + Time.deltaTime * scrollSpeed);
-        if (endobj.TransformPoint(endobj.localPosition).y > -3600)
+        if (thisanim.GetCurrentAnimatorStateInfo(0).IsName("Credits") &&
+            thisanim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
         {
             sm.TransitionScenes("MainMenu");
             finished = true;
         }
-    }
-
-    IEnumerator SpeedUp(float topspeed)
-    {
-        float stepcount = 10;
-        for(int i = 0; i < stepcount; i++)
-        {
-            scrollSpeed = Mathf.SmoothStep(0, topspeed, i / stepcount);
-            yield return new WaitForSeconds(1.5f / stepcount);
-        }
-        scrollSpeed = topspeed;
     }
 }

@@ -94,7 +94,7 @@ namespace Dialog
                 var character = characters.Find((c) => c.Name.ToLower() == args[1]);
                 var anim = character.GetComponent<Animator>();
                 anim.Play("FadeOut");
-                yield return new WaitForSeconds(1.75f);
+                yield return new WaitForSeconds(3f);
             }
             else if(args[0] == "cleartb")
             {
@@ -164,6 +164,12 @@ namespace Dialog
             {
                 var abs0Val = new Yarn.Value(pData.absoluteZeroPhase2Defeated ? 1 : 0);
                 runner.variableStorage.SetValue("$abs0Defeated", abs0Val);
+            }
+            else if(args[0] == "defrostlua")
+            {
+                var frozenLua = GameObject.Find("CampLuacicle").GetComponent<FrozenLua>();
+                frozenLua.Defrost();
+                yield return new WaitForSeconds(3.25f);
             }
             yield break;
         }

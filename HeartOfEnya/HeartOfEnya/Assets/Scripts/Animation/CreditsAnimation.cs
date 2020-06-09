@@ -54,7 +54,7 @@ public class CreditsAnimation : MonoBehaviour
     {
         tf.anchoredPosition = new Vector2(tf.anchoredPosition.x,
                                           tf.anchoredPosition.y + Time.deltaTime * scrollSpeed);
-        if (endobj.TransformPoint(endobj.localPosition).y > -200)
+        if (endobj.TransformPoint(endobj.localPosition).y > -3600)
         {
             sm.TransitionScenes("MainMenu");
             finished = true;

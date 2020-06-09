@@ -3,12 +3,10 @@
 
 title: BapyNightC
 tags: 
-
 ---
 -> Bapy is sitting outside.
         -> I should see if they're ok.
 <<goToSolo Bapy>>
-
 -> Hello, Bapy.
 Bapy (frustrated): ... 
 -> You’re sitting so far from the others. 
@@ -46,6 +44,7 @@ Bapy: They’re both going through so much, I don’t want to bother them...
 -> You don’t think they would want to help?
 Bapy: I- I don’t know.
 Bapy: It’s okay if they don’t... 
+<<progressTheme>>
 -> Would you like to ask them? 
         -> It’s okay if you don’t want to.
                 -> But I think you should give them a chance.
@@ -64,14 +63,14 @@ Bapy: ...
 -> You won’t be alone.
         -> I’ll be with you.
 Bapy: ... 
-Bapy: ...okay.
+Bapy (cry happy): ...okay.
 
 ===
 
 title: CampfireNightC
-tags:
-
+tags: 
 ---
+
 
 Bapy (frustrated): ... 
 Bapy: Hi, everyone.
@@ -145,7 +144,7 @@ Soleil: Oh, Bapy...
 Raina: None of that was fair to you.
 Raina: Absolutely none of it.
 Soleil: How much you matter has nothing to do with how hard you can hit,
-Soleil: Or how good of a kid you are for your parents.
+Soleil: Or what your parents think.
 Soleil (shy smile): No matter what they tell you.
 Raina (reassuring smile): You’ve got so much ahead of you.
 Raina: None of it has to do with your parents, if that’s what you want.
@@ -166,7 +165,7 @@ Bapy: People who’ll be there for you when this is over.
 Bapy (cry): I don’t have anyone anymore.
 Soleil (frustrated): Don’t say that.
 Soleil (shy smile): You’re acting like we’re going somewhere.
-Bapy: You both have people who need you…
+Bapy: But you have people who need you…
 Raina (reassuring smile): Not as much as you do right now.
 Raina: When this is all over, we can visit your family and talk to them.
 Raina: It won’t be perfect, but we’ll be there for you the whole time.
@@ -176,15 +175,17 @@ Bapy: I-
 Bapy: I just-
 Bapy: Thank you…
 Bapy: ...I think... 
-Bapy (neutral): I think I’m still scared.
-Bapy (smile): But not as much anymore.
+Bapy: I think I’m still scared.
+Bapy (cry happy): But not as much anymore.
 Soleil: That’s okay.
 Soleil: It’s not something you just have to believe right now.
 Soleil: Things like this take a long time. 
 Bapy: ...but you’ll be here.
 Raina: Every step of the way.
 
+
 [[defrostingLua]]
+
 
 ===
 
@@ -192,44 +193,62 @@ Raina: Every step of the way.
 title: defrostingLua
 tags: 
 ---
-
--> ...
-Soleil (neutral): ...Willow?
-Raina (neutral): Willow, you’re growing brighter... 
-Bapy (smile): It’s so... warm.
+Bapy (cry happy): Thank you…
+Bapy: ...I can’t seem to stop crying…
+Raina (reassuring smile): That’s okay.
+Raina: Drink some water, though. You’ll get a headache otherwise.
+Soleil (shy smile): It’s nice to let things out, isn’t it?
+Bapy: It’s just-
+Bapy: I’m happy! I really am!
+Bapy: But I can’t stop crying-
+Soleil: Yeah, I get that. A whole lot of feelings at once.
+Bapy: But mostly- I’m happy.
+Bapy: You know how I said I came out here?
+Bapy: To find somewhere to fit in?
+Bapy: It didn’t work out, exactly, but it did... 
+Bapy: Because I found you three.
+Raina: Oh, Bapy.
+Raina (cry): I-
+Soleil (cry): Aw, no. Look, you’ll make us all cry.
+Soleil (cry happy): What are we going to do when Willow starts crying, huh?
+-> Do not worry.
+        -> Your joy only strengthens my flame.
+Raina (cry happy): Is that why you burn brighter than before?
+Bapy: It’s so much warmer, now... 
 -> This warmth... doesn’t just come from me
         -> But all of you as well.
                 -> With your strength behind me…
                         -> I think... I can wake Lua now.
-Soleil: W-what?
-Bapy: Oh! That’s amazing!
-Raina: Soleil? What’s wrong?
-Soleil (frustrated): I- I’m just-
+Soleil (cry): W-what?
+Bapy (smile): Oh! That’s amazing!
+Raina (neutral): Soleil? What’s wrong?
+Soleil: I- I’m just-
 Soleil: What if she doesn’t- 
-Soleil (neutral): What if something goes wrong?
-Soleil (frustrated): I... 
+Soleil: What if something goes wrong?
+Soleil: I... 
 Raina (reassuring smile): Then we’ll figure it out.
 Raina: Trust us, and trust her.
 Soleil: ...
-Soleil: ...okay. 
+Soleil (cry happy): ...okay. 
 -> Here we go.
+<<defrostLua>>
 //i assume something with the graphics go here? Icecube.png opacity -> 0???
 
 
-Soleil (neutral): ...Lua...?
+Soleil (cry): ...Lua...?
 Lua: ... 
 Soleil: Can you see me?
 Lua: ... 
 Lua: I...
 Lua: I see you’re wearing the mantle I made you.
-Soleil (frustrated): I-I’ve been wearing it since the Frost stole you from me.
+Soleil (cry happy): I-I’ve been wearing it since the Frost stole you from me.
 Lua: You look pretty angst-y with the hood up.
 Lua: Now take it off so I can kiss you properly.
 <<swapCharacterData Soleil>>
-Soleil (shy smile): Lua...it’s really you... 
-Soleil: I missed you so much.  
+Soleil: Lua...it’s really you... 
+Soleil (cry): I missed you so much.  
 Soleil: I can’t believe you’re really back... 
-Soleil: I- are you feeling alright? 
+Soleil (cry happy): I- are you feeling alright? 
 Lua: Just... a little tired.
 -> You should take some rest... 
         -> You will need more time to recover.

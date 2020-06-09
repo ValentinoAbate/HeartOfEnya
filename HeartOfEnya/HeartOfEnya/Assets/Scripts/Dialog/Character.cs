@@ -119,12 +119,12 @@ public class Character : MonoBehaviour
         //automatically start the scene - if it's our monologue scene, launch RunDialogue() now instead of waiting for player click
         if(phaseData != null && phaseData.monologCharacter.ToLower() == Name.ToLower())
         {
-            RunDialogue();
+            StartCoroutine(RunDialogue());
         }
     }
 
     //runs whenever the character gets clicked on
-    public void RunDialogue()
+    public IEnumerator RunDialogue()
     {
     	Debug.Log("You've clicked on: " + Name + " on day " + DoNotDestroyOnLoad.Instance.persistentData.dayNum);
 
@@ -132,11 +132,12 @@ public class Character : MonoBehaviour
     	if (dialogManager.isDialogueRunning)
     	{
     		Debug.Log(Name + " won't interrupt the current conversation");
-    		return;
+            yield break;
     	}
     	else
     	{
-    		//sfxSelect.Play(); //since RunDialogue is now run automatically instead of on click, don't play the sound
+            yield return new WaitForSeconds(3f);
+            //sfxSelect.Play(); //since RunDialogue is now run automatically instead of on click, don't play the sound
             var pData = DoNotDestroyOnLoad.Instance.persistentData;
             //retrieve date from persistent data
     		string phase = pData.gamePhase;

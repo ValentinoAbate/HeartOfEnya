@@ -370,8 +370,9 @@ public class PartyMember : Combatant, IPausable
     public void Run()
     {
         RanAway = true;
-        if (DeathsDoor && PhaseManager.main.PartyPhase.Party.Count((p) => p.DeathsDoor) <= 1)
-            FMODBattle.main.Music.SetParameter("Crisis", 0);
+        if (DeathsDoor && PhaseManager.main.PartyPhase.Party.Count((p) => p.DeathsDoor && !p.RanAway) <= 0)
+            if(PhaseManager.main.PartyPhase.Party.Count((p) => p != null && !p.RanAway) >= 1)
+                FMODBattle.main.Music.SetParameter("Crisis", 0);
         EndTurn();
         Destroy(gameObject);
     }

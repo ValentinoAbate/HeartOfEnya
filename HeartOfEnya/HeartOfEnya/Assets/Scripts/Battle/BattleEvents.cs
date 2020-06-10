@@ -472,7 +472,7 @@ public class BattleEvents : MonoBehaviour
         // disable unit selecting
         string[] units = {"Bapy", "Soleil", "Raina"};
         partyPhase.DisableUnits(new List<string>(units));
-        
+        BattleUI.main.examineEnemyReminderUI.SetActive(true);
         Unpause();
     }
 
@@ -497,7 +497,7 @@ public class BattleEvents : MonoBehaviour
         // re-enable unit selecting
         string[] units = {"Bapy", "Soleil", "Raina"};
         partyPhase.EnableUnits(new List<string>(units));
-        
+        BattleUI.main.examineEnemyReminderUI.SetActive(false);
         Unpause();
     }
 

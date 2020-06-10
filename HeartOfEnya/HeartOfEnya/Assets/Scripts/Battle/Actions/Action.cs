@@ -36,6 +36,8 @@ public class Action : MonoBehaviour
     #region VFX Fields
 
     public GameObject cutInPrefab = null;
+    // Hack for soleil's hood-down cutins
+    public GameObject lvl4CutinPrefab = null;
     public GameObject tileFxPrefab;
     public GameObject actionFxPrefab;
     public GameObject actionFxPrefabVertical;
@@ -177,10 +179,14 @@ public class Action : MonoBehaviour
                 startupEmitters[sfxCat].Play();
                 startupEmitters[sfxCat].SetParameter("Fire", GetComponent<StunEffect>() != null ? 1 : 0);
             }
-
-            var cutIn = Instantiate(cutInPrefab);
+            // Hack to allow for hood up soleil cut-ins
+            GameObject cutin = null;
+            if (lvl4CutinPrefab != null && user is PartyMember && (user as PartyMember).level >= 4)
+                cutin = Instantiate(lvl4CutinPrefab);
+            else
+                cutin = Instantiate(cutInPrefab);
             yield return new WaitForSeconds(cutInSeconds);
-            Destroy(cutIn);
+            Destroy(cutin);
         }
 
         var tileType = user.Team == FieldEntity.Teams.Enemy ? TileUI.Type.TargetPreviewEnemy
@@ -237,7 +243,7 @@ public class Action : MonoBehaviour
                     }                       
                     yield return StartCoroutine(effect.ApplyEffect(user, target, extraData));
                     // If the target died from this effect
-                    if (target == null)
+                    if (target == null || target.Dead)
                         break;
                 }
             }
@@ -250,7 +256,7 @@ public class Action : MonoBehaviour
                         continue;
                     yield return StartCoroutine(effect.ApplyEffect(user, position, extraData));
                     // If the target died from this effect
-                    if (target == null)
+                    if (target == null || target.Dead)
                         break;
                 }
             }

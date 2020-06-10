@@ -66,7 +66,7 @@ public abstract class Combatant : FieldObject, IPausable
             {
                 Debug.Log(name + " is stunned!");
                 unstunnedColor = hpImage.color;
-                hpImage.color = new Color(1, 0.55f, 0.55f, 1);
+                hpImage.color = stunnedColor;
                 uiHelper.SetStun(true);
                 CancelChargingAction();
             }
@@ -79,6 +79,7 @@ public abstract class Combatant : FieldObject, IPausable
         }
     }
     protected bool stunned;
+    public Color stunnedColor = new Color(1, 0.55f, 0.55f, 1);
     // The color to set the hp image back to after unstunning
     private Color unstunnedColor;
     /// <summary>

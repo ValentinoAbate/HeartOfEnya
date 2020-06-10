@@ -106,6 +106,7 @@ public class BattleEventsLuaBoss : MonoBehaviour
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         pData.luaBossPhase2Defeated = true;
         battleEvents.Pause();
+        FMODBattle.main.Music.Stop();
         StartCoroutine(LuaPhaseDeathRoutine());
     }
 

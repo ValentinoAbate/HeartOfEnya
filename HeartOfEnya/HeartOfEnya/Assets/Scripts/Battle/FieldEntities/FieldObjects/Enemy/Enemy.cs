@@ -156,7 +156,7 @@ public class Enemy : Combatant, IPausable
         Debug.Log(DisplayName + " has died...");
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         pData.numEnemiesDefeatedThisEncounter++;
-        if(pData.InMainPhase)
+        if(pData.InMainPhase || pData.absoluteZeroPhase1Defeated)
         {
             pData.numEnemiesLeft--;
             BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft);

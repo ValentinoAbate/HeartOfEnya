@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LevelSelect : MonoBehaviour
 {
     public bool goToSoup = true;
+    public Encounter mainEncounter = null;
     private Button[] buttons;
 
     private void Start()
@@ -70,8 +71,30 @@ public class LevelSelect : MonoBehaviour
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         pData.dayNum = dayNum;
         pData.gamePhase = phase;
-        if (pData.InMainPhase)
+        if (pData.InMainPhase || pData.LuaUnfrozen)
+        {
             pData.luaBossPhase2Defeated = true;
+            pData.lastEncounter = mainEncounter;
+            if(phase == PersistentData.gamePhaseBeginMain && dayNum == PersistentData.dayNumStart + 1)
+            {
+                pData.waveNum = 4;
+            }
+            else if(phase == PersistentData.gamePhaseLuaUnfrozen)
+            {
+                pData.waveNum = dayNum == PersistentData.dayNumStart ? 8 : 12;
+            }
+            else if(phase == PersistentData.gamePhaseAbsoluteZeroBattle)
+            {
+                pData.waveNum = 16;
+            }
+            int totalEnemies = 0;
+            for (int i = mainEncounter.Waves.Length - 1; i >= pData.waveNum; --i)
+            {
+                totalEnemies += mainEncounter.Waves[i].enemies.Count;
+            }
+            pData.numEnemiesLeft = totalEnemies;
+        }
+
         
     }
 

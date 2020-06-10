@@ -107,7 +107,7 @@ public class BattleUI : MonoBehaviour, IPausable
             }
             else if(pData.numEnemiesLeft <= 0)
             {
-                numEnemiesLeft.text = "No Frost Remain";
+                numEnemiesLeft.text = "Absolute Zero Remains";
             }
             else
                 numEnemiesLeft.text = numRemaining.ToString() + " Frost Remain...";

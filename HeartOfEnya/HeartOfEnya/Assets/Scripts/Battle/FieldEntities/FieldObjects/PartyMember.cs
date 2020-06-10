@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 /// <summary>
 /// A Combatant that is a member of the party.
@@ -60,7 +61,6 @@ public class PartyMember : Combatant, IPausable
     public override Sprite DisplaySprite => chara.Portrait;
     public override Color DisplaySpriteColor => Color.white;
 
-    private FMODUnity.StudioEventEmitter battleTheme;
     private FMODUnity.StudioEventEmitter sfxHighlight;
 
     private PlaytestLogger logger;
@@ -154,9 +154,7 @@ public class PartyMember : Combatant, IPausable
         PauseHandle = new PauseHandle(null, moveCursor, mouseMoveCursor, attackCursor, actionMenuRight, actionMenuLeft);
 
         // Find reference to FMOD event emitter
-        battleTheme = GameObject.Find("BattleTheme").GetComponent<FMODUnity.StudioEventEmitter>();
-        // sfxHighlight = GameObject.Find("UIHighlight").GetComponent<FMODUnity.StudioEventEmitter>();
-        battleTheme.SetParameter("Loading", 0);
+        FMODBattle.main.Music.SetParameter("Loading", 0);
 
         logger = DoNotDestroyOnLoad.Instance.playtestLogger;
     }
@@ -200,7 +198,7 @@ public class PartyMember : Combatant, IPausable
         deathSfxEvent.Play();
         DeathsDoor = true;
         Debug.Log(DisplayName + "Has Enetered Death's Door");
-        battleTheme.SetParameter("Crisis", 1);
+        FMODBattle.main.Music.SetParameter("Crisis", 1);
         deathsDoorUI.SetActive(true);
         hpImage.gameObject.SetActive(false);
         fpText.transform.parent.gameObject.SetActive(false);
@@ -372,6 +370,8 @@ public class PartyMember : Combatant, IPausable
     public void Run()
     {
         RanAway = true;
+        if (DeathsDoor && PhaseManager.main.PartyPhase.Party.Count((p) => p.DeathsDoor) <= 1)
+            FMODBattle.main.Music.SetParameter("Crisis", 0);
         EndTurn();
         Destroy(gameObject);
     }

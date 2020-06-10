@@ -73,6 +73,11 @@ public class TargetPattern
         offsets = offsets.Distinct().ToList();
     }
 
+    public void Remove(Pos p)
+    {
+        offsets.Remove(p);
+    }
+
     /// <summary>
     /// Display the targeting UI at the current target position
     /// </summary>

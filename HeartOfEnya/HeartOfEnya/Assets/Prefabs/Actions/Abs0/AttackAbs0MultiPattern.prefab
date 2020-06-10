@@ -65,9 +65,12 @@ MonoBehaviour:
   weights:
   - 1
   - 1
-  - 2
+  - 1
   numChoices: 2
   noDuplicateTargets: 1
+  exclude:
+    row: 2
+    col: 0
 --- !u!114 &1596124406641089430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,10 +181,20 @@ PrefabInstance:
       propertyPath: Event
       value: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Box
       objectReference: {fileID: 0}
+    - target: {fileID: 6228225249225075218, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: Event
+      value: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Raina
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344676169653005994, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: Event
+      value: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Lua
+      objectReference: {fileID: 0}
     - target: {fileID: 7557890244487479659, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
       propertyPath: Event
-      value: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Bapy
+      value: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Soleil
       objectReference: {fileID: 0}
     - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -280,6 +293,11 @@ PrefabInstance:
         type: 3}
       propertyPath: Event
       value: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146262879415712421, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: Event
+      value: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Bapy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65afaea67fb0af4a84fe0702411019e, type: 3}

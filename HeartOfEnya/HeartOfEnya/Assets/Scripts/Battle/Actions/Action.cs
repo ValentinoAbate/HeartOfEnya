@@ -14,6 +14,10 @@ public class Action : MonoBehaviour
         Party,
         Override,
         None,
+        Bapy,
+        Lua,
+        Soleil,
+        Raina,
     }
 
     public const float targetHighlightSeconds = 0.25f;
@@ -51,7 +55,10 @@ public class Action : MonoBehaviour
     public StudioEventEmitter impactEnemy;
     public StudioEventEmitter impactWood;
     public StudioEventEmitter impactStone;
-    public StudioEventEmitter impactParty;
+    public StudioEventEmitter impactBapy;
+    public StudioEventEmitter impactLua;
+    public StudioEventEmitter impactRaina;
+    public StudioEventEmitter impactSoleil;
 
     private Dictionary<SfxCategory, StudioEventEmitter> startupEmitters;
     private Dictionary<SfxCategory, StudioEventEmitter> impactEmitters;
@@ -89,6 +96,10 @@ public class Action : MonoBehaviour
             {SfxCategory.Wood, startupWood },
             {SfxCategory.Stone, startupStone },
             {SfxCategory.Party, startupParty },
+            {SfxCategory.Bapy, startupParty },
+            {SfxCategory.Soleil, startupParty },
+            {SfxCategory.Lua, startupParty },
+            {SfxCategory.Raina, startupParty },
             {SfxCategory.Override, startupOverride },
         };
         impactEmitters = new Dictionary<SfxCategory, StudioEventEmitter>()
@@ -96,7 +107,11 @@ public class Action : MonoBehaviour
             {SfxCategory.Enemy, impactEnemy },
             {SfxCategory.Wood, impactWood },
             {SfxCategory.Stone, impactStone },
-            {SfxCategory.Party, impactParty },
+            {SfxCategory.Bapy, impactBapy },
+            {SfxCategory.Lua, impactLua },
+            {SfxCategory.Soleil, impactSoleil },
+            {SfxCategory.Raina, impactRaina },
+            {SfxCategory.Party, impactBapy }, // Fallback
         };
         effects = GetComponentsInChildren<ActionEffect>();
         if (targetPatternGenerator != null)
@@ -126,7 +141,16 @@ public class Action : MonoBehaviour
         else if (target.Team == FieldEntity.Teams.Enemy)
             return SfxCategory.Enemy;
         else if (target.Team == FieldEntity.Teams.Party)
-            return SfxCategory.Party;
+        {
+            switch(target.DisplayName)
+            {
+                case "Bapy": return SfxCategory.Bapy;
+                case "Soleil": return SfxCategory.Soleil;
+                case "Raina": return SfxCategory.Raina;
+                case "Lua": return SfxCategory.Lua;
+                default: return SfxCategory.Party;
+            }
+        }
         else if (!target.isMovable)
             return SfxCategory.Stone;
         else
@@ -138,17 +162,17 @@ public class Action : MonoBehaviour
         // Get the target positions, with rotating applied
         var targetPositions = HitPositions(user.Pos, targetPos);
         //Play cut-in if applicable
-        if(cutInPrefab != null)
+        if (cutInPrefab != null)
         {
             var sfxCat = SfxCategory.Override;
-            if(!singleStartup && targetPositions.Count > 0)
+            if (!singleStartup && targetPositions.Count > 0)
             {
                 var target = BattleGrid.main.Get<Combatant>(targetPositions[0]);
-                if(primaryTargetPos != Pos.OutOfBounds)
+                if (primaryTargetPos != Pos.OutOfBounds)
                     target = BattleGrid.main.Get<Combatant>(primaryTargetPos);
                 sfxCat = GetSfxCategory(target);
             }
-            if(startupEmitters.ContainsKey(sfxCat))
+            if (startupEmitters.ContainsKey(sfxCat))
             {
                 startupEmitters[sfxCat].Play();
                 startupEmitters[sfxCat].SetParameter("Fire", GetComponent<StunEffect>() != null ? 1 : 0);

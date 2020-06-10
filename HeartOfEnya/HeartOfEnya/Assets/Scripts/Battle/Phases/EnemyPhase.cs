@@ -56,9 +56,11 @@ public class EnemyPhase : Phase
         yield return StartCoroutine(PlayTransition());
         foreach (var enemy in Enemies)
         {
-            if (enemy == null)
+            if (enemy == null || enemy.Dead)
                 continue;
             yield return new WaitWhile(() => PauseHandle.Paused);
+            if (enemy == null || enemy.Dead)
+                continue;
             yield return enemy.StartTurn();
         }               
     }

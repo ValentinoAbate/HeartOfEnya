@@ -45,7 +45,10 @@ public class ActionInspector : Editor
             EditorGUILayout.PropertyField(serializedObject.FindProperty("impactEnemy"), new GUIContent("Impact SFX (Enemy)"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("impactWood"), new GUIContent("Impact SFX (Wood)"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("impactStone"), new GUIContent("Impact SFX (Stone)"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("impactParty"), new GUIContent("Impact SFX (Party)"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("impactBapy"), new GUIContent("Impact SFX (Bapy)"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("impactRaina"), new GUIContent("Impact SFX (Raina)"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("impactSoleil"), new GUIContent("Impact SFX (Soleil)"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("impactLua"), new GUIContent("Impact SFX (Lua)"));
         }
         EditorUtils.Separator();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("chargeTurns"), new GUIContent("Charge Turns"));

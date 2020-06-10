@@ -11,6 +11,7 @@ public class TargetPatternGeneratorAbs0 : TargetPatternGenerator
     public float[] weights = new float[3];
     public int numChoices;
     public bool noDuplicateTargets = true;
+    public Pos exclude = Pos.OutOfBounds;
     public override TargetPattern Generate()
     {
         var choices = new TargetPattern[] { pattern1, pattern2, pattern3 };
@@ -43,6 +44,7 @@ public class TargetPatternGeneratorAbs0 : TargetPatternGenerator
             output.Add(pattern);
         }
         output.RemoveDuplicates();
+        output.Remove(exclude);
         return output;
     }
 }

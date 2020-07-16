@@ -33,12 +33,12 @@ public class EnemyPhase : Phase
     private int CompareTurnOrder(Enemy e1, Enemy e2)
     {
         if (e1.isBoss)
-            return -1;
-        if (e2.isBoss)
             return 1;
+        if (e2.isBoss)
+            return -1;
         if (e1.Col != e2.Col)
             return e2.Col.CompareTo(e1.Col);
-        return e2.Row.CompareTo(e1.Row);
+        return e1.Row.CompareTo(e2.Row);
     }
 
     public void RemoveDead()

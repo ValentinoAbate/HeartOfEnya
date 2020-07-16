@@ -243,7 +243,7 @@ public class Action : MonoBehaviour
                     }                       
                     yield return StartCoroutine(effect.ApplyEffect(user, target, extraData));
                     // If the target died from this effect
-                    if (target == null || target.Dead)
+                    if (target == null || (target.Dead && !(target is PartyMember)))
                         break;
                 }
             }
@@ -256,7 +256,7 @@ public class Action : MonoBehaviour
                         continue;
                     yield return StartCoroutine(effect.ApplyEffect(user, position, extraData));
                     // If the target died from this effect
-                    if (target == null || target.Dead)
+                    if (target == null || (target.Dead && !(target is PartyMember)))
                         break;
                 }
             }

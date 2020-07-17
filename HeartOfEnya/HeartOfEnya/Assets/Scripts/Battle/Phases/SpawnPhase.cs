@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Dialog;
+using UnityEditorInternal;
 
 public class SpawnPhase : Phase
 {
@@ -10,23 +11,27 @@ public class SpawnPhase : Phase
 
     public override PauseHandle PauseHandle { get; set; } = new PauseHandle(null);
     public bool HasActiveSpawners => spawners.Count > 0;
+    public Encounter CurrEncounter { get; private set; }
+
+    [Header("Encounters")]
     [SerializeField]
-    private Encounter tutDay1Encounter;
+    private Encounter tutDay1Encounter = null;
     [SerializeField]
-    private Encounter tutDay2Encounter;
+    private Encounter tutDay2Encounter = null;
     [SerializeField]
-    private Encounter tutDay3Encounter;
+    private Encounter tutDay3Encounter = null;
     [SerializeField]
-    private Encounter luaEncounter;    
+    private Encounter luaEncounter = null;    
     [SerializeField]
-    private Encounter luaEncounterPhase2Standalone;
+    private Encounter luaEncounterPhase2Standalone = null;
     [SerializeField]
-    private Encounter mainEncounter;
+    private Encounter mainEncounter = null;
     [SerializeField]
-    private Encounter absoluteZeroEncounter;
+    private Encounter absoluteZeroEncounter = null;
     [SerializeField]
     public Encounter levelEditorEncounter;
-    public Encounter CurrEncounter { get; private set;}
+
+    [Header("Spawning Properties")]
     public GameObject spawnTileEnemyPrefab;
     public GameObject spawnTileObstaclePrefab;
     public int spawnDamage = 2;
@@ -59,7 +64,7 @@ public class SpawnPhase : Phase
 
     // Playtest data logger reference
     private PlaytestLogger logger;
-    private List<GameObject> absolute0Bank = new List<GameObject>();
+    private List<GameObject> absolute0Bank = null;
     [Header("Abs0 encounter spawn parameters")]
     public List<Pos> abs0ReinforcementSpawnPositions = new List<Pos>();
     public int minAbs0Enemies = 5;
@@ -109,7 +114,7 @@ public class SpawnPhase : Phase
             enemies.Add(savedSpawn.spawnObject);
         }
         // Add remaining unspawned waves
-        for(int waveNum = pData.waveNum; waveNum < mainEncounter.Waves.Length; ++waveNum)
+        for(int waveNum = pData.waveNum + 1; waveNum < mainEncounter.Waves.Length; ++waveNum)
         {
             foreach (var spawnData in mainEncounter.Waves[waveNum].enemies)
             {
@@ -337,6 +342,9 @@ public class SpawnPhase : Phase
         }
 
         #endregion
+
+        if (NextWave == null)
+            yield break;
 
         // Log playtest data from previous wave
         logger.testData.NewDataLog(

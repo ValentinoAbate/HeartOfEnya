@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Dialog;
-using UnityEditorInternal;
 
 public class SpawnPhase : Phase
 {

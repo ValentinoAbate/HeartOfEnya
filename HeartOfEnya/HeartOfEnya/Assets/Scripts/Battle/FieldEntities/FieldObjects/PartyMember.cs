@@ -374,7 +374,8 @@ public class PartyMember : Combatant, IPausable
             if(PhaseManager.main.PartyPhase.Party.Count((p) => p != null && !p.RanAway) >= 1)
                 FMODBattle.main.Music.SetParameter("Crisis", 0);
         EndTurn();
-        Destroy(gameObject);
+        // Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     /// <summary>

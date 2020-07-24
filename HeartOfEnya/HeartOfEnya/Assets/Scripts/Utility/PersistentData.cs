@@ -67,6 +67,9 @@ public class PersistentData : MonoBehaviour
     [Header("Level Editor")]
     public int levelEditorPartyLevel = PartyMember.minLevel;
 
+    [Header("Saving")]
+    public string returnScene; //what scene to return to on game load
+
     public string IntToGamePhase(int phaseNum)
     {
         if (phaseNum == 0)
@@ -149,7 +152,15 @@ public class PersistentData : MonoBehaviour
         string jsonData = Encoding.ASCII.GetString(jsonByte);
         JsonUtility.FromJsonOverwrite(jsonData, this);
 
-        //reload the scene
-        SceneTransitionManager.main.TransitionScenes("Battle");
+        //load the scene we saved on
+        if (String.IsNullOrEmpty(returnScene))
+        {
+            //if no return scene was specified, abort
+            Debug.LogWarning("No return scene specified! Cannot complete load!");
+        }
+        else
+        {
+            SceneTransitionManager.main.TransitionScenes(returnScene);
+        }
     }
 }

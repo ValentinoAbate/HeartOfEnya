@@ -309,12 +309,16 @@ namespace Dialog
                 {
                     GoToNextGamePhase();
                 }
+                pData.returnScene = sceneName; //mark what scene to return to on game load
+                pData.SaveToFile(); //autosave
                 SceneTransitionManager.main.TransitionScenes(sceneName);
             }
             else if(endAction == EndAction.GoToCampfireScene)
             {
                 //assume we're on day 0 of the phase, in which case we should...
                 pData.dayNum += 1; //...iterate to day 1...
+                pData.returnScene = sceneName; //...mark what scene to return to on game load
+                pData.SaveToFile(); //...autosave...
                 SceneTransitionManager.main.TransitionScenes(sceneName); //..and proceed to the battle scene
                 //runner.StartCampPartyScene(phaseData);
             }

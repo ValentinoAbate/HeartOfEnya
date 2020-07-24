@@ -17,7 +17,8 @@ public class DebugTestSave : MonoBehaviour
     	if(Input.GetKeyDown(KeyCode.Equals))//save
     	{
     		Debug.Log("Attempting save...");
-    		pData.SaveToFile();
+    		//pData.SaveToFile();
+    		Debug.Log("Sorry, but for now manual saving is disabled because you're not smart enough to save the return scene!");
     	}
         else if(Input.GetKeyDown(KeyCode.Minus))//load
         {

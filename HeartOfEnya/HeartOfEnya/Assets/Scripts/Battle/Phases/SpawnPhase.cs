@@ -190,7 +190,7 @@ public class SpawnPhase : Phase
         }
 
         // Don't spawn enemies
-        if (!spawnEnemies)
+        if (!spawnEnemies || (pData.InMainPhase && pData.numEnemiesLeft <= 0))
             return;
 
         // This is a fresh encounter or a boss fight, just spawn everything

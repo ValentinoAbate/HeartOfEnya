@@ -87,6 +87,7 @@ public class PartyPhase : Phase
             BattleEvents.main.tutPassives._event.Invoke();   // main phase event
             BattleEvents.main.tutMove3._event.Invoke();      // lua unfrozen event
             BattleEvents.main.abs0Intro._event.Invoke();     // abs0 boss intro event
+            BattleEvents.main.noEnemiesLeftMainPhase._event.Invoke(); // No Enemies remain event
         }
         else if (PhaseManager.main.Turn == 2)
         {
@@ -258,6 +259,9 @@ public class PartyPhase : Phase
 
         // tutorial day 3: run trigger when raina uses flame cleave
         BattleEvents.main.tutBurn._event.Invoke();
+
+        // main pahse: run trigger to check for no enemies remaining
+        BattleEvents.main.noEnemiesLeftMainPhase._event.Invoke();
     }
 
     /// <summary>

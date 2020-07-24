@@ -13,6 +13,7 @@ public class EnemyPhase : Phase
         DoNotDestroyOnLoad.Instance.playtestLogger.testData.UpdateAvgEnemies(Enemies.Count);
         RemoveDead();
         Enemies.ForEach((enemy) => enemy.OnPhaseEnd());
+        BattleEvents.main.noEnemiesLeftMainPhase._event.Invoke();
         return null;
     }
 

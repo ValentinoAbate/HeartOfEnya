@@ -22,6 +22,7 @@ public class BattleEvents : MonoBehaviour
     [HideInInspector] public bool tutLuaJoin;
     [HideInInspector] public bool tutMainPhase;
     [HideInInspector] public bool abs0Battle;
+    [HideInInspector] public bool inMainPhase;
 
     [Header("Tutorial Events")]
     public BattleEvent tutorialIntro;
@@ -59,7 +60,7 @@ public class BattleEvents : MonoBehaviour
     public BattleEvent luaBossPhaseChange;
     public BattleEvent luaBossPhase2Defeated;
 
-    [Header("Main Phase Events")]
+    [Header("Main Phase Intro Events")]
     public BattleEvent tutPassives;
 
     [Header("Lua Joins Events")]
@@ -73,6 +74,7 @@ public class BattleEvents : MonoBehaviour
 
     [Header("Generic Battle Events")]
     public BattleEvent graveInjury;
+    public BattleEvent noEnemiesLeftMainPhase;
 
     // references to objects that will be needed to disable certain game functions
     [HideInInspector] public PartyPhase partyPhase;
@@ -93,14 +95,15 @@ public class BattleEvents : MonoBehaviour
 
     private void Start()
     {
-        tutorialDay1 = DoNotDestroyOnLoad.Instance.persistentData.InTutorialFirstDay;
-        tutorialDay2 = DoNotDestroyOnLoad.Instance.persistentData.InTutorialSecondDay;
-        tutorialDay3 = DoNotDestroyOnLoad.Instance.persistentData.InTutorialThirdDay;
-        luaBattle = DoNotDestroyOnLoad.Instance.persistentData.InLuaBattle;
-        tutMainPhase = DoNotDestroyOnLoad.Instance.persistentData.InTutorialMainPhase;
-        tutLuaJoin = DoNotDestroyOnLoad.Instance.persistentData.InTutorialLuaJoin;
-        abs0Battle = DoNotDestroyOnLoad.Instance.persistentData.InAbs0Battle;
-
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        tutorialDay1 = pData.InTutorialFirstDay;
+        tutorialDay2 = pData.InTutorialSecondDay;
+        tutorialDay3 = pData.InTutorialThirdDay;
+        luaBattle = pData.InLuaBattle;
+        tutMainPhase = pData.InTutorialMainPhase;
+        tutLuaJoin = pData.InTutorialLuaJoin;
+        abs0Battle = pData.InAbs0Battle;
+        inMainPhase = pData.InMainPhase;
         partyPhase = PhaseManager.main.PartyPhase;
     }
 
@@ -569,6 +572,23 @@ public class BattleEvents : MonoBehaviour
     }
 
     private IEnumerator GraveInjuryTriggerPost(DialogueRunner runner)
+    {
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+        SceneTransitionManager.main.TransitionScenes("Camp");
+    }
+
+    public void NoEnemiesLeftInMainPhaseTrigger()
+    {
+        if (!inMainPhase || noEnemiesLeftMainPhase.flag || DoNotDestroyOnLoad.Instance.persistentData.numEnemiesLeft > 0)
+            return;
+        Pause();
+        noEnemiesLeftMainPhase.flag = true;
+        DialogueManager.main.runner.StartDialogue("NoEnemiesRemain");
+        Debug.Log("Battle Triggers: No Enemies Left In Main Encounter");
+        StartCoroutine(NoEnemiesLeftInMainPhaseTriggerPost(DialogueManager.main.runner));
+    }
+
+    private IEnumerator NoEnemiesLeftInMainPhaseTriggerPost(DialogueRunner runner)
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
         SceneTransitionManager.main.TransitionScenes("Camp");

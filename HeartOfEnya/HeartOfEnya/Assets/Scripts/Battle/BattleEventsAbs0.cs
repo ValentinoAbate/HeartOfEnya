@@ -85,7 +85,7 @@ public class BattleEventsAbs0 : MonoBehaviour
             partyMember.Fp = partyMember.maxFp;
         }
         yield return StartCoroutine(pManager.SpawnPhase.DeclareNextWave());
-        // Update the counter to actually show the number that remain +1 for abs0
+        // Update the counter to actually show the number that remain
         BattleUI.main.UpdateEnemiesRemaining(pData.numEnemiesLeft);
         pManager.NextPhase();
         BattleEvents.main.abs0PhaseChange.flag = true;

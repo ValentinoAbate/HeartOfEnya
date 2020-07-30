@@ -44,7 +44,7 @@ public class EnemyPhase : Phase
 
     public void RemoveDead()
     {
-        Enemies.RemoveAll((e) => e == null || e.Dead);
+        Enemies.RemoveAll((e) => e == null || (e.Dead && !e.invincible));
     }
 
     public override void OnPhaseUpdate()

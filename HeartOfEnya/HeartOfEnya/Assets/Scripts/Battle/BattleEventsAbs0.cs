@@ -73,8 +73,8 @@ public class BattleEventsAbs0 : MonoBehaviour
         yield return abs0.UseAction(aiComponent.spawnObstacles, Pos.Zero, Pos.Zero);
         // Revive Abs0
         abs0.Hp = 9;
-        if(!pManager.EnemyPhase.Enemies.Contains(abs0 as Enemy))
-            pManager.EnemyPhase.Enemies.Add(abs0 as Enemy);
+        //if(!pManager.EnemyPhase.Enemies.Contains(abs0 as Enemy))
+            //pManager.EnemyPhase.Enemies.Add(abs0 as Enemy);
         // Post-transition
         runner.StartDialogue("Abs0BossPhase2-2");
         yield return new WaitWhile(() => runner.isDialogueRunning);

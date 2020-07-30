@@ -82,8 +82,8 @@ public class BattleEventsLuaBoss : MonoBehaviour
         pManager.SpawnPhase.SetEncounter(aiComponent.secondPhaseEnounter, true);
         // Revive Luicicle
         luaBoss.Hp = aiComponent.secondPhaseHp;
-        if (!pManager.EnemyPhase.Enemies.Contains(luaBoss as Enemy))
-            pManager.EnemyPhase.Enemies.Add(luaBoss as Enemy);
+        //if (!pManager.EnemyPhase.Enemies.Contains(luaBoss as Enemy))
+            //pManager.EnemyPhase.Enemies.Add(luaBoss as Enemy);
         // Post-Transition
         runner.StartDialogue("LuaBossPhase2-2");
         yield return new WaitWhile(() => runner.isDialogueRunning);

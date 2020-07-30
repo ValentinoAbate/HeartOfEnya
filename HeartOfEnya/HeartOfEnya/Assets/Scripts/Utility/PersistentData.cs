@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.IO;
+using System.Text;
 
 /// <summary>
 /// Class that contains all the data that has to be saved between states
 /// GameState Legend:
 /// "A"
 /// </summary>
+[System.Serializable]
 public class PersistentData : MonoBehaviour
 {
     public const int dayNumStart = 0;
@@ -63,6 +67,9 @@ public class PersistentData : MonoBehaviour
     [Header("Level Editor")]
     public int levelEditorPartyLevel = PartyMember.minLevel;
 
+    [Header("Saving")]
+    public string returnScene; //what scene to return to on game load
+
     public string IntToGamePhase(int phaseNum)
     {
         if (phaseNum == 0)
@@ -76,5 +83,85 @@ public class PersistentData : MonoBehaviour
         public GameObject prefabAsset;
         public int remainingHP;
         public Pos spawnPos;
+    }
+
+    //Saves pdata to file. Used in game saving.
+    //Based on https://stackoverflow.com/questions/40965645/what-is-the-best-way-to-save-game-state/40966346#40966346
+    public void SaveToFile()
+    {
+        //get path to the save file
+        string savePath = Path.Combine(Application.persistentDataPath, "data");
+        savePath = Path.Combine(savePath, "SaveData.txt"); //naughty ben, hardcoding filenames! Should probably fix later
+
+        //convert to JSON, then to bytes
+        string jsonData = JsonUtility.ToJson(this, true);
+        byte[] jsonByte = Encoding.ASCII.GetBytes(jsonData); //do this because I think the file writer expects a byte string or something
+
+        //create the save directory if it doesn't exist
+        if (!Directory.Exists(Path.GetDirectoryName(savePath)))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(savePath));
+        }
+
+        //do the saving
+        try
+        {
+            File.WriteAllBytes(savePath, jsonByte);
+            Debug.Log("Saved data to: " + savePath.Replace("/","\\"));
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Failed to save data to " + savePath.Replace("/","\\"));
+            Debug.LogWarning("Error: " + e.Message);
+        }
+    }
+
+    //Loads pdata from file. Used in game saving.
+    //Based on https://stackoverflow.com/questions/40965645/what-is-the-best-way-to-save-game-state/40966346#40966346
+    public void LoadFromFile()
+    {
+        //get path to the save file
+        string savePath = Path.Combine(Application.persistentDataPath, "data");
+        savePath = Path.Combine(savePath, "SaveData.txt"); //naughty ben, hardcoding filenames! Should probably fix later
+
+        //abort if the save file and/or directory doesn't exist
+        if (!Directory.Exists(Path.GetDirectoryName(savePath)))
+        {
+            Debug.LogWarning("Cannot load save data - save directory doesn't exist!");
+            return;
+        }
+        if (!File.Exists(savePath))
+        {
+            Debug.LogWarning("Cannot load save data - save file doesn't exist!");
+            return;
+        }
+
+        //load the saved JSON
+        byte[] jsonByte = null;
+        try
+        {
+            jsonByte = File.ReadAllBytes(savePath);
+            Debug.Log("Loaded data from " + savePath.Replace("/","\\"));
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Failed to load data from " + savePath.Replace("/","\\"));
+            Debug.LogWarning("Error: " + e.Message);
+        }
+
+        //convert raw ASCII to JSON string, then to JSON object
+        string jsonData = Encoding.ASCII.GetString(jsonByte);
+        JsonUtility.FromJsonOverwrite(jsonData, this);
+
+        //load the scene we saved on
+        if (String.IsNullOrEmpty(returnScene))
+        {
+            //if no return scene was specified, abort
+            Debug.LogWarning("No return scene specified! Cannot complete load!");
+        }
+        else
+        {
+            SceneTransitionManager.main.TransitionScenes(returnScene);
+        }
     }
 }

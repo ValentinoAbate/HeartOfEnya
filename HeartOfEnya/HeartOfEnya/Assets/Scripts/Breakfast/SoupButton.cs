@@ -113,6 +113,8 @@ public class SoupButton : MonoBehaviour
                 sfxSelect.Play();
 
             //load the next level
+            DoNotDestroyOnLoad.Instance.persistentData.returnScene = nextSceneName; //mark what scene to return to on game load
+            DoNotDestroyOnLoad.Instance.persistentData.SaveToFile(); //autosave
             SceneTransitionManager.main.TransitionScenes(nextSceneName);
         }
         else

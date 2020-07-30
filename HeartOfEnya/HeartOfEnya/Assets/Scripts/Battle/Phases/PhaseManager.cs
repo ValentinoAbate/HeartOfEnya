@@ -127,9 +127,17 @@ public class PhaseManager : MonoBehaviour, IPausable
         }
         SpawnPhase.LogPersistentData();
         if (pData.absoluteZeroPhase1Defeated)
+        {
+            pData.returnScene = goToSceneOnEndSpecial; //mark what scene to return to on game load
+            pData.SaveToFile(); //autosave
             SceneTransitionManager.main?.TransitionScenes(goToSceneOnEndSpecial);
+        }
         else
+        {
+            pData.returnScene = goToSceneOnEnd; //mark what scene to return to on game load
+            pData.SaveToFile(); //autosave
             SceneTransitionManager.main?.TransitionScenes(goToSceneOnEnd);
+        }
     }
 
     /// <summary>

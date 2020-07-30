@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// A data structure used to store buffs in the form of {effect, target}.
 /// </summary>
+[System.Serializable]
 public class BuffStruct
 {
 	public enum Effect

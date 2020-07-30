@@ -133,6 +133,7 @@ public class PersistentData : MonoBehaviour
         if (!File.Exists(savePath))
         {
             Debug.LogWarning("Cannot load save data - save file doesn't exist!");
+            return;
         }
 
         //load the saved JSON

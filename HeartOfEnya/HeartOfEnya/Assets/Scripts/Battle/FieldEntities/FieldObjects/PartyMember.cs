@@ -376,6 +376,7 @@ public class PartyMember : Combatant, IPausable
         EndTurn();
         // Destroy(gameObject);
         gameObject.SetActive(false);
+        BattleGrid.main.RemoveObject(this);
     }
 
     /// <summary>

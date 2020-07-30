@@ -23,7 +23,7 @@ public class UIInfoPanelEnemy : MonoBehaviour
         hpNumberText.text = e.Hp.ToString();
         hpBarImage.fillAmount = e.Hp / (float)e.maxHp;
         descriptionText.text = e.description;
-        unitPropertiesText.text = e.isBoss ? "Immovable, Unburnable, Acts First, Defeat to End Battle" : string.Empty;
+        unitPropertiesText.text = e.isBoss ? "Immovable, Unburnable, Acts Last, Defeat to End Battle" : string.Empty;
         int damage = e.action.TotalDamage;
         damageNumberText.text = damage > 0 ? damage.ToString() : "N/A";
         int i = 0;

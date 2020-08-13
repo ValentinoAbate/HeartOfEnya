@@ -61,7 +61,7 @@ public class SoupManager : MonoBehaviour
         //make sure we don't spawn FP ingredients before they're introduced, or Lua ingredients before she unfreezes
         ingredients = ingredients.FindAll(IsValidIng);
         bool evenMode = ((ingredients.Count % 2) == 0); //whether we align to an even or odd # of objects
-        while(totalSpawned < 6 && ingredients.Count > 0)
+        while(totalSpawned < totalIngredients && ingredients.Count > 0)
         {
             //pick a random ingredient that we haven't spawned yet
             int choice = Random.Range(0, ingredients.Count);

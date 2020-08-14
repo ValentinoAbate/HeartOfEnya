@@ -14,7 +14,6 @@ public class PartyMember : Combatant, IPausable
 {
     public const int maxDeathsDoorCounter = 5;
     public const int minLevel = 1;
-    public PauseHandle PauseHandle { get; set; }
     public override bool Stunned
     {
         get => stunned;

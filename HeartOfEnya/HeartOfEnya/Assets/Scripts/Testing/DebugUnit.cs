@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class DebugKillUnit : MonoBehaviour
+public class DebugUnit : MonoBehaviour
 {
     public int killDamage = 10;
     public int damage = 10;
@@ -30,6 +28,8 @@ public class DebugKillUnit : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.LeftShift))
                     target.Damage(killDamage);
+                else if (Input.GetKey(KeyCode.RightShift))
+                    target.Stunned = true;
                 else
                     target.Damage(damage);
             }

@@ -45,7 +45,7 @@ public class SpawnPhase : Phase
     public WaveData NextWave => waveNum < CurrEncounter.Waves.Length - 1 ? CurrEncounter.Waves[waveNum + 1] : null;
     private List<EventTileSpawn> spawners = new List<EventTileSpawn>();
     // Start at negative one to account for first turn
-    private int turnsSinceLastSpawn = 0;
+    private int turnsSinceLastWaveSpawn = 0;
     [HideInInspector] public int waveNum = 0;
 
     // Party Member prefab references for each level
@@ -268,8 +268,6 @@ public class SpawnPhase : Phase
 
     private IEnumerator OnPhaseStartCr()
     {
-        //SnowParticleController.main.Intensity = 0.5f;
-        //yield return StartCoroutine(PlayTransition());
         // If something is supposed to be spawned
         if (HasActiveSpawners)
         {
@@ -282,27 +280,40 @@ public class SpawnPhase : Phase
                 yield break;
             }
         }
-        else // Increase the turns since something was last spawned
-            ++turnsSinceLastSpawn;
-        // If there isn't a next wave, just yeet out of there
+
+        // Increase the turns since something was last spawned
+        ++turnsSinceLastWaveSpawn;
+
+        // If there isn't a next wave just yeet out of there
         if (NextWave == null)
+        {
             yield break;
+        }
+
         // Spawn the next wave if ready
         if (NextWaveReady())
+        {
             yield return StartCoroutine(DeclareNextWave());
+        }
     }
 
+    /// <summary>
+    /// Change the encounter mid-battle
+    /// </summary>
     public void SetEncounter(Encounter encounter, bool spawnFirstWaveImmediately = true)
     {
         CurrEncounter = encounter;
         waveNum = 0;
-        turnsSinceLastSpawn = 0;
+        turnsSinceLastWaveSpawn = 0;
         if(spawnFirstWaveImmediately)
         {
             SpawnAllEnemiesAndObstacles(CurrWave);
         }
     }
-    
+
+    /// <summary>
+    /// Clear any active spawners from the field without spawning anything
+    /// </summary>
     public void ClearActiveSpawns()
     {
         foreach(var spawn in spawners)
@@ -315,6 +326,8 @@ public class SpawnPhase : Phase
 
     public IEnumerator DeclareNextWave()
     {
+        // Reset the turns since wave last spawn to -1 (to acount for the turn of the declared spawns spawning)
+        turnsSinceLastWaveSpawn = -1;
         if (!spawnEnemies)
             yield break;
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
@@ -342,6 +355,7 @@ public class SpawnPhase : Phase
 
         #endregion
 
+        // Don't attempt to declare if there is no next wave
         if (NextWave == null)
             yield break;
 
@@ -370,7 +384,6 @@ public class SpawnPhase : Phase
 
     private IEnumerator Spawn()
     {
-        turnsSinceLastSpawn = 0;
         foreach (var spawner in spawners)
         {
             var objInSquare = BattleGrid.main.Get<FieldObject>(spawner.Pos);
@@ -411,15 +424,15 @@ public class SpawnPhase : Phase
     private bool NextWaveReady()
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        if(pData.absoluteZeroPhase1Defeated)
-            return PhaseManager.main.EnemyPhase.Enemies.Count <= minAbs0Enemies;
-        if(CurrWave.spawnWhenNumberOfEnemiesRemain &&
-            PhaseManager.main.EnemyPhase.Enemies.Count <= CurrWave.numEnemies)
+        var enemyCount = PhaseManager.main.EnemyPhase.Enemies.Count;
+        // Special absolute 0 phase 2 logic
+        if (pData.absoluteZeroPhase1Defeated)
+            return enemyCount <= minAbs0Enemies;
+        if(CurrWave.spawnWhenNumberOfEnemiesRemain && enemyCount <= CurrWave.numEnemies)
         {
             return true;
         }
-        if(CurrWave.spawnAfterTurns &&
-            turnsSinceLastSpawn >= CurrWave.numTurns )
+        if(CurrWave.spawnAfterTurns && turnsSinceLastWaveSpawn >= CurrWave.numTurns )
         {
             return true;
         }

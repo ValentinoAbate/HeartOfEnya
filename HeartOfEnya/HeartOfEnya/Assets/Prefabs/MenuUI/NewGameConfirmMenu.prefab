@@ -371,6 +371,7 @@ GameObject:
   - component: {fileID: 7966169111904131954}
   - component: {fileID: 7966169111904131953}
   - component: {fileID: 7966169111904131952}
+  - component: {fileID: 6179289511265526319}
   m_Layer: 5
   m_Name: ConfirmButton
   m_TagString: Untagged
@@ -499,6 +500,17 @@ MonoBehaviour:
           m_StringArgument: IntroCamp
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6179289511265526319}
+        m_MethodName: Save
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7966169111904131954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,6 +574,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &6179289511265526319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7966169111904131966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7d46ec0dd094dd48b67226b3ea479da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7966169111944424466
 GameObject:
   m_ObjectHideFlags: 0

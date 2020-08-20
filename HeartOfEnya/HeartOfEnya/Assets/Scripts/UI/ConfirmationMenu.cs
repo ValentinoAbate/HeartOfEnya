@@ -24,6 +24,9 @@ public class ConfirmationMenu : MonoBehaviour
         else
         {
             Debug.Log("No save file exists - skipping confirmation popup");
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
+            pData.returnScene = "IntroCamp"; //mark what scene to return to on game load
+            pData.SaveToFile(); //Save new file
             SceneTransitionManager.main.TransitionScenes(sceneName);
         }
     }

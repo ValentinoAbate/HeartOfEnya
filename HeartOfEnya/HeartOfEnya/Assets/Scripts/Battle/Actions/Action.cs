@@ -67,6 +67,7 @@ public class Action : MonoBehaviour
 
     #endregion
     public string Description => description;
+    [TextArea(1,2)]
     [SerializeField]
     private string description = "description";
     public string DisplayName => displayName;

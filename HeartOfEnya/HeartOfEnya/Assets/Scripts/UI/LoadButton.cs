@@ -22,12 +22,14 @@ public class LoadButton : MonoBehaviour
         {
             Debug.Log("No save file detected - disabling load button");
             button.interactable = false;
+            gameObject.SetActive(false);
             return;
         }
         if (!File.Exists(savePath))
         {
             Debug.Log("No save file detected - disabling load button");
             button.interactable = false;
+            gameObject.SetActive(false);
             return;
         }
     }

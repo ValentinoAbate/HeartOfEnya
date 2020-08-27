@@ -28,15 +28,18 @@ public class ActionMenu : MonoBehaviour, IPausable
 
     public void SetSkipOneCancel() => skipOneCancel = true;
     private bool skipOneCancel = false;
+    public GameObject enemiesRemainingUI;
 
     private void Awake()
     {
         PauseHandle = new PauseHandle(OnPause);
+        enemiesRemainingUI = GameObject.Find("Topbar");
     }
 
     private void Start()
     {
         sfxCancel = GameObject.Find("UICancel").GetComponent<FMODUnity.StudioEventEmitter>();
+
     }
 
     private void Update()
@@ -72,6 +75,7 @@ public class ActionMenu : MonoBehaviour, IPausable
         }
         cursor.HideTargets();
         user.CancelActionMenu();
+        enemiesRemainingUI.SetActive(true);
     }
 
     public void ShowConfirmationPrompt()
@@ -121,7 +125,7 @@ public class ActionMenu : MonoBehaviour, IPausable
         buttons.AddRange(GetComponentsInChildren<Button>());
     }
 
-    public void Close() => SetActive(false);
+    public void Close() { SetActive(false); enemiesRemainingUI.SetActive(true); }
 
     public void SetActive(bool value)
     {
@@ -130,9 +134,12 @@ public class ActionMenu : MonoBehaviour, IPausable
         if (value)
         {
             InitializeMenu();
-        }            
+        }
         else
-            gameObject.SetActive(false);      
+        {
+            enemiesRemainingUI.SetActive(true);
+            gameObject.SetActive(false);
+        }
     }
 
     public void InitializeMenu(Button select = null)
@@ -176,6 +183,7 @@ public class ActionMenu : MonoBehaviour, IPausable
         }
         // Enable the action menu
         gameObject.SetActive(true);
+        enemiesRemainingUI.SetActive(false);
         // Select the argument button if there is one
         //if (select != null)
         //    select.Select();

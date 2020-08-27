@@ -46,6 +46,7 @@ public class PartyMember : Combatant, IPausable
     public TextMeshProUGUI fpText;
     public GameObject deathsDoorUI;
     public TextMeshProUGUI deathsDoorCounterText;
+    public GameObject fpImage;
     [SerializeField]
     private SpriteRenderer sprite;
     [SerializeField]
@@ -59,10 +60,9 @@ public class PartyMember : Combatant, IPausable
     public Color noTurnColor = Color.gray;
     public override Sprite DisplaySprite => chara.Portrait;
     public override Color DisplaySpriteColor => Color.white;
-
     private FMODUnity.StudioEventEmitter sfxHighlight;
-
     private PlaytestLogger logger;
+  
 
     public bool DeathsDoor { get; private set; }
     public ActionMenu ActionMenu
@@ -156,6 +156,7 @@ public class PartyMember : Combatant, IPausable
         FMODBattle.main.Music.SetParameter("Loading", 0);
 
         logger = DoNotDestroyOnLoad.Instance.playtestLogger;
+        EnableFP();
     }
 
     public string GetName()
@@ -433,5 +434,18 @@ public class PartyMember : Combatant, IPausable
     public void EnableUnit()
     {
         Disabled = false;
+    }
+
+    public void EnableFP()
+    {
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        if (pData.InTutorialFirstDay || pData.InTutorialSecondDay)
+        {
+            fpImage.SetActive(false); 
+        }
+        else
+        {
+            fpImage.SetActive(true);
+        }
     }
 }

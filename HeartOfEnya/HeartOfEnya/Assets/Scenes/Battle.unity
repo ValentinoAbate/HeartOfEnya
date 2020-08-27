@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -399,6 +399,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &161167543 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4921604348070583004, guid: d2950fc4ea5c4c34eb785fb945b5b274,
+    type: 3}
+  m_PrefabInstance: {fileID: 4921604348018840863}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &162487644 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6474591132739200386, guid: 15963c80f4dc1154e8d888ca633d8b6d,
@@ -457,6 +463,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 266351717}
     m_Modifications:
+    - target: {fileID: 3333972280392239835, guid: 2a793944536db204cbcf859cdb81c8ce,
+        type: 3}
+      propertyPath: enemiesRemainingUI
+      value: 
+      objectReference: {fileID: 161167543}
     - target: {fileID: 3661800201196908403, guid: 2a793944536db204cbcf859cdb81c8ce,
         type: 3}
       propertyPath: dialogManager
@@ -477,6 +488,31 @@ PrefabInstance:
       propertyPath: level
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4582076202421940112, guid: 2a793944536db204cbcf859cdb81c8ce,
+        type: 3}
+      propertyPath: bapyFp
+      value: 
+      objectReference: {fileID: 1810635902}
+    - target: {fileID: 4582076202421940112, guid: 2a793944536db204cbcf859cdb81c8ce,
+        type: 3}
+      propertyPath: soleilFp
+      value: 
+      objectReference: {fileID: 232394056}
+    - target: {fileID: 4582076202421940112, guid: 2a793944536db204cbcf859cdb81c8ce,
+        type: 3}
+      propertyPath: RainaFp
+      value: 
+      objectReference: {fileID: 1850490737}
+    - target: {fileID: 4582076202421940112, guid: 2a793944536db204cbcf859cdb81c8ce,
+        type: 3}
+      propertyPath: rainaFp
+      value: 
+      objectReference: {fileID: 1850490737}
+    - target: {fileID: 4582076202421940112, guid: 2a793944536db204cbcf859cdb81c8ce,
+        type: 3}
+      propertyPath: fpImage
+      value: 
+      objectReference: {fileID: 232394056}
     - target: {fileID: 4582076202421940125, guid: 2a793944536db204cbcf859cdb81c8ce,
         type: 3}
       propertyPath: m_Name
@@ -542,8 +578,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8368155529230857228, guid: 2a793944536db204cbcf859cdb81c8ce,
+        type: 3}
+      propertyPath: enemiesRemainingUI
+      value: 
+      objectReference: {fileID: 161167543}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a793944536db204cbcf859cdb81c8ce, type: 3}
+--- !u!1 &232394056 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 667305445277929671, guid: 2a793944536db204cbcf859cdb81c8ce,
+    type: 3}
+  m_PrefabInstance: {fileID: 232394055}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &266351716
 GameObject:
   m_ObjectHideFlags: 0
@@ -912,6 +959,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3942262031952348979, guid: 1a00c200a13ef9a27b8391587a6a0b66,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7243930662405243379, guid: 1a00c200a13ef9a27b8391587a6a0b66,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -968,6 +1020,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7825716619185035859, guid: 1a00c200a13ef9a27b8391587a6a0b66,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593399186391796857, guid: 1a00c200a13ef9a27b8391587a6a0b66,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -1647,6 +1704,31 @@ PrefabInstance:
       propertyPath: level
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4100317412230784054, guid: 92d6dff19c8e56b4891462301e05feac,
+        type: 3}
+      propertyPath: bapyFp
+      value: 
+      objectReference: {fileID: 1810635902}
+    - target: {fileID: 4100317412230784054, guid: 92d6dff19c8e56b4891462301e05feac,
+        type: 3}
+      propertyPath: RainaFp
+      value: 
+      objectReference: {fileID: 1850490737}
+    - target: {fileID: 4100317412230784054, guid: 92d6dff19c8e56b4891462301e05feac,
+        type: 3}
+      propertyPath: soleilFp
+      value: 
+      objectReference: {fileID: 232394056}
+    - target: {fileID: 4100317412230784054, guid: 92d6dff19c8e56b4891462301e05feac,
+        type: 3}
+      propertyPath: rainaFp
+      value: 
+      objectReference: {fileID: 1850490737}
+    - target: {fileID: 4100317412230784054, guid: 92d6dff19c8e56b4891462301e05feac,
+        type: 3}
+      propertyPath: fpImage
+      value: 
+      objectReference: {fileID: 1810635902}
     - target: {fileID: 4100317412230784056, guid: 92d6dff19c8e56b4891462301e05feac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1714,6 +1796,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92d6dff19c8e56b4891462301e05feac, type: 3}
+--- !u!1 &1810635902 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1023214546330164065, guid: 92d6dff19c8e56b4891462301e05feac,
+    type: 3}
+  m_PrefabInstance: {fileID: 1810635901}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1821257218
 GameObject:
   m_ObjectHideFlags: 0
@@ -1840,8 +1928,39 @@ PrefabInstance:
       propertyPath: level
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4262706971885986029, guid: 6628bde58cbf14f46ac9f821470144eb,
+        type: 3}
+      propertyPath: soleilFp
+      value: 
+      objectReference: {fileID: 232394056}
+    - target: {fileID: 4262706971885986029, guid: 6628bde58cbf14f46ac9f821470144eb,
+        type: 3}
+      propertyPath: RainaFp
+      value: 
+      objectReference: {fileID: 1850490737}
+    - target: {fileID: 4262706971885986029, guid: 6628bde58cbf14f46ac9f821470144eb,
+        type: 3}
+      propertyPath: bapyFp
+      value: 
+      objectReference: {fileID: 1810635902}
+    - target: {fileID: 4262706971885986029, guid: 6628bde58cbf14f46ac9f821470144eb,
+        type: 3}
+      propertyPath: rainaFp
+      value: 
+      objectReference: {fileID: 1850490737}
+    - target: {fileID: 4262706971885986029, guid: 6628bde58cbf14f46ac9f821470144eb,
+        type: 3}
+      propertyPath: fpImage
+      value: 
+      objectReference: {fileID: 1850490737}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6628bde58cbf14f46ac9f821470144eb, type: 3}
+--- !u!1 &1850490737 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1007783379162144698, guid: 6628bde58cbf14f46ac9f821470144eb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1850490736}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1918468646
 GameObject:
   m_ObjectHideFlags: 0
@@ -2432,6 +2551,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4921604347508904434, guid: d2950fc4ea5c4c34eb785fb945b5b274,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4921604347784557285, guid: d2950fc4ea5c4c34eb785fb945b5b274,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2541,6 +2665,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BattleUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921604347784557289, guid: d2950fc4ea5c4c34eb785fb945b5b274,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921604348070583004, guid: d2950fc4ea5c4c34eb785fb945b5b274,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7015410904960965916, guid: d2950fc4ea5c4c34eb785fb945b5b274,
         type: 3}

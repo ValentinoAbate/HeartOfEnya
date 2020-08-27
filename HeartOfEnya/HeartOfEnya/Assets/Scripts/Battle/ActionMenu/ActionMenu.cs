@@ -33,12 +33,13 @@ public class ActionMenu : MonoBehaviour, IPausable
     private void Awake()
     {
         PauseHandle = new PauseHandle(OnPause);
+        enemiesRemainingUI = GameObject.Find("Topbar");
     }
 
     private void Start()
     {
         sfxCancel = GameObject.Find("UICancel").GetComponent<FMODUnity.StudioEventEmitter>();
-        enemiesRemainingUI = GameObject.Find("Topbar");
+
     }
 
     private void Update()
@@ -124,7 +125,7 @@ public class ActionMenu : MonoBehaviour, IPausable
         buttons.AddRange(GetComponentsInChildren<Button>());
     }
 
-    public void Close() => SetActive(false);
+    public void Close() { SetActive(false); enemiesRemainingUI.SetActive(true); }
 
     public void SetActive(bool value)
     {
@@ -133,19 +134,16 @@ public class ActionMenu : MonoBehaviour, IPausable
         if (value)
         {
             InitializeMenu();
-            
         }
         else
         {
             enemiesRemainingUI.SetActive(true);
             gameObject.SetActive(false);
         }
-    
     }
 
     public void InitializeMenu(Button select = null)
     {
-      
         foreach (var button in buttons)
         {
             var actionButton = button.GetComponent<ActionButtonBase>();
@@ -186,7 +184,6 @@ public class ActionMenu : MonoBehaviour, IPausable
         // Enable the action menu
         gameObject.SetActive(true);
         enemiesRemainingUI.SetActive(false);
-
         // Select the argument button if there is one
         //if (select != null)
         //    select.Select();

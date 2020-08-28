@@ -36,7 +36,8 @@ public class BattleEventsDay3 : MonoBehaviour
 
         // solo raina's flame move
         battleEvents.partyPhase.PartyWideSoloAction("RainaAction2_Flame");
-
+        BattleUI.main.ShowPrompt("Move Raina forward and use Flame Cleave on the Frost.");
+        
         battleEvents.Unpause();
     }
 

@@ -33,7 +33,7 @@ public class BattleEventsDay2 : MonoBehaviour
         battleEvents.partyPhase.PartyWideSoloAction("BapyAction2");
         BattleUI.main.MoveableTiles.Add(new Pos(1, 8));
         BattleUI.main.TargetableTiles.Add(new Pos (1, 7));
-
+        BattleUI.main.ShowPrompt("Have Bapy push the box in front of them.");
         battleEvents.Unpause();
     }
 
@@ -64,7 +64,7 @@ public class BattleEventsDay2 : MonoBehaviour
 
         // end the turn manually
         PhaseManager.main.NextPhase();
-
+        BattleUI.main.ShowPrompt("Have Bapy move to the box and push it again.");
         battleEvents.Unpause();
     }
 
@@ -96,7 +96,8 @@ public class BattleEventsDay2 : MonoBehaviour
 
         // end the turn manually
         PhaseManager.main.NextPhase();
-
+        BattleUI.main.ShowPrompt("Try pushing the box into the pillar to damage it.");
+        
         battleEvents.Unpause();
     }
 
@@ -128,7 +129,7 @@ public class BattleEventsDay2 : MonoBehaviour
 
         // end the turn manually
         PhaseManager.main.NextPhase();
-
+        BattleUI.main.ShowPrompt("Pull the box with 4 Hp closer.");
         battleEvents.Unpause();
     }
 

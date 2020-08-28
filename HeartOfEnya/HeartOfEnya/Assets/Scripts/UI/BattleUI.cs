@@ -26,16 +26,17 @@ public class BattleUI : MonoBehaviour, IPausable
     public Color partyColor;
     public Color neutralColor;
     public Color enemyColor;
-    [Header("Misc")]
-    public GameObject cancelReminderUI;
-    public GameObject examineEnemyReminderUI;
-    public GameObject enemiesRemainingUI;
+
+    [Header("Prompts")]
+    [SerializeField] private GameObject prompt = null;
+    [SerializeField] private TextMeshProUGUI promptText = null;
 
     public bool CancelingEnabled { get; set; } = true;
     public HashSet<Pos> MoveableTiles { get; set; } = new HashSet<Pos>();
     public HashSet<Pos> TargetableTiles { get; set; } = new HashSet<Pos>();
     public PauseHandle PauseHandle { get; set; }
 
+    [Header("Set in Scene")]
     public GameObject runTileContainer;
     private List<EventTileAction> runTiles;
 
@@ -210,5 +211,16 @@ public class BattleUI : MonoBehaviour, IPausable
     private void InitializeInfoPanel()
     {
         infoPanel.SetActive(true);
+    }
+
+    public void ShowPrompt(string text)
+    {
+        prompt.SetActive(true);
+        promptText.text = text;
+    }
+
+    public void HidePrompt()
+    {
+        prompt.SetActive(false);
     }
 }

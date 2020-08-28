@@ -208,6 +208,7 @@ public class AttackCursor : GridAndSelectionListCursor
     {
         if (!inRange.Contains(Pos))
             return;
+        BattleUI.main.HidePrompt();
         sfxSelect.Play();
         if (action.useSecondaryRange && !inSecondaryMode)
         {

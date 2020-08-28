@@ -226,6 +226,8 @@ public class ActionMenu : MonoBehaviour, IPausable
     public void Wait()
     {
         user.EndTurn();
+        // Hide any active tutorialization prompts
+        BattleUI.main.HidePrompt();
         Close();
     }
 

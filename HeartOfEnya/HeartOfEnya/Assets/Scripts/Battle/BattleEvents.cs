@@ -111,6 +111,7 @@ public class BattleEvents : MonoBehaviour
     {
         PhaseManager.main.PauseHandle.Pause(PauseHandle.PauseSource.BattleInterrupt);
         FMODBattle.main.TextPlaying = true;
+        BattleUI.main.HidePrompt();
     }
 
     public void Unpause()
@@ -138,7 +139,6 @@ public class BattleEvents : MonoBehaviour
 
     private IEnumerator IntroTriggerPost(DialogueRunner runner)
     {
-        Pause();
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
         // post-condition: disable everyone but raina
@@ -146,7 +146,7 @@ public class BattleEvents : MonoBehaviour
         partyPhase.DisableUnits(new List<string>(units));
         // restrict raina's movement to specific square
         BattleUI.main.MoveableTiles.Add(rainaMovePos);
-
+        BattleUI.main.ShowPrompt("Click on Raina to select them.");
         Unpause();        
     }
 
@@ -171,7 +171,7 @@ public class BattleEvents : MonoBehaviour
         // disable cancelling, solo raina's cleave move
         BattleUI.main.CancelingEnabled = false;
         partyPhase.PartyWideSoloAction("RainaAction2");
-
+        BattleUI.main.ShowPrompt("Click on the highlighted tile to move Raina.");
         Unpause();
     }
 
@@ -195,7 +195,7 @@ public class BattleEvents : MonoBehaviour
         
         // restrict raina to attacking to the left
         BattleUI.main.TargetableTiles.Add(rainaMovePos + Pos.Left);
-
+        BattleUI.main.ShowPrompt("Click on Cleave, then choose a target tile to attack the boxes.");
         Unpause();
     }
 
@@ -223,7 +223,7 @@ public class BattleEvents : MonoBehaviour
         // unrestrict movement/targeting
         BattleUI.main.MoveableTiles.Clear();
         BattleUI.main.TargetableTiles.Clear();
-        
+        BattleUI.main.ShowPrompt("Click on Bapy to select them.");
         Unpause();
     }
 
@@ -250,7 +250,7 @@ public class BattleEvents : MonoBehaviour
         // enable soleil's charge attack
         partyPhase.PartyWideClearSoloActions();
         partyPhase.PartyWideSoloAction("SoleilAction2");
-        BattleUI.main.cancelReminderUI.SetActive(true);
+        BattleUI.main.ShowPrompt("Right click to undo an action.\nRight click again to go back to unit selection.");
         Unpause();
     }
 
@@ -258,8 +258,7 @@ public class BattleEvents : MonoBehaviour
     {
         if(tutorialDay1 && !tutSoleilSelect.flag)
         {
-            Pause();
-            BattleUI.main.cancelReminderUI.SetActive(false);   
+            Pause();  
             Debug.Log("Battle Triggers: select soleil");
             tutSoleilSelect.flag = true;
             // Turn Cancelling back off
@@ -279,7 +278,7 @@ public class BattleEvents : MonoBehaviour
 
         // disable bapy
         partyPhase.DisableUnits("Bapy");
-
+        BattleUI.main.ShowPrompt("Click on Soleil to select her, then click a tile to move.");
         Unpause();
     }
 
@@ -308,7 +307,7 @@ public class BattleEvents : MonoBehaviour
         // make it so bapy can only move next to raina
         BattleUI.main.MoveableTiles.Add(rainaMovePos + Pos.Right);
         BattleUI.main.MoveableTiles.Add(rainaMovePos + Pos.Right + Pos.Right);
-        
+        BattleUI.main.ShowPrompt("Click on Blast, then pick an area to begin charging.");
         Unpause();
     }
 
@@ -332,6 +331,7 @@ public class BattleEvents : MonoBehaviour
     private IEnumerator BapySelectTrigger2Post(DialogueRunner runner)
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
+        BattleUI.main.ShowPrompt("Click on Bapy to select them, then click a tile to move"); 
         Unpause();
     }
 
@@ -352,7 +352,7 @@ public class BattleEvents : MonoBehaviour
     private IEnumerator BapyWaitTriggerPost(DialogueRunner runner)
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
-
+        BattleUI.main.ShowPrompt("Click on Wait to end Bapy’s turn without taking an action.");
         Unpause();
     }
 
@@ -475,7 +475,7 @@ public class BattleEvents : MonoBehaviour
         // disable unit selecting
         string[] units = {"Bapy", "Soleil", "Raina"};
         partyPhase.DisableUnits(new List<string>(units));
-        BattleUI.main.examineEnemyReminderUI.SetActive(true);
+        BattleUI.main.ShowPrompt("Mouse over an enemy to learn more about it.");
         Unpause();
     }
 
@@ -500,7 +500,6 @@ public class BattleEvents : MonoBehaviour
         // re-enable unit selecting
         string[] units = {"Bapy", "Soleil", "Raina"};
         partyPhase.EnableUnits(new List<string>(units));
-        BattleUI.main.examineEnemyReminderUI.SetActive(false);
         Unpause();
     }
 

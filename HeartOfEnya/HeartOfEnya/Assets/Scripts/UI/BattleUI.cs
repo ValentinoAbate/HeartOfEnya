@@ -10,6 +10,8 @@ public class BattleUI : MonoBehaviour, IPausable
 {
     public static BattleUI main;
 
+    [SerializeField]
+    private GameObject enemiesRemainingUI;
     public TextMeshProUGUI numEnemiesLeft;
 
     public Button endTurnButton;
@@ -120,6 +122,16 @@ public class BattleUI : MonoBehaviour, IPausable
             numEnemiesLeft.text =  "??? Frost Remain...";
         }
 
+    }
+
+    public void ShowEnemiesRemaining()
+    {
+        enemiesRemainingUI.SetActive(true);
+    }
+
+    public void HideEnemiesRemaining()
+    {
+        enemiesRemainingUI.SetActive(false);
     }
 
     private bool hideEndTurnButtonHighPriority = false;

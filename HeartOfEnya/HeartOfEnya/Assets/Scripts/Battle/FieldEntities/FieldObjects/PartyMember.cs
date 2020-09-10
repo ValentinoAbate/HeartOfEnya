@@ -62,7 +62,7 @@ public class PartyMember : Combatant, IPausable
     public override Color DisplaySpriteColor => Color.white;
     private FMODUnity.StudioEventEmitter sfxHighlight;
     private PlaytestLogger logger;
-  
+    public GameObject battleUI;
 
     public bool DeathsDoor { get; private set; }
     public ActionMenu ActionMenu
@@ -259,12 +259,19 @@ public class PartyMember : Combatant, IPausable
     /// </summary>
     public void EndTurn()
     {
+        battleUI.SetActive(true);
         HasTurn = false;
         PhaseManager.main.PartyPhase.EndAction(this);
     }
 
     public void OpenActionMenu(bool skipOneCancel = false)
     {
+       battleUI = GameObject.Find("Topbar");
+
+        if (Pos.row == 0 && Pos.col == 0 || Pos.row ==0 && Pos.col == 1)
+        {
+            battleUI.SetActive(false);
+        }
         if (skipOneCancel)
             ActionMenu.SetSkipOneCancel();
         ActionMenu.SetActive(true);
@@ -282,6 +289,8 @@ public class PartyMember : Combatant, IPausable
     /// </summary>
     public void CancelActionMenu()
     {
+       
+        battleUI.SetActive(true);
         ActionMenu.gameObject.SetActive(false);
         // moveCursor.ResetToLastPosition();
         // moveCursor.SetActive(true);
@@ -383,7 +392,9 @@ public class PartyMember : Combatant, IPausable
     /// Use the action and reduce Fp if the action has an ActionFpCost component
     /// </summary>
     public override Coroutine UseAction(Action action, Pos targetPos, Pos primaryTarget)
-    {        
+    {
+        
+        battleUI.SetActive(true);
         //Hide the info panel;
         BattleUI.main.HideInfoPanel();
         var routine = base.UseAction(action, targetPos, primaryTarget);

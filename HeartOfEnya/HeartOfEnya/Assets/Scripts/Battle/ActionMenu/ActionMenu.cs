@@ -28,12 +28,12 @@ public class ActionMenu : MonoBehaviour, IPausable
 
     public void SetSkipOneCancel() => skipOneCancel = true;
     private bool skipOneCancel = false;
-    public GameObject enemiesRemainingUI;
+ 
 
     private void Awake()
     {
         PauseHandle = new PauseHandle(OnPause);
-        enemiesRemainingUI = GameObject.Find("Topbar");
+        
     }
 
     private void Start()
@@ -75,7 +75,7 @@ public class ActionMenu : MonoBehaviour, IPausable
         }
         cursor.HideTargets();
         user.CancelActionMenu();
-        enemiesRemainingUI.SetActive(true);
+   
     }
 
     public void ShowConfirmationPrompt()
@@ -125,7 +125,7 @@ public class ActionMenu : MonoBehaviour, IPausable
         buttons.AddRange(GetComponentsInChildren<Button>());
     }
 
-    public void Close() { SetActive(false); enemiesRemainingUI.SetActive(true); }
+    public void Close() => SetActive(false); 
 
     public void SetActive(bool value)
     {
@@ -137,7 +137,7 @@ public class ActionMenu : MonoBehaviour, IPausable
         }
         else
         {
-            enemiesRemainingUI.SetActive(true);
+            
             gameObject.SetActive(false);
         }
     }
@@ -183,7 +183,6 @@ public class ActionMenu : MonoBehaviour, IPausable
         }
         // Enable the action menu
         gameObject.SetActive(true);
-        enemiesRemainingUI.SetActive(false);
         // Select the argument button if there is one
         //if (select != null)
         //    select.Select();

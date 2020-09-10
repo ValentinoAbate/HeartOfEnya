@@ -16,6 +16,7 @@ public class UIInfoPanelParty : MonoBehaviour
     public Image hpBarImage;
     public TextMeshProUGUI fpNumberText;
     public Image fpBarImage;
+    public GameObject fpUI;
     public TextMeshProUGUI passiveText;
     public TextMeshProUGUI passiveNameText;
     public Image nameplate;
@@ -67,6 +68,15 @@ public class UIInfoPanelParty : MonoBehaviour
 
     public void ShowUI(PartyMember p)
     {
+        var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        if (pData.InTutorialFirstDay || pData.InTutorialSecondDay)
+        {
+            fpUI.SetActive(false);
+        }
+        else
+        {
+            fpUI.SetActive(true);
+        }
         nameText.text = p.DisplayName;
         descriptionText.text = p.description;
         //statusText.text = "status";

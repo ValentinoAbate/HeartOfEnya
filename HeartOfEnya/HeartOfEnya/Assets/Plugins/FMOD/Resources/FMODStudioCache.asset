@@ -136,6 +136,40 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &-8781748710853724532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Soleil Blast Startup/Fire
+  m_EditorClassIdentifier: 
+  Name: Fire
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
+--- !u!114 &-8679498724934848075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Bapy Conversation/Progress Theme
+  m_EditorClassIdentifier: 
+  Name: Progress Theme
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-8667577922476640012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +221,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-8564526229387317110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +288,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Raina/Impact/Raina Impact Box
   guid: ff0aa4e4d3b48b439eea107e1edc91c6
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -464,7 +498,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Melee Attack Impacts/Enemy Impact Soleil
   guid: 889a23b6ff21c2448af2c53a08fd7b57
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -521,15 +555,32 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Lua/Startup/Lua Yeet Box
   guid: e437ba617caf4447a8fee291cdffc890
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 4545397558296267129}
+  - {fileID: 804412871356391285}
   MinDistance: 0
   MaxDistance: 0
   Length: 5274
+--- !u!114 &-7910507704698487418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: Master Volume
+  m_EditorClassIdentifier: 
+  Name: Master Volume
+  Min: 0
+  Max: 1
+  Default: 0.8
+  Exists: 1
 --- !u!114 &-7903493056561460522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,12 +715,12 @@ MonoBehaviour:
   Path: event:/SFX/Voices/Lua/Lua Normal
   guid: 5e708cc22e80094a8084af455bc148e3
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 4469783562112997503}
+  - {fileID: 4668150153250042367}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
@@ -688,7 +739,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Melee Attack Impacts/Enemy Impact Raina
   guid: 377dc1b796822c498999a7c55df89e4f
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -696,6 +747,23 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 879
+--- !u!114 &-7386080695966220043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Ending Theme/Soleil Gone
+  m_EditorClassIdentifier: 
+  Name: Soleil Gone
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-7354664799562297367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -746,7 +814,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-7298390048572226339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -796,7 +864,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Raina
   guid: f4edae62973a714db743db9a2afe5305
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -819,7 +887,7 @@ MonoBehaviour:
   Path: event:/SFX/Ambient/Snowstorm
   guid: 1bf7ffd967922e47a5c315791d0fd1b7
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -877,7 +945,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-7125373548982013621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -933,7 +1001,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Raina/Raina Charge attack
   guid: 5ffa94fd6aaa46449a99b9bd4e4c9176
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1109,7 +1177,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Damage Party/Bapy Pain
   guid: 3446c87f7f95ce41b5b1a7aaeaf1ebce
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1149,12 +1217,12 @@ MonoBehaviour:
   Path: event:/SFX/Voices/Soleil/Soleil Normal
   guid: a30e360095381d45a49a6e926e4e6c01
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 7899727295896767027}
+  - {fileID: -3042817310422176083}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
@@ -1224,7 +1292,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Bapy/Impact/Bapy Impact Stone
   guid: 53569747075c744bbdbcaf3c17542acb
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1316,7 +1384,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-6498814978976453083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1333,7 +1401,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-6476489562146964505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1349,7 +1417,7 @@ MonoBehaviour:
   Path: event:/SFX/UI/Camp Select
   guid: aafdf30f25fa5843ac73321b29273016
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1389,7 +1457,7 @@ MonoBehaviour:
   Path: event:/SFX/Soup Scene/Item Into Soup
   guid: 288adc20f05bcd49b0bec06d4051cb63
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1549,6 +1617,40 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
+  Exists: 0
+--- !u!114 &-6010375427745630937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: Voice Volume
+  m_EditorClassIdentifier: 
+  Name: Voice Volume
+  Min: 0
+  Max: 1
+  Default: 0.8
+  Exists: 1
+--- !u!114 &-5991860417615384953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Raina Normal/Space
+  m_EditorClassIdentifier: 
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
   Exists: 1
 --- !u!114 &-5950209448643752914
 MonoBehaviour:
@@ -1583,7 +1685,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-5904236403074381548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1633,7 +1735,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Death's Door/Lua Pain
   guid: 97f06e0be3e00b4bb6cd5ccb202dcc19
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1690,7 +1792,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Soleil
   guid: 124293dceea107409ed324031738354f
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1714,7 +1816,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-5787622054230678328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1800,7 +1902,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-5598280086441435620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1919,6 +2021,23 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+  Exists: 0
+--- !u!114 &-5272713312126266781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Lua Bash Wood/Fire
+  m_EditorClassIdentifier: 
+  Name: Fire
+  Min: 0
+  Max: 1
+  Default: 0
   Exists: 1
 --- !u!114 &-5221994991676270539
 MonoBehaviour:
@@ -1935,13 +2054,13 @@ MonoBehaviour:
   Path: event:/Music/Battle Theme
   guid: 34ce1126a9dfcf46a856be6b7d67badf
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 1214509002412933731}
-  - {fileID: -4206695316893531957}
+  - {fileID: -2777478619156125740}
+  - {fileID: -674526144522241410}
   MinDistance: 0
   MaxDistance: 0
   Length: 451516
@@ -2029,7 +2148,7 @@ MonoBehaviour:
   Min: 0
   Max: 5
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-5074091220964740258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2045,7 +2164,7 @@ MonoBehaviour:
   Path: event:/SFX/Soup Scene/Pickups/Noodles
   guid: df262551afe0d646908a2298aaebd7e3
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -2102,7 +2221,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Melee Attack Impacts/Enemy Impact Lua
   guid: d78e185afeca8040ab05e2c60d641242
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -2195,6 +2314,23 @@ MonoBehaviour:
   Max: 1
   Default: 0.8
   Exists: 0
+--- !u!114 &-4725189417293027937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Bapy Attack Startup/Fire
+  m_EditorClassIdentifier: 
+  Name: Fire
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-4694278636114119989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2211,7 +2347,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0.8
-  Exists: 1
+  Exists: 0
 --- !u!114 &-4693610744041187207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2261,22 +2397,22 @@ MonoBehaviour:
   Path: event:/Music/Ending Theme
   guid: 5ee3afb87cb6824b851e40f2a5a25ba5
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 6686654096140779918}
-  - {fileID: 1252811955084037380}
-  - {fileID: -2708875461633311618}
-  - {fileID: 4365506823434505172}
-  - {fileID: 5434551726597520100}
-  - {fileID: -6503996014225079253}
-  - {fileID: -6498814978976453083}
-  - {fileID: 3461941470682952892}
-  - {fileID: -2836116870054994274}
-  - {fileID: -7146008390127026617}
-  - {fileID: -3807252805029287060}
+  - {fileID: -2321721372911811972}
+  - {fileID: 4474770995136009846}
+  - {fileID: 3313031598159219534}
+  - {fileID: 4550245156934417457}
+  - {fileID: 5110340809310634487}
+  - {fileID: -1511745112757862963}
+  - {fileID: 4347202941203625617}
+  - {fileID: -412246078610212040}
+  - {fileID: 2361775303137843148}
+  - {fileID: -753715087660955416}
+  - {fileID: -7386080695966220043}
   MinDistance: 0
   MaxDistance: 0
   Length: 114000
@@ -2431,7 +2567,7 @@ MonoBehaviour:
   Path: event:/SFX/Soup Scene/Pickups/Walnuts
   guid: 81efe1447b14e34db5e053c362a8e736
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -2505,12 +2641,12 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Soleil/Startup/Soleil Blast Startup
   guid: b0c2ad94f0f83f4899c626f506f2b06a
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: -8583374063398793625}
+  - {fileID: -8781748710853724532}
   MinDistance: 0
   MaxDistance: 0
   Length: 6854
@@ -2547,7 +2683,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-4151366912662165122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2597,7 +2733,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Death's Door/Soleil Pain
   guid: 95e3a680ed18c54f9fc7e345db0c9def
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -2672,7 +2808,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0.8
-  Exists: 1
+  Exists: 0
 --- !u!114 &-3864795181283738918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2723,7 +2859,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-3773232889279783580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2774,12 +2910,12 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Raina/Startup/Cross Cleave
   guid: 7f338bb1e5ed0843852d27147ba97a5f
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: -5948473493780347362}
+  - {fileID: 8327225543843041353}
   MinDistance: 0
   MaxDistance: 0
   Length: 4000
@@ -2849,12 +2985,12 @@ MonoBehaviour:
   Path: event:/SFX/Voices/Raina/Raina Normal
   guid: b15ed984ae98b1458469372a725d4601
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -552540498236904759}
+  - {fileID: -5991860417615384953}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
@@ -2875,6 +3011,23 @@ MonoBehaviour:
   Max: 2
   Default: 0
   Exists: 0
+--- !u!114 &-3356262311406182436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Bapy Angry/Space
+  m_EditorClassIdentifier: 
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &-3351308811053066333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2891,7 +3044,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-3328039035413110226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2977,6 +3130,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &-3250232263315331074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Lua Yeet Enemy/Fire
+  m_EditorClassIdentifier: 
+  Name: Fire
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-3175314218261722646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3009,7 +3179,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Melee Attack Impacts/Enemy Impact Pillar
   guid: 90433991f3fd5e4f96cb6ffa42cb25ba
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -3084,7 +3254,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-3054458668860380556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3117,7 +3287,7 @@ MonoBehaviour:
   Path: event:/SFX/UI/Highlight
   guid: 7e45e13ac1066246a506f2d0c7d5a514
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -3125,6 +3295,23 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 500
+--- !u!114 &-3042817310422176083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Soleil Normal/Space
+  m_EditorClassIdentifier: 
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &-3013112540807262535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3158,7 +3345,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-3004899702001197389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3211,6 +3398,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &-2966311523138923816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Lua Bash Enemy/Fire
+  m_EditorClassIdentifier: 
+  Name: Fire
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-2948002139287063782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3278,6 +3482,23 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+  Exists: 0
+--- !u!114 &-2777478619156125740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Loading
+  m_EditorClassIdentifier: 
+  Name: Loading
+  Min: 0
+  Max: 1
+  Default: 1
   Exists: 1
 --- !u!114 &-2758102311375052905
 MonoBehaviour:
@@ -3311,12 +3532,12 @@ MonoBehaviour:
   Path: event:/Music/Bapy Conversation
   guid: d02c65b210e54e4f8918d355b393b5bf
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 5407198748971350590}
+  - {fileID: -8679498724934848075}
   MinDistance: 0
   MaxDistance: 0
   Length: 193000
@@ -3336,7 +3557,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-2647871112831145881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3370,7 +3591,7 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-2596691481934161201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3387,7 +3608,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0.8
-  Exists: 1
+  Exists: 0
 --- !u!114 &-2595305656913914781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3454,7 +3675,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Soleil/Impact/Soleil Impact Wood
   guid: bb11edd5eca69d418f92a35db307386d
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -3549,6 +3770,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &-2321721372911811972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Ending Theme/Raina Gone
+  m_EditorClassIdentifier: 
+  Name: Raina Gone
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-2286359319575959859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3632,7 +3870,7 @@ MonoBehaviour:
   Path: event:/SFX/UI/Cancel
   guid: b9d2fc7667c9ac41945e378c74b462e6
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -3758,7 +3996,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Place Character/Place Bapy
   guid: 00868b11eec5ff46af0ba6560af56c90
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -3832,7 +4070,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Bapy
   guid: 5e07fe0bccfd6b49aca774fed2b3c16f
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -3994,6 +4232,23 @@ MonoBehaviour:
   Max: 2
   Default: 0
   Exists: 0
+--- !u!114 &-1573178708225437517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: Music Volume
+  m_EditorClassIdentifier: 
+  Name: Music Volume
+  Min: 0
+  Max: 1
+  Default: 0.8
+  Exists: 1
 --- !u!114 &-1560216465308015555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4010,7 +4265,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-1544158350131394097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4026,7 +4281,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Common/Enemy Charge Attack
   guid: 6cb611f62b46464f98b37c80d4c7ef6e
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -4034,6 +4289,23 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 5375
+--- !u!114 &-1511745112757862963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Ending Theme/Soleil Solo
+  m_EditorClassIdentifier: 
+  Name: Soleil Solo
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-1473918983440170967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4066,7 +4338,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Raina/Impact/Raina Impact Pillar
   guid: d3a9ccca0c839e4bbe22b093f70ae22f
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -4106,7 +4378,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Damage Party/Soleil Pain
   guid: 40a36251c1cddc4c9fdab3cf5871cc79
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -4129,7 +4401,7 @@ MonoBehaviour:
   Path: event:/Music/Soup Theme
   guid: 5caf18e85864f643877a9a8b46317085
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -4152,7 +4424,7 @@ MonoBehaviour:
   Path: event:/SFX/Ambient/Fire
   guid: d8a8053abfc3cf4ea1e42082a9bd7f88
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -4209,12 +4481,12 @@ MonoBehaviour:
   Path: event:/SFX/Voices/Bapy/Bapy Angry
   guid: 7536d24792d9a34c86769459c95eb6d2
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -2600522831368872333}
+  - {fileID: -3356262311406182436}
   MinDistance: 0
   MaxDistance: 0
   Length: 312
@@ -4319,7 +4591,7 @@ MonoBehaviour:
   Path: event:/Music/Camp Theme
   guid: 2ed6b8e2a816e540a712490bf67c2a7e
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -4359,7 +4631,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Soleil/Impact/Soleil Impact Enemy
   guid: 095385a585a3c045ba95c6728bc782df
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -4451,12 +4723,12 @@ MonoBehaviour:
   Path: event:/Music/Soleil Conversation
   guid: 7b4bae72ecdb454bbbc193e0694d3093
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -10172536186658137}
+  - {fileID: 6038197623377138496}
   MinDistance: 0
   MaxDistance: 0
   Length: 164000
@@ -4475,7 +4747,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Bapy/Impact/Bapy Impact Wood
   guid: 73b8cf5d769d13458828009fa2f465d4
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -4483,6 +4755,23 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1258
+--- !u!114 &-753715087660955416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Ending Theme/Lua Solo
+  m_EditorClassIdentifier: 
+  Name: Lua Solo
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-737523782630094927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4517,6 +4806,40 @@ MonoBehaviour:
   Max: 2
   Default: 0
   Exists: 0
+--- !u!114 &-715099836291385329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Bapy Speach/Space
+  m_EditorClassIdentifier: 
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
+--- !u!114 &-674526144522241410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Battle Theme/Crisis
+  m_EditorClassIdentifier: 
+  Name: Crisis
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-670545746548880111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4584,7 +4907,7 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-537033423271150149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4635,7 +4958,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Damage Party/Raina Pain
   guid: f90b1cebe010c84c85c20ac6360103f0
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -4660,6 +4983,40 @@ MonoBehaviour:
   Max: 1
   Default: 0.8
   Exists: 0
+--- !u!114 &-422200273757369017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Bapy Speach/Emotion
+  m_EditorClassIdentifier: 
+  Name: Emotion
+  Min: 0
+  Max: 5
+  Default: 0
+  Exists: 1
+--- !u!114 &-412246078610212040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Ending Theme/Solo
+  m_EditorClassIdentifier: 
+  Name: Solo
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-387080516899073262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4760,7 +5117,7 @@ MonoBehaviour:
   Path: event:/SFX/Soup Scene/Pickups/Mushroom
   guid: f71f1b445afeb743b67be0f6146b3396
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -4784,7 +5141,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4799,7 +5156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: 8180324856139246775}
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   EditorEvents:
   - {fileID: -1996147224635830896}
   - {fileID: 137066688830738650}
@@ -4891,17 +5248,17 @@ MonoBehaviour:
   - {fileID: -436213227776546738}
   - {fileID: -4685291682572874063}
   EditorParameters:
-  - {fileID: -4694278636114119989}
-  - {fileID: 3679724661810776759}
-  - {fileID: -5813247853123437391}
-  - {fileID: -3928973063344913398}
-  - {fileID: -5283340754170738509}
-  - {fileID: -2596691481934161201}
+  - {fileID: -1573178708225437517}
+  - {fileID: -7910507704698487418}
+  - {fileID: 7307786262840639778}
+  - {fileID: 709516647731888848}
+  - {fileID: 6966969173838965779}
+  - {fileID: -6010375427745630937}
   MasterBanks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   StringsBanks:
   - {fileID: 8180324856139246775}
-  stringsBankWriteTime: 637275913583710835
+  stringsBankWriteTime: 637341363743685145
   cacheVersion: 3
 --- !u!114 &60385950758236239
 MonoBehaviour:
@@ -4919,7 +5276,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &83549020475366355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4952,7 +5309,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Obstacles/Pillar/Damage Pillar
   guid: 8dfc0c87c04f5448a5f388d21ad7deb2
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -4992,7 +5349,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Place Character/Place Soleil
   guid: 0d1190094595e34494627e5ea6fb7182
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -5015,12 +5372,12 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Lua/Startup/Lua Yeet Enemy
   guid: c714098e51bd864daaf34fb17cc895e8
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 6516565679590827640}
+  - {fileID: -3250232263315331074}
   MinDistance: 0
   MaxDistance: 0
   Length: 5274
@@ -5142,7 +5499,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Raina/Impact/Raina Impact Enemy
   guid: 10bc21921db8fb489cd661628e13498c
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -5318,15 +5675,32 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Soleil/Startup/Soleil Bolt Startup
   guid: 619b8f3138d833449cb8f0c71bfc0641
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 3922281141169679906}
+  - {fileID: 8733857875586127129}
   MinDistance: 0
   MaxDistance: 0
   Length: 5902
+--- !u!114 &709516647731888848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: SFX Volume
+  m_EditorClassIdentifier: 
+  Name: SFX Volume
+  Min: 0
+  Max: 1
+  Default: 0.8
+  Exists: 1
 --- !u!114 &771195379326205333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5361,6 +5735,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &804412871356391285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Lua Yeet Box/Fire
+  m_EditorClassIdentifier: 
+  Name: Fire
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &809264740464439831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5393,7 +5784,7 @@ MonoBehaviour:
   Path: event:/SFX/Soup Scene/Pickups/Chicken
   guid: 01ca4d73313a704e9170c3e2f939fc06
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -5433,7 +5824,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Death's Door/Raina Pain
   guid: bfe49d88a9daf5478328839bfb907ed9
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -5490,7 +5881,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Soleil/Impact/Soleil Impact Stone
   guid: f480a3ad301f074dbb4896238ae46126
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -5498,6 +5889,23 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1713
+--- !u!114 &1014095528035706295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Wide Slash/Fire
+  m_EditorClassIdentifier: 
+  Name: Fire
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &1026576651662823569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5581,7 +5989,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Enemy
   guid: dbeac92ad7aa0d43b8998f850d0f300b
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -5639,7 +6047,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 1
-  Exists: 1
+  Exists: 0
 --- !u!114 &1228736496504587586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5673,7 +6081,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &1263553515907226324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5757,7 +6165,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Lua
   guid: 7cc825ee05567b4c89823d3763e11082
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -5882,7 +6290,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Obstacles/Pillar/Destroy Pillar
   guid: 14e248729d7cdb4597187f2d7f325bfe
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -5973,7 +6381,7 @@ MonoBehaviour:
   Path: event:/SFX/Soup Scene/Pickups/Carrots
   guid: 61b7488b620aac4bb4f56e6bc3f8367d
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -5998,6 +6406,23 @@ MonoBehaviour:
   Max: 2
   Default: 0
   Exists: 0
+--- !u!114 &1706399638944100818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Long Slash/Fire
+  m_EditorClassIdentifier: 
+  Name: Fire
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &1717366686519502951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6048,12 +6473,12 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Lua/Startup/Lua Bash Wood
   guid: bc989e6cbed24645b7222cf1095f6e90
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: -3351308811053066333}
+  - {fileID: -5272713312126266781}
   MinDistance: 0
   MaxDistance: 0
   Length: 4315
@@ -6327,7 +6752,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Damage Party/Lua Pain
   guid: 4af6033628ffe9499e93ddee527fb373
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -6404,6 +6829,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &2361775303137843148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Ending Theme/Everyone Gone
+  m_EditorClassIdentifier: 
+  Name: Everyone Gone
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &2405876040737706018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6419,7 +6861,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Common/Destroy Enemy
   guid: 925b71a6e00d934b97e55104da19ff53
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -6527,7 +6969,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Place Character/Place Lua
   guid: ce553535176c17468e7023e84bd03c32
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -6584,7 +7026,7 @@ MonoBehaviour:
   Path: event:/SFX/Ambient/Soup Scene/Soup Bubbling
   guid: 8a77ca62ac506b41b6c1ccbae7e584d9
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -6709,7 +7151,7 @@ MonoBehaviour:
   Path: event:/Music/Camp Solo Willow
   guid: 202ca680843b064d9a07830e80cdbcf7
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -6734,6 +7176,23 @@ MonoBehaviour:
   Max: 1
   Default: 0.8
   Exists: 0
+--- !u!114 &3086148616293589126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Raina Conversation/Progress Theme
+  m_EditorClassIdentifier: 
+  Name: Progress Theme
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &3121517400859600385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6766,7 +7225,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Obstacles/Box/Push Box
   guid: 0a0e36fe70b48f46ab6a120b55c78fe3
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -6808,6 +7267,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &3313031598159219534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Ending Theme/Bapy Solo
+  m_EditorClassIdentifier: 
+  Name: Bapy Solo
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &3344037405276099455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6875,7 +7351,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &3521938344770119436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6908,7 +7384,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Obstacles/Box/Destroy Box
   guid: 9f4928f2891dd44db4ac45eb6022963f
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -6965,7 +7441,7 @@ MonoBehaviour:
   Path: event:/SFX/UI/Select
   guid: b18ada5908e2864793f9eea4d27ac0e6
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -7040,7 +7516,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0.8
-  Exists: 1
+  Exists: 0
 --- !u!114 &3704780971616484975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7073,7 +7549,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Avalancher/Avalancher Earthquake Layer
   guid: 8883a689be944044a86f5ac711f8fe59
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -7131,7 +7607,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &3944583957301415696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7183,7 +7659,7 @@ MonoBehaviour:
   lastModified: 637275913583431960
   LoadResult: 0
   FileSizes: []
-  Exists: 1
+  Exists: 0
 --- !u!114 &4021282501592678722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7199,7 +7675,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Death's Door/Bapy Pain
   guid: 9cab296df4d07944bc0b906e7e0cae3f
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -7326,6 +7802,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &4347202941203625617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Ending Theme/Bapy Gone
+  m_EditorClassIdentifier: 
+  Name: Bapy Gone
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &4365506823434505172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7342,7 +7835,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &4375193374435498997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7393,6 +7886,23 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
+  Exists: 0
+--- !u!114 &4474770995136009846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Ending Theme/Lua Gone
+  m_EditorClassIdentifier: 
+  Name: Lua Gone
+  Min: 0
+  Max: 1
+  Default: 0
   Exists: 1
 --- !u!114 &4497091855620092295
 MonoBehaviour:
@@ -7424,6 +7934,23 @@ MonoBehaviour:
   m_Name: parameter:/Lua Yeet Box/Fire
   m_EditorClassIdentifier: 
   Name: Fire
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 0
+--- !u!114 &4550245156934417457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Ending Theme/Raina Solo
+  m_EditorClassIdentifier: 
+  Name: Raina Solo
   Min: 0
   Max: 1
   Default: 0
@@ -7462,6 +7989,23 @@ MonoBehaviour:
   Max: 2
   Default: 0
   Exists: 0
+--- !u!114 &4668150153250042367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Lua Normal/Space
+  m_EditorClassIdentifier: 
+  Name: Space
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &4683681427859493360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7547,6 +8091,23 @@ MonoBehaviour:
   Max: 1
   Default: 0.8
   Exists: 0
+--- !u!114 &5110340809310634487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Ending Theme/Zoom In
+  m_EditorClassIdentifier: 
+  Name: Zoom In
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &5134143970194155012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7598,7 +8159,7 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
---- !u!114 &5203657082566747225
+--- !u!114 &5201600712535347784
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7615,6 +8176,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 1
+--- !u!114 &5203657082566747225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Bapy Snowbank/Fire
+  m_EditorClassIdentifier: 
+  Name: Fire
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 0
 --- !u!114 &5228423662510832824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7716,7 +8294,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &5427264792049714866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7732,7 +8310,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Soleil/Soleil Charge attack
   guid: 85b731fcfeabbd429b2ae00278558d38
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -7756,7 +8334,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &5487966668069786154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7772,12 +8350,12 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Bapy/Startup/Bapy Attack Startup
   guid: 79dc53020e032341ad2a975bb8ad510a
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: -3006231769923770090}
+  - {fileID: -4725189417293027937}
   MinDistance: 0
   MaxDistance: 0
   Length: 3356
@@ -7830,7 +8408,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Pillar
   guid: f3cabdfd571a274c9ea5b4adb4e9ca9e
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -7958,6 +8536,23 @@ MonoBehaviour:
   Max: 2
   Default: 0
   Exists: 0
+--- !u!114 &6038197623377138496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Soleil Conversation/Progress Theme
+  m_EditorClassIdentifier: 
+  Name: Progress Theme
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &6053688671480842261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8109,7 +8704,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Place Character/Place Raina
   guid: 7373bd27359e224f8eba989fc344d017
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -8132,12 +8727,12 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Bapy/Startup/Bapy Snowbank
   guid: 36177ecd860d4849bf2215a7cfa5d3e6
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 5203657082566747225}
+  - {fileID: 5201600712535347784}
   MinDistance: 0
   MaxDistance: 0
   Length: 3356
@@ -8193,6 +8788,23 @@ MonoBehaviour:
   Max: 1
   Default: 0.8
   Exists: 0
+--- !u!114 &6401820276515067802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Lua Bash Stone/Fire
+  m_EditorClassIdentifier: 
+  Name: Fire
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &6422556563335919414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8208,7 +8820,7 @@ MonoBehaviour:
   Path: event:/Music/Title Theme
   guid: 01a5fb91e95c32469f8a26f3798fadd1
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 1
   Is3D: 0
   IsOneShot: 1
@@ -8283,7 +8895,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &6518868149679465241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8299,7 +8911,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Melee Attack Impacts/Enemy Impact Box
   guid: 9c80fad5570e604ba48c6140ff329d8e
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -8374,7 +8986,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &6781425511965442391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8441,7 +9053,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Avalancher/Impacts/Avalancher Impact Box
   guid: 077a2577af3d0149a87eed33199f4579
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -8466,6 +9078,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &6966969173838965779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: Enemy Turn
+  m_EditorClassIdentifier: 
+  Name: Enemy Turn
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &6980143340715666981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8483,6 +9112,24 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &7009129560898737870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637341363743605137
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &7029459661796956271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8549,12 +9196,12 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Lua/Startup/Lua Bash Enemy
   guid: e736783e6906af42a285550ce8d0cfae
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 60385950758236239}
+  - {fileID: -2966311523138923816}
   MinDistance: 0
   MaxDistance: 0
   Length: 4315
@@ -8573,12 +9220,12 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Raina/Startup/Long Slash
   guid: 371ee568581d0c4ca0b4557208020ef4
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: -5607511763013708445}
+  - {fileID: 1706399638944100818}
   MinDistance: 0
   MaxDistance: 0
   Length: 4000
@@ -8597,7 +9244,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Obstacles/Box/Damage Box
   guid: 9ba4ae209cc9ea43aa61453eb88c957b
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -8671,7 +9318,7 @@ MonoBehaviour:
   Path: event:/SFX/Soup Scene/Pickups/Potatoes
   guid: 7b4b76970fcb86449717e4a4a973e0d8
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -8779,7 +9426,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Common/Damage Enemy
   guid: d957549cd6d9f74caeff4ac6d00cf4c1
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -8787,6 +9434,23 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1361
+--- !u!114 &7307786262840639778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: Text Playing
+  m_EditorClassIdentifier: 
+  Name: Text Playing
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &7337138853284137004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8836,12 +9500,12 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Lua/Startup/Lua Bash Stone
   guid: 75fc6bbf3075274d91664132e9073844
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: -1560216465308015555}
+  - {fileID: 6401820276515067802}
   MinDistance: 0
   MaxDistance: 0
   Length: 4315
@@ -8877,7 +9541,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Enemy/Melee Attack Impacts/Enemy Impact Bapy
   guid: 1ba5387c75310f4997a190bf8e5d03a3
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -8900,7 +9564,7 @@ MonoBehaviour:
   Path: event:/SFX/Soup Scene/Pickups/Tomatoes
   guid: 85f035eac749934ea13c811337853d62
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -9095,7 +9759,7 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &7930125146588251876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9145,7 +9809,7 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Bapy/Impact/Bapy Impact Enemy
   guid: 95fe3b8abef6dc49b41d10fbb6acf2fb
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -9168,12 +9832,12 @@ MonoBehaviour:
   Path: event:/Music/Raina Conversation
   guid: e31f8da3c76ec9428371465bf0e3ba93
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -7314961016005105540}
+  - {fileID: 3086148616293589126}
   MinDistance: 0
   MaxDistance: 0
   Length: 126600
@@ -9226,7 +9890,7 @@ MonoBehaviour:
   Path: event:/SFX/Soup Scene/Pickups/Cabbage
   guid: b48967b016252c4c8384dd447b910655
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -9248,7 +9912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: Assets/Audio/FMOD/Heart of Enya/FMODBuilds/Desktop/Master.strings.bank
   SubDir: 
-  lastModified: 637275913583710835
+  lastModified: 637341363743685145
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -9322,6 +9986,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &8327225543843041353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Cross Cleave/Fire
+  m_EditorClassIdentifier: 
+  Name: Fire
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &8335278469885475922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9459,6 +10140,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &8733857875586127129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Soleil Bolt Startup/Fire
+  m_EditorClassIdentifier: 
+  Name: Fire
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &8735634135499856355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9474,12 +10172,12 @@ MonoBehaviour:
   Path: event:/SFX/Battle/Raina/Startup/Wide Slash
   guid: 4a3805bfb2ddbf48a0191a7806b1b505
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: -3057532397161325369}
+  - {fileID: 1014095528035706295}
   MinDistance: 0
   MaxDistance: 0
   Length: 4000
@@ -9515,7 +10213,7 @@ MonoBehaviour:
   Path: event:/Music/Absolute Zero Battle Theme
   guid: d3fe2ffafdc0ee4d9fc77a76cd133908
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -9624,13 +10322,13 @@ MonoBehaviour:
   Path: event:/SFX/Voices/Bapy/Bapy Speach
   guid: 375404193540074fa1d1915e870c79d1
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -6061441715262086296}
-  - {fileID: -5135306476584919710}
+  - {fileID: -715099836291385329}
+  - {fileID: -422200273757369017}
   MinDistance: 0
   MaxDistance: 0
   Length: 521
@@ -9717,7 +10415,7 @@ MonoBehaviour:
   Path: event:/SFX/Soup Scene/Pickups/Onions
   guid: 1188c3e2e754254093a32ae6a776580a
   Banks:
-  - {fileID: 3949606736179880263}
+  - {fileID: 7009129560898737870}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1

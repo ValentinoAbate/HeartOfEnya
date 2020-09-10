@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Experimental;
 using System;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public class DialogBox : MonoBehaviour, IPausable
 {
@@ -24,6 +25,7 @@ public class DialogBox : MonoBehaviour, IPausable
     private State state = State.Inactive;
     private bool finishedWithStartAnimation = true;
     private FMODUnity.StudioEventEmitter voiceEmitter;
+    private DialogLine currentLine;
 
     private void Awake()
     {
@@ -44,8 +46,17 @@ public class DialogBox : MonoBehaviour, IPausable
             state = state.Next();
     }
 
-    public IEnumerator PlayLine(string line, float scrollDelay, float spaceDelay, Sprite portrait = null, string voiceEvent = null)
+    private void Update()
     {
+        if(currentLine != null)
+        {
+            currentLine.UpdateEffects(text);
+        }
+    }
+
+    public IEnumerator PlayLine(DialogLine line, float scrollDelay, float spaceDelay, Sprite portrait = null, string voiceEvent = null)
+    {
+        currentLine = line;
         // Set Portrait if desired
         if (portrait != null)
             this.portrait.sprite = portrait;
@@ -62,11 +73,12 @@ public class DialogBox : MonoBehaviour, IPausable
                 voiceEmitter.Play();
             state = State.Scrolling;
             text.text = string.Empty;
-            for (int i = 0; state != State.Cancel && i < line.Length - 1; ++i)
+            for (int i = 0; state != State.Cancel && i < line.CleanText.Length - 1; ++i)
             {
                 yield return new WaitWhile(() => PauseHandle.Paused);
-                text.text += line[i];
-                if (char.IsWhiteSpace(line[i]))
+                //text.text += line[i];
+                text.text = line.GetFormatted(i + 1);
+                if (char.IsWhiteSpace(text.text.Last()))
                 {
                     voiceEmitter.SetParameter("Space", 1);
                     yield return new WaitForSeconds(spaceDelay);
@@ -79,7 +91,7 @@ public class DialogBox : MonoBehaviour, IPausable
             }
         }
         // Dump text
-        text.text = line;
+        text.text = line.GetFormatted();
         // Wait until the player continues
         state = State.Waiting;
         voiceEmitter.SetParameter("Space", 1);

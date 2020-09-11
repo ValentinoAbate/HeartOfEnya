@@ -50,7 +50,14 @@ public class Pot : MonoBehaviour
     {
     	if (chosenIngredients.Count < ingredientPoints.Count) //do we have room for more ingredients?
     	{
-    		chosenIngredients.Add(ing); //store it in our active ingredient list
+            bool added = SoupManager.main.EnableIngredient(ing.ingredient); //tell the soup manager to add us
+            if (!added) //error checking - if the soup manager somehow can't add us, abort the add and throw a warning
+            {
+                Debug.Log("Ingredient " + ing.ingredient.name + " can fit in pot, but can't be added by the manager! Aborting!");
+                return false;
+            }
+            Debug.Log("Ingredient " + ing.ingredient.name + " successfully added to soup!");
+            chosenIngredients.Add(ing); //store it in our active ingredient list
     		ing.transform.position = ingredientPoints[chosenIngredients.Count - 1]; //put the ingredient in its place
     		return true;
     	}

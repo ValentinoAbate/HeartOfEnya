@@ -172,17 +172,6 @@ public class DraggableIngredient : MonoBehaviour
     			inSoup = true; //only have to update inSoup - AddIngredient took care of our position for us
                 buffUI.SetActive(true); //turn on the buff UI
                 hoverUI.SetActive(false); //turn off the hover UI
-    			bool added = SoupManager.main.EnableIngredient(ingredient); //tell the soup manager to add us
-    			//Error checking just on the offchance that somehow the ingredient could be added to the pot but not the soup manager.
-    			//That should be impossible, but better safe than sorry. 
-    			if (added) //success
-    			{
-    				Debug.Log("Ingredient " + ingredient.name + " successfully added to soup!");
-    			}
-    			else //failure
-    			{
-    				Debug.LogWarning("Ingredient " + ingredient.name + " can fit in soup, but wasn't added properly!");
-    			}
     		}
     		else
     		{
@@ -223,23 +212,8 @@ public class DraggableIngredient : MonoBehaviour
     /// </summary>
     public void UpdateData()
     {
-    	/***ADD THE REST OF THIS ONCE THE UI IS ADDED***/
-
-    	//if ingredient isn't set, give an error message & abort
-    	// if(!ingredient)
-    	// {
-    	// 	Debug.Log("ERROR: No ingredient specified for button " + myID);
-    	// 	return;
-    	// }
-
-    	//
-
-    	//set name text based on ingredient
-        // Text nameTxt = transform.Find("NameText").GetComponent<Text>();
-        // nameTxt.text = ingredient.name;
+    	Debug.Log(ingredient.name + ", " + myCanvas);
         //set effect text based on ingredient
-        // Text effectTxt = transform.Find("EffectText").GetComponent<Text>();
-        Debug.Log(ingredient.name + ", " + myCanvas);
         Text effectTxt = myCanvas.transform.Find("EffectText").GetComponent<Text>();
         effectTxt.text = ingredient.GetEffectText();
         //set ingredient icon based on ingredient

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="ParameterPreset" id="{d105b98a-c41d-4742-8649-16120e63f4fa}">
+		<property name="name">
+			<value>New Wave</value>
+		</property>
+		<relationship name="folder">
+			<destination>{e367d257-ed9c-48be-82d4-429e28a3e48c}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{13e15f4d-9d0d-4bf1-81ab-00264876710e}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{13e15f4d-9d0d-4bf1-81ab-00264876710e}">
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="seekSpeed">
+			<value>1</value>
+		</property>
+		<property name="seekSpeedDescending">
+			<value>0.68000006675720215</value>
+		</property>
+		<property name="seekSpeedAsymmetric">
+			<value>true</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{1dc59e58-1daa-4c57-b47a-80f41306df51}</destination>
+		</relationship>
+	</object>
+	<object class="SidechainModulator" id="{1dc59e58-1daa-4c57-b47a-80f41306df51}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>cursorPosition</value>
+		</property>
+		<property name="minimumThreshold">
+			<value>-47</value>
+		</property>
+		<property name="maximumThreshold">
+			<value>-14</value>
+		</property>
+	</object>
+</objects>

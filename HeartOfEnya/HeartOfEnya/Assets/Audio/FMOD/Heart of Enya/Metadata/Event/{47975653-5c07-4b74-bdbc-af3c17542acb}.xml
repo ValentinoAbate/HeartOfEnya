@@ -90,7 +90,10 @@
 	<object class="MixerBusPanner" id="{17e809c4-93f2-467b-a9fe-5731995adb20}" />
 	<object class="SingleSound" id="{52d12bbd-6ee6-42ac-9370-c3173c320c33}">
 		<property name="length">
-			<value>1.2587708333333334</value>
+			<value>1.0987708333333333</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>0.16</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{07a5ca59-c35b-4872-9167-fde3b9f3f55d}</destination>
@@ -120,9 +123,18 @@
 	<object class="MixerBusEffectChain" id="{0346a7c2-c285-4052-9a96-3d42303481d7}">
 		<relationship name="effects">
 			<destination>{4fd6af9a-126d-44f4-b3f3-7e2ab2ef2a99}</destination>
+			<destination>{f3480149-490b-4955-97d1-b526827c9cd5}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{cc2ec9d4-c0ef-459c-b6ee-f44e502daff9}" />
 	<object class="MixerBusFader" id="{a789142c-c327-4aa4-9943-2c7549fa8941}" />
 	<object class="MixerBusFader" id="{4fd6af9a-126d-44f4-b3f3-7e2ab2ef2a99}" />
+	<object class="ThreeEQEffect" id="{f3480149-490b-4955-97d1-b526827c9cd5}">
+		<property name="lowGain">
+			<value>-10.5</value>
+		</property>
+		<property name="highGain">
+			<value>-6</value>
+		</property>
+	</object>
 </objects>

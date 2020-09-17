@@ -86,9 +86,7 @@ public class DialogLine
             if (effect.start < length)
             {
                 tags.Add(new TagString(effect.startTag, effect.start));
-                Debug.Log($"start: {effect.startTag}");
                 tags.Add(new TagString(effect.endTag, Mathf.Min(effect.start + effect.length, length)));
-                Debug.Log($"end: {effect.endTag}");
             }
         }
 
@@ -96,9 +94,6 @@ public class DialogLine
 
         for (int i = tags.Count - 1; i >= 0; i--)
         {
-            /*Debug.Log(tags[i]);
-            Debug.Log(tags[i].index);
-            Debug.Log(tags[i].tag);*/
             formattedText = formattedText.Insert(tags[i].index, tags[i].tag);
         }
 
@@ -158,7 +153,6 @@ public class DialogLine
                 else
                 {
                     StandardTextEffect createdEffect = (StandardTextEffect)ScriptableObject.CreateInstance("StandardTextEffect");
-                    Debug.Log($"match value: {tag.match.Value}");
                     createdEffect.SetValues(tag.match.Groups[1].Value, tag.match.Value, current - removedCount, customColors);
                     openStandardEffects.Add(createdEffect);
                 }
@@ -191,7 +185,6 @@ public class DialogLine
                         {
                             openStandardEffects[i].length = current - removedCount - openStandardEffects[i].start;
                             openStandardEffects[i].endTag = tag.match.Value;
-                            Debug.Log($"closing tag: {tag.match.Value}");
                             standardEffects.Add(openStandardEffects[i]);
                             openStandardEffects.RemoveAt(i);
                             break;

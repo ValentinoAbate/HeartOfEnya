@@ -130,10 +130,10 @@ public class BattleEvents : MonoBehaviour
 
             // Start the dialog (connect to ambers code)
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutIntro");
+            DialogManager.main.runner.StartDialogue("TutIntro");
             
             // Wait for finish StartCoroutine(IntroTriggerPost(runner))
-            StartCoroutine(IntroTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(IntroTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -155,12 +155,12 @@ public class BattleEvents : MonoBehaviour
         if(tutorialDay1 && !tutMove.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutMove");
+            DialogManager.main.runner.StartDialogue("TutMove");
             
             Debug.Log("Battle Triggers: raina move");
             tutMove.flag = true;
             
-            StartCoroutine(MoveTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(MoveTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -180,12 +180,12 @@ public class BattleEvents : MonoBehaviour
         if(tutorialDay1 && !tutRainaAttack.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutRainaAttack");
+            DialogManager.main.runner.StartDialogue("TutRainaAttack");
             
             Debug.Log("Battle Triggers: raina attack");
             tutRainaAttack.flag = true;
             
-            StartCoroutine(RainaAttackTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(RainaAttackTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -204,12 +204,12 @@ public class BattleEvents : MonoBehaviour
         if(tutorialDay1 && !tutBapySelect.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutBapySelect");
+            DialogManager.main.runner.StartDialogue("TutBapySelect");
             
             Debug.Log("Battle Triggers: select bapy");
             tutBapySelect.flag = true;
             
-            StartCoroutine(BapySelectTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(BapySelectTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -232,12 +232,12 @@ public class BattleEvents : MonoBehaviour
         if(tutorialDay1 && !tutBapyCancel.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutBapyCancel");
+            DialogManager.main.runner.StartDialogue("TutBapyCancel");
             
             Debug.Log("Battle Triggers: bapy cancel");
             tutBapyCancel.flag = true;
             
-            StartCoroutine(BapyCancelTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(BapyCancelTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -263,8 +263,8 @@ public class BattleEvents : MonoBehaviour
             tutSoleilSelect.flag = true;
             // Turn Cancelling back off
             BattleUI.main.CancelingEnabled = false;
-            DialogueManager.main.runner.StartDialogue("TutSoleilSelect");
-            StartCoroutine(SoleilSelectTriggerPost(DialogueManager.main.runner));
+            DialogManager.main.runner.StartDialogue("TutSoleilSelect");
+            StartCoroutine(SoleilSelectTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -287,12 +287,12 @@ public class BattleEvents : MonoBehaviour
         if(tutorialDay1 && !tutSoleilAttack.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutSoleilAttack");
+            DialogManager.main.runner.StartDialogue("TutSoleilAttack");
             
             Debug.Log("Battle Triggers: soleil attack");
             tutSoleilAttack.flag = true;
             
-            StartCoroutine(SoleilAttackTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(SoleilAttackTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -316,7 +316,7 @@ public class BattleEvents : MonoBehaviour
         if (tutorialDay1 && tutSoleilAttack.flag && !tutBapySelect2.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutBapySelect2");
+            DialogManager.main.runner.StartDialogue("TutBapySelect2");
 
             // solo wait for bapy
             partyPhase.PartyWideSoloAction("Wait");
@@ -324,7 +324,7 @@ public class BattleEvents : MonoBehaviour
             Debug.Log("Battle Triggers: select bapy 2");
             tutBapySelect2.flag = true;
             BattleUI.main.CancelingEnabled = true;
-            StartCoroutine(BapySelectTrigger2Post(DialogueManager.main.runner));
+            StartCoroutine(BapySelectTrigger2Post(DialogManager.main.runner));
         }
     }
 
@@ -340,12 +340,12 @@ public class BattleEvents : MonoBehaviour
         if (tutorialDay1 && tutBapySelect2.flag && !tutBapyWait.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutBapyWait");
+            DialogManager.main.runner.StartDialogue("TutBapyWait");
 
             Debug.Log("Battle Triggers: bapy wait");
             tutBapyWait.flag = true;
 
-            StartCoroutine(BapyWaitTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(BapyWaitTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -361,12 +361,12 @@ public class BattleEvents : MonoBehaviour
         if(tutorialDay1 && !tutSoleilChargeReminder.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutSoleilChargeReminder");
+            DialogManager.main.runner.StartDialogue("TutSoleilChargeReminder");
             
             Debug.Log("Battle Triggers: SoleilChargeReminder");
             tutSoleilChargeReminder.flag = true;
             
-            StartCoroutine(SoleilChargeReminderTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(SoleilChargeReminderTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -387,12 +387,12 @@ public class BattleEvents : MonoBehaviour
         if(tutorialDay1 && !tutSoleilChargeExplanation.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutSoleilChargeExplanation");
+            DialogManager.main.runner.StartDialogue("TutSoleilChargeExplanation");
             
             Debug.Log("Battle Triggers: SoleilChargeExplanation");
             tutSoleilChargeExplanation.flag = true;
             
-            StartCoroutine(SoleilChargeExplanationTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(SoleilChargeExplanationTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -410,12 +410,12 @@ public class BattleEvents : MonoBehaviour
         if(tutorialDay1 && !tutEnemySpawnWarning.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutEnemySpawnWarning");
+            DialogManager.main.runner.StartDialogue("TutEnemySpawnWarning");
             
             Debug.Log("Battle Triggers: EnemySpawnWarning");
             tutEnemySpawnWarning.flag = true;
             
-            StartCoroutine(EnemySpawnWarningTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(EnemySpawnWarningTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -434,12 +434,12 @@ public class BattleEvents : MonoBehaviour
         if (tutorialDay1 && !tutEndTurnButton.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutEndTurnButton");
+            DialogManager.main.runner.StartDialogue("TutEndTurnButton");
 
             Debug.Log("Battle Triggers: TutEndTurnButton");
             tutEndTurnButton.flag = true;
 
-            StartCoroutine(TutEndTurnButtonTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(TutEndTurnButtonTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -459,12 +459,12 @@ public class BattleEvents : MonoBehaviour
         if(tutorialDay1 && !tutEnemySpawn.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutEnemySpawn");
+            DialogManager.main.runner.StartDialogue("TutEnemySpawn");
             
             Debug.Log("Battle Triggers: EnemySpawn");
             tutEnemySpawn.flag = true;
             
-            StartCoroutine(EnemySpawnTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(EnemySpawnTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -484,12 +484,12 @@ public class BattleEvents : MonoBehaviour
         if(tutorialDay1 && !tutEnemyInfo.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutEnemyInfo");
+            DialogManager.main.runner.StartDialogue("TutEnemyInfo");
             
             Debug.Log("Battle Triggers: EnemyInfo");
             tutEnemyInfo.flag = true;
             
-            StartCoroutine(EnemyInfoTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(EnemyInfoTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -508,12 +508,12 @@ public class BattleEvents : MonoBehaviour
         if(tutorialDay1 && !tutEnemyRanged.flag)
         {
             Pause();
-            DialogueManager.main.runner.StartDialogue("TutEnemyRanged");
+            DialogManager.main.runner.StartDialogue("TutEnemyRanged");
             
             Debug.Log("Battle Triggers: EnemyRanged");
             tutEnemyRanged.flag = true;
             
-            StartCoroutine(EnemyRangedTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(EnemyRangedTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -535,15 +535,15 @@ public class BattleEvents : MonoBehaviour
             var partyMemberAtDD = PhaseManager.main.PartyPhase.Party.Find((p) => p.DeathsDoor);
             //DialogueManager.main.runner.StartDialogue("TutDD" + partyMemberAtDD.DisplayName);
             if (partyMemberAtDD.DisplayName == "Bapy")
-                DialogueManager.main.runner.StartDialogue("TutDDBapy");
+                DialogManager.main.runner.StartDialogue("TutDDBapy");
             else if(partyMemberAtDD.DisplayName == "Soleil")
-                DialogueManager.main.runner.StartDialogue("TutDDSoleil");
+                DialogManager.main.runner.StartDialogue("TutDDSoleil");
             else
-                DialogueManager.main.runner.StartDialogue("TutDDRaina");
+                DialogManager.main.runner.StartDialogue("TutDDRaina");
             Debug.Log("Battle Triggers: DeathsDoor");
 
 
-            StartCoroutine(DeathsDoorTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(DeathsDoorTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -553,9 +553,9 @@ public class BattleEvents : MonoBehaviour
         
         // willow stuns all enemies, run tiles appear
         yield return partyPhase.WillowStunAll();
-        DialogueManager.main.runner.StartDialogue("TutStun");
+        DialogManager.main.runner.StartDialogue("TutStun");
         yield return new WaitWhile(() => runner.isDialogueRunning);
-        DialogueManager.main.runner.StartDialogue("TutRun");
+        DialogManager.main.runner.StartDialogue("TutRun");
         BattleUI.main.EnableRunTiles();
         yield return new WaitWhile(() => runner.isDialogueRunning);
         Unpause();
@@ -565,9 +565,9 @@ public class BattleEvents : MonoBehaviour
     {
         Pause();
         var injuredPartyMember = PhaseManager.main.PartyPhase.Party.Find((p) => p.DeathsDoor && p.DeathsDoorCounter <= 0);
-        DialogueManager.main.runner.StartDialogue("GraveInjury" + injuredPartyMember.DisplayName);
+        DialogManager.main.runner.StartDialogue("GraveInjury" + injuredPartyMember.DisplayName);
         Debug.Log("Battle Triggers: GraveInjury");
-        StartCoroutine(GraveInjuryTriggerPost(DialogueManager.main.runner));
+        StartCoroutine(GraveInjuryTriggerPost(DialogManager.main.runner));
     }
 
     private IEnumerator GraveInjuryTriggerPost(DialogueRunner runner)

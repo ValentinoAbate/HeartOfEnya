@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleDialogue : MonoBehaviour
+public class BattleDialog : MonoBehaviour
 {
     public KeyCode testKey;
     public string startNode;

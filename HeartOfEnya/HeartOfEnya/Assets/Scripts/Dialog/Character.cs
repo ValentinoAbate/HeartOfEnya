@@ -214,7 +214,7 @@ public class Character : MonoBehaviour
         //remove other characters
         Debug.Log("YEET OTHER CHARACTERS");
         DisableOtherCharacters();
-        DialogueManager.main.ui.SetSoloMode(true);
+        DialogManager.main.ui.SetSoloMode(true);
         //fade in
         yield return StartCoroutine("FadeToClear");
         //run the dialogue

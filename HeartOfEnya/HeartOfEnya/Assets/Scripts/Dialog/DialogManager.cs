@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
 
-public class DialogueManager : MonoBehaviour
+public class DialogManager : MonoBehaviour
 {
 
     public Dialog.DialogUI ui;
@@ -11,7 +11,7 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// DialogueManager Singleton
     /// </summary>
-    public static DialogueManager main;
+    public static DialogManager main;
     private void Awake()
     {
         if (main == null)

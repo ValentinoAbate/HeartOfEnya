@@ -53,6 +53,11 @@ namespace Dialog
         public EndAction endAction = EndAction.DoNothing;
         public string sceneName = string.Empty;
 
+        [Header("Effects and Colors")]
+        [SerializeField] private List<TextEffect.CustomColor> customColors;
+        [SerializeField] private List<TextEffect> customEffects;
+
+
         // The last character that spoke
         private Character lastSpeaker;
         // The currently active dialogbox
@@ -234,7 +239,10 @@ namespace Dialog
             }
             // Set the dialogBox's portrait
             dialogBox.portrait.sprite = character.Portrait;
-            yield return StartCoroutine(dialogBox.PlayLine(text, scrollDelay, spaceDelay));
+
+            DialogLine sentence = new DialogLine(text, customColors, customEffects);
+
+            yield return StartCoroutine(dialogBox.PlayLine(sentence, scrollDelay, spaceDelay));
         }
 
         /// Show a list of options, and wait for the player to make a selection.

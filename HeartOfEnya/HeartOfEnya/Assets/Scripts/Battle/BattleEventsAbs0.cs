@@ -20,7 +20,7 @@ public class BattleEventsAbs0 : MonoBehaviour
 
     private IEnumerator Abs0IntroRoutine()
     {
-        var runner = DialogueManager.main.runner;
+        var runner = DialogManager.main.runner;
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         if (pData.dayNum == PersistentData.dayNumStart)
         {
@@ -59,7 +59,7 @@ public class BattleEventsAbs0 : MonoBehaviour
     private IEnumerator Abs0PhaseChangeRoutine(Combatant abs0, EnemyAIAbs0Boss aiComponent)
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        var runner = DialogueManager.main.runner;
+        var runner = DialogManager.main.runner;
         var pManager = PhaseManager.main;
         // Pre-transition
         runner.StartDialogue("Abs0BossPhase2-1");
@@ -117,7 +117,7 @@ public class BattleEventsAbs0 : MonoBehaviour
 
     private IEnumerator Abs0Phase2DefeatedRoutine()
     {
-        var runner = DialogueManager.main.runner;
+        var runner = DialogManager.main.runner;
         runner.StartDialogue("Abs0BossOutro");
         yield return new WaitWhile(() => runner.isDialogueRunning);
         SceneTransitionManager.main.TransitionScenes("OutroCamp");

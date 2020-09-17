@@ -19,7 +19,7 @@ public class BattleEventsLuaBoss : MonoBehaviour
 
     private IEnumerator LuaBossIntroRoutine()
     {
-        var runner = DialogueManager.main.runner;
+        var runner = DialogManager.main.runner;
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         if (pData.luaBossPhase1Defeated)
         {
@@ -70,7 +70,7 @@ public class BattleEventsLuaBoss : MonoBehaviour
         luaBoss.sprite.sprite = aiComponent.secondPhaseSprite;
         aiComponent.secondPhase = true;
         luaBoss.CancelChargingAction();
-        var runner = DialogueManager.main.runner;
+        var runner = DialogManager.main.runner;
         var pManager = PhaseManager.main;
         // Pre-transition
         runner.StartDialogue("LuaBossPhase2-1");
@@ -112,7 +112,7 @@ public class BattleEventsLuaBoss : MonoBehaviour
 
     private IEnumerator LuaPhaseDeathRoutine()
     {
-        var runner = DialogueManager.main.runner;
+        var runner = DialogManager.main.runner;
         runner.StartDialogue("LuaBossOutro");
         yield return new WaitWhile(() => runner.isDialogueRunning);
         SceneTransitionManager.main.TransitionScenes("Camp");

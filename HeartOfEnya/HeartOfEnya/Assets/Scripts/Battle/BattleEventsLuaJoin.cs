@@ -16,7 +16,7 @@ public class BattleEventsLuaJoin : MonoBehaviour
             Debug.Log("Battle Triggers: Move 3");
             battleEvents.tutMove3.flag = true;
 
-            StartCoroutine(Move3Post(DialogueManager.main.runner));
+            StartCoroutine(Move3Post(DialogManager.main.runner));
         }
     }
 
@@ -37,7 +37,7 @@ public class BattleEventsLuaJoin : MonoBehaviour
             Debug.Log("Battle Triggers: Lua");
             battleEvents.tutLua.flag = true;
 
-            StartCoroutine(LuaPost(DialogueManager.main.runner));
+            StartCoroutine(LuaPost(DialogManager.main.runner));
         }
     }
 

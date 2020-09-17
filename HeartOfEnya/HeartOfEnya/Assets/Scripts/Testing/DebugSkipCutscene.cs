@@ -13,9 +13,9 @@ public class DebugSkipCutscene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Delete) && DialogueManager.main.runner.isDialogueRunning)
+        if(Input.GetKeyDown(KeyCode.Delete) && DialogManager.main.runner.isDialogueRunning)
         {
-            DialogueManager.main.runner.Stop();
+            DialogManager.main.runner.Stop();
 
         }
     }

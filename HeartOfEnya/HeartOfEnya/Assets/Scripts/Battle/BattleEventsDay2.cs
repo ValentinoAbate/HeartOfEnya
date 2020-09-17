@@ -16,8 +16,8 @@ public class BattleEventsDay2 : MonoBehaviour
             Debug.Log("Battle Triggers: Pushing");
             battleEvents.tutPushing.flag = true;
             BattleUI.main.HideEndTurnButton(true);
-            DialogueManager.main.runner.StartDialogue("TutPush");
-            StartCoroutine(PushingTriggerPost(DialogueManager.main.runner));
+            DialogManager.main.runner.StartDialogue("TutPush");
+            StartCoroutine(PushingTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -45,8 +45,8 @@ public class BattleEventsDay2 : MonoBehaviour
 
             Debug.Log("Battle Triggers: Knock On");
             battleEvents.tutKnockOn.flag = true;
-            DialogueManager.main.runner.StartDialogue("TutChainedMovement");
-            StartCoroutine(KnockOnTriggerPost(DialogueManager.main.runner));
+            DialogManager.main.runner.StartDialogue("TutChainedMovement");
+            StartCoroutine(KnockOnTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -77,8 +77,8 @@ public class BattleEventsDay2 : MonoBehaviour
 
             Debug.Log("Battle Triggers: Move Damage");
             battleEvents.tutMoveDamage.flag = true;
-            DialogueManager.main.runner.StartDialogue("TutMoveDamage");
-            StartCoroutine(MoveDamageTriggerPost(DialogueManager.main.runner));
+            DialogManager.main.runner.StartDialogue("TutMoveDamage");
+            StartCoroutine(MoveDamageTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -109,8 +109,8 @@ public class BattleEventsDay2 : MonoBehaviour
 
             Debug.Log("Battle Triggers: Pulling");
             battleEvents.tutPulling.flag = true;
-            DialogueManager.main.runner.StartDialogue("TutPull");
-            StartCoroutine(PullingTriggerPost(DialogueManager.main.runner));
+            DialogManager.main.runner.StartDialogue("TutPull");
+            StartCoroutine(PullingTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -141,14 +141,14 @@ public class BattleEventsDay2 : MonoBehaviour
 
             Debug.Log("Battle Triggers: Choke Points");
             battleEvents.tutChokePoints.flag = true;
-            StartCoroutine(ChokePointsTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(ChokePointsTriggerPost(DialogManager.main.runner));
         }
     }
 
     private IEnumerator ChokePointsTriggerPost(DialogueRunner runner)
     {
         yield return StartCoroutine(PhaseManager.main.SpawnPhase.DeclareNextWave());
-        DialogueManager.main.runner.StartDialogue("TutChokepoint");
+        DialogManager.main.runner.StartDialogue("TutChokepoint");
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
         // post-condition: re-enable all moves
@@ -176,8 +176,8 @@ public class BattleEventsDay2 : MonoBehaviour
 
             Debug.Log("Battle Triggers: Enemy Push");
             battleEvents.tutEnemyPush.flag = true;
-            DialogueManager.main.runner.StartDialogue("TutEnemyPush");
-            StartCoroutine(EnemyPushTriggerPost(DialogueManager.main.runner));
+            DialogManager.main.runner.StartDialogue("TutEnemyPush");
+            StartCoroutine(EnemyPushTriggerPost(DialogManager.main.runner));
         }
     }
 

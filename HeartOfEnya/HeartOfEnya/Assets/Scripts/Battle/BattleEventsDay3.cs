@@ -16,8 +16,8 @@ public class BattleEventsDay3 : MonoBehaviour
             Debug.Log("Battle Triggers: Flame Moves");
             BattleUI.main.HideEndTurnButton(true);
             battleEvents.tutFlameMoves.flag = true;
-            DialogueManager.main.runner.StartDialogue("TutFlameMoves");
-            StartCoroutine(FlameMovesTriggerPost(DialogueManager.main.runner));
+            DialogManager.main.runner.StartDialogue("TutFlameMoves");
+            StartCoroutine(FlameMovesTriggerPost(DialogManager.main.runner));
         }
     }
 
@@ -48,8 +48,8 @@ public class BattleEventsDay3 : MonoBehaviour
             
             Debug.Log("Battle Triggers: Burn");
             battleEvents.tutBurn.flag = true;
-            DialogueManager.main.runner.StartDialogue("TutBurn");
-            StartCoroutine(BurnTriggerPost(DialogueManager.main.runner));
+            DialogManager.main.runner.StartDialogue("TutBurn");
+            StartCoroutine(BurnTriggerPost(DialogManager.main.runner));
         }
     }
 

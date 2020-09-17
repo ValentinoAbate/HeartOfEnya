@@ -582,9 +582,9 @@ public class BattleEvents : MonoBehaviour
             return;
         Pause();
         noEnemiesLeftMainPhase.flag = true;
-        DialogueManager.main.runner.StartDialogue("NoEnemiesRemain");
+        DialogManager.main.runner.StartDialogue("NoEnemiesRemain");
         Debug.Log("Battle Triggers: No Enemies Left In Main Encounter");
-        StartCoroutine(NoEnemiesLeftInMainPhaseTriggerPost(DialogueManager.main.runner));
+        StartCoroutine(NoEnemiesLeftInMainPhaseTriggerPost(DialogManager.main.runner));
     }
 
     private IEnumerator NoEnemiesLeftInMainPhaseTriggerPost(DialogueRunner runner)

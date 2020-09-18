@@ -159,6 +159,7 @@ public class Pot : MonoBehaviour
         {
         	DraggableIngredient mostRecent = chosenIngredients[chosenIngredients.Count - 1];
         	mostRecent.ResetPosition(); //send the ingredient back to its initial position
+            mostRecent.HideBuffUI();
             RemoveIngredient(mostRecent);
         }
     }

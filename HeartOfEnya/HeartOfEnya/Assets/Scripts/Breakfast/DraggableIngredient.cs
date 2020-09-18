@@ -270,4 +270,9 @@ public class DraggableIngredient : MonoBehaviour
         hpText.text = "" + baseHP;
         fpText.text = "" + baseFP;
     }
+
+    public void HideBuffUI()
+    {
+        buffUI.SetActive(false);
+    }
 }

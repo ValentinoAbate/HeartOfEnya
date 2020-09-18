@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1240,6 +1240,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74bfb196dbfc61f478bd91cfb3d8c737, type: 3}
+--- !u!1 &1830157049 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1347360321100983193, guid: 74bfb196dbfc61f478bd91cfb3d8c737,
+    type: 3}
+  m_PrefabInstance: {fileID: 1830157048}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1830157050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830157049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 026ab76405c42914fa6c800f0e3b1fc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 16
+  y: 9
 --- !u!1 &1913457661
 GameObject:
   m_ObjectHideFlags: 0
@@ -1252,6 +1272,7 @@ GameObject:
   - component: {fileID: 1913457664}
   - component: {fileID: 1913457663}
   - component: {fileID: 1913457662}
+  - component: {fileID: 1913457666}
   m_Layer: 5
   m_Name: UI Canvas
   m_TagString: Untagged
@@ -1342,6 +1363,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1913457666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913457661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 026ab76405c42914fa6c800f0e3b1fc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 16
+  y: 9
 --- !u!1001 &1925378241
 PrefabInstance:
   m_ObjectHideFlags: 0

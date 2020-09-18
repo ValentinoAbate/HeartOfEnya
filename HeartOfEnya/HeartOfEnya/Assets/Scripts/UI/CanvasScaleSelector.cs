@@ -19,6 +19,19 @@ public class CanvasScaleSelector : MonoBehaviour
     
     public void UpdateScalingMode()
     {
-
+        if (scaler.uiScaleMode != CanvasScaler.ScaleMode.ScaleWithScreenSize)
+            return;
+        float intendedScale = (float)x / y;
+        float currScale = (float)Screen.width / Screen.height;
+        if(currScale <= intendedScale)
+        {
+            // Match Width
+            scaler.matchWidthOrHeight = 0;
+        }
+        else
+        {
+            // Match Height
+            scaler.matchWidthOrHeight = 1;
+        }
     }
 }

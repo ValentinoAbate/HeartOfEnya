@@ -150,8 +150,17 @@ public class PersistentData : MonoBehaviour
         }
 
         //convert raw ASCII to JSON string, then to JSON object
-        string jsonData = Encoding.ASCII.GetString(jsonByte);
-        JsonUtility.FromJsonOverwrite(jsonData, this);
+        try
+        {
+            string jsonData = Encoding.ASCII.GetString(jsonByte);
+            JsonUtility.FromJsonOverwrite(jsonData, this);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error parsing save data: " + e.Message);
+            
+            /***TODO: add some way of communicating the error to the player & prompting them to load a new game***/
+        }
 
         //load the scene we saved on
         if (String.IsNullOrEmpty(returnScene))

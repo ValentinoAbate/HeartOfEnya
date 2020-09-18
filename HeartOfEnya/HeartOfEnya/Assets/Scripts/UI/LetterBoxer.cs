@@ -28,11 +28,6 @@ public class LetterBoxer : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        PerformSizing();
-    }
-
     private void OnValidate()
     {
         x = Mathf.Max(1, x);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Yarn;
@@ -262,7 +263,7 @@ namespace Dialog
             foreach (var optionString in optionsCollection.options)
             {
                 optionButtons[i].gameObject.SetActive(true);
-                optionButtons[i].GetComponentInChildren<Text>().text = CorrectFormatting(optionString);
+                optionButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = CorrectFormatting(optionString);
                 i++;
             }
 

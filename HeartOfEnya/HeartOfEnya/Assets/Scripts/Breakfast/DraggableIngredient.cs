@@ -237,4 +237,37 @@ public class DraggableIngredient : MonoBehaviour
     	hoverUI.SetActive(false); //turn off the hover UI too
         sfxCancel.Play();
     }
+
+    /// <summary>
+    /// Updates the buff UI with the base stats and active buffs.
+    /// Args: baseHP/baseFP are the current base stats of the target (retrieved from the prefab),
+    ///       doHPBuff/doFPBuff represent whether to apply the HP/FP buff effect and show the "buff active" arrow 
+    /// </summary>
+    public void UpdateBuffUI(int baseHP, int baseFP, bool doHPBuff, bool doFPBuff)
+    {
+        //get references to the HP/FP text objects
+        Text hpText = myBuffCanvas.transform.Find("HPText").GetComponent<Text>();
+        Text fpText = myBuffCanvas.transform.Find("FPText").GetComponent<Text>();
+        //get references to the HP/FP arrows and disable them (they'll be activated again if their buff is actually active)
+        Image hpArrow = myBuffCanvas.transform.Find("HPArrow").GetComponent<Image>();
+        hpArrow.enabled = false;
+        Image fpArrow = myBuffCanvas.transform.Find("FPArrow").GetComponent<Image>();
+        fpArrow.enabled = false;
+
+        //apply the active buffs
+        if (doHPBuff)
+        {
+            baseHP += 2;
+            hpArrow.enabled = true;
+        }
+        if (doFPBuff)
+        {
+            baseFP += 1;
+            fpArrow.enabled = true;
+        }
+
+        //display the final HP/FP values
+        hpText.text = "" + baseHP;
+        fpText.text = "" + baseFP;
+    }
 }

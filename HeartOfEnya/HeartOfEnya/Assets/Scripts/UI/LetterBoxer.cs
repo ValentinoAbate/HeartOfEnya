@@ -79,5 +79,6 @@ public class LetterBoxer : MonoBehaviour
 
             cam.rect = rect;
         }
+        cam.ResetAspect();
     }
 }

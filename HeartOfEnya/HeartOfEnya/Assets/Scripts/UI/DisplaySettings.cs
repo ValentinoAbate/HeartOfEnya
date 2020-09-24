@@ -63,14 +63,20 @@ public class DisplaySettings : MonoBehaviour
     public void Apply()
     {
         Screen.SetResolution(resolution.width, resolution.height, mode);
-        StartCoroutine(UpdateScalingSettings());
+        StartCoroutine(UpdateScalingSettingsCr());
     }
 
-    private IEnumerator UpdateScalingSettings()
+    private void UpdateScalingSettings()
     {
-        yield return new WaitForSeconds(1);
         Camera.main.GetComponent<LetterBoxer>().PerformSizing();
         foreach (var canvasScaler in GameObject.FindObjectsOfType<CanvasScaleSelector>())
             canvasScaler.UpdateScalingMode();
+
+    }
+
+    private IEnumerator UpdateScalingSettingsCr()
+    {
+        yield return new WaitUntil(() => Screen.width == resolution.width && Screen.height == resolution.height);
+        UpdateScalingSettings();
     }
 }

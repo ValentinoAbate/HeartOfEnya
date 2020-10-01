@@ -17,7 +17,7 @@ public class BattleEventsMain : MonoBehaviour
             Debug.Log("Battle Triggers: Passives");
             battleEvents.tutPassives.flag = true;
 
-            StartCoroutine(PassivesTriggerPost(DialogueManager.main.runner));
+            StartCoroutine(PassivesTriggerPost(DialogManager.main.runner));
         }
     }
 

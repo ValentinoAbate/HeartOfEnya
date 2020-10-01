@@ -19,7 +19,9 @@ public class DraggableIngredient : MonoBehaviour
 	private BoxCollider2D potCollider; //stores a reference to the pot's collider component for quick access. Set automatically in Start()
 	private BoxCollider2D myCollider; //stores a reference to our collider component for quick access. Set automatically in Start()
 	private GameObject hoverUI; //stores a reference to the group for the hover-over UI for quick access. Set automatically in Start()
+    private GameObject buffUI; //stores a reference to the group for the in-soup buff UI for quick access. Set automatically in Start()
 	private Canvas myCanvas; //stores a reference to the child canvas object for quick access. Set automatically in Start()
+    private Canvas myBuffCanvas; //stores a reference to the child buff canvas object for quick access. Set automatically in Start()
 
     private FMODUnity.StudioEventEmitter sfxHighlight;
     private FMODUnity.StudioEventEmitter sfxCancel;
@@ -38,7 +40,9 @@ public class DraggableIngredient : MonoBehaviour
     {
     	//set up some references we'll need later
     	hoverUI = transform.Find("HoverUI").gameObject; //store a reference for later use so we don't have a fuckton of Find() calls
+        buffUI = transform.Find("BuffUI").gameObject; //same deal
         myCanvas = transform.Find("HoverUI").transform.Find("Canvas").GetComponent<Canvas>(); //store this bastard, we're gonna use it a lot
+        myBuffCanvas = transform.Find("BuffUI").transform.Find("Canvas").GetComponent<Canvas>(); //also store this bastard
         
         sfxHighlight = GameObject.Find("UIHighlight").GetComponent<FMODUnity.StudioEventEmitter>();
         sfxCancel = GameObject.Find("UICancel").GetComponent<FMODUnity.StudioEventEmitter>();
@@ -71,6 +75,7 @@ public class DraggableIngredient : MonoBehaviour
 
         //turn off the UI on startup so it only appears when moused over
         hoverUI.SetActive(false);
+        buffUI.SetActive(false);
 
         //For reasons no sane person can explain, the only way to get the fucking UI to show up is if we switch the UI Canvas
         //from "WorldSpace" render mode to "SceenSpace - Camera" and then switch it back.
@@ -78,11 +83,15 @@ public class DraggableIngredient : MonoBehaviour
         //just to see if my braces were conductive.
         myCanvas.renderMode = RenderMode.ScreenSpaceCamera;
         myCanvas.renderMode = RenderMode.WorldSpace;
+        myBuffCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+        myBuffCanvas.renderMode = RenderMode.WorldSpace;
         //adjust it's fucking coords because who the fuck cares what I entered in the inspector, toss it out at the first opportunity
         //and make me do it again. Keep the original Z value though - it's magic and I don't want to poke it lest I invite the wrath of god
         myCanvas.transform.localPosition = new Vector3(infoCanvasOffset.x, infoCanvasOffset.y, myCanvas.transform.localPosition.z);
+        myBuffCanvas.transform.localPosition = new Vector3(infoCanvasOffset.x, infoCanvasOffset.y, myBuffCanvas.transform.localPosition.z);
         //we also gotta adjust it's scale - the one it chooses by itself is a bit too large
         myCanvas.transform.localScale = new Vector3(infoCanvasScale, infoCanvasScale, 0.0f);
+        myBuffCanvas.transform.localScale = new Vector3(infoCanvasScale, infoCanvasScale, 0.0f);
     }
 
     // Update is called once per frame
@@ -107,6 +116,8 @@ public class DraggableIngredient : MonoBehaviour
     	if(inSoup)
     	{
     		pot.RemoveIngredient(this); //get out of the pot. Assume the pot will handle everything with the soup manager.
+            buffUI.SetActive(false); //turn off buff UI
+            hoverUI.SetActive(true); //turn on hover UI
     		inSoup = false;
     	}
         else
@@ -159,17 +170,8 @@ public class DraggableIngredient : MonoBehaviour
     		{
     			//b e c o m e   s o u p
     			inSoup = true; //only have to update inSoup - AddIngredient took care of our position for us
-    			bool added = SoupManager.main.EnableIngredient(ingredient); //tell the soup manager to add us
-    			//Error checking just on the offchance that somehow the ingredient could be added to the pot but not the soup manager.
-    			//That should be impossible, but better safe than sorry. 
-    			if (added) //success
-    			{
-    				Debug.Log("Ingredient " + ingredient.name + " successfully added to soup!");
-    			}
-    			else //failure
-    			{
-    				Debug.LogWarning("Ingredient " + ingredient.name + " can fit in soup, but wasn't added properly!");
-    			}
+                buffUI.SetActive(true); //turn on the buff UI
+                hoverUI.SetActive(false); //turn off the hover UI
     		}
     		else
     		{
@@ -188,8 +190,12 @@ public class DraggableIngredient : MonoBehaviour
     //detect mouse over & display the target/effect data
     private void OnMouseEnter()
     {
-    	hoverUI.SetActive(true); //turn on UI
+    	//hoverUI.SetActive(true); //turn on UI
         sfxHighlight.Play();
+        if (!inSoup)
+        {
+            hoverUI.SetActive(true);
+        }
     }
 
     //detect mouse no longer over & hide the target/effect data
@@ -206,23 +212,8 @@ public class DraggableIngredient : MonoBehaviour
     /// </summary>
     public void UpdateData()
     {
-    	/***ADD THE REST OF THIS ONCE THE UI IS ADDED***/
-
-    	//if ingredient isn't set, give an error message & abort
-    	// if(!ingredient)
-    	// {
-    	// 	Debug.Log("ERROR: No ingredient specified for button " + myID);
-    	// 	return;
-    	// }
-
-    	//
-
-    	//set name text based on ingredient
-        // Text nameTxt = transform.Find("NameText").GetComponent<Text>();
-        // nameTxt.text = ingredient.name;
+    	Debug.Log(ingredient.name + ", " + myCanvas);
         //set effect text based on ingredient
-        // Text effectTxt = transform.Find("EffectText").GetComponent<Text>();
-        Debug.Log(ingredient.name + ", " + myCanvas);
         Text effectTxt = myCanvas.transform.Find("EffectText").GetComponent<Text>();
         effectTxt.text = ingredient.GetEffectText();
         //set ingredient icon based on ingredient
@@ -232,6 +223,8 @@ public class DraggableIngredient : MonoBehaviour
         // Image charIcon = transform.Find("CharacterIcon").GetComponent<Image>();
         Image charIcon = myCanvas.transform.Find("CharacterIcon").GetComponent<Image>();
         charIcon.sprite = ingredient.characterIcon;
+        Image buffIcon = myBuffCanvas.transform.Find("CharacterIcon").GetComponent<Image>();
+        buffIcon.sprite = ingredient.characterIcon;
     }
 
     /// <summary>
@@ -243,5 +236,43 @@ public class DraggableIngredient : MonoBehaviour
     	inSoup = false; //it's safe to assume that if we're resetting our position, we're not in the soup
     	hoverUI.SetActive(false); //turn off the hover UI too
         sfxCancel.Play();
+    }
+
+    /// <summary>
+    /// Updates the buff UI with the base stats and active buffs.
+    /// Args: baseHP/baseFP are the current base stats of the target (retrieved from the prefab),
+    ///       doHPBuff/doFPBuff represent whether to apply the HP/FP buff effect and show the "buff active" arrow 
+    /// </summary>
+    public void UpdateBuffUI(int baseHP, int baseFP, bool doHPBuff, bool doFPBuff)
+    {
+        //get references to the HP/FP text objects
+        Text hpText = myBuffCanvas.transform.Find("HPText").GetComponent<Text>();
+        Text fpText = myBuffCanvas.transform.Find("FPText").GetComponent<Text>();
+        //get references to the HP/FP arrows and disable them (they'll be activated again if their buff is actually active)
+        Image hpArrow = myBuffCanvas.transform.Find("HPArrow").GetComponent<Image>();
+        hpArrow.enabled = false;
+        Image fpArrow = myBuffCanvas.transform.Find("FPArrow").GetComponent<Image>();
+        fpArrow.enabled = false;
+
+        //apply the active buffs
+        if (doHPBuff)
+        {
+            baseHP += 2;
+            hpArrow.enabled = true;
+        }
+        if (doFPBuff)
+        {
+            baseFP += 1;
+            fpArrow.enabled = true;
+        }
+
+        //display the final HP/FP values
+        hpText.text = "" + baseHP;
+        fpText.text = "" + baseFP;
+    }
+
+    public void HideBuffUI()
+    {
+        buffUI.SetActive(false);
     }
 }

@@ -7,6 +7,7 @@ public class LevelSelect : MonoBehaviour
 {
     public bool goToSoup = true;
     public Encounter mainEncounter = null;
+    public FMODUnity.StudioEventEmitter selectSfx;
     private Button[] buttons;
 
     private void Start()
@@ -26,8 +27,11 @@ public class LevelSelect : MonoBehaviour
             {
                 button.onClick.AddListener(() => GoToBattle(pData.IntToGamePhase(phase), day));
             }
+            button.onClick.AddListener(() => selectSfx.Play());
         }
-        buttons[buttons.Length - 1].onClick.AddListener(() => SceneTransitionManager.main.TransitionScenes("Credits"));
+        var creditsButton = buttons[buttons.Length - 1];
+        creditsButton.onClick.AddListener(() => SceneTransitionManager.main.TransitionScenes("Credits"));
+        creditsButton.onClick.AddListener(() => selectSfx.Play());
     }
 
     public void SetGoToSoup(bool b) => goToSoup = b;

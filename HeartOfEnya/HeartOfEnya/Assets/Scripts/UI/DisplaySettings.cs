@@ -16,7 +16,7 @@ public class DisplaySettings : MonoBehaviour
     private void Awake()
     {
         resolution = Screen.currentResolution;
-        resolutionDropDown.value = Array.IndexOf(Screen.resolutions.Where((r) => r.width / 16 == r.height / 9).ToArray(), resolution);
+        resolutionDropDown.value = Array.IndexOf(Screen.resolutions.ToArray(), resolution);
         mode = Screen.fullScreenMode;
         displayDropDown.value = (int)mode;
         selectorText.text = resolution.ToString();
@@ -42,7 +42,7 @@ public class DisplaySettings : MonoBehaviour
 
     public void NextResolution()
     {
-        int ind = Array.IndexOf(Screen.resolutions.Where((r) => r.width / 16 == r.height / 9).ToArray(), resolution);
+        int ind = Array.IndexOf(Screen.resolutions.ToArray(), resolution);
         if(++ind >= Screen.resolutions.Length)
             ind = 0;
             resolution = Screen.resolutions[ind];
@@ -63,5 +63,20 @@ public class DisplaySettings : MonoBehaviour
     public void Apply()
     {
         Screen.SetResolution(resolution.width, resolution.height, mode);
+        StartCoroutine(UpdateScalingSettingsCr());
+    }
+
+    private void UpdateScalingSettings()
+    {
+        Camera.main.GetComponent<LetterBoxer>().PerformSizing();
+        foreach (var canvasScaler in GameObject.FindObjectsOfType<CanvasScaleSelector>())
+            canvasScaler.UpdateScalingMode();
+
+    }
+
+    private IEnumerator UpdateScalingSettingsCr()
+    {
+        yield return new WaitUntil(() => Screen.width == resolution.width && Screen.height == resolution.height);
+        UpdateScalingSettings();
     }
 }

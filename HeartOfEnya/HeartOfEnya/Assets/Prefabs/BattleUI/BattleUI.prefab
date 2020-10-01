@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 3580600630761987107}
   - component: {fileID: 1121050959947647030}
   - component: {fileID: 8756886544051372604}
+  - component: {fileID: 660282373433939221}
+  - component: {fileID: 1828223705918189330}
+  - component: {fileID: 369928856497592471}
   m_Layer: 5
   m_Name: EndTurnButton
   m_TagString: Untagged
@@ -130,6 +133,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 660282373433939221}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8756886544051372604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +156,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b7aeb453c34cd45b5b8b60c7a87e0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &660282373433939221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2639279140654399159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/SFX/UI/Highlight
+  PlayEvent: 0
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
+--- !u!114 &1828223705918189330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2639279140654399159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/SFX/UI/Select
+  PlayEvent: 0
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
+--- !u!114 &369928856497592471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2639279140654399159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 660282373433939221}
+          m_MethodName: Play
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2668261366911396756
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,6 +696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5860aefa5f6dca140a880c6cea8e9c1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemiesRemainingUI: {fileID: 4921604348070583004}
   numEnemiesLeft: {fileID: 4921604347508904432}
   endTurnButton: {fileID: 1121050959947647030}
   infoPanel: {fileID: 4921604349132582660}
@@ -1675,12 +1764,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bbdeae321552014b9eb2c9cae81faeb, type: 3}
---- !u!224 &8677623354959271654 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6458132686528799975, guid: 5bbdeae321552014b9eb2c9cae81faeb,
-    type: 3}
-  m_PrefabInstance: {fileID: 2446291331012129281}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2260559479177303595 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4516520949039309866, guid: 5bbdeae321552014b9eb2c9cae81faeb,
@@ -1693,6 +1776,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15591b932de224193b89e18bc1661f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &8677623354959271654 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6458132686528799975, guid: 5bbdeae321552014b9eb2c9cae81faeb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2446291331012129281}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5658923027457203340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1817,12 +1906,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b56d73458c60af41a11eca4075824c4, type: 3}
---- !u!224 &5141605540856504223 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 707679208594457363, guid: 3b56d73458c60af41a11eca4075824c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 5658923027457203340}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &659468311461173564 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5165187240084129200, guid: 3b56d73458c60af41a11eca4075824c4,
@@ -1835,6 +1918,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe390cb10081751458fdde65a62e903c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &5141605540856504223 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 707679208594457363, guid: 3b56d73458c60af41a11eca4075824c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 5658923027457203340}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7207234992811715728
 PrefabInstance:
   m_ObjectHideFlags: 0

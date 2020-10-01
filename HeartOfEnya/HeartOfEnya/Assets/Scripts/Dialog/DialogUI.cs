@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Yarn;
@@ -52,6 +53,11 @@ namespace Dialog
         [Header("Scene Transition Fields")]
         public EndAction endAction = EndAction.DoNothing;
         public string sceneName = string.Empty;
+
+        [Header("Effects and Colors")]
+        [SerializeField] private List<TextEffect.CustomColor> customColors;
+        [SerializeField] private List<TextEffect> customEffects;
+
 
         // The last character that spoke
         private Character lastSpeaker;
@@ -234,7 +240,10 @@ namespace Dialog
             }
             // Set the dialogBox's portrait
             dialogBox.portrait.sprite = character.Portrait;
-            yield return StartCoroutine(dialogBox.PlayLine(text, scrollDelay, spaceDelay));
+
+            DialogLine sentence = new DialogLine(text, customColors, customEffects);
+
+            yield return StartCoroutine(dialogBox.PlayLine(sentence, scrollDelay, spaceDelay));
         }
 
         /// Show a list of options, and wait for the player to make a selection.
@@ -254,7 +263,7 @@ namespace Dialog
             foreach (var optionString in optionsCollection.options)
             {
                 optionButtons[i].gameObject.SetActive(true);
-                optionButtons[i].GetComponentInChildren<Text>().text = CorrectFormatting(optionString);
+                optionButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = CorrectFormatting(optionString);
                 i++;
             }
 

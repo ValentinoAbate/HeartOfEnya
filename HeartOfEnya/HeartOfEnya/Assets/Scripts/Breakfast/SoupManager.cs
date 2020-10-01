@@ -69,10 +69,7 @@ public class SoupManager : MonoBehaviour
             
             //spawn the draggable ingredient
             var dragIng = Instantiate(ingredientPrefab);
-            //connect it to the UI canvas and move it to the next open slot
-            //dragIng.transform.SetParent(parentCanvas.transform, false);
             dragIng.pot = pot;
-            //dragIng.transform.localPosition = new Vector3(ingredientX, ingredientY - (totalSpawned * ingredientOffset), 0);
             dragIng.transform.localPosition = new Vector3(ingredientX + (ingredientOffset * getOffsetScale(totalSpawned, evenMode)), ingredientY, 0);
             dragIng.ingredient = ingredients[choice]; //set its ingredient
             dragIng.transform.Find("HoverUI").transform.Find("Canvas").GetComponent<Canvas>().worldCamera = mainCamera;
@@ -87,8 +84,6 @@ public class SoupManager : MonoBehaviour
         {
             //spawn the button
             var dragIng = Instantiate(ingredientPrefab);
-            //connect it to the UI canvas and move it to the next open slot
-            //dragIng.transform.SetParent(parentCanvas.transform, false);
             dragIng.pot = pot;
             dragIng.transform.localPosition = new Vector3(ingredientX + (ingredientOffset * getOffsetScale(totalSpawned, evenMode)), ingredientY, 0);
             dragIng.ingredient = defaultIngredient; //set its ingredient

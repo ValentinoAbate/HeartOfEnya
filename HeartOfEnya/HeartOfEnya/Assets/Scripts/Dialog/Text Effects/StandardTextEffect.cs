@@ -17,7 +17,7 @@ public class StandardTextEffect : TextEffect
 
     public void SetValues(string parsingTag, string startTag, int start, List<CustomColor> customColors)
     {
-        this.parsingTag = parsingTag.Split('=')[0];
+        this.name = parsingTag.Split('=')[0];
         this.startTag = startTag;
         this.endTag = startTag.Substring(1, startTag.Length - 3);
 

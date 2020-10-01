@@ -65,7 +65,7 @@ public class DialogLine
         effectDictionary = new Dictionary<string, TextEffect>();
         effects.ForEach(effect =>
         {
-            if (!effectDictionary.ContainsKey(effect.parsingTag)) effectDictionary.Add(effect.parsingTag, effect);
+            if (!effectDictionary.ContainsKey(effect.name)) effectDictionary.Add(effect.name, effect);
             else Debug.LogError("Effect Parsing Error: multiple custom effects share the same name");
         });
 
@@ -166,7 +166,7 @@ public class DialogLine
                     // iterate from the end of the list to match the innermost open effect
                     for (int i = openEffects.Count - 1; i >= 0; i--)
                     {
-                        if (tag.match.Groups[1].Value == openEffects[i].parsingTag)
+                        if (tag.match.Groups[1].Value == openEffects[i].name)
                         {
                             openEffects[i].length = current - removedCount - openEffects[i].start;
                             customEffects.Add(openEffects[i]);
@@ -181,7 +181,7 @@ public class DialogLine
                     // iterate from the end of the list to match the innermost open effect
                     for (int i = openStandardEffects.Count - 1; i >= 0; i--)
                     {
-                        if (tag.match.Groups[1].Value == openStandardEffects[i].parsingTag)
+                        if (tag.match.Groups[1].Value == openStandardEffects[i].name)
                         {
                             openStandardEffects[i].length = current - removedCount - openStandardEffects[i].start;
                             openStandardEffects[i].endTag = tag.match.Value;

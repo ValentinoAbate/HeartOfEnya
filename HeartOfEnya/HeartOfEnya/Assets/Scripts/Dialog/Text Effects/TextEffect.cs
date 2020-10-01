@@ -10,8 +10,6 @@ using System;
 
 public abstract class TextEffect : ScriptableObject
 {
-    public string parsingTag;
-
     [HideInInspector]
     public int start;
     [HideInInspector]
@@ -62,7 +60,7 @@ public abstract class TextEffect : ScriptableObject
     {
         //TextEffect copy = (TextEffect)Activator.CreateInstance(this.GetType());
         TextEffect copy = (TextEffect)CreateInstance(this.GetType().Name);
-        copy.parsingTag = this.parsingTag;
+        copy.name = this.name;
         copy.start = this.start;
         copy.length = this.length;
         copy.isValid = this.isValid;

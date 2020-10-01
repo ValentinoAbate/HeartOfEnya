@@ -20,6 +20,7 @@ public class TextShake : TextEffect
     public override void Apply(TextMeshProUGUI text)
     {
         base.Apply(text);
+        Debug.Log($"my name is {name}");
     }
 
     public override void Run(TextMeshProUGUI text)
@@ -28,7 +29,7 @@ public class TextShake : TextEffect
 
         for (int i = start; i < start + length; i++)
         {
-            if (i > text.textInfo.characterCount) break;
+            if (i >= text.textInfo.characterCount) break;
             TMP_CharacterInfo character = text.textInfo.characterInfo[i];
 
             Vector2 offset = new Vector2(
@@ -37,7 +38,6 @@ public class TextShake : TextEffect
             //offset = new Vector3(0, 1, 0);
             if (character.character != ' ' && character.character != '\0')
             {
-                Debug.Log(character.character + ":" + character.vertexIndex);
                 for (int k = 0; k < 4; k++)
                 {
                     text

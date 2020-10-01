@@ -205,6 +205,11 @@ public class DialogLine
             effect.length = cleanText.Length - effect.start;
             standardEffects.Add(effect);
         }
+        foreach(TextEffect effect in openEffects)
+        {
+            effect.length = cleanText.Length - effect.start;
+            customEffects.Add(effect);
+        }
     }
     
     public void UpdateEffects(TextMeshProUGUI text)

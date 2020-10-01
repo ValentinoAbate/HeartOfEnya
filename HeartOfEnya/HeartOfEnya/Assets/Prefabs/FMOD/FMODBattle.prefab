@@ -379,6 +379,7 @@ Transform:
   m_Children:
   - {fileID: 2580693633287966070}
   - {fileID: 8334703885375756381}
+  - {fileID: 1192323091628945075}
   m_Father: {fileID: 8938799820228471625}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -490,6 +491,53 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
+--- !u!1 &4644531384186347612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1192323091628945075}
+  - component: {fileID: 4295814013235236218}
+  m_Layer: 0
+  m_Name: GlobalNewWave
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1192323091628945075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644531384186347612}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3540085923719276708}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4295814013235236218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644531384186347612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b0e04e2572f9a940a47465f6f3c2f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  parameter: New Wave
+  TriggerEvent: 1
+  value: 0
 --- !u!1 &5148204035930599813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,8 +1050,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c6cad45a20aa7428f94193debca708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newWaveLength: 1.5
   music: {fileID: 6326528829966886475}
   storm: {fileID: 652576428286471297}
   abs0Music: {fileID: 8768142321196099194}
   textPlaying: {fileID: 8203992725065556494}
   enemyTurn: {fileID: 5697159598975590571}
+  newWave: {fileID: 4295814013235236218}

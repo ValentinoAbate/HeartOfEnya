@@ -336,6 +336,8 @@ public class SpawnPhase : Phase
 
         if (pData.absoluteZeroPhase1Defeated)
         {
+            FMODBattle.main.TriggerNewWave();
+
             for(int i = 0; i < abs0ReinforcementsSpawnNumber; ++i)
             {
                 if (absolute0Bank.Count <= 0)
@@ -348,6 +350,7 @@ public class SpawnPhase : Phase
                 var spawnTile = Instantiate(spawnTileEnemyPrefab).GetComponent<EventTileSpawn>();
                 LogEventTile(spawnData, spawnTile);
                 absolute0Bank.RemoveAt(0);
+
                 yield return new WaitForSeconds(delaySeconds);
             }
             yield break;
@@ -358,6 +361,8 @@ public class SpawnPhase : Phase
         // Don't attempt to declare if there is no next wave
         if (NextWave == null)
             yield break;
+
+        FMODBattle.main.TriggerNewWave();
 
         // Log playtest data from previous wave
         logger.testData.NewDataLog(
@@ -380,6 +385,7 @@ public class SpawnPhase : Phase
         // Repeat the last x waves according to the number on the encounter
         if (NextWave == null)
             waveNum -= CurrEncounter.repeatLastWaves;
+
     }
 
     private IEnumerator Spawn()

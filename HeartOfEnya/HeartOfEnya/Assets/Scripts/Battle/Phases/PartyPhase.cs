@@ -41,6 +41,9 @@ public class PartyPhase : Phase
             EndBattle();
             return null;
         }
+
+        FMODBattle.main.StartPlayerTurn();
+
         return StartCoroutine(OnPhaseStartCr());
     }
 

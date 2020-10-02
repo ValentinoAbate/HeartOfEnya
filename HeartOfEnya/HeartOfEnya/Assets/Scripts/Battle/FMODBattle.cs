@@ -58,8 +58,13 @@ public class FMODBattle : MonoBehaviour
     public StudioEventEmitter storm;
 
     [Header("Effects")]
+    [SerializeField]
     [FMODUnity.EventRef]
-    public string EnemyTurnTransition;
+    private string EnemyTurnTransition;
+
+    [SerializeField]
+    [FMODUnity.EventRef]
+    private string PlayerTurnTransition;
 
     [Header("Parameter Triggers")]
     [SerializeField]
@@ -90,6 +95,11 @@ public class FMODBattle : MonoBehaviour
     {
         NewWave = true;
         Invoke("TurnOffNewWave", newWaveLength);
+    }
+
+    public void StartPlayerTurn()
+    { 
+        FMODUnity.RuntimeManager.PlayOneShot(PlayerTurnTransition);
     }
 
     public void StartEnemyTurn()

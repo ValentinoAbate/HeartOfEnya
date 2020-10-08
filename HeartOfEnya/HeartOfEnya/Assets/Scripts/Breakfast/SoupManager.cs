@@ -93,6 +93,13 @@ public class SoupManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        //Invoke the tutorial event. Need to do it here in Start() because otherwise we can't be sure that SoupEvents.main
+        //has awoken yet and is non-null (especially since Unity seems determined to initialize us before the event manager) 
+        SoupEvents.main.tutorialIntro._event.Invoke();
+    }
+
     /// <summary>
     /// Used to figure out where to place each new ingredient.
     /// Args:

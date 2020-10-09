@@ -1389,12 +1389,99 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialDay1: 0
+  grabIngredientText: Grab an ingredient and drag it into the pot
+  buffExplainText: When used in soup, ingredients will raise the HP or FP of a character
+    for the next battle
+  removeIngredientText: Drag the ingredient out of the pot to remove it
+  threeIngredientText: You can put up to 3 ingredients into the pot
+  experimentText: Each ingredient does something different, so experiment!
+  makeSoupText: When you've made your choice, press the "Make Soup" button
   tutorialIntro:
     _event:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 998138098}
           m_MethodName: IntroTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  buffExplanation:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 998138098}
+          m_MethodName: BuffExplainTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  removeIngredient:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 998138098}
+          m_MethodName: RemoveIngredientTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  threeIngredients:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 998138098}
+          m_MethodName: ThreeIngredientsTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  experiment:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 998138098}
+          m_MethodName: ExperimentTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  makeSoup:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 998138098}
+          m_MethodName: MakeSoupTrigger
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

@@ -97,8 +97,8 @@ public class DraggableIngredient : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    	//handle drag-&-drop
-        if (dragging)
+        //handle drag-&-drop
+        if (dragging && SoupManager.main.AllowInteraction)
         {
         	//because everything's so fucking small I've gotta turn these screenspace coords into worldspace
         	//lest the ingredient ping off into space like a goddamn rocket the second you click it
@@ -110,6 +110,17 @@ public class DraggableIngredient : MonoBehaviour
     //if clicked, start dragging
     private void OnMouseDown()
     {
+        //abort if player interaction is disabled
+        if (!SoupManager.main.AllowInteraction)
+        {
+            return;
+        }
+        //another abort, this time to prevent non-removal interactions while only removal from soup is allowed (for the tutorial)
+        if (!inSoup && SoupManager.main.AllowOnlyRemove)
+        {
+            return;
+        }
+
     	//when clicked, start dragging the object
     	dragging = true;
     	//if we're in the soup, remove ourselves
@@ -159,6 +170,17 @@ public class DraggableIngredient : MonoBehaviour
     //if unclicked, stop dragging
     private void OnMouseUp()
     {
+        //abort if player interaction is disabled
+        if (!SoupManager.main.AllowInteraction)
+        {
+            return;
+        }
+        //another abort, this time to prevent non-removal interactions while only removal from soup is allowed (for the tutorial)
+        if (!inSoup && !dragging && SoupManager.main.AllowOnlyRemove)
+        {
+            return;
+        }
+
     	//when unclicked, stop dragging the object
     	dragging = false;
     	
@@ -184,15 +206,22 @@ public class DraggableIngredient : MonoBehaviour
     	{
     		//we were not dropped in the soup
     		ResetPosition();//transform.position = startPos; //go back home and cry because you missed the pot
+            SoupEvents.main.threeIngredients._event.Invoke(); //attempt to trigger tutorial progression
     	}
     }
 
     //detect mouse over & display the target/effect data
     private void OnMouseEnter()
     {
+        //abort if player interaction is disabled
+        if (!SoupManager.main.AllowInteraction)
+        {
+            return;
+        }
+
     	//hoverUI.SetActive(true); //turn on UI
         sfxHighlight.Play();
-        if (!inSoup)
+        if (!inSoup && !SoupManager.main.AllowOnlyRemove)
         {
             hoverUI.SetActive(true);
         }
@@ -201,6 +230,12 @@ public class DraggableIngredient : MonoBehaviour
     //detect mouse no longer over & hide the target/effect data
     private void OnMouseExit()
     {
+        //abort if player interaction is disabled
+        if (!SoupManager.main.AllowInteraction)
+        {
+            return;
+        }
+
     	if(!inSoup)
     	{
     		hoverUI.SetActive(false); //turn off UI

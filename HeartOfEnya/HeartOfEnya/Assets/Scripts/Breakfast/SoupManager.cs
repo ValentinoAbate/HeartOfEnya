@@ -29,6 +29,42 @@ public class SoupManager : MonoBehaviour
 
     //internal variables used for state tracking, etc.
     private List<Ingredient> activeIngredients = new List<Ingredient>(); // selected ingredients
+    private bool allowInteraction = true; //whether to let the user interact with ingredients, the pot, etc. Only used during the tutorial.
+    public bool AllowInteraction //use a property to grant access to allowInteraction and warn of its terrible power
+    {
+        get { return allowInteraction; }
+        set
+        {
+            allowInteraction = value;
+            if (!allowInteraction)
+            {
+                //since disabling interaction could cause all sorts of fun new errors, throw a warning to make it easier to diagnose "I forgot to turn it back on" errors
+                Debug.LogWarning("Disabling Interaction! Remember to turn it back on!");
+            }
+            else
+            {
+                Debug.LogWarning("Interaction re-enabled! No problems here!");
+            }
+        }
+    }
+    private bool allowOnlyRemove = false; //similar to allowInteraction, but prevents all player actions EXCEPT removing an ingredient from the pot. Only used during the tutorial.
+    public bool AllowOnlyRemove //same deal - make sure all use of this potentially destructive property is VERY obvious to prevent terrible new bugs
+    {
+        get { return allowOnlyRemove; }
+        set
+        {
+            allowOnlyRemove = value;
+            if (allowOnlyRemove)
+            {
+                //since disabling interaction could cause all sorts of fun new errors, throw a warning to make it easier to diagnose "I forgot to turn it back on" errors
+                Debug.LogWarning("Disabling All Interactions Except Removal! Remember to turn them back on!");
+            }
+            else
+            {
+                Debug.LogWarning("Non-removal blacklist disabled! No problems here!");
+            }
+        }
+    }
 
     private FMODUnity.StudioEventEmitter sfxCancel;
     private FMODUnity.StudioEventEmitter sfxPlaceItem;
@@ -91,6 +127,13 @@ public class SoupManager : MonoBehaviour
             
             totalSpawned++;
         }
+    }
+
+    void Start()
+    {
+        //Invoke the tutorial event. Need to do it here in Start() because otherwise we can't be sure that SoupEvents.main
+        //has awoken yet and is non-null (especially since Unity seems determined to initialize us before the event manager) 
+        SoupEvents.main.tutorialIntro._event.Invoke();
     }
 
     /// <summary>

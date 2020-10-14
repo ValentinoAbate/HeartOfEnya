@@ -101,6 +101,9 @@ public class Pot : MonoBehaviour
                 }
             }
             
+            //attempt to trigger the tutorial event that runs after you add your first ingredient
+            SoupEvents.main.buffExplanation._event.Invoke();
+
             return true;
     	}
     	else
@@ -142,6 +145,8 @@ public class Pot : MonoBehaviour
                         break;
                 }
             }
+            //attempt to trigger tutorial progression
+            //SoupEvents.main.threeIngredients._event.Invoke();
     	}
     	else
     	{
@@ -155,6 +160,12 @@ public class Pot : MonoBehaviour
     /// </summary>
     private void RemoveMostRecent(InputAction.CallbackContext context)
     {
+        //abort if player interaction is disabled
+        if (!SoupManager.main.AllowInteraction)
+        {
+            return;
+        }
+
         if (chosenIngredients.Count > 0) //only proceed if we have active ingredients
         {
         	DraggableIngredient mostRecent = chosenIngredients[chosenIngredients.Count - 1];

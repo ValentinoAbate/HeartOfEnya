@@ -48,11 +48,25 @@ public class FMODBattle : MonoBehaviour
         }
     }
 
+    [Header("Music")]
     [SerializeField]
     private StudioEventEmitter music;
-    public StudioEventEmitter storm;
     [SerializeField]
     private StudioEventEmitter abs0Music;
+
+    [Header("Ambient")]
+    public StudioEventEmitter storm;
+
+    [Header("Effects")]
+    [SerializeField]
+    [FMODUnity.EventRef]
+    private string EnemyTurnTransition;
+
+    [SerializeField]
+    [FMODUnity.EventRef]
+    private string PlayerTurnTransition;
+
+    [Header("Parameter Triggers")]
     [SerializeField]
     private StudioGlobalParameterTrigger textPlaying;
     [SerializeField]
@@ -83,5 +97,24 @@ public class FMODBattle : MonoBehaviour
         Invoke("TurnOffNewWave", newWaveLength);
     }
 
+    public void StartPlayerTurn()
+    { 
+        FMODUnity.RuntimeManager.PlayOneShot(PlayerTurnTransition);
+    }
+
+    public void StartEnemyTurn()
+    {
+        storm.SetParameter("Enemy Turn", 1);
+        FMODUnity.RuntimeManager.PlayOneShot(EnemyTurnTransition);
+        InEnemyTurn = true;
+    }
+
+    public void EndEnemyTurn()
+    {
+        storm.SetParameter("Enemy Turn", 0);
+        InEnemyTurn = false;
+    }
+
     private void TurnOffNewWave() => NewWave = false;
+
 }

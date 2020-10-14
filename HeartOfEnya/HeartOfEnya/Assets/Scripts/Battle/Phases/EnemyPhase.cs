@@ -14,6 +14,9 @@ public class EnemyPhase : Phase
         RemoveDead();
         Enemies.ForEach((enemy) => enemy.OnPhaseEnd());
         BattleEvents.main.noEnemiesLeftMainPhase._event.Invoke();
+
+        
+        FMODBattle.main.EndEnemyTurn();
         return null;
     }
 
@@ -25,8 +28,8 @@ public class EnemyPhase : Phase
         // Sort by turn order
         Enemies.Sort(CompareTurnOrder);
         SnowParticleController.main.Intensity = 1;
-        FMODBattle.main.storm.SetParameter("Enemy Turn", 1);
-        FMODBattle.main.InEnemyTurn = true;
+        
+        FMODBattle.main.StartEnemyTurn();
         //FMODBattle.main.music.SetParameter("Text Playing", 1);
         return StartCoroutine(PlayTurns());
     }

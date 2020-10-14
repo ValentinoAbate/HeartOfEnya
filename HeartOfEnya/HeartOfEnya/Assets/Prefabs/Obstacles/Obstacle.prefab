@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 6588326718544028018}
   - component: {fileID: 6806669522555439619}
   - component: {fileID: 1061692599890477573}
+  - component: {fileID: 8611281959361579565}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Untagged
@@ -187,8 +188,7 @@ MonoBehaviour:
   passiveDescription: 
   damageFxPrefab: {fileID: 0}
   deathFxPrefab: {fileID: 0}
-  sfxDispatch: {fileID: 6588326718544028018}
-  moveSfx: {fileID: 8300000, guid: 1273e667312313c4e8f744eb59708eec, type: 3}
+  moveSfxEvent: {fileID: 8611281959361579565}
   damageSfxEvent: {fileID: 6806669522555439619}
   deathSfxEvent: {fileID: 1061692599890477573}
   chargeSfxEvent: {fileID: 0}
@@ -277,6 +277,29 @@ MonoBehaviour:
   Event: event:/SFX/Battle/Obstacles/Box/Destroy Box
   PlayEvent: 0
   StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
+--- !u!114 &8611281959361579565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6271636570576552739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/SFX/Battle/Obstacles/Box/Push Box
+  PlayEvent: 0
+  StopEvent: 2
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0

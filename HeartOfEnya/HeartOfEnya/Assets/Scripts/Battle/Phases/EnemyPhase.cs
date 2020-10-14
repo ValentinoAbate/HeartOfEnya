@@ -28,8 +28,10 @@ public class EnemyPhase : Phase
         // Sort by turn order
         Enemies.Sort(CompareTurnOrder);
         SnowParticleController.main.Intensity = 1;
-        
-        FMODBattle.main.StartEnemyTurn();
+        if(Enemies.Count > 0)
+        {
+            FMODBattle.main.StartEnemyTurn();
+        }
         //FMODBattle.main.music.SetParameter("Text Playing", 1);
         return StartCoroutine(PlayTurns());
     }

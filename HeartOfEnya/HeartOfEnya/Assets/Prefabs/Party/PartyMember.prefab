@@ -188,10 +188,10 @@ GameObject:
   - component: {fileID: 844067722643252201}
   - component: {fileID: 6808373308506984039}
   - component: {fileID: 7116945294850344080}
-  - component: {fileID: 7649253792842341975}
   - component: {fileID: 4728739854517241226}
   - component: {fileID: 3014986940448015175}
   - component: {fileID: 629191863079778173}
+  - component: {fileID: 7443250283443310555}
   m_Layer: 0
   m_Name: PartyMember
   m_TagString: Untagged
@@ -244,8 +244,8 @@ MonoBehaviour:
   damageFxPrefab: {fileID: 8118972412587649372, guid: c7a01ded067df4d4d9e77af5296d5c60,
     type: 3}
   deathFxPrefab: {fileID: 0}
-  sfxDispatch: {fileID: 7649253792842341975}
   moveSfx: {fileID: 8300000, guid: 1273e667312313c4e8f744eb59708eec, type: 3}
+  moveSfxEvent: {fileID: 7443250283443310555}
   damageSfxEvent: {fileID: 4728739854517241226}
   deathSfxEvent: {fileID: 3014986940448015175}
   chargeSfxEvent: {fileID: 629191863079778173}
@@ -332,20 +332,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7649253792842341975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5997579284185976457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac751914963ad3741b204cd5f2adf152, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sfxPlayerPrefab: {fileID: 5694999867227550884, guid: 4e3cbc787db179a4e895032d270eac16,
-    type: 3}
 --- !u!114 &4728739854517241226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,6 +394,29 @@ MonoBehaviour:
   Event: event:/SFX/Battle/Soleil/Soleil Charge attack
   PlayEvent: 0
   StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
+--- !u!114 &7443250283443310555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5997579284185976457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/SFX/Battle/Obstacles/Box/Push Box
+  PlayEvent: 0
+  StopEvent: 2
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0

@@ -12,8 +12,7 @@ public class MoveEffectPushToRightSide : ActionEffect
         for(int i = 0; i < squares; ++i)
             if (!BattleGrid.main.MoveAndSetWorldPos(target, target.Pos + direction))
                 break;
-        var src = GetComponent<AudioSource>();
-        src.PlayOneShot(target.moveSfx);
-        yield return new WaitForSeconds(target.moveSfx.length);
+        target.moveSfxEvent.Play();
+        yield return new WaitForSeconds(effectWaitTime);
     }
 }

@@ -34,9 +34,7 @@ public abstract class Combatant : FieldObject, IPausable
     public string passiveDescription = string.Empty;
     public GameObject damageFxPrefab;
     public GameObject deathFxPrefab;
-    // Debug Audio fields while we don't have FMOD setup
-    public SfxPlayerDispatcher sfxDispatch;
-    public AudioClip moveSfx;
+    public StudioEventEmitter moveSfxEvent;
     public StudioEventEmitter damageSfxEvent;
     public StudioEventEmitter deathSfxEvent;
     public StudioEventEmitter chargeSfxEvent;

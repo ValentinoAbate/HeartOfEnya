@@ -76,6 +76,9 @@ public abstract class ActionEffect : MonoBehaviour
             MoveData tgtData = toMove.Pop();
             if (dealDamage)
             {
+                // Exit early if doing no damage
+                if (moveDamage <= 0)
+                    yield break;
                 //copied from DamageEffect
                 Debug.Log(user.DisplayName + " dealt " + moveDamage + " damage to " + tgtData.target.DisplayName + " with " + name);
                 tgtData.target.Damage(moveDamage);
@@ -90,9 +93,8 @@ public abstract class ActionEffect : MonoBehaviour
         }
         if (!dealDamage)
         {
-            var src = GetComponent<AudioSource>();
-            src.PlayOneShot(target.moveSfx);
-            yield return new WaitForSeconds(target.moveSfx.length);
+            target.moveSfxEvent.Play();
+            yield return new WaitForSeconds(effectWaitTime);
         }
     }
 

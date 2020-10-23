@@ -129,7 +129,7 @@ public class BattleEventsDay2 : MonoBehaviour
 
         // end the turn manually
         PhaseManager.main.NextPhase();
-        BattleUI.main.ShowPrompt("Pull the box with 4 Hp closer.");
+        BattleUI.main.ShowPrompt("Pull a box closer.");
         battleEvents.Unpause();
     }
 
@@ -148,22 +148,83 @@ public class BattleEventsDay2 : MonoBehaviour
 
     private IEnumerator ChokePointsTriggerPost(DialogueRunner runner)
     {
-        yield return StartCoroutine(PhaseManager.main.SpawnPhase.DeclareNextWave());
-        DialogManager.main.runner.StartDialogue("TutChokepoint");
+        runner.StartDialogue("TutChokepoint");
         yield return new WaitWhile(() => runner.isDialogueRunning);
 
+        // post-condition: reset actions NEED TO SET PROPER VALUES
+        BattleUI.main.MoveableTiles.Clear();
+        BattleUI.main.TargetableTiles.Clear();
+
+        // make bapy pull the lower box to create a choke point NEED TO SET PROPER VALUES
+        BattleUI.main.MoveableTiles.Add(new Pos(2, 3));
+        BattleUI.main.TargetableTiles.Add(new Pos(2, 2));
+
+        // Declare next wave and end the phase to prevent waiting around
+        PhaseManager.main.NextPhase();
+        battleEvents.Unpause();
+    }
+
+    public void SpawnBlockTrigger()
+    {
+        // only run after the previous trigger has finished
+        if (battleEvents.tutorialDay2 && battleEvents.tutChokePoints.flag && !battleEvents.tutSpawnBlock.flag)
+        {
+            battleEvents.Pause();
+
+            Debug.Log("Battle Triggers: Spawn Block");
+            battleEvents.tutSpawnBlock.flag = true;
+            StartCoroutine(SpawnBlockTriggerPost(DialogManager.main.runner));
+        }
+    }
+
+    private IEnumerator SpawnBlockTriggerPost(DialogueRunner runner)
+    {
+        runner.StartDialogue("TutSpawnBlock");
+        yield return new WaitWhile(() => runner.isDialogueRunning);
+
+
+        PhaseManager.main.NextPhase();
+        BattleUI.main.ShowPrompt("Try pushing a box to cover up the Frost’s spawn point.");
+        battleEvents.Unpause();
+    }
+
+    public void SpawnBlockEndTurnTrigger()
+    {
+        // only run after the previous trigger has finished
+        if (battleEvents.tutorialDay2 && battleEvents.tutSpawnBlock.flag && !battleEvents.tutSpawnBlockEndTurn.flag)
+        {
+            battleEvents.tutSpawnBlockEndTurn.flag = true;
+            PhaseManager.main.NextPhase();
+        }
+    }
+
+    public void CelebrateSpawnBlockTrigger()
+    {
+        // only run after the previous trigger has finished
+        if (battleEvents.tutorialDay2 && battleEvents.tutSpawnBlockEndTurn.flag && !battleEvents.tutBapyCelebrateSpawnBlock.flag)
+        {
+            battleEvents.Pause();
+
+            Debug.Log("Battle Triggers: Choke Points");
+            battleEvents.tutBapyCelebrateSpawnBlock.flag = true;
+            StartCoroutine(CelebrateSpawnBlockTriggerPost(DialogManager.main.runner));
+        }
+    }
+
+    private IEnumerator CelebrateSpawnBlockTriggerPost(DialogueRunner runner)
+    {
+        runner.StartDialogue("TutBapyCelebrateSpawnBlock");
+        yield return new WaitWhile(() => runner.isDialogueRunning);
         // post-condition: re-enable all moves
         BattleUI.main.MoveableTiles.Clear();
         BattleUI.main.TargetableTiles.Clear();
         battleEvents.partyPhase.PartyWideClearSoloActions();
 
-        // re-enable all characters and run tiles
-        string[] units = {"Raina", "Soleil"};
+        // re-enable all characters
+        string[] units = { "Raina", "Soleil" };
         battleEvents.partyPhase.EnableUnits(new List<string>(units));
-        
-        // Declare next wave and end the phase to prevent waiting around
 
-        PhaseManager.main.NextPhase();
+        // Enable end turn button and run tiles
         BattleUI.main.ShowEndTurnButton(true);
         BattleUI.main.EnableRunTiles();
         battleEvents.Unpause();

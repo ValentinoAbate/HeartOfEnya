@@ -103,7 +103,16 @@ public class PartyPhase : Phase
             // tutorial event at the start of the third turn
             BattleEvents.main.tutEndTurnButton._event.Invoke();
         }
-        if(PhaseManager.main.EnemyPhase.Enemies.Find((e) => e.action.DisplayName == "Bludgeon") != null)
+        else if (PhaseManager.main.Turn == 5)
+        {
+            // tutorial event at the start of the fifth turn
+            BattleEvents.main.tutSpawnBlock._event.Invoke();
+        }
+        else if(PhaseManager.main.Turn == 6)
+        {
+            BattleEvents.main.tutBapyCelebrateSpawnBlock._event.Invoke();
+        }
+        if (PhaseManager.main.EnemyPhase.Enemies.Find((e) => e.action.DisplayName == "Bludgeon") != null)
         {
             BattleEvents.main.tutEnemyPush._event.Invoke();
         }
@@ -257,6 +266,9 @@ public class PartyPhase : Phase
                 break;
             case 4:
                 BattleEvents.main.tutChokePoints._event.Invoke();
+                break;
+            case 5:
+                BattleEvents.main.tutSpawnBlockEndTurn._event.Invoke();
                 break;
         }
 

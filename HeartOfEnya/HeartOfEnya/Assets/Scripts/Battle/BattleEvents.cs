@@ -49,6 +49,9 @@ public class BattleEvents : MonoBehaviour
     public BattleEvent tutMoveDamage;
     public BattleEvent tutPulling;
     public BattleEvent tutChokePoints;
+    public BattleEvent tutSpawnBlock;
+    public BattleEvent tutSpawnBlockEndTurn;
+    public BattleEvent tutBapyCelebrateSpawnBlock;
     public BattleEvent tutEnemyPush;
 
     [Header("Tutorial Day 3")]

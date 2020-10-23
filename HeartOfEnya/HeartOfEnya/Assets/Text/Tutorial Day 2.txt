@@ -1,12 +1,15 @@
 ﻿===
 
+
 title:TutPush
 Tags:
 
+
 ---
 
+
 -> Today will be a difficult battle again.
-    -> Don’t let your guard down.
+        -> Don’t let your guard down.
 Bapy: ...
 Bapy: I-I think I’m ready to fight today.
 Soleil: Are you sure?
@@ -14,19 +17,24 @@ Raina (battle): It’s okay to stay back.
 Raina: I want to make sure you’ll be safe.
 Bapy: I-I’ll be careful…
 -> You can help Raina and Soleil out without directly engaging the Frost.
-    -> Try using your hoe to move things around!
+        -> Try using your hoe to move things around!
 Bapy: I-I think I can do that...
 // NON-DIEGETIC: Introduction to move effects
 Tutorial: Some actions can be used to move objects.
 Tutorial: They work on obstacles, allies, and enemies alike.
 Tutorial: Try having Bapy push the box in front of them
+//PROMPT: Have Bapy push the box in front of them.
+
 
 ===
+
 
 title:TutChainedMovement
 Tags:
 
+
 ---
+
 
 Bapy: I did it!
 Bapy: Let me try that again.
@@ -35,13 +43,18 @@ Bapy: I-I think I'm strong enough to move both.
 // NON-DIEGETIC: explanation of chained movement effects
 Tutorial: If you try to push an object into another object, they both move.
 Tutorial: Try pushing the box again to move it and the box behind it.
+//PROMPT: Have Bapy move to the box and push it again.
+
 
 ===
+
 
 title:TutMoveDamage
 Tags:
 
+
 ---
+
 
 Bapy: It worked!
 -> Now try pushing the box one more time.
@@ -50,45 +63,91 @@ Bapy: I don’t know if I’ll be able to push any further.
 // NON-DIEGETIC: explanation of movement damage
 Tutorial: Some objects, like those pillars, can’t be moved.
 Tutorial: If you try to push an object into one of these objects, it takes damage.
+//PROMPT: Try pushing the box into the pillar to damage it.
+
 
 ===
+
 
 title:TutPull
 Tags:
 
+
 ---
 
+
 Bapy: I think I’m getting the hang of this!
-Bapy: I have an idea.
+-> That isn’t all.
+        -> You can also use your hoe to pull things closer!
 // NON-DIEGETIC: explanation of pulling effects and Bapy’s move target pattern
 Tutorial: Bapy can pull objects as well as push them.
 Tutorial: When you target an adjacent object with Push/Pull, it will be pushed.
 Tutorial: However, if you target a distant object it will be pulled.
+//PROMPT: Pull the box with 4 Hp closer.
+
 
 ===
+
 
 title:TutChokepoint
 tags:
 
+
 ---
 
--> The Frost will be here soon.
-        -> You may be able to block off their approach by moving a box.
-// NON-DIEGETIC: explanation of obstacles as resources
-Tutorial: Obstacles on the map can be used in your favor.
-Tutorial: They can block enemy paths to better control who they attack,
-Tutorial: or they can be used to prevent enemies from attacking all together.
-Tutorial: Try pulling one more box to create a choke point.
+
+-> Great job!
+        -> Although Obstacles can get in your way, they can also be an advantage.
+                -> Use Obstacles to prevent the Frost from attacking all together.
+// Spacer
+
 
 ===
+
+
+title:TutSpawnBlock
+tags:
+
+
+---
+
+
+-> The Frost will be here soon.
+        -> We should be careful.
+Bapy: …
+Bapy: I have an idea.
+//PROMPT: Try pushing a box to cover up the Frost’s spawn point
+
+
+===
+
+
+title:TutBapyCelebrateSpawnBlock
+tags:
+
+
+---
+//Trigger after enemy spawn is blocked off
+Bapy: I stopped the Frost!
+Raina (battle): Great work.
+Raina: ...now come back before they get any closer.
+// NON-DIEGETIC: explanation of obstacles as resources
+Tutorial: If an object blocks a spawn tile, the enemy won’t appear that turn.
+Tutorial: However, the object will take 2 damage every turn it blocks the tile.
+
+
+===
+
 
 title:TutEnemyPush
 Tags:
 
+
 ---
--> Watch out for that Frost. It can move things it attacks.
+-> Watch out for that Frost. It can push things it attacks.
 // NON-DIEGETIC: a line about enemies having move effects and that the player should watch out!
 Tutorial: Bapy isn’t the only one capable of pushing objects.
 Tutorial: Watch out for the purple enemies who can push you around!
+
 
 ===

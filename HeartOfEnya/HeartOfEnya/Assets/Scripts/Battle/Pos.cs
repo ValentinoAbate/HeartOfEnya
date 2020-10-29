@@ -10,7 +10,6 @@ using System;
 public struct Pos : IEquatable<Pos>
 {
     #region Static Symbolic Constants
-
     public static Pos Zero { get; } = new Pos(0, 0);
     public static Pos One { get; } = new Pos(1, 1);
     public static Pos Right { get; } = new Pos(0, 1);
@@ -18,6 +17,7 @@ public struct Pos : IEquatable<Pos>
     public static Pos Up { get; } = new Pos(-1, 0);
     public static Pos Down { get; } = new Pos(1, 0);
     public static Pos OutOfBounds { get; } = new Pos(-100, -100);
+    public static Pos[] Directions { get; } = new Pos[] { Up, Down, Left, Right };
 
     #endregion
 
@@ -46,7 +46,7 @@ public struct Pos : IEquatable<Pos>
         {
             if (from.row == to.row)
                 return Zero;
-            return from.row > to.col ? Up : Down;
+            return from.row > to.row ? Up : Down;
         }          
         else
             return from.col > to.col ? Left : Right;
@@ -95,6 +95,20 @@ public struct Pos : IEquatable<Pos>
     public static Pos PointwiseProduct(Pos p1, Pos p2)
     {
         return new Pos(p1.row * p2.row, p1.col * p2.col);
+    }
+
+    public static Pos Average(IEnumerable<Pos> positions)
+    {
+        Pos sum = Pos.Zero;
+        int count = 0;
+        foreach(var pos in positions)
+        {
+            sum += pos;
+            ++count;
+        }
+        if (count == 0)
+            return OutOfBounds;
+        return new Pos(sum.row / count, sum.col / count);
     }
 
     #endregion

@@ -1,6 +1,9 @@
 # Heart of Enya
-A repository for prototyping Heart of Enya
+Repository for Heart of Enya, a narrative SRPG made in Unity.
 
-Full game repository is located at: https://github.com/HeartOfEnya/HeartOfEnya
+# Version Info
+Unity Version: 2019.3.0f6
+Game Version: 1.2.0
 
-Game released at: https://heartofenya.itch.io/heart-of-enya
+# Release
+itch.io release: https://heartofenya.itch.io/heart-of-enya

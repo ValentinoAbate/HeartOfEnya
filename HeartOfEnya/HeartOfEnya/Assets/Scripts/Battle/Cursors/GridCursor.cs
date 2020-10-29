@@ -8,12 +8,6 @@ using UnityEngine;
 /// </summary>
 public class GridCursor : Cursor
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        Highlight(Pos);
-    }
-
     public override void Highlight(Pos newPos)
     {
         if (newPos == Pos)
@@ -21,10 +15,10 @@ public class GridCursor : Cursor
         if (!BattleGrid.main.IsLegal(newPos))
             return;
 
-        BattleGrid.main.GetObject(Pos)?.Highlight();
+        BattleGrid.main.Get<FieldObject>(Pos)?.Highlight();
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(Pos);
-        BattleGrid.main.GetObject(Pos)?.UnHighlight();
+        BattleGrid.main.Get<FieldObject>(Pos)?.UnHighlight();
     }
 
     public override void ProcessInput()

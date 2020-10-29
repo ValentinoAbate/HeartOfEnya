@@ -5,7 +5,7 @@ using UnityEngine;
 public class ActionConditionSpecialAction : ActionCondition
 {
     public ActionMenu.SpecialAction action;
-    public override bool CheckCondition(ActionMenu menu, PartyMember user)
+    protected override bool CheckConditionFn(ActionMenu menu, PartyMember user)
     {
         return user.ActionMenu.IsSpecialActionEnabled(action);
     }

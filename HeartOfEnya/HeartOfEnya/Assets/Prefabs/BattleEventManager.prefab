@@ -1,0 +1,762 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8324923904088594698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4044083608772402107}
+  - component: {fileID: 3274595405748874241}
+  - component: {fileID: 740124394214506185}
+  - component: {fileID: 7797176595401580605}
+  - component: {fileID: 7450389100152843022}
+  - component: {fileID: 1978365551954952731}
+  - component: {fileID: 7400720262534053760}
+  - component: {fileID: 2275520191734268552}
+  m_Layer: 0
+  m_Name: BattleEventManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4044083608772402107
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324923904088594698}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3274595405748874241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324923904088594698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81f40383249ab010299cc5311c4144af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialDay1: 0
+  tutorialDay2: 0
+  tutorialDay3: 0
+  luaBattle: 0
+  tutLuaJoin: 0
+  tutMainPhase: 0
+  abs0Battle: 0
+  inMainPhase: 0
+  tutorialIntro:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: IntroTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutMove:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: MoveTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutRainaAttack:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: RainaAttackTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutBapySelect:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: BapySelectTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutBapyCancel:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: BapyCancelTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutSoleilSelect:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: SoleilSelectTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutSoleilAttack:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: SoleilAttackTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutBapySelect2:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: BapySelect2Trigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutBapyWait:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: BapyWaitTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutSoleilChargeReminder:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: SoleilChargeReminderTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutSoleilChargeExplanation:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: SoleilChargeExplanationTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutEndTurnButton:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: TutEndTurnButtonTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutEnemySpawnWarning:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: EnemySpawnWarningTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutEnemySpawn:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: EnemySpawnTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutEnemyInfo:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: EnemyInfoTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutEnemyRanged:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: EnemyRangedTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutDD:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: DeathsDoorTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutPushing:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: PushingTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutKnockOn:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: KnockOnTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutMoveDamage:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: MoveDamageTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutPulling:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: PullingTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutChokePoints:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: ChokePointsTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutSpawnBlock:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: SpawnBlockTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutSpawnBlockEndTurn:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: SpawnBlockEndTurnTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutBapyCelebrateSpawnBlock:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: CelebrateSpawnBlockTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutEnemyPush:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7797176595401580605}
+          m_MethodName: EnemyPushTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutFlameMoves:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7450389100152843022}
+          m_MethodName: FlameMovesTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutBurn:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7450389100152843022}
+          m_MethodName: BurnTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  luaBossIntro:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1978365551954952731}
+          m_MethodName: LuaBossIntroTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  luaBossPhaseChange:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1978365551954952731}
+          m_MethodName: LuaBossPhaseChange
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  luaBossPhase2Defeated:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1978365551954952731}
+          m_MethodName: LuaBossDeathTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutPassives:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7400720262534053760}
+          m_MethodName: PassivesTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutMove3:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2275520191734268552}
+          m_MethodName: Move3Trigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  tutLua:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2275520191734268552}
+          m_MethodName: LuaTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  abs0Intro:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 740124394214506185}
+          m_MethodName: Abs0IntroTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  abs0PhaseChange:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 740124394214506185}
+          m_MethodName: Abs0PhaseChange
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  abs0Phase2Defeated:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 740124394214506185}
+          m_MethodName: Abs0Phase2Defeated
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  graveInjury:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: GraveInjuryTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  noEnemiesLeftMainPhase:
+    _event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3274595405748874241}
+          m_MethodName: NoEnemiesLeftInMainPhaseTrigger
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    flag: 0
+  partyPhase: {fileID: 0}
+--- !u!114 &740124394214506185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324923904088594698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e2658ccc4caf304db2c0c25c9642974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleEvents: {fileID: 3274595405748874241}
+--- !u!114 &7797176595401580605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324923904088594698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad3ceccabacd57ce7961e787f29a677f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleEvents: {fileID: 3274595405748874241}
+--- !u!114 &7450389100152843022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324923904088594698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5562a33fdaa4099dda12cc232c162923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleEvents: {fileID: 3274595405748874241}
+--- !u!114 &1978365551954952731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324923904088594698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d6dda9fc8c15f74c87172debabd7b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleEvents: {fileID: 3274595405748874241}
+--- !u!114 &7400720262534053760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324923904088594698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108ffd1f1cd0f431295b6aa6145e38a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleEvents: {fileID: 3274595405748874241}
+--- !u!114 &2275520191734268552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324923904088594698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b17fda71374d802b89260920fe52602d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleEvents: {fileID: 3274595405748874241}

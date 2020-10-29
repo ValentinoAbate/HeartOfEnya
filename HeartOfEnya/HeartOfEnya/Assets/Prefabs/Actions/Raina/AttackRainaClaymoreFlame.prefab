@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3094366700976723135
+--- !u!114 &-1507884645196560147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8034678729559284260}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7951daf7713baef45b162066c21c9919, type: 3}
+  m_Script: {fileID: 11500000, guid: 36bfc6b107e685545927a6495f380b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attribute: 2
-  damage: 1
+  target: 1
 --- !u!114 &-568368019692409987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,11 +33,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 417375792446999537, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
-        type: 3}
-      propertyPath: m_Name
-      value: AttackRainaClaymoreFlame
-      objectReference: {fileID: 0}
     - target: {fileID: 417375792446999535, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -94,6 +88,61 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 417375792446999537, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
+        type: 3}
+      propertyPath: m_Name
+      value: AttackRainaClaymoreFlame
+      objectReference: {fileID: 0}
+    - target: {fileID: 2108769757878144725, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121614438438286909, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e23ea8276f39ced4d8ef5084874ca3cd, type: 3}
+    - target: {fileID: 8902642157473425592, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
+        type: 3}
+      propertyPath: fxPrefab
+      value: 
+      objectReference: {fileID: 2709230759481436863, guid: 18484fe37b3b3f34a95fdcaa42bdaada,
+        type: 3}
+    - target: {fileID: 8902642157473425592, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
+        type: 3}
+      propertyPath: cutInPrefab
+      value: 
+      objectReference: {fileID: 7869046948155591850, guid: 3eb5250f7d96ab547904b7923c20d440,
+        type: 3}
+    - target: {fileID: 8902642157473425592, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
+        type: 3}
+      propertyPath: tileFxPrefab
+      value: 
+      objectReference: {fileID: 8432700419999427716, guid: 9d85324ee4ccb8d42ae288a793842ccd,
+        type: 3}
+    - target: {fileID: 8902642157473425592, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
+        type: 3}
+      propertyPath: id
+      value: RainaAction1_Flame
+      objectReference: {fileID: 0}
+    - target: {fileID: 8902642157473425592, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
+        type: 3}
+      propertyPath: displayName
+      value: Flame Slash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8902642157473425592, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
+        type: 3}
+      propertyPath: actionFxPrefabVertical
+      value: 
+      objectReference: {fileID: 8432700419999427716, guid: 42253e17d5095f54dbc9b831953bee4b,
+        type: 3}
+    - target: {fileID: 8902642157473425592, guid: 8731d7bcfdbd28e4aa394ef2a6284a77,
+        type: 3}
+      propertyPath: actionFxPrefabHorizontal
+      value: 
+      objectReference: {fileID: 8432700419999427716, guid: bc22a166725b86248bb8dfa8b4c2218c,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8731d7bcfdbd28e4aa394ef2a6284a77, type: 3}
 --- !u!1 &8034678729559284260 stripped

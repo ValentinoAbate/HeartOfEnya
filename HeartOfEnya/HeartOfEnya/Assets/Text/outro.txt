@@ -1,0 +1,266 @@
+===
+title: outroStart
+tags: 
+---
+<<setAbs0Data>>
+<<if $abs0Defeated eq 1>>
+    -> It’s so quiet, now that the storm is over.
+    Raina (reassuring smile): It is, isn’t it? Everything seems so calm now.
+    Soleil: It still doesn’t feel real, somehow. 
+    Bapy (smile): But in a good way, right?
+    Soleil (shy smile): Yeah. 
+    -> You finally can leave the Outpost safely.
+            -> What will you do now?
+    Raina (neutral): Things aren’t finished yet.
+    Raina: People need to know about what happened here at the Outpost…
+    Raina: And how much time we have before Absolute Zero comes back.
+    Bapy (neutral): I mean, I was thinking... 
+    Bapy: Maybe I could stay behind with you?
+    Bapy: It’s just- I don’t want you to be alone here... 
+    -> Oh, Bapy…
+            -> The spirits of the heroes live on within me.
+                    -> Here, at the fire they ate at, I don’t think I will ever be lonely
+                            -> Although I will miss you all.
+                                    -> But you don’t have to worry about me.
+    Bapy: But... could we take you with us?
+    Bapy: In our lanterns, like we used to in battle?
+    Bapy (smile): It’s not quite the same... but this way you could see the world too!
+<<else>>
+    -> You won’t have much time before Absolute Zero recovers.
+            -> You should leave as soon as you can.
+    Raina: We’ll have to go immediately. 
+    Raina: Spread the news of what happened here.
+    Soleil: Guess we’ll be sticking together for a little longer, huh. 
+    Raina: Are you sure? I could-
+    Lua: Nah, we’d love to! 
+    Raina: Well, in that case, I’d be honored.
+    -> Bapy?
+    Bapy (neutral): I mean, I was thinking... 
+    Bapy: What about you?
+    Bapy: It’s just- I don’t want you to be alone here... 
+    Bapy: And Absolute Zero...
+    -> Oh, Bapy…
+            -> The spirits of the heroes live on within me.
+                    -> Here, at the hearth, I will be safe.
+                            -> Absolute Zero will not be able to extinguish my flame.
+                                    -> Though I will miss you all.
+    Bapy: But... could we take you with us?
+    Bapy: In our lanterns, like we used to in battle?
+    Bapy (smile): It’s not quite the same... but this way you could see the world too!
+<<endif>>
+-> Oh!
+        -> I’d like that.
+                -> I won’t be able to speak to you, far from the hearth... 
+                        -> But I am strengthened by those that gather at my fire.
+                                -> Perhaps we could meet again, then.
+Bapy: Then we’ll take you with us! 
+-> That sounds lovely.
+        -> Where will you go?
+Raina: We need to spread the news, make sure that people are ready.
+<<soloMusic Raina>>
+// Turn on Solo, turn on Raina Solo (turn off others)
+Raina (reassuring smile): But mostly, I can’t wait to see my partner again.
+Raina: I can’t wait for them to meet you all.
+-> You must miss them.
+Raina: I do. I have so much to say.
+-> Are you nervous?
+Raina: Yes. 
+Raina: But I think I’ll be fine, now. 
+Raina: Whatever happens next, I’ll get through just fine.
+-> I believe you.
+<<soloMusic Soleil Lua>>
+// Turn on Solo, turn on Soleil and Lua Solo (turn off others)
+Soleil (shy smile): Lua and I... 
+
+Lua: We’ve always loved the idea of traveling, seeing the world.
+Soleil: We’ve got plenty of things to figure out.
+Soleil: Before we can even think about settling down. 
+Soleil: Or heading home.
+Soleil: As for my family... 
+Soleil: Maybe I’ll let them know I’m okay, someday.
+Soleil: But I won’t be going back.
+Lua: Maybe we could stop by my family instead!
+Soleil (neutral): O-oh. You’re sure?
+Lua: Of course! They’ll love you.
+Soleil (shy smile): ...that sounds nice.
+Soleil: I’d love that.
+Lua: I can’t wait for them to meet all of you!
+Lua: I don’t think they’ve ever met a talking fire before.
+-> I can’t wait to meet them too.
+        -> Bapy, what about you?
+<<soloMusic Bapy>>
+// Turn on Solo, turn on Bapy solo (turn off others)
+Bapy: Well, we’re going to go see my siblings.
+Bapy: I can’t wait to show them how much I’ve grown.
+Bapy: And I really want everyone to meet them all!
+Bapy (neutral): After that... 
+Bapy: I just want to see the world. See what it is I want to do.
+Bapy: I’ve got plenty of time to figure out what I want. 
+-> That sounds lovely. 
+Bapy (smile): It does, doesn’t it.
+<<endSoloMusic>>
+// Turn off solo and all solo params
+Bapy (neutral): ...
+Raina (smile eyes closed): …
+Raina (reassuring smile): It seems like it’s time for us to get going now.
+Raina (reassuring smile): Thank you for everything you’ve done for us.
+Soleil (neutral): Stay safe, alright?
+Soleil: I-
+Soleil (frustrated): I’m going to miss you.
+Lua: We’ll be thinking of you.
+Soleil (shy smile): Yeah…
+Bapy: …
+Raina: Is there something you’d like to say, Bapy?
+Bapy: …
+Bapy: ...
+Bapy (cry): …
+-> It’s okay to be sad.
+            -> What did you want to say?
+Bapy: …
+Bapy: You’ll be with us, right?
+-> Every step of the way.
+            -> But for now, it really is time to get going.
+                    -> ...
+                                    -> Goodbye, everyone.
+Raina: Goodbye, Willow.
+<<clearTb>>
+<<instrumentFadeOut Raina>>
+<<fadeOut Raina>>
+Lua: Goodbye!
+Soleil (shy smile): ...Goodbye.
+<<clearTb>>
+<<instrumentFadeOut Soleil>>
+<<instrumentFadeOut Lua>>
+<<fadeOut Soleil>>
+Bapy: ...
+Bapy: ...
+Bapy (neutral): ...
+Bapy (smile): Goodbye.
+<<clearTb>>
+<<instrumentFadeOut Bapy>>
+<<fadeOut Bapy>>
+<<instrumentFadeOut all>>
+// Set everyone gone
+-> ...
+            -> ...
+                    -> Goodbye.
+<<waitWhileMusicPlaying>>
+
+
+
+
+
+===
+
+
+title: outroRaina
+tags: 
+---
+
+
+-> Hello, Raina. 
+Raina: Hello, Willow. 
+-> How are you feeling? 
+Raina: Amazing. It’s like I can breathe again. 
+Raina: I’ve spent so long imagining the worst. 
+Raina: Thanks for everything, Willow. 
+Raina: Not just for guiding us out there, but talking me through my troubles.
+-> I’m happy to see you so relaxed.
+Raina: It’s new to me too. It’s nice. 
+Raina: We’re not done quite yet.
+Raina: We’ve still got to get Bapy home... 
+Raina: Talk to their parents, and then see what they want to do.
+Raina: Soleil and Lua… after seeing them together, I think they’ll be fine.
+-> And what about you?
+Raina: Me? Well, after spreading the news about the outpost, I’ll head home.
+Raina: It’s been so long... 
+Raina: I can’t wait to see my partner again.
+-> Are you nervous?
+Raina: Yes. 
+Raina: But I think I’ll be fine, now. 
+Raina: Whatever happens next, I’ll get through just fine.
+-> I believe you.
+
+
+===
+title: outroLua
+tags: 
+---
+-> Hello, Lua.
+Lua: Hey there, Willow. 
+-> How are you feeling? 
+Lua: Fantastic! None of this feels real.
+Lua: 
+
+
+
+
+=== 
+title: outroBapy
+tags:
+---
+
+
+-> Hello, Bapy.
+Bapy: Willow! Hi!
+-> How are you feeling?
+Bapy: Good! It’s amazing, now that everything is over.
+Bapy: For now, at least.
+Bapy: Now that the storm is over, I can actually see the Outpost clearly.
+Bapy: It’s so pretty in the snow.
+-> It is, isn’t it.
+Bapy: I was thinking... maybe I should stay behind with you?
+Bapy: I just... I don’t want you to be lonely here... 
+-> Oh, Bapy…
+        -> The spirits of the heroes live on within me.
+                -> Here, at the fire they ate at, I don’t think I will ever be lonely
+                        -> But thank you. 
+Bapy: Oh, thank goodness.
+Bapy: That’s really good to hear.
+-> Were you worried for me?
+Bapy: A little, yeah. 
+Bapy: And I’m going to miss you... 
+-> My fire will stay with you, no matter how far you go.
+Bapy: That’s true. I’m glad I’m not really leaving you behind.
+-> Where will you go now?
+Bapy: Well, we’re going to go see my family... 
+Bapy: And then I’ll see where it goes from there.
+Bapy: I think I’ll try traveling for a bit.
+Bapy: See the world. See what it is I want to do.
+Bapy: I’ve got plenty of time to figure out what I want. 
+-> That sounds lovely. 
+Bapy: It does, doesn’t it.
+Bapy: And you’ll be with me?
+-> Every step of the way.
+===
+title: outroSoleil
+tags: 
+---
+-> Hello, Soleil.
+Soleil: Hey, Willow. 
+-> How are you feeling?
+Soleil: I still can’t really believe everything’s over.
+Soleil: Thanks for helping us out there, Willow. 
+Soleil: And in here too, I guess. 
+Soleil: You’ve been so patient with us.
+-> I’m glad to see you so happy.
+Soleil (smile): I really am.
+-> Where will you go now?
+Soleil: Well, I want to see Bapy get home safely.
+Soleil: I’ve got to make sure they’re okay.
+Soleil: After that, Lua and I are going to head home.
+Soleil: And I’m going to tell my family about us. About me. 
+-> Are you nervous?
+Soleil: Terrified. But I want to do this.
+Soleil: It won’t be easy, but... 
+Soleil: I think I want to give them a chance.
+Soleil: And if they don’t... if it doesn’t go well... 
+Soleil: We’ll figure out what to do together. 
+
+
+Soleil should get to mention that she isn't going to see her family
+Soleil should get to mention that she isn't going to see her family
+Feels a little passive? I'd want her to say something a little more emotional or at least put an ellipses before nice to put emphasis
+changed from the original concept bc it seems like with the current visuals it'd just be a rly crowded doorway?
+Yeah lol they can just be sitting around the fire
+This likely wouldn't happen, instead, the party stays together and brings Willow's flame around, visiting Bapy, Raina, and Lua's hometowns along the way. they do bring the flame to Soleil's hometown, but they do not visit Soleil's family

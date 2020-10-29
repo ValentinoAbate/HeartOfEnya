@@ -147,6 +147,15 @@ namespace SerializableCollections.EditorGUIUtils
 
         #endregion
 
+        #region KeyGUI options
+
+        public static void KeyGUIFixedWidth<TKey, TValue>(this SDictionary<TKey, TValue> dict, TKey key, float width)
+        {
+            EditorGUILayout.LabelField(key.ToString(), GUILayout.Width(width));
+        }
+
+        #endregion
+
         public static void DoGUILayout<TKey, TValue>(this SDictionary<TKey, TValue> dict, ValueGUI<TValue> valueGUI, AddGUI addGUI, string title, bool oneLine = false)
         {
             void kGUI(TKey key) => EditorGUILayout.LabelField(key.ToString(), GUILayout.MaxWidth(oneLine ? 100 : 250));

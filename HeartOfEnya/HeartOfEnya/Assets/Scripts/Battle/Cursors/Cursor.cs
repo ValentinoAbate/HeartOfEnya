@@ -11,6 +11,28 @@ public abstract class Cursor : MonoBehaviour, IPausable
     public PauseHandle PauseHandle { get; set; } = new PauseHandle();
     public Pos Pos { get; set; }
 
+    protected FMODUnity.StudioEventEmitter placeBapy;
+    protected FMODUnity.StudioEventEmitter placeLua;
+    protected FMODUnity.StudioEventEmitter placeRaina;
+    protected FMODUnity.StudioEventEmitter placeSoleil;
+
+    protected FMODUnity.StudioEventEmitter sfxSelect;
+    protected FMODUnity.StudioEventEmitter sfxCancel;
+    protected FMODUnity.StudioEventEmitter sfxHighlight;
+
+    private void Awake()
+    {
+        // find references to FMOD objects
+        placeBapy = GameObject.Find("PlaceBapy").GetComponent<FMODUnity.StudioEventEmitter>();
+        placeLua = GameObject.Find("PlaceLua").GetComponent<FMODUnity.StudioEventEmitter>();
+        placeRaina = GameObject.Find("PlaceRaina").GetComponent<FMODUnity.StudioEventEmitter>();
+        placeSoleil = GameObject.Find("PlaceSoleil").GetComponent<FMODUnity.StudioEventEmitter>();
+
+        sfxSelect = GameObject.Find("UISelect").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxCancel = GameObject.Find("UICancel").GetComponent<FMODUnity.StudioEventEmitter>();
+        sfxHighlight = GameObject.Find("UIHighlight").GetComponent<FMODUnity.StudioEventEmitter>();
+    }
+
     public virtual void SetActive(bool value)
     {
         gameObject.SetActive(value);
@@ -29,13 +51,17 @@ public abstract class Cursor : MonoBehaviour, IPausable
     /// </summary>
     public virtual void Select()
     {
-        var highlighted = BattleGrid.main.GetObject(Pos);
+        var highlighted = BattleGrid.main.Get<FieldObject>(Pos);
         if (highlighted != null)
         {
             if (highlighted.Select())
+            {
+                sfxSelect.Play();
                 gameObject.SetActive(false);
+            }
         }
     }
+
 
     /// <summary>
     /// Process any input. Called in update if the cursor is unpaused.

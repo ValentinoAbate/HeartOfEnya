@@ -10,11 +10,26 @@ public class QuadMesh : MonoBehaviour
 {
     private MeshRenderer meshRenderer;
     private MeshFilter meshFilter;
+    private MaterialPropertyBlock propertyBlock;
+    public MaterialPropertyBlock PropertyBlock 
+    { 
+        get => propertyBlock;
+        set
+        {
+            propertyBlock = value;
+            meshRenderer.SetPropertyBlock(value);
+        } 
+    }
+
     private void Awake()
     {
-        meshRenderer = GetComponent<MeshRenderer>();        
-        meshFilter = GetComponent<MeshFilter>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        // Initialize property block cache
+        propertyBlock = new MaterialPropertyBlock();
+        meshRenderer.GetPropertyBlock(propertyBlock);
+        meshFilter = GetComponent<MeshFilter>();  
     }
+
     public void SetMesh(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)
     {
         var mesh = new Mesh();
@@ -44,5 +59,4 @@ public class QuadMesh : MonoBehaviour
     {
         meshRenderer.material = mat;
     }
-
 }

@@ -15,7 +15,11 @@ public class CharacterDataInspector : Editor
     }
     public override void OnInspectorGUI()
     {
-        data.textScrollSfx = EditorUtils.ObjectField(new GUIContent("Text Scroll SFX"), data.textScrollSfx, false);
+        data.voiceEvent = EditorGUILayout.TextField(new GUIContent("Voice Event"), data.voiceEvent);
+        data.dialogBoxPrefab = EditorUtils.ObjectField(new GUIContent("Dialog Box Prefab"), data.dialogBoxPrefab, false);
+        data.dialogBoxSolo = EditorUtils.ObjectField(new GUIContent("Dialog Box Prefab (Solo)"), data.dialogBoxSolo, false);
+        data.dialogBoxBattle = EditorUtils.ObjectField(new GUIContent("Dialog Box Prefab (Battle)"), data.dialogBoxBattle, false);
+        data.soloBackground = EditorUtils.ObjectField(new GUIContent("Solo Scene Background"), data.soloBackground, false);
         data.portraits.DoGUILayout(data.portraits.ValueGUIObj, () => data.portraits.StringAddGUID(ref toAdd), "Portraits", true);
         if (GUI.changed)
             EditorUtility.SetDirty(data);

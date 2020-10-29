@@ -206,6 +206,42 @@ namespace Yarn.Unity
             StartCoroutine (RunDialogue (startNode));
         }
 
+        private FMODUnity.StudioEventEmitter monologMusic;
+        private FMODUnity.StudioEventEmitter campfireMusic;
+
+        public void StartCampMonolog(CharacterManager.PhaseData data)
+        {
+            var ui = dialogueUI as Dialog.DialogUI;
+            if(ui == null)
+            {
+                Debug.LogError("Attempting to start a camp dialog from an improper dialogUI");
+                return;
+            }
+            ui.endAction = Dialog.DialogUI.EndAction.GoToCampfireScene;
+            monologMusic = GameObject.Find(data.monologMusic).GetComponent<FMODUnity.StudioEventEmitter>();
+            ui.Music = monologMusic;
+            StartDialogue(data.monologNode);
+        }
+
+        public void StartCampPartyScene(CharacterManager.PhaseData data)
+        {
+            var ui = dialogueUI as Dialog.DialogUI;
+            if (ui == null)
+            {
+                Debug.LogError("Attempting to start a camp dialog from an improper dialogUI");
+                return;
+            }
+            ui.endAction = Dialog.DialogUI.EndAction.EndScene;
+            if(monologMusic != null)
+            {
+                monologMusic.EventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            }
+            campfireMusic = GameObject.Find(data.campfireMusic).GetComponent<FMODUnity.StudioEventEmitter>();
+            campfireMusic.Play();
+            ui.Music = campfireMusic;
+            StartDialogue(data.campfireNode);
+        }
+
         IEnumerator RunDialogue (string startNode = "Start")
         {
             // Mark that we're in conversation.
@@ -278,6 +314,15 @@ namespace Yarn.Unity
         public void Stop() {
             isDialogueRunning = false;
             dialogue.Stop();
+        }
+
+        public void Skip()
+        {
+            // Stop any processes that might be running already
+            StopAllCoroutines();
+            dialogueUI.StopAllCoroutines();
+            // End the UI
+            StartCoroutine(dialogueUI.DialogueComplete());
         }
 
         /// Test to see if a node name exists

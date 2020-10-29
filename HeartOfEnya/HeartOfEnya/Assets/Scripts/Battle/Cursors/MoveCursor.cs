@@ -11,10 +11,21 @@ using System.Linq;
 [RequireComponent(typeof(PartyMember))]
 public class MoveCursor : GridCursor
 {
+    public GameObject shadowPrefab;
+    public SpriteRenderer shadowSprite;
+    public Transform shadowTransform;
+    private GameObject shadow;
     private Pos lastPosition;
-    private PartyMember partyMember;
-    private List<Pos> traversable;
-    private readonly List<GameObject> squares = new List<GameObject>();
+    protected PartyMember partyMember;
+    protected List<Pos> traversable;
+    /// <summary>
+    /// If bonusmode is true, end the turn, else open the actionMenu
+    /// will automaticall be unset at the end of amuce
+    /// </summary>
+    public bool BonusMode { get; private set; }
+    private int bonusMoveRange = 1;
+
+    private readonly List<TileUI.Entry> tileUIEntries = new List<TileUI.Entry>();
 
     private void Start()
     {
@@ -30,8 +41,35 @@ public class MoveCursor : GridCursor
         if(value)
         {
             CalculateTraversable();
+            shadow = Instantiate(shadowPrefab);
+            Vector2 epsilon = new Vector2(0, -0.0000001f);
+            shadow.transform.position = BattleGrid.main.GetSpace(lastPosition) + epsilon;
+            shadow.GetComponent<SpriteRenderer>().sprite = shadowSprite.sprite;
+            var shadowShadow = shadow.transform.GetChild(0);
+            shadowShadow.localPosition = shadowTransform.localPosition * 4;
+            shadowShadow.localScale = shadowTransform.localScale * 4;
+        }
+        if(!value)
+        {
+            Destroy(shadow.gameObject);
         }
         DisplayTraversable(value);
+    }
+
+    public void SetBonusMode(int range)
+    {
+        BonusMode = true;
+        bonusMoveRange = range;
+    }
+
+    public void CancelBonusMode()
+    {
+        if (!BonusMode)
+            return;
+        BonusMode = false;
+        bonusMoveRange = 0;
+        DisplayTraversable(false);
+        SetActive(false);
     }
 
     /// <summary>
@@ -42,7 +80,7 @@ public class MoveCursor : GridCursor
         // Log the last position in case the move is canceled
         lastPosition = partyMember.Pos;
         // Calculate the reachable squares given position, move range, and traverability function
-        traversable = BattleGrid.main.Reachable(partyMember.Pos, partyMember.Move, partyMember.CanMoveThrough).Keys.ToList();
+        traversable = BattleGrid.main.Reachable(partyMember.Pos, BonusMode ? bonusMoveRange : partyMember.Move, partyMember.CanMoveThrough).Keys.ToList();
         // Remove squares that were traversable but cannot be ended in (Squares with trasversable allies, etc.)
         traversable.RemoveAll((p) => !BattleGrid.main.IsEmpty(p));
         // Add the initial location back in (as it will be removed by the last line)
@@ -58,14 +96,19 @@ public class MoveCursor : GridCursor
     {
         if(value)
         {
+            var moveRestrictions = BattleUI.main.MoveableTiles;
             foreach (var spot in traversable)
-                squares.Add(BattleGrid.main.SpawnSquare(spot, BattleGrid.main.moveSquareMat));
+            {
+                if (moveRestrictions.Count > 0 && !moveRestrictions.Contains(spot))
+                    continue;
+                tileUIEntries.Add(BattleGrid.main.SpawnTileUI(spot, TileUI.Type.MoveRangeParty));
+            }
         }
         else
         {
-            foreach (var obj in squares)
-                Destroy(obj);
-            squares.Clear();
+            foreach (var entry in tileUIEntries)
+                BattleGrid.main.RemoveTileUI(entry);
+            tileUIEntries.Clear();
         }
     }
 
@@ -102,10 +145,43 @@ public class MoveCursor : GridCursor
     // Finish the move and open the action menu
     public override void Select()
     {
+        var moveRestrictions = BattleUI.main.MoveableTiles;
+        if (moveRestrictions.Count > 0 && !moveRestrictions.Contains(Pos))
+            return;
+
         lastPosition = partyMember.Pos;
         BattleGrid.main.Move(partyMember, Pos);
         SetActive(false);
-        partyMember.OpenActionMenu();
+        if (BonusMode)
+        {
+            partyMember.EndTurn();
+            BonusMode = false;
+        }
+        else
+            partyMember.OpenActionMenu();
+
+        // play Place Character sfx based on which character
+        name = partyMember.GetName();
+        switch (name)
+        {
+            case "Bapy":
+                placeBapy.Play();
+                BattleEvents.main.tutBapyWait._event.Invoke();
+                break;
+            case "Soleil":
+                placeSoleil.Play();
+                BattleEvents.main.tutSoleilAttack._event.Invoke(); // run tutorial trigger for moving soleil
+                break;
+            case "Raina":
+                placeRaina.Play();
+                BattleEvents.main.tutRainaAttack._event.Invoke(); // run tutorial trigger for moving raina
+                break;
+            case "Lua":
+                placeLua.Play();
+                break;
+            default:
+                break;
+        }
     }
 
     /// <summary>
@@ -123,7 +199,9 @@ public class MoveCursor : GridCursor
     public override void ProcessInput()
     {
         base.ProcessInput();
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (PauseHandle.Paused || !BattleUI.main.CancelingEnabled)
+            return;
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
         {
             ResetToLastPosition();
             SetActive(false);

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System.Linq;
 using System;
 
@@ -28,10 +29,7 @@ public class BattleGrid : MonoBehaviour
     private float skewXOffset;
     [Header("Rendering")]
     public GameObject gridLinePrefab;
-    public GameObject gridSquarePrefab;
-    public Material attackSquareMat;
-    public Material moveSquareMat;
-    public Material targetSquareMat;
+    public TileUI tileUIManager;
 
     private Matrix field;
     private Dictionary<Pos, List<EventTile>> eventTiles;
@@ -141,22 +139,27 @@ public class BattleGrid : MonoBehaviour
     /// The material to apply. The grid contains several references to materials (e.g BattleGrid.main.moveSquareMat) 
     /// </param>
     /// <returns> Returns the created object </returns>
-    public GameObject SpawnSquare(Pos p, Material mat = null)
+    public TileUI.Entry SpawnTileUI(Pos p, TileUI.Type type)
     {
-        var obj = Instantiate(gridSquarePrefab);
-        var qMesh = obj.GetComponent<QuadMesh>();
-        if(qMesh != null)
-        {
-            Vector2 offset = new Vector2((cellSize.x + skewXOffset) * 0.5f, -cellSize.y / 2);
-            var v1 = GetSpace(p) - offset;
-            var v2 = v1 + new Vector2(cellSize.x, 0);
-            var v3 = GetSpace(p + Pos.Down) - offset;
-            var v4 = v3 + new Vector2(cellSize.x, 0);
-            qMesh.SetMesh(v1, v2, v3, v4);
-            if (mat != null)
-                qMesh.SetMaterial(mat);
-        }
-        return obj;
+        if (!IsLegal(p))
+            return new TileUI.Entry() { pos = Pos.OutOfBounds, type = TileUI.Type.Empty };
+        // If there is already a tile, set the secondary type
+        if (tileUIManager.HasActiveTileUI(p))
+            return tileUIManager.AddType(p, type);
+
+        // Calculate Vertices
+        Vector2 offset = new Vector2((cellSize.x + skewXOffset) * 0.5f, -cellSize.y / 2);
+        var v1 = GetSpace(p) - offset;
+        var v2 = v1 + new Vector2(cellSize.x, 0);
+        var v3 = GetSpace(p + Pos.Down) - offset;
+        var v4 = v3 + new Vector2(cellSize.x, 0);
+        // Else create a new tile
+        return tileUIManager.SpawnTileUI(p, type, v1, v2, v3, v4);
+    }
+
+    public void RemoveTileUI(TileUI.Entry entry)
+    {
+        tileUIManager.RemoveType(entry);
     }
 
     #endregion
@@ -185,9 +188,15 @@ public class BattleGrid : MonoBehaviour
     public Pos GetPos (Vector2 worldSpace)
     {
         float leniency = (cellSize.x / 2);
-        int row = Mathf.FloorToInt(transform.position.y - worldSpace.y / (cellSize.y));
+        float yleniency = cellSize.y / 2;
+        int row = Mathf.FloorToInt(transform.position.y + yleniency - worldSpace.y / (cellSize.y));
         int col = Mathf.FloorToInt((worldSpace.x + leniency - transform.position.x - (skewXOffset * row)) / (cellSize.x));
         return new Pos(row, col);
+    }
+
+    public bool ContainsPoint(Vector2 worldSpace)
+    {
+        return IsLegal(GetPos(worldSpace));
     }
 
     /// <summary>
@@ -203,19 +212,54 @@ public class BattleGrid : MonoBehaviour
 
     public bool IsEmpty(Pos pos) => field.Get(pos) == null;
 
+    public bool IsEmptyEventTiles(Pos pos) => !eventTiles.ContainsKey(pos) || eventTiles[pos].Count <= 0;
+
     /// <summary>
-    /// Return the FieldObject at the given grid position, or null if the position is empty
+    /// Return the object of type T at the given grid position, or null if the position is empty or filled with an object that is not of type T
     /// </summary>
-    public FieldObject GetObject(Pos pos)
+    public T Get<T>(Pos pos) where T : FieldObject
     {
         if (IsLegal(pos))
         {
             // Avoid references to destroyed GameObjects not working with the ?. operator (return a ture null value)
             if (field.Get(pos) == null)
                 return null;
-            return field.Get(pos);
+            return field.Get(pos) as T;
         }
         return null;
+    }
+
+    public T Find<T>(Predicate<T> pred) where T : FieldObject
+    {
+        //brute force foreach of field; might optimize later
+        foreach (var obj in field)
+        {
+            if (obj is T)
+            {
+                var objT = obj as T;
+                //if object matches the predicate, add it to the list
+                if (pred(objT))
+                    return objT;
+            }
+        }
+        return null;
+    }
+
+    public List<T> FindAll<T>(Predicate<T> pred = null) where T : FieldObject
+    {
+        var objects = new List<T>();
+        //brute force foreach of field; might optimize later
+        foreach (var obj in field)
+        {
+            if (obj is T)
+            {
+                var objT = obj as T;
+                //if there is no predicate or object matches the predicate, add it to the list
+                if (pred == null || pred(objT))
+                    objects.Add(objT);
+            }
+        }
+        return objects;
     }
 
     /// <summary>
@@ -224,7 +268,11 @@ public class BattleGrid : MonoBehaviour
     public void SetObject(Pos pos, FieldObject value)
     {
         if(IsLegal(pos))
+        {
+            value.Pos = pos;
             field.Set(pos, value);
+        }
+
     }
     
     /// <summary>
@@ -259,7 +307,7 @@ public class BattleGrid : MonoBehaviour
     public bool Move(FieldObject obj, Pos dest)
     {
         // If the destination is not legal and empty, return
-        if (!(IsLegal(dest) && !IsEmpty(dest)))
+        if (!(IsLegal(dest) && IsEmpty(dest)))
             return false;
         Pos src = obj.Pos;
         // Clean up any event tiles on the square left from
@@ -271,6 +319,11 @@ public class BattleGrid : MonoBehaviour
         // Activate any event tiles if present on the square moved to
         if (eventTiles.ContainsKey(dest))
             eventTiles[dest].ForEach((et) => et.OnSteppedOn(obj));
+        if (obj is Combatant)
+        {
+            var c = obj as Combatant;
+            c.UpdateChargeTileUI();
+        }
         return true;
     }
 
@@ -310,6 +363,16 @@ public class BattleGrid : MonoBehaviour
             eventTiles[obj1.Pos].ForEach((et) => et.OnSteppedOn(obj1));
         if (eventTiles.ContainsKey(obj2.Pos))
             eventTiles[obj2.Pos].ForEach((et) => et.OnSteppedOn(obj2));
+        if (obj1 is Combatant)
+        {
+            var c = obj1 as Combatant;
+            c.UpdateChargeTileUI();
+        }
+        if (obj2 is Combatant)
+        {
+            var c = obj2 as Combatant;
+            c.UpdateChargeTileUI();
+        }
     }
 
     #endregion
@@ -324,6 +387,7 @@ public class BattleGrid : MonoBehaviour
     {
         if (!IsLegal(pos))
             return;
+        e.Pos = pos;
         if(!eventTiles.ContainsKey(pos))
         {
             eventTiles.Add(pos, new List<EventTile>() { e });
@@ -480,11 +544,15 @@ public class BattleGrid : MonoBehaviour
 
         public void Set(Pos p, FieldObject value)
         {
+            if (!Contains(p.row, p.col))
+                return;
             this[p.row, p.col] = value;
         }
 
         public FieldObject Get(Pos p)
         {
+            if (!Contains(p.row, p.col))
+                return null;
             return this[p.row, p.col];
         }
     };

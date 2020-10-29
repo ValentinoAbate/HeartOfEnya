@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e33c48ad71bf17147a9fecb3624a3256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attribute: 4
+  target: 1
   moveType: 0
   squares: 1
+  moveDamage: 2
 --- !u!1001 &3944204646680883296
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26,41 +27,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AttackLuaGrapplingHook
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: range.min
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: range.max
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.maxReach.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.maxReach.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
-        type: 3}
-      propertyPath: targetPattern.offsets.Array.data[0].col
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 876645245125307388, guid: b65afaea67fb0af4a84fe0702411019e,
         type: 3}
@@ -117,6 +83,52 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: targetPattern.offsets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: range.min
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: range.max
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: targetPattern.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: targetPattern.maxReach.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: targetPattern.maxReach.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: targetPattern.offsets.Array.data[0].col
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: displayName
+      value: Pull
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245001273598986411, guid: b65afaea67fb0af4a84fe0702411019e,
+        type: 3}
+      propertyPath: cutInPrefab
+      value: 
+      objectReference: {fileID: 7869046948155591850, guid: ffe1bdd28a65fd1468a7c4298d9f7c08,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65afaea67fb0af4a84fe0702411019e, type: 3}
 --- !u!1 &4221800355855424386 stripped

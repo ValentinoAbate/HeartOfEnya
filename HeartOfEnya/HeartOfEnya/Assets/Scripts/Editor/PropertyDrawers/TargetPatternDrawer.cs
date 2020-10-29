@@ -20,8 +20,6 @@ public class TargetPatternDrawer : PropertyDrawer
         // prefab override logic works on the entire property.
         EditorGUI.BeginProperty(position, label, property);
 
-        // Draw label
-        //position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 
         //Initialize properties
         var offsetsProp = property.FindPropertyRelative("offsets");
@@ -32,7 +30,7 @@ public class TargetPatternDrawer : PropertyDrawer
         Rect UIRect = new Rect(position) { height = EditorGUIUtility.singleLineHeight };
 
         #region Actual GUI drawing
-        GUI.Label(UIRect, new GUIContent("Target Pattern", "TODO, tooltip"), EditorUtils.BoldCentered);
+        GUI.Label(UIRect, new GUIContent("Target Pattern", "TODO, tooltip"), EditorUtils.Centered);
         UIRect.y += lineHeight;
         EditorGUI.PrefixLabel(new Rect(UIRect) { width = labelWidth }, new GUIContent("Type"));
         EditorGUI.PropertyField(new Rect(UIRect) { x = UIRect.x + labelWidth, width = UIRect.width - labelWidth }, typeProp, GUIContent.none);
@@ -70,9 +68,6 @@ public class TargetPatternDrawer : PropertyDrawer
         #endregion
 
         #endregion
-
-        // Set indent back to what it was
-        //EditorGUI.indentLevel = indent;
 
         EditorGUI.EndProperty();
     }

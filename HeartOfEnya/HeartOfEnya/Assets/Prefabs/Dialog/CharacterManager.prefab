@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6832639801117800353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6832639801117800355}
+  - component: {fileID: 6832639801117800352}
+  m_Layer: 0
+  m_Name: CharacterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6832639801117800355
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6832639801117800353}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.9033661, y: -0.30928934, z: -2278.9412}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6832639801117800352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6832639801117800353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76279958879d26f428b7de6aedf18472, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phaseDataA:
+    monologCharacter: Soleil
+    monologNode: SoleilNightA
+    monologMusic: SoleilConversation
+    campfireNode: CampfireNightA
+    campfireMusic: CampTheme
+    bossWaitNode: 
+    extraScenes:
+      _keys: []
+      _values: []
+  phaseDataB:
+    monologCharacter: Raina
+    monologNode: RainaNightB
+    monologMusic: RainaConversation
+    campfireNode: CampfireNightB
+    campfireMusic: CampTheme
+    bossWaitNode: LuaBossRepeat
+    extraScenes:
+      _keys: []
+      _values: []
+  phaseDataC:
+    monologCharacter: Bapy
+    monologNode: BapyNightC
+    monologMusic: BapyConversation
+    campfireNode: CampfireNightC
+    campfireMusic: CampTheme
+    bossWaitNode: 
+    extraScenes:
+      _keys: []
+      _values: []
+  phaseDataD:
+    monologCharacter: Soleil
+    monologNode: LuaSoleil
+    monologMusic: SoleilConversation
+    campfireNode: absoluteZeroPrep
+    campfireMusic: CampTheme
+    bossWaitNode: 
+    extraScenes:
+      _keys: []
+      _values: []
+  phaseDataE:
+    monologCharacter: Raina
+    monologNode: 
+    monologMusic: 
+    campfireNode: outroStart
+    campfireMusic: campTheme
+    bossWaitNode: Abs0Repeat
+    extraScenes:
+      _keys: []
+      _values: []

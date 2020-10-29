@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 using System.Linq;
 
 /// <summary>
@@ -21,7 +23,75 @@ public class AttackCursor : GridAndSelectionListCursor
     public Action action;
 
     private readonly HashSet<Pos> inRange = new HashSet<Pos>();
-    private readonly List<GameObject> targetGraphics = new List<GameObject>();
+    private readonly List<TileUI.Entry> tileUIEntries = new List<TileUI.Entry>();
+
+    public Controls controlSys;
+
+    // Secondary mode fields
+    private Pos primaryTarget = Pos.Zero;
+    private bool inSecondaryMode = false;
+
+ /// <summary>
+ /// Copied from Mouse Cursor
+ /// </summary>
+    private void OnEnable()
+    {
+        if (controlSys == null)
+            controlSys = new Controls();
+        controlSys.BattleUI.MousePos.performed += FollowMouse;
+        controlSys.BattleUI.MousePos.Enable();
+        controlSys.BattleUI.Select.performed += HandleSelect;
+        controlSys.BattleUI.Select.Enable();
+        controlSys.BattleUI.Deselect.performed += HandleCancel;
+        controlSys.BattleUI.Deselect.Enable();
+    }
+
+    /// <summary>
+    /// Copied from Mouse Cursor
+    /// </summary>
+    private void OnDisable()
+    {
+        if (controlSys == null)
+            controlSys = new Controls();
+        controlSys.BattleUI.MousePos.performed -= FollowMouse;
+        controlSys.BattleUI.MousePos.Disable();
+        controlSys.BattleUI.Select.performed -= HandleSelect;
+        controlSys.BattleUI.Select.Disable();
+        controlSys.BattleUI.Deselect.performed -= HandleCancel;
+        controlSys.BattleUI.Deselect.Disable();
+    }
+
+    /// <summary>
+    /// Copied from Mouse Cursor
+    /// </summary>
+    private void FollowMouse(InputAction.CallbackContext context)
+    {
+        if (PauseHandle.Paused)
+            return;
+        //convert mouse coords from screenspace to worldspace to BattleGrid coords
+        Pos newPos = BattleGrid.main.GetPos(Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>()));
+        Highlight(newPos);
+    }
+
+    /// <summary>
+    /// Copied From Mouse Cursor
+    /// </summary>
+    private void HandleSelect(InputAction.CallbackContext context)
+    {
+        if (PauseHandle.Paused)
+            return;
+        Select();
+    }
+
+    /// <summary>
+    /// Adds in right click doing a move functionality.
+    /// </summary>
+    private void HandleCancel(InputAction.CallbackContext context)
+    {
+        if (PauseHandle.Paused || !BattleUI.main.CancelingEnabled)
+            return;
+        Cancel();
+    }
 
     /// <summary>
     /// Base functionality with the addition of start ing by selecting the closes target
@@ -32,12 +102,25 @@ public class AttackCursor : GridAndSelectionListCursor
         base.SetActive(value);
         if (value)
         {
-            if (Empty)
-                Highlight(inRange.First());
-            else
-                HighlightFirst();
+            HighlightInitialize();
         }
-            
+    }
+
+    private void HighlightInitialize()
+    {
+        var temp = Pos;
+        Pos = Pos.OutOfBounds;
+        Highlight(BattleGrid.main.GetPos(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+        if (Pos == Pos.OutOfBounds)
+            Highlight(temp);
+        if (Pos == Pos.OutOfBounds)
+            Highlight(attacker.Pos + Pos.Left);
+        if (Pos == Pos.OutOfBounds)
+            Highlight(attacker.Pos + Pos.Left + Pos.Left);
+        if (Pos == Pos.OutOfBounds)
+            Highlight(attacker.Pos + Pos.Right);
+        if (Pos == Pos.OutOfBounds)
+            Highlight(attacker.Pos + Pos.Right + Pos.Right);
     }
 
     /// <summary>
@@ -47,22 +130,16 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public override void Highlight(Pos newPos)
     {
-        if (!BattleGrid.main.IsLegal(newPos) || !inRange.Contains(newPos))
+        if (newPos == Pos || !BattleGrid.main.IsLegal(newPos) || !inRange.Contains(newPos))
             return;
+        
+        sfxHighlight.Play();
         // Update grid and world position
         Pos = newPos;
         transform.position = BattleGrid.main.GetSpace(newPos);
         // Update and show target pattern
         action.targetPattern.Target(attacker.Pos, newPos);
-        action.targetPattern.Show(BattleGrid.main.attackSquareMat);
-        // Find highlighted object, and apply applicable extra displays if one exists
-        var highlightedObj = BattleGrid.main.GetObject(newPos);
-        if (highlightedObj != null)
-        {
-            int index = SelectionList.IndexOf(highlightedObj);
-            if (index != -1)
-                selectedInd = index;
-        }
+        action.targetPattern.Show(TileUI.Type.TargetPreviewParty);
     }
 
     /// <summary>
@@ -80,21 +157,23 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public void CalculateTargets()
     {
-        SelectionList.Clear();
+        var targetRestrictions = BattleUI.main.TargetableTiles;
+        var range = inSecondaryMode ? action.secondaryRange : action.range;
         inRange.Clear();
-        var reachable = BattleGrid.main.Reachable(attacker.Pos, action.range.max, CanMoveThrough);
+        var reachable = BattleGrid.main.Reachable(attacker.Pos, range.max, CanMoveThrough);
         foreach(var kvp in reachable)
         {
-            if (kvp.Value < action.range.min)
+            if (kvp.Value < range.min)
                 continue;
             var pos = kvp.Key;
+            // Remove non-cardinal squares from cardinal patterns
+            if (range.type == ActionRange.Type.Cardinal && attacker.Pos.row != pos.row && attacker.Pos.col != pos.col)
+                continue;
+            // Apply target restrictions
+            if (targetRestrictions.Count > 0 && !targetRestrictions.Contains(kvp.Key))
+                continue;
             inRange.Add(pos);
-            var obj = BattleGrid.main.GetObject(pos) as Combatant;
-            // Put any non-ignored object in the selection list
-            if (obj != null && !ignore.Any((t) => t == obj.Team))
-                SelectionList.Add(obj);
         }
-        SelectionList.Sort((obj1, obj2) => obj1.Team == FieldEntity.Teams.Party ? 1 : -1);
     }
 
     /// <summary>
@@ -106,7 +185,7 @@ public class AttackCursor : GridAndSelectionListCursor
         CalculateTargets();
         foreach (var pos in inRange)
         {
-            targetGraphics.Add(BattleGrid.main.SpawnSquare(pos, BattleGrid.main.targetSquareMat));
+            tileUIEntries.Add(BattleGrid.main.SpawnTileUI(pos, TileUI.Type.TargetRangeParty));
         }
     }
 
@@ -116,9 +195,9 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public void HideTargets()
     {
-        foreach (var obj in targetGraphics)
-            Destroy(obj);
-        targetGraphics.Clear();
+        foreach (var entry in tileUIEntries)
+            BattleGrid.main.RemoveTileUI(entry);
+        tileUIEntries.Clear();
     }
 
     /// <summary>
@@ -127,12 +206,88 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public override void Select()
     {
-        HideTargets();
-        action.targetPattern.Hide();
-        attacker.UseAction(action, Pos);
+        if (!inRange.Contains(Pos))
+            return;
+        BattleUI.main.HidePrompt();
+        sfxSelect.Play();
+        if (action.useSecondaryRange && !inSecondaryMode)
+        {
+            HideTargets();
+            primaryTarget = Pos;
+            inSecondaryMode = true;
+            ShowTargets();
+        }
+        else
+        {
+            HideTargets();
+            BattleUI.main.HideAttackDescriptionPanel();
+            action.targetPattern.Hide();
+            StartCoroutine(AttackCr());
+        }  
+    }
+
+    /// <summary>
+    /// Cancels action when player right clicks during wheel
+    /// </summary>
+    public void Cancel()
+    {
+        sfxCancel.Play();
+        if (inSecondaryMode)
+        {
+            inSecondaryMode = false;
+            HideTargets();
+            action.targetPattern.Hide();
+            ShowTargets();
+            HighlightInitialize();
+        }
+        else
+        {          
+            Highlight(attacker.Pos);
+            HideTargets();
+            action.targetPattern.Hide();
+            SetActive(false);
+            OnCancel.Invoke();
+            BattleUI.main.HideAttackDescriptionPanel();
+        }
+    }
+
+    private IEnumerator AttackCr()
+    {
+        enabled = false;
+        var partyMember = attacker as PartyMember;
+        var bonusMove = action.GetComponent<BonusMove>();
+        if (partyMember != null && bonusMove != null)
+        {
+            var moveCuror = partyMember.GetComponent<MoveCursor>();
+            moveCuror.SetBonusMode(bonusMove.range);
+        }
+        if (inSecondaryMode)
+        {
+            // Wait for the attack routine to finish
+            yield return attacker.UseAction(action, Pos, primaryTarget);
+            inSecondaryMode = false;
+        }
+        else
+        {
+            // Wait for the attack routine to finish
+            yield return attacker.UseAction(action, Pos, Pos.OutOfBounds);
+        }
+        if(partyMember != null)
+        {
+            if (bonusMove != null )
+            {
+                var moveCuror = partyMember.GetComponent<MoveCursor>();
+                if(moveCuror.BonusMode)
+                    moveCuror.SetActive(true);
+            }
+            else
+            {
+                partyMember.EndTurn();
+            }
+        }     
+        enabled = true;
+        // Disable attacking again
         SetActive(false);
-        (attacker as PartyMember)?.EndAction();
-        
     }
 
     /// <summary>
@@ -140,48 +295,7 @@ public class AttackCursor : GridAndSelectionListCursor
     /// </summary>
     public override void ProcessInput()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Highlight(attacker.Pos);
-            HideTargets();
-            action.targetPattern.Hide();
-            SetActive(false);
-            OnCancel.Invoke();
-            return;
-        }          
-        if(action.targetPattern.type == TargetPattern.Type.Spread)
-            base.ProcessInput();
-        else // Targeting pattern is directional, apply special controls
-        {
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                Highlight(attacker.Pos + Pos.Up);
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                Highlight(attacker.Pos + Pos.Down);
-            }
-            else if (Input.GetKeyDown(KeyCode.A))
-            {
-                Highlight(attacker.Pos + Pos.Left);
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                Highlight(attacker.Pos + Pos.Right);
-            }
-            if (Input.GetKeyDown(nextKey))
-            {
-                HighlightNext();
-            }
-            else if (Input.GetKeyDown(lastKey))
-            {
-                HighlightPrev();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Select();
-            }
-        }
+
     }
 
     public bool CanMoveThrough(FieldObject obj)

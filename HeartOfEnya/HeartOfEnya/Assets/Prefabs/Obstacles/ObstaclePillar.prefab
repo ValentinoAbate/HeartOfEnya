@@ -1,0 +1,296 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1588969146335200848
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7639896353834501638}
+  - component: {fileID: 8958130726671538867}
+  m_Layer: 0
+  m_Name: Shadow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7639896353834501638
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588969146335200848}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.19, y: 0, z: 0}
+  m_LocalScale: {x: 1.178, y: 0.35999998, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1041527618701703073}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &8958130726671538867
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588969146335200848}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 946fbdcfe80afbe4599e7fa0c11d9b2f, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -1926034441
+  m_SortingLayer: 5
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 21300000, guid: 2c63edf3312c960408acc6e17f411df8, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.36078432}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1001 &6448428862654756095
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -225921385592598223, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: reactionToFire
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -225921385592598223, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: reactionToIce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -225921385592598223, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: description
+      value: A stone pillar. Can be broken but not moved.
+      objectReference: {fileID: 0}
+    - target: {fileID: -225921385592598223, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: displayName
+      value: Pillar
+      objectReference: {fileID: 0}
+    - target: {fileID: -225921385592598223, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: displaySprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 63ac9c18096f16d4ba81a74fe4e55589,
+        type: 3}
+    - target: {fileID: -225921385592598223, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: isMovable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -225921385592598223, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: maxHp
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -225921385592598223, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: deathSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 5ba5b245a8bc11640baff482b0585988, type: 3}
+    - target: {fileID: -225921385592598223, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: damageFxPrefab
+      value: 
+      objectReference: {fileID: 8118972412587649372, guid: d2458a08c4fb77b47822ba6021275da1,
+        type: 3}
+    - target: {fileID: 166792643511715538, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 166792643511715538, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 166792643511715538, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 166792643511715538, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b150399882d2f8e40946dc5e72049cb5,
+        type: 3}
+    - target: {fileID: 388723792023308957, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 907420851453752435, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1061692599890477573, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: Event
+      value: event:/SFX/Battle/Obstacles/Pillar/Destroy Pillar
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552737, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.6037736
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552737, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.46991813
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552737, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.46991813
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552739, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_Name
+      value: ObstaclePillar
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552798, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552798, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552798, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552798, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552798, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552798, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552798, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552798, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552798, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552798, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271636570576552798, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405744111515405522, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405744111515405522, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6806669522555439619, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: Event
+      value: event:/SFX/Battle/Obstacles/Pillar/Damage Pillar
+      objectReference: {fileID: 0}
+    - target: {fileID: 7753301054686794937, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: reactionToFire
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7753301054686794937, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: reactionToIce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7753301054686794937, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: displayName
+      value: RockSmall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8942053366801058832, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8942053366801058832, guid: 51a1f4181baf4664bbfacee8f97d2549,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.04
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 51a1f4181baf4664bbfacee8f97d2549, type: 3}
+--- !u!4 &1041527618701703073 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6271636570576552798, guid: 51a1f4181baf4664bbfacee8f97d2549,
+    type: 3}
+  m_PrefabInstance: {fileID: 6448428862654756095}
+  m_PrefabAsset: {fileID: 0}

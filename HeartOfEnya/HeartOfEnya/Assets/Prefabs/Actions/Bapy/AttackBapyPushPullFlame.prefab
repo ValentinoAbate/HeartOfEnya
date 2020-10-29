@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &2305426105357540543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4139298934160620899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36bfc6b107e685545927a6495f380b04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: 1
+--- !u!114 &5555101268443754890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4139298934160620899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dea043a1132f22a40aef14f555858055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fpCost: 1
+--- !u!1001 &4376213927393851026
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 417375792446999535, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 417375792446999535, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 417375792446999535, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 417375792446999535, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 417375792446999535, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 417375792446999535, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 417375792446999535, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 417375792446999535, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 417375792446999535, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 417375792446999535, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 417375792446999535, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 417375792446999537, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: m_Name
+      value: AttackBapyPushPullFlame
+      objectReference: {fileID: 0}
+    - target: {fileID: 8902642157473425592, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: cutInPrefab
+      value: 
+      objectReference: {fileID: 7869046948155591850, guid: d61e2d35bbff764439400940bf661830,
+        type: 3}
+    - target: {fileID: 8902642157473425592, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: displayName
+      value: F Push/Pull
+      objectReference: {fileID: 0}
+    - target: {fileID: 8902642157473425592, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: tileFxPrefab
+      value: 
+      objectReference: {fileID: 8432700419999427716, guid: ad536296dbd46d04a8efe75d4da4d0cb,
+        type: 3}
+    - target: {fileID: 8902642157473425592, guid: 3a0ed12c73bebd943876342718d79eb3,
+        type: 3}
+      propertyPath: actionFxPrefab
+      value: 
+      objectReference: {fileID: 8432700419999427716, guid: 9d85324ee4ccb8d42ae288a793842ccd,
+        type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3a0ed12c73bebd943876342718d79eb3, type: 3}
+--- !u!1 &4139298934160620899 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 417375792446999537, guid: 3a0ed12c73bebd943876342718d79eb3,
+    type: 3}
+  m_PrefabInstance: {fileID: 4376213927393851026}
+  m_PrefabAsset: {fileID: 0}

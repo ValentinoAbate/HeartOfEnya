@@ -5,18 +5,12 @@ using UnityEngine;
 public class DamageEffect : ActionEffect
 {
     public int damage;
-    public override void ApplyEffect(Combatant user, Combatant target, Reaction reaction)
+    public override IEnumerator ApplyEffect(Combatant user, Combatant target, ExtraData data)
     {
-        if (reaction == Reaction.Immune)
-        {
-            Debug.Log(target.DisplayName + " blocked " + damage + " " + attribute.ToString() + " damage from " + user.DisplayName + "'s " + name);
-            return;
-        }
-        if (reaction == Reaction.Vulnerable && !target.Stunned)
-        {              
-            target.Stunned = true;         
-        }
-        Debug.Log(user.name + " dealt " + damage + " " + attribute.ToString() + " damage to " + target.name + " with " + name);
-        target.Damage(damage);
+        Debug.Log(user.DisplayName + " dealt " + damage + " damage to " + target.DisplayName + " with " + name);
+        if(target is Enemy && (target as Enemy).isBoss && target.Team == user.Team)
+            yield break;
+        target.Damage(damage); // Where the death actually happens rn
+        yield return new WaitForSeconds(effectWaitTime);
     }
 }

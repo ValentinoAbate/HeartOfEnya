@@ -39,7 +39,7 @@ public class LevelSelect : MonoBehaviour
     public void GoToBattle(string phase, int dayNum)
     {
         SetPersistantData(phase, dayNum);
-        if(goToSoup)
+        if(goToSoup && !(phase == PersistentData.gamePhaseTut1And2 && dayNum == PersistentData.dayNumStart))
         {
             SceneTransitionManager.main.TransitionScenes("Breakfast");
         }

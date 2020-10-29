@@ -32,12 +32,25 @@ public class BattleLighting : MonoBehaviour
     // transition fps
     int transitionIntervalsPerSecond = 60;
 
+    private readonly Dictionary<Time, int> lightingPhaseLengths = new Dictionary<Time, int>
+    {
+        {Time.Morning,   3},
+        {Time.Noon, 9},
+        {Time.Afternoon,   15},
+    };
+
     private void Start()
     {
         current = lighting[0];
         index = 0;
 
         // StartCoroutine(TestLighting());
+    }
+
+    public bool ReadyToProgress(int turn)
+    {
+        Time currTime = (Time)index;
+        return lightingPhaseLengths.ContainsKey(currTime) && turn > lightingPhaseLengths[currTime];
     }
 
     // progress lighting to next time of day

@@ -30,9 +30,9 @@ public class PhaseManager : MonoBehaviour, IPausable
 
     private List<Phase> phases;
     private int currPhase;
-    public bool Transitioning => transitioning;
-    private bool transitioning = true;
+    public bool Transitioning { get; private set; } = true;
 
+    public BattleLighting lightingManager;
     private PlaytestLogger logger;
 
     /// <summary>
@@ -81,7 +81,7 @@ public class PhaseManager : MonoBehaviour, IPausable
 
         yield return StartCoroutine(StartBattle());
         yield return ActivePhase.OnPhaseStart();
-        transitioning = false;
+        Transitioning = false;
     }
 
     /// <summary>
@@ -90,15 +90,15 @@ public class PhaseManager : MonoBehaviour, IPausable
     /// </summary>
     void Update()
     {
-        if (!transitioning)
+        if (!Transitioning)
             ActivePhase.OnPhaseUpdate();
     }
 
     public void NextPhase()
     {
-        if (transitioning)
+        if (Transitioning)
             return;
-        transitioning = true;
+        Transitioning = true;
         StartCoroutine(NextPhaseCr());
     }
 
@@ -157,6 +157,8 @@ public class PhaseManager : MonoBehaviour, IPausable
         {
             currPhase = 0;
             ++Turn;
+            if (lightingManager != null && lightingManager.ReadyToProgress(Turn))
+                lightingManager.ProgressLighting();
             logger.testData.UpdateTurnCount(Turn);
             Debug.Log("It is turn " + Turn);
         }
@@ -164,6 +166,6 @@ public class PhaseManager : MonoBehaviour, IPausable
         Debug.Log("Starting Phase: " + ActivePhase.displayName);
         yield return ActivePhase.OnPhaseStart();
         yield return new WaitWhile(() => PauseHandle.Paused);
-        transitioning = false;
+        Transitioning = false;
     }
 }

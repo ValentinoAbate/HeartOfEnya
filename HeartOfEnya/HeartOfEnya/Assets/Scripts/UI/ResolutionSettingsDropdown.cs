@@ -15,10 +15,11 @@ public class ResolutionSettingsDropdown : MonoBehaviour
     {
         //generate a list of resolutions that are smaller or equal to the native resolution
         Resolution[] availableResolutions = getLegalResolutions();
-
+        
         menu.AddOptions(availableResolutions.Select((r) => new TMP_Dropdown.OptionData(r.ToString())).ToList());
         menu.value = Array.IndexOf(availableResolutions, Screen.currentResolution);
-        //in the unlikely event we somehow removed the current resolution from the list, scream bloody murder
+        //In the unlikely event we somehow removed the current resolution from the list, scream bloody murder.
+        //Usually only happens in the editor window (since it can have a non-standard resolution), but let's just play it safe for the builds.
         if (Array.Exists(availableResolutions, element => isResEqual(element, Screen.currentResolution))) //all is fine
         {
             label.text = availableResolutions[menu.value].ToString();
@@ -26,9 +27,12 @@ public class ResolutionSettingsDropdown : MonoBehaviour
         else //current resolution somehow got removed
         {
             Debug.LogError("Current resolution is not in the list of available resolutions!");
-            label.text = "!!UNKNOWN RESOLUTION!!"; //since I can only properly test this system in builds (where the console doesn't show), this is the easiest way to indicate this error in-game.
+            //If the current resolution got removed, label.text will sometimes default to the lowest resolution.
+            //It *should* throw an index-out-of-bounds error, but for some reason Array.IndexOf seems to be returning 0 instead of -1 if fed an item not in the array.
+            //This is probably worrying, but at least it doesn't crash so :shrug:
+            //Anyway, since builds won't have access to the console to see the error, instead of listing the wrong resolution we'll manually input the "select resolution" text instead.
+            label.text = "Select Resolution";
         }
-        //label.text = availableResolutions[menu.value].ToString();
         menu.onValueChanged.AddListener((val) => label.text = availableResolutions[val].ToString());
     }
 

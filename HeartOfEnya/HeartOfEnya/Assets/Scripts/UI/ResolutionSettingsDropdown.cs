@@ -4,12 +4,14 @@ using System.Linq;
 using UnityEngine;
 using TMPro;
 using System;
+using FMODUnity;
 
 public class ResolutionSettingsDropdown : MonoBehaviour
 {
     public TMP_Dropdown menu;
     public TextMeshProUGUI label;
     public DisplaySettings settings;
+    public StudioEventEmitter emitter;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,5 +19,6 @@ public class ResolutionSettingsDropdown : MonoBehaviour
         menu.value = Array.IndexOf(Screen.resolutions, Screen.currentResolution);
         label.text = Screen.resolutions[menu.value].ToString();
         menu.onValueChanged.AddListener((val) => label.text = Screen.resolutions[val].ToString());
+        menu.onValueChanged.AddListener((val) => emitter.Play());
     }
 }

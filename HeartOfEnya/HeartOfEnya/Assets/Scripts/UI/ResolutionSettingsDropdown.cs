@@ -4,18 +4,20 @@ using System.Linq;
 using UnityEngine;
 using TMPro;
 using System;
+using FMODUnity;
 
 public class ResolutionSettingsDropdown : MonoBehaviour
 {
     public TMP_Dropdown menu;
     public TextMeshProUGUI label;
     public DisplaySettings settings;
+    public StudioEventEmitter emitter;
     // Start is called before the first frame update
     void Start()
     {
         //generate a list of resolutions that are smaller or equal to the native resolution
         Resolution[] availableResolutions = getLegalResolutions();
-        
+
         menu.AddOptions(availableResolutions.Select((r) => new TMP_Dropdown.OptionData(r.ToString())).ToList());
         menu.value = Array.IndexOf(availableResolutions, Screen.currentResolution);
         //In the unlikely event we somehow removed the current resolution from the list, scream bloody murder.
@@ -34,6 +36,7 @@ public class ResolutionSettingsDropdown : MonoBehaviour
             label.text = "Select Resolution";
         }
         menu.onValueChanged.AddListener((val) => label.text = availableResolutions[val].ToString());
+        menu.onValueChanged.AddListener((val) => emitter.Play());
     }
 
     //goes through the list of available resolutions and removes any larger than the native resolution

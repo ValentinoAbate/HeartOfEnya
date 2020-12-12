@@ -262,19 +262,18 @@ public class Action : MonoBehaviour
                 }
             }
         }
-        // Remove all dead combatants
-        toStun.RemoveAll((c) => c == null || c.Dead);
+        // Remove all dead or already stunned combatants
+        toStun.RemoveAll((c) => c == null || c.Dead || c.Stunned);
         // Bosses can't be stunned
         toStun.RemoveAll((c) => c is Enemy && (c as Enemy).isBoss);
+        // Neutral team can't be stunned, and you can't stun your teammates
+        toStun.RemoveAll((c) => c.Team.HasFlag(FieldEntity.Teams.Neutral) || c.Team == user.Team);
         if(toStun.Count > 0)
         {
             yield return new WaitForSeconds(ActionEffect.effectWaitTime);
             foreach (var stunTarget in toStun)
             {
-                if (stunTarget.Team == user.Team)
-                    continue;
-                if (!stunTarget.Stunned)
-                    stunTarget.Stunned = true;
+                stunTarget.Stunned = true;
             }
             // Play stun sound
             yield return new WaitForSeconds(ActionEffect.effectWaitTime);

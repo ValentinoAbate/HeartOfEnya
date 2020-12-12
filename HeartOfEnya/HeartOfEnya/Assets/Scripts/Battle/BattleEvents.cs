@@ -576,7 +576,7 @@ public class BattleEvents : MonoBehaviour
     private IEnumerator GraveInjuryTriggerPost(DialogueRunner runner)
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
-        SceneTransitionManager.main.TransitionScenes("Camp");
+        PhaseManager.main.EndBattle();
     }
 
     public void NoEnemiesLeftInMainPhaseTrigger()

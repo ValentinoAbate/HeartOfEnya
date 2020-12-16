@@ -8,7 +8,6 @@ public class EncounterEditor : EditorWindow
 {
     public const string encounterFolderPath = "Assets/ScriptableObjects/Encounters/";
     public const string assetSuffix = ".asset";
-    public const string levelEditorScenePath = "Assets/Scenes/LevelEditor/LevelEditor.unity";
     private SpawnPhase spawner = null;
     public SpawnPhase Spawner
     {
@@ -35,15 +34,20 @@ public class EncounterEditor : EditorWindow
     }
     private void OnGUI()
     {
+        if (Application.isPlaying)
+        {
+            EditorGUILayout.HelpBox("Level editing tools unavailable during play mode.", MessageType.Info);
+            return;
+        }
         // If there is no grid, we aren't in a battle scene or this one is improperly configured
-        if(EditorSceneManager.GetActiveScene().name != "LevelEditor")
+        if (EditorSceneManager.GetActiveScene().name != LevelEditor.levelEditorSceneName)
         {
             EditorGUILayout.HelpBox("You are not in the LevelEditor scene!", MessageType.Error);
             if(GUILayout.Button(new GUIContent("Go to Level Editor Scene")))
             {
                 if(EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 {
-                    EditorSceneManager.OpenScene(levelEditorScenePath);
+                    EditorSceneManager.OpenScene(LevelEditor.levelEditorScenePath);
                 }              
             }
             return;
@@ -143,7 +147,6 @@ public class EncounterEditor : EditorWindow
         {
             levelEditor = GetWindow<LevelEditor>("Level Editor", typeof(EncounterEditor));
         }
-        levelEditor.Initialize();
     }
 
     #region Helper Methods

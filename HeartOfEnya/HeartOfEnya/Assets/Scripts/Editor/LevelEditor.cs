@@ -6,7 +6,8 @@ using UnityEditor.SceneManagement;
 
 public class LevelEditor : EditorWindow
 {
-    public const string levelEditorScenePath = "Assets/Scenes/LevelEditor/LevelEditor.unity";
+    public const string levelEditorSceneName = "LevelEditor";
+    public const string levelEditorScenePath = "Assets/Scenes/LevelEditor/" + levelEditorSceneName + ".unity";
     public enum PlayMode
     { 
         PlayWave,
@@ -20,7 +21,6 @@ public class LevelEditor : EditorWindow
     public EncounterEditor encounterEditor;
     public GameObject obstacleContainer;
     public GameObject enemyContainer;
-    private bool initialized = false;
 
     public GameObject EnemyContainer 
     {
@@ -72,7 +72,11 @@ public class LevelEditor : EditorWindow
         var inspectorType = System.Type.GetType("UnityEditor.InspectorWindow,UnityEditor.dll");
         var window = GetWindow<LevelEditor>("Level Editor", inspectorType);
         window.RefreshReferences();
-        window.Initialize();
+    }
+
+    private void OnEnable()
+    {
+        Initialize();
     }
 
     private void EnactPlayModeSettings(PlayModeStateChange state)
@@ -81,12 +85,16 @@ public class LevelEditor : EditorWindow
         {
             if(playMode == PlayMode.PlayEncounter)
             {
-                foreach (Transform enemy in EnemyContainer.transform)
+                foreach (var enemy in FindObjectsOfType<Enemy>())
                 {
+                    if (enemy.transform.parent != EnemyContainer.transform)
+                        enemy.transform.SetParent(EnemyContainer.transform);
                     enemy.gameObject.SetActive(false);
                 }
-                foreach (Transform obstacle in ObstacleContainer.transform)
+                foreach (var obstacle in FindObjectsOfType<Obstacle>())
                 {
+                    if (obstacle.transform.parent != ObstacleContainer.transform)
+                        obstacle.transform.SetParent(ObstacleContainer.transform);
                     obstacle.gameObject.SetActive(false);
                 }
                 Spawner.spawnEnemies = true;
@@ -100,11 +108,11 @@ public class LevelEditor : EditorWindow
         {
             if (playMode == PlayMode.PlayEncounter)
             {
-                foreach (Transform enemy in EnemyContainer.transform)
+                foreach (var enemy in EnemyContainer.GetComponentsInChildren<Enemy>(true))
                 {
                     enemy.gameObject.SetActive(true);
                 }                
-                foreach (Transform obstacle in ObstacleContainer.transform)
+                foreach (var obstacle in ObstacleContainer.GetComponentsInChildren<Obstacle>(true))
                 {
                     obstacle.gameObject.SetActive(true);
                 }
@@ -113,13 +121,12 @@ public class LevelEditor : EditorWindow
             {
                 Spawner.spawnEnemies = true;
             }
-            Initialize();
         }
     }
 
-    private void SetupListener(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.Scene arg1)
-    {        
-        if(arg1.name == "LevelEditor")
+    private void SetupListener(UnityEngine.SceneManagement.Scene scene, OpenSceneMode mode)
+    {
+        if (scene.name == "LevelEditor")
         {
             EditorApplication.playModeStateChanged += EnactPlayModeSettings;
         }
@@ -131,13 +138,12 @@ public class LevelEditor : EditorWindow
 
     public void Initialize()
     {
-        if (initialized)
+        EditorSceneManager.sceneOpened -= SetupListener;
+        EditorSceneManager.sceneOpened += SetupListener;
+        if (EditorSceneManager.GetActiveScene().name != levelEditorSceneName)
             return;
-        EditorSceneManager.activeSceneChangedInEditMode -= SetupListener;
-        EditorSceneManager.activeSceneChangedInEditMode += SetupListener;
+        EditorApplication.playModeStateChanged -= EnactPlayModeSettings;
         EditorApplication.playModeStateChanged += EnactPlayModeSettings;
-        
-        initialized = true;
     }
 
     public void RefreshReferences()
@@ -149,8 +155,13 @@ public class LevelEditor : EditorWindow
 
     private void OnGUI()
     {
+        if (Application.isPlaying)
+        {
+            EditorGUILayout.HelpBox("Level editing tools unavailable during play mode.", MessageType.Info);
+            return;
+        }
         // If there is no grid, we aren't in a battle scene or this one is improperly configured
-        if(EditorSceneManager.GetActiveScene().name != "LevelEditor")
+        if (EditorSceneManager.GetActiveScene().name != levelEditorSceneName)
         {
             EditorGUILayout.HelpBox("You are not in the LevelEditor scene!", MessageType.Error);
             if(GUILayout.Button(new GUIContent("Go to Level Editor Scene")))
@@ -162,7 +173,6 @@ public class LevelEditor : EditorWindow
             }
             return;
         }
-        Initialize();
         if (waveEditor == null || encounterEditor == null)
             RefreshReferences();
         GUILayout.BeginVertical("Box");

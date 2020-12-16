@@ -9,7 +9,6 @@ public class WaveEditor : EditorWindow
 {
     public const string waveFolderPath = "Assets/ScriptableObjects/WaveData/";
     public const string assetSuffix = ".asset";
-    public const string levelEditorScenePath = "Assets/Scenes/LevelEditor/LevelEditor.unity";
     // Wave editing properties
     public WaveData loadedWave = null;
     public string newFileName = string.Empty;
@@ -23,15 +22,20 @@ public class WaveEditor : EditorWindow
     }
     private void OnGUI()
     {
+        if (Application.isPlaying)
+        {
+            EditorGUILayout.HelpBox("Level editing tools unavailable during play mode.", MessageType.Info);
+            return;
+        }
         // If there is no grid, we aren't in a battle scene or this one is improperly configured
-        if(EditorSceneManager.GetActiveScene().name != "LevelEditor")
+        if (EditorSceneManager.GetActiveScene().name != LevelEditor.levelEditorSceneName)
         {
             EditorGUILayout.HelpBox("You are not in the LevelEditor scene!", MessageType.Error);
             if(GUILayout.Button(new GUIContent("Go to Level Editor Scene")))
             {
                 if(EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 {
-                    EditorSceneManager.OpenScene(levelEditorScenePath);
+                    EditorSceneManager.OpenScene(LevelEditor.levelEditorScenePath);
                 }              
             }
             return;
@@ -139,7 +143,6 @@ public class WaveEditor : EditorWindow
         {
             levelEditor = GetWindow<LevelEditor>("Level Editor", typeof(WaveEditor));
         }
-        levelEditor.Initialize();
     }
 
     #region Helper Methods

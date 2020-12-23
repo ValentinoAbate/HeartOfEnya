@@ -284,21 +284,21 @@ public class DraggableIngredient : MonoBehaviour
         Text hpText = myBuffCanvas.transform.Find("HPText").GetComponent<Text>();
         Text fpText = myBuffCanvas.transform.Find("FPText").GetComponent<Text>();
         //get references to the HP/FP arrows and disable them (they'll be activated again if their buff is actually active)
-        Image hpArrow = myBuffCanvas.transform.Find("HPArrow").GetComponent<Image>();
-        hpArrow.enabled = false;
-        Image fpArrow = myBuffCanvas.transform.Find("FPArrow").GetComponent<Image>();
-        fpArrow.enabled = false;
+        GameObject hpArrow = myBuffCanvas.transform.Find("HPArrow").gameObject;
+        hpArrow.SetActive(false);
+        GameObject fpArrow = myBuffCanvas.transform.Find("FPArrow").gameObject;
+        fpArrow.SetActive(false);
 
         //apply the active buffs
         if (doHPBuff)
         {
             baseHP += 2;
-            hpArrow.enabled = true;
+            hpArrow.SetActive(true);
         }
         if (doFPBuff)
         {
             baseFP += 1;
-            fpArrow.enabled = true;
+            fpArrow.SetActive(true);
         }
 
         //display the final HP/FP values

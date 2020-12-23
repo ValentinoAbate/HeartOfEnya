@@ -57,7 +57,20 @@ public class DisplaySettings : MonoBehaviour
 
     public void SetFullScreenMode(int mode)
     {
-        this.mode = (FullScreenMode)mode;
+        //convert the option's list index into an actual usable value & use it to set the display mode.
+        //WARNING: WILL BREAK IF WE CHANGE THE ORDER OF THE OPTIONS IN THE DROPDOWN!!
+        switch (mode)
+        {
+            case 0:
+                this.mode = FullScreenMode.FullScreenWindow;
+                break;
+            case 1:
+                this.mode = FullScreenMode.Windowed;
+                break;
+            default:
+                Debug.LogError("Invalid display mode choice!");
+                break;
+        }
     }
 
     public void Apply()

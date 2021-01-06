@@ -89,7 +89,14 @@ public class DisplaySettings : MonoBehaviour
 
     private IEnumerator UpdateScalingSettingsCr()
     {
-        yield return new WaitUntil(() => Screen.width == resolution.width && Screen.height == resolution.height);
+        //Waiting until the screen hits the new resolution *SHOULD* work, but in reality this WaitUntil never executes.
+        //yield return new WaitUntil(() => Screen.width == resolution.width && Screen.height == resolution.height);
+
+        //Instead of waiting until we've confirmed the resolution change, let's just wait 4 frames and pray Unity sorts it out itself.
+        yield return null; //waits until the end of the current frame
+        yield return null; //waits until the end of the next frame (when the docs say the change SHOULD take effect)
+        yield return null; //wait 2 more frames just in case Unity is slow and/or the docs are lying again
+        yield return null;
         UpdateScalingSettings();
     }
 }

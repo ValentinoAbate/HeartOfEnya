@@ -12,29 +12,36 @@ public class ResolutionSettingsDropdown : MonoBehaviour
     public TextMeshProUGUI label;
     public DisplaySettings settings;
     public StudioEventEmitter emitter;
+
+    //stores the list of valid resolutions
+    Resolution[] availableResolutions;
+
     // Start is called before the first frame update
     void Start()
     {
-        //generate a list of resolutions that are smaller or equal to the native resolution
-        Resolution[] availableResolutions = getLegalResolutions();
+        // //generate a list of resolutions that are smaller or equal to the native resolution
+        //availableResolutions = getLegalResolutions();
 
-        menu.AddOptions(availableResolutions.Select((r) => new TMP_Dropdown.OptionData(r.ToString())).ToList());
-        menu.value = Array.IndexOf(availableResolutions, Screen.currentResolution);
-        //In the unlikely event we somehow removed the current resolution from the list, scream bloody murder.
-        //Usually only happens in the editor window (since it can have a non-standard resolution), but let's just play it safe for the builds.
-        if (Array.Exists(availableResolutions, element => isResEqual(element, Screen.currentResolution))) //all is fine
-        {
-            label.text = availableResolutions[menu.value].ToString();
-        }
-        else //current resolution somehow got removed
-        {
-            Debug.LogError("Current resolution is not in the list of available resolutions!");
-            //If the current resolution got removed, label.text will sometimes default to the lowest resolution.
-            //It *should* throw an index-out-of-bounds error, but for some reason Array.IndexOf seems to be returning 0 instead of -1 if fed an item not in the array.
-            //This is probably worrying, but at least it doesn't crash so :shrug:
-            //Anyway, since builds won't have access to the console to see the error, instead of listing the wrong resolution we'll manually input the "select resolution" text instead.
-            label.text = "Select Resolution";
-        }
+        // menu.AddOptions(availableResolutions.Select((r) => new TMP_Dropdown.OptionData(r.ToString())).ToList());
+        // menu.value = Array.IndexOf(availableResolutions, Screen.currentResolution);
+        // //In the unlikely event we somehow removed the current resolution from the list, scream bloody murder.
+        // //Usually only happens in the editor window (since it can have a non-standard resolution), but let's just play it safe for the builds.
+        // if (Array.Exists(availableResolutions, element => isResEqual(element, Screen.currentResolution))) //all is fine
+        // {
+        //     label.text = availableResolutions[menu.value].ToString();
+        // }
+        // else //current resolution somehow got removed
+        // {
+        //     Debug.LogError("Current resolution is not in the list of available resolutions!");
+        //     //If the current resolution got removed, label.text will sometimes default to the lowest resolution.
+        //     //It *should* throw an index-out-of-bounds error, but for some reason Array.IndexOf seems to be returning 0 instead of -1 if fed an item not in the array.
+        //     //This is probably worrying, but at least it doesn't crash so :shrug:
+        //     //Anyway, since builds won't have access to the console to see the error, instead of listing the wrong resolution we'll manually input the "select resolution" text instead.
+        //     label.text = "Select Resolution";
+        // }
+
+        //use Refresh() to populate the options 
+        Refresh();
         menu.onValueChanged.AddListener((val) => label.text = availableResolutions[val].ToString());
         menu.onValueChanged.AddListener((val) => emitter.Play());
     }
@@ -84,6 +91,37 @@ public class ResolutionSettingsDropdown : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    //re-generates the options list and currently selected option
+    public void Refresh()
+    {
+        Debug.Log("Refreshing resolution options...");
+
+        //remove previous options list
+        menu.ClearOptions();
+
+        //generate a list of resolutions that are smaller or equal to the native resolution
+        availableResolutions = getLegalResolutions();
+
+        //populate the options list and set the current resolution as the selection
+        menu.AddOptions(availableResolutions.Select((r) => new TMP_Dropdown.OptionData(r.ToString())).ToList());
+        menu.value = Array.IndexOf(availableResolutions, Screen.currentResolution);
+        //In the unlikely event we somehow removed the current resolution from the list, scream bloody murder.
+        //Usually only happens in the editor window (since it can have a non-standard resolution), but let's just play it safe for the builds.
+        if (Array.Exists(availableResolutions, element => isResEqual(element, Screen.currentResolution))) //all is fine
+        {
+            label.text = availableResolutions[menu.value].ToString();
+        }
+        else //current resolution somehow got removed
+        {
+            Debug.LogError("Current resolution (" + Screen.currentResolution.ToString() + ") is not in the list of available resolutions!");
+            //If the current resolution got removed, label.text will sometimes default to the lowest resolution.
+            //It *should* throw an index-out-of-bounds error, but for some reason Array.IndexOf seems to be returning 0 instead of -1 if fed an item not in the array.
+            //This is probably worrying, but at least it doesn't crash so :shrug:
+            //Anyway, since builds won't have access to the console to see the error, instead of listing the wrong resolution we'll manually input the "select resolution" text instead.
+            label.text = "Select Resolution";
         }
     }
 }

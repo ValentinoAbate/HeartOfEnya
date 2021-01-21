@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -4543,6 +4543,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a00c200a13ef9a27b8391587a6a0b66, type: 3}
+--- !u!114 &889293070 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4981419126738185588, guid: 7819467f5929e60498c4853cf6fde23e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1341500610}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00115e96b8ea1884eb5beede45789bc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &897754569
 GameObject:
   m_ObjectHideFlags: 0
@@ -6446,6 +6458,11 @@ PrefabInstance:
       propertyPath: optionDisplayText.Array.data[1]
       value: Windowed
       objectReference: {fileID: 0}
+    - target: {fileID: 1732387189313810243, guid: 7819467f5929e60498c4853cf6fde23e,
+        type: 3}
+      propertyPath: resolutionMenu
+      value: 
+      objectReference: {fileID: 889293070}
     - target: {fileID: 1769703654116775970, guid: 7819467f5929e60498c4853cf6fde23e,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size

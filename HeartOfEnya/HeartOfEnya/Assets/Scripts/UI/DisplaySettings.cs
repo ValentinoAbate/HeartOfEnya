@@ -77,10 +77,6 @@ public class DisplaySettings : MonoBehaviour
     public void Apply()
     {
         Screen.SetResolution(resolution.width, resolution.height, mode);
-        //Have the resolution dropdown refresh its option list when the display mode changes.
-        //This should help with a bug on multiple monitor setups where moving the game to a different monitor causes the resolution menu
-        //to use the resolution list from the old monitor, which results in weird behavior.
-        resolutionMenu.Refresh();
         StartCoroutine(UpdateScalingSettingsCr());
     }
 
@@ -103,5 +99,9 @@ public class DisplaySettings : MonoBehaviour
         yield return null; //wait 2 more frames just in case Unity is slow and/or the docs are lying again
         yield return null;
         UpdateScalingSettings();
+        //Have the resolution dropdown refresh its option list when the display mode changes.
+        //This should help with a bug on multiple monitor setups where moving the game to a different monitor causes the resolution menu
+        //to use the resolution list from the old monitor, which results in weird behavior.
+        resolutionMenu.Refresh();
     }
 }

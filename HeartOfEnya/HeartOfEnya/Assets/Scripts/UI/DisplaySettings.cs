@@ -12,6 +12,7 @@ public class DisplaySettings : MonoBehaviour
     public TextMeshProUGUI selectorText;
     public TMP_Dropdown displayDropDown;
     public TMP_Dropdown resolutionDropDown;
+    public ResolutionSettingsDropdown resolutionMenu; //reference to the resolution dropdown so we can refresh it on mode change
 
     private void Awake()
     {
@@ -76,6 +77,10 @@ public class DisplaySettings : MonoBehaviour
     public void Apply()
     {
         Screen.SetResolution(resolution.width, resolution.height, mode);
+        //Have the resolution dropdown refresh its option list when the display mode changes.
+        //This should help with a bug on multiple monitor setups where moving the game to a different monitor causes the resolution menu
+        //to use the resolution list from the old monitor, which results in weird behavior.
+        resolutionMenu.Refresh();
         StartCoroutine(UpdateScalingSettingsCr());
     }
 

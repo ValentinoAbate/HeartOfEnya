@@ -19,27 +19,6 @@ public class ResolutionSettingsDropdown : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // //generate a list of resolutions that are smaller or equal to the native resolution
-        //availableResolutions = getLegalResolutions();
-
-        // menu.AddOptions(availableResolutions.Select((r) => new TMP_Dropdown.OptionData(r.ToString())).ToList());
-        // menu.value = Array.IndexOf(availableResolutions, Screen.currentResolution);
-        // //In the unlikely event we somehow removed the current resolution from the list, scream bloody murder.
-        // //Usually only happens in the editor window (since it can have a non-standard resolution), but let's just play it safe for the builds.
-        // if (Array.Exists(availableResolutions, element => isResEqual(element, Screen.currentResolution))) //all is fine
-        // {
-        //     label.text = availableResolutions[menu.value].ToString();
-        // }
-        // else //current resolution somehow got removed
-        // {
-        //     Debug.LogError("Current resolution is not in the list of available resolutions!");
-        //     //If the current resolution got removed, label.text will sometimes default to the lowest resolution.
-        //     //It *should* throw an index-out-of-bounds error, but for some reason Array.IndexOf seems to be returning 0 instead of -1 if fed an item not in the array.
-        //     //This is probably worrying, but at least it doesn't crash so :shrug:
-        //     //Anyway, since builds won't have access to the console to see the error, instead of listing the wrong resolution we'll manually input the "select resolution" text instead.
-        //     label.text = "Select Resolution";
-        // }
-
         //use Refresh() to populate the options 
         Refresh();
         menu.onValueChanged.AddListener((val) => label.text = availableResolutions[val].ToString());
@@ -60,12 +39,8 @@ public class ResolutionSettingsDropdown : MonoBehaviour
         Debug.Log("NATIVE RES: " + native.ToString());
 
         //go through the available resolutions and toss out everything higher than the native resolution
-        //Debug.Log("PRE-FILTERING:");
-        //printResArray(availableRes);
         availableRes = Array.FindAll(availableRes, x => (x.width <= native.width && x.height <= native.height));
-        //Debug.Log("POST-FILTERING:");
-        //printResArray(availableRes);
-
+        
         return availableRes;
     }
 
@@ -107,21 +82,43 @@ public class ResolutionSettingsDropdown : MonoBehaviour
 
         //populate the options list and set the current resolution as the selection
         menu.AddOptions(availableResolutions.Select((r) => new TMP_Dropdown.OptionData(r.ToString())).ToList());
-        menu.value = Array.IndexOf(availableResolutions, Screen.currentResolution);
+        menu.value = Array.IndexOf(availableResolutions, GetCurrentResolution());
         //In the unlikely event we somehow removed the current resolution from the list, scream bloody murder.
         //Usually only happens in the editor window (since it can have a non-standard resolution), but let's just play it safe for the builds.
-        if (Array.Exists(availableResolutions, element => isResEqual(element, Screen.currentResolution))) //all is fine
+        if (Array.Exists(availableResolutions, element => isResEqual(element, GetCurrentResolution()))) //all is fine
         {
             label.text = availableResolutions[menu.value].ToString();
         }
         else //current resolution somehow got removed
         {
-            Debug.LogError("Current resolution (" + Screen.currentResolution.ToString() + ") is not in the list of available resolutions!");
+            Debug.LogError("Current resolution (" + GetCurrentResolution().ToString() + ") is not in the list of available resolutions!");
             //If the current resolution got removed, label.text will sometimes default to the lowest resolution.
             //It *should* throw an index-out-of-bounds error, but for some reason Array.IndexOf seems to be returning 0 instead of -1 if fed an item not in the array.
             //This is probably worrying, but at least it doesn't crash so :shrug:
             //Anyway, since builds won't have access to the console to see the error, instead of listing the wrong resolution we'll manually input the "select resolution" text instead.
             label.text = "Select Resolution";
         }
+    }
+
+    //returns the actual resolution of the game window
+    public Resolution GetCurrentResolution()
+    {
+        //"If the player is running in window mode, this returns the current resolution of the desktop."
+        Resolution currentRes = Screen.currentResolution;
+        
+        //if we are in window mode and would like to know our resolution, we'll have to find it ourself.
+        if (Screen.fullScreenMode == FullScreenMode.Windowed)
+        {
+            //override currentRes with correct width and height
+            currentRes.width = Screen.width;
+            currentRes.height = Screen.height;
+            //We can skip messing with the refresh rate because, according to the top answer in https://answers.unity.com/questions/1678566/mismatch-refreshratehz-between-currentresolution-a.html,
+            //"In all fullscreen modes other than 'exclusive' the refresh rate will be that of whatever refresh rate your desktop runs.
+            // Because... anything but "exclusive" is running in a window even if you can't see the window title and borders."
+        }
+
+        Debug.Log("Found actual resolution to be: " + currentRes);
+
+        return currentRes;
     }
 }

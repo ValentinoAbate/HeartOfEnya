@@ -12,6 +12,7 @@ public class DisplaySettings : MonoBehaviour
     public TextMeshProUGUI selectorText;
     public TMP_Dropdown displayDropDown;
     public TMP_Dropdown resolutionDropDown;
+    public ResolutionSettingsDropdown resolutionMenu; //reference to the resolution dropdown so we can refresh it on mode change
 
     private void Awake()
     {
@@ -89,7 +90,18 @@ public class DisplaySettings : MonoBehaviour
 
     private IEnumerator UpdateScalingSettingsCr()
     {
-        yield return new WaitUntil(() => Screen.width == resolution.width && Screen.height == resolution.height);
+        //Waiting until the screen hits the new resolution *SHOULD* work, but in reality this WaitUntil never executes.
+        //yield return new WaitUntil(() => Screen.width == resolution.width && Screen.height == resolution.height);
+
+        //Instead of waiting until we've confirmed the resolution change, let's just wait 4 frames and pray Unity sorts it out itself.
+        yield return null; //waits until the end of the current frame
+        yield return null; //waits until the end of the next frame (when the docs say the change SHOULD take effect)
+        yield return null; //wait 2 more frames just in case Unity is slow and/or the docs are lying again
+        yield return null;
         UpdateScalingSettings();
+        //Have the resolution dropdown refresh its option list when the display mode changes.
+        //This should help with a bug on multiple monitor setups where moving the game to a different monitor causes the resolution menu
+        //to use the resolution list from the old monitor, which results in weird behavior.
+        resolutionMenu.Refresh();
     }
 }

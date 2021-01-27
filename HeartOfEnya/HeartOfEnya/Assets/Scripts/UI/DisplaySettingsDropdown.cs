@@ -11,7 +11,7 @@ public class DisplaySettingsDropdown : MonoBehaviour
     public TMP_Dropdown menu;
     public TextMeshProUGUI label;
     public StudioEventEmitter emitter;
-
+    
     //Used to convert the chosen display mode into a string form since we can't convert the choice index directly to and from the FullScreenMode enum anymore.
     //Entries should match the options as they appear in the options dropdown, including their order.
     public string[] optionDisplayText;

@@ -38,11 +38,11 @@ public class DialogBox : MonoBehaviour, IPausable
             voiceEmitter?.SetParameter("Space", 1);
     }
 
-    private void OnConfirm()
+    public void GoToNext()
     {
         if (PauseHandle.Paused)
             return;
-        if(state != State.Inactive)
+        if (state != State.Inactive)
             state = state.Next();
     }
 
@@ -83,7 +83,7 @@ public class DialogBox : MonoBehaviour, IPausable
                     voiceEmitter.SetParameter("Space", 1);
                     yield return new WaitForSeconds(spaceDelay);
                 }
-                else
+                else if (!PauseHandle.Paused)
                 {
                     voiceEmitter.SetParameter("Space", 0);
                     yield return new WaitForSeconds(scrollDelay);

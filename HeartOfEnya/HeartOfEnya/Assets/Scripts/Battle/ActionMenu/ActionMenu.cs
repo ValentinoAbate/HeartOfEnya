@@ -46,7 +46,7 @@ public class ActionMenu : MonoBehaviour, IPausable
     {
         if (PauseHandle.Paused || !BattleUI.main.CancelingEnabled || cursor.isActiveAndEnabled)
             return;
-        if (Input.GetKeyDown(cancelKey) || Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
             if(skipOneCancel)
             {

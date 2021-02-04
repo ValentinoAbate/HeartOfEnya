@@ -14,6 +14,7 @@ public class DisplaySettings : MonoBehaviour
     public TMP_Dropdown resolutionDropDown;
     public ResolutionSettingsDropdown resolutionMenu; //reference to the resolution dropdown so we can refresh it on mode change
 
+
     private void Awake()
     {
         resolution = Screen.currentResolution;
@@ -52,7 +53,7 @@ public class DisplaySettings : MonoBehaviour
 
     public void SetResolution(int ind)
     {
-        resolution = Screen.resolutions[ind];
+        resolution = resolutionMenu.availableResolutions[ind];
         selectorText.text = resolution.ToString();
     }
 

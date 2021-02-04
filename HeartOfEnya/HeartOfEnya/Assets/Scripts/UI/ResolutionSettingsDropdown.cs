@@ -14,7 +14,7 @@ public class ResolutionSettingsDropdown : MonoBehaviour
     public StudioEventEmitter emitter;
 
     //stores the list of valid resolutions
-    Resolution[] availableResolutions;
+    public Resolution[] availableResolutions;
 
     // Start is called before the first frame update
     void Start()
@@ -34,12 +34,13 @@ public class ResolutionSettingsDropdown : MonoBehaviour
         //Get the native resolution so we can remove everything above it.
         //We'll use the systemWidth/systemHeight properties of the Display class, since unlike Screen.currentResolution they remain constant regardless of any changes to the display or resolution settings.
         Resolution native = new Resolution();       //This refuses to compile if fed arguments and I can't find any documentation of a constructor...
-        native.width = Display.main.systemWidth;    //..so we'll just use the default 0x0 @ 0Hz and manually adjust the width and height.
-        native.height = Display.main.systemHeight;  //We can leave the refresh rate at 0, since we're not filtering based on it (and the native refresh rate is harder to find).
+        native.width = Display.main.systemWidth;    //..so we'll just use the default 0x0 @ 0Hz and manually adjust the width, height, & refresh rate.
+        native.height = Display.main.systemHeight;  
+        native.refreshRate = Screen.currentResolution.refreshRate;
         Debug.Log("NATIVE RES: " + native.ToString());
 
         //go through the available resolutions and toss out everything higher than the native resolution
-        availableRes = Array.FindAll(availableRes, x => (x.width <= native.width && x.height <= native.height));
+        availableRes = Array.FindAll(availableRes, x => (x.width <= native.width && x.height <= native.height && x.refreshRate == native.refreshRate));
         
         return availableRes;
     }

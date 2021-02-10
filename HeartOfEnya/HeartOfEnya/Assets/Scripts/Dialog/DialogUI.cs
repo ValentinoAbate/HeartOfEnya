@@ -195,6 +195,7 @@ namespace Dialog
                 newDialog = false;
                 foreach (var chara in characters)
                     chara.Expression = Character.defaultExpression;
+                dialogBoxButton.gameObject.SetActive(true);
             }
 
             // Correct the formatting
@@ -291,6 +292,7 @@ namespace Dialog
         public override IEnumerator DialogueComplete()
         {
             newDialog = true;
+            dialogBoxButton.gameObject.SetActive(false);
             if (dialogBox != null)
             {
                 dialogBox.Stop();

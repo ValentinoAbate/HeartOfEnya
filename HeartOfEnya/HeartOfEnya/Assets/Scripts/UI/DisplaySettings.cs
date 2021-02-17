@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class DisplaySettings : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class DisplaySettings : MonoBehaviour
     public TMP_Dropdown displayDropDown;
     public TMP_Dropdown resolutionDropDown;
     public ResolutionSettingsDropdown resolutionMenu; //reference to the resolution dropdown so we can refresh it on mode change
+    public Toggle vSyncToggle;
 
 
     private void Awake()
@@ -22,6 +24,7 @@ public class DisplaySettings : MonoBehaviour
         mode = Screen.fullScreenMode;
         displayDropDown.value = (int)mode;
         selectorText.text = resolution.ToString();
+        vSyncToggle.isOn = QualitySettings.vSyncCount > 0;
     }
 
     public void SetFullScreenModeWindowed()
@@ -78,6 +81,7 @@ public class DisplaySettings : MonoBehaviour
     public void Apply()
     {
         Screen.SetResolution(resolution.width, resolution.height, mode);
+        QualitySettings.vSyncCount = vSyncToggle.isOn ? 1 : 0;
         StartCoroutine(UpdateScalingSettingsCr());
     }
 

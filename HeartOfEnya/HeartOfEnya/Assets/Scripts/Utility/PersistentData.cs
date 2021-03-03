@@ -12,6 +12,7 @@ using System.Text;
 [System.Serializable]
 public class PersistentData : MonoBehaviour
 {
+    public const string saveDataPath = "data";
     public const int dayNumStart = 0;
     public const string gamePhaseIntro = "INTRO";
     public const string gamePhaseTut1And2 = "A";
@@ -19,6 +20,7 @@ public class PersistentData : MonoBehaviour
     public const string gamePhaseBeginMain = "C";
     public const string gamePhaseLuaUnfrozen = "D";
     public const string gamePhaseAbsoluteZeroBattle = "E";
+    public const string gamePhaseGameComplete = "F";
     public const string gamePhaseLevelEditor = "LE";
 
     public bool InMainPhase => gamePhase == gamePhaseBeginMain || gamePhase == gamePhaseLuaUnfrozen;
@@ -70,11 +72,18 @@ public class PersistentData : MonoBehaviour
     [Header("Saving")]
     public string returnScene; //what scene to return to on game load
 
-    public string IntToGamePhase(int phaseNum)
+    public static string IntToGamePhase(int phaseNum)
     {
         if (phaseNum == 0)
             return gamePhaseIntro;
         return ((char)('A' + phaseNum - 1)).ToString();
+    }
+
+    public static int GamePhaseToInt(string gamePhase)
+    {
+        if (gamePhase.ToUpper() == gamePhaseIntro)
+            return 0;
+        return (gamePhase.ToUpper()[0] - 'A') + 1;
     }
 
     [System.Serializable]
@@ -90,7 +99,7 @@ public class PersistentData : MonoBehaviour
     public void SaveToFile()
     {
         //get path to the save file
-        string savePath = Path.Combine(Application.persistentDataPath, "data");
+        string savePath = Path.Combine(Application.persistentDataPath, saveDataPath);
         savePath = Path.Combine(savePath, "SaveData.txt"); //naughty ben, hardcoding filenames! Should probably fix later
 
         //convert to JSON, then to bytes
@@ -121,7 +130,7 @@ public class PersistentData : MonoBehaviour
     public void LoadFromFile()
     {
         //get path to the save file
-        string savePath = Path.Combine(Application.persistentDataPath, "data");
+        string savePath = Path.Combine(Application.persistentDataPath, saveDataPath);
         savePath = Path.Combine(savePath, "SaveData.txt"); //naughty ben, hardcoding filenames! Should probably fix later
 
         //abort if the save file and/or directory doesn't exist

@@ -12,6 +12,7 @@ public class DoNotDestroyOnLoad : MonoBehaviour
     public static DoNotDestroyOnLoad Instance { get { return instance; } }
     public PersistentData persistentData;
     public PlaytestLogger playtestLogger;
+    public PersistentSaveData permanentSaveData;
 
     private void Awake()
     {

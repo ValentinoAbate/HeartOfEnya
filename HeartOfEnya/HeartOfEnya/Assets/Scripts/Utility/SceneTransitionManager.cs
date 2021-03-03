@@ -42,13 +42,17 @@ public class SceneTransitionManager : MonoBehaviour
         if (sceneName == "Battle")
         {
             StartCoroutine(BattleTransition(sceneName));
-        }else if(sceneName == "Camp" || sceneName == "OutroCamp" || sceneName == "IntroCamp")
+            DoNotDestroyOnLoad.Instance?.permanentSaveData?.UpdatePersistantSaveData(false);
+        }
+        else if(sceneName == "Camp" || sceneName == "OutroCamp" || sceneName == "IntroCamp")
         {
             StartCoroutine(CampTransition(sceneName));
+            DoNotDestroyOnLoad.Instance?.permanentSaveData?.UpdatePersistantSaveData(true);
         }
         else
         {
             StartCoroutine(StartFade(sceneName));
+            DoNotDestroyOnLoad.Instance?.permanentSaveData?.UpdatePersistantSaveData(false);
         }
 
     }

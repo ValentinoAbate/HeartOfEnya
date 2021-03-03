@@ -13,19 +13,28 @@ public class LevelSelect : MonoBehaviour
     private void Start()
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
+        var pSaveData = DoNotDestroyOnLoad.Instance.permanentSaveData;
+        int latestGamePhase = PersistentData.GamePhaseToInt(pSaveData.latestGamePhase);
+        int latestDay = pSaveData.latestDay;
         buttons = GetComponentsInChildren<Button>();
         for (int i = 0; i < buttons.Length - 1; ++i)
         {
             var button = buttons[i];
             int phase = (i + 3) / 4;
             int day = ((i - 1) % 4) / 2;
+            if (phase > latestGamePhase || (phase == latestGamePhase && day > latestDay) || (phase == latestGamePhase && day == latestDay && pSaveData.onBattle && i % 2 == 0))
+            {
+                button.GetComponentInChildren<Text>().text = "???";
+                continue;
+            }
+            button.interactable = true;
             if (i % 2 == 0) // Button goes to camp scene
             {
-                button.onClick.AddListener(() => GoToCamp(pData.IntToGamePhase(phase), day));
+                button.onClick.AddListener(() => GoToCamp(PersistentData.IntToGamePhase(phase), day));
             }
             else // Button goes to battle / soup scene
             {
-                button.onClick.AddListener(() => GoToBattle(pData.IntToGamePhase(phase), day));
+                button.onClick.AddListener(() => GoToBattle(PersistentData.IntToGamePhase(phase), day));
             }
             button.onClick.AddListener(() => selectSfx.Play());
         }

@@ -91,6 +91,7 @@ public class FMODBattle : MonoBehaviour
         Music.Play();
     }
 
+
     public void TriggerNewWave()
     {
         NewWave = true;
@@ -113,6 +114,22 @@ public class FMODBattle : MonoBehaviour
     {
         storm.SetParameter("Enemy Turn", 0);
         InEnemyTurn = false;
+    }
+
+    public void EnterCrisis(PartyMember partyMember)
+    {
+        Music.SetParameter("Crisis", 1);
+        Music.SetParameter(partyMember.DisplayName + "Crisis", 1);
+    }
+
+    public void PartyMemberOutOfCrisis(PartyMember partyMember)
+    {
+        Music.SetParameter(partyMember.DisplayName + "Crisis", 0);
+    }
+
+    public void ExitCrisis()
+    {
+        Music.SetParameter("Crisis", 0);
     }
 
     private void TurnOffNewWave() => NewWave = false;

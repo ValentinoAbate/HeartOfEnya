@@ -8,9 +8,12 @@ using UnityEngine;
 public class PersistentSaveData : MonoBehaviour
 {
     private const string fileName = "PersistentSaveData.txt";
-    public string latestGamePhase = PersistentData.gamePhaseIntro;
-    public int latestDay = PersistentData.dayNumStart;
-    public bool onBattle = true;
+    public string LatestGamePhase => latestGamePhase;
+    [SerializeField] private string latestGamePhase = PersistentData.gamePhaseIntro;
+    public bool OnBattle => onBattle;
+    [SerializeField] private bool onBattle = true;
+    public int LatestDay => latestDay;
+    [SerializeField] private int latestDay = PersistentData.dayNumStart;
     private bool loaded = false;
     public void UpdatePersistantSaveData(bool camp)
     {
@@ -20,7 +23,7 @@ public class PersistentSaveData : MonoBehaviour
             if (latestDay < pData.dayNum)
                 latestDay = pData.dayNum;
             if (onBattle && camp)
-                onBattle = false;
+                onBattle = (pData.InLuaBattle && !pData.luaBossPhase2Defeated) || (pData.InAbs0Battle && !pData.absoluteZeroPhase1Defeated) || false;
         }
         else if(PersistentData.GamePhaseToInt(latestGamePhase) < PersistentData.GamePhaseToInt(pData.gamePhase))
         {

@@ -14,21 +14,38 @@ public class LevelSelect : MonoBehaviour
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         var pSaveData = DoNotDestroyOnLoad.Instance.permanentSaveData;
-        int latestGamePhase = PersistentData.GamePhaseToInt(pSaveData.latestGamePhase);
-        int latestDay = pSaveData.latestDay;
+        string latestPhase = pSaveData.LatestGamePhase;
+        int latestPhaseInt = PersistentData.GamePhaseToInt(latestPhase);
+        int latestDay = pSaveData.LatestDay;
+        bool Disable(int phase, int day, bool camp)
+        {
+            if (phase == latestPhaseInt)
+            {
+                if (latestPhase == PersistentData.gamePhaseTut3AndLuaBattle && day > 0)
+                    return pSaveData.OnBattle && camp;
+                if (latestPhase == PersistentData.gamePhaseAbsoluteZeroBattle)
+                    return pSaveData.OnBattle && camp;
+                if (day == latestDay)
+                    return pSaveData.OnBattle && camp;
+                return day > latestDay;
+            }
+            return phase > latestPhaseInt;
+        }
         buttons = GetComponentsInChildren<Button>();
         for (int i = 0; i < buttons.Length - 1; ++i)
         {
             var button = buttons[i];
+            // Why have i committed this crime against indices
             int phase = (i + 3) / 4;
             int day = ((i - 1) % 4) / 2;
-            if (phase > latestGamePhase || (phase == latestGamePhase && day > latestDay) || (phase == latestGamePhase && day == latestDay && pSaveData.onBattle && i % 2 == 0))
+            bool camp = i % 2 == 0;
+            if (Disable(phase, day, camp))
             {
                 button.GetComponentInChildren<Text>().text = "???";
                 continue;
             }
             button.interactable = true;
-            if (i % 2 == 0) // Button goes to camp scene
+            if (camp) // Button goes to camp scene
             {
                 button.onClick.AddListener(() => GoToCamp(PersistentData.IntToGamePhase(phase), day));
             }

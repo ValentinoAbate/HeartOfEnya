@@ -448,6 +448,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 459061680}
+        m_MethodName: LoadReturnScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &14903329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2344,6 +2355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showIfFile: 1
+  persistentData: {fileID: 1115800236}
 --- !u!1 &1113895313
 GameObject:
   m_ObjectHideFlags: 0
@@ -2586,6 +2598,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1115800235}
+  - component: {fileID: 1115800236}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -2614,6 +2627,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1115800236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115800234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9126cb4538e1b7d5c9c714eee8a0ec44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  luaBossPhase1Defeated: 0
+  luaBossPhase2Defeated: 0
+  absoluteZeroPhase1Defeated: 0
+  absoluteZeroPhase2Defeated: 0
+  numEnemiesLeft: 0
+  numEnemiesDefeatedThisEncounter: 0
+  waveNum: 0
+  lastEncounter: {fileID: 0}
+  listEnemiesLeft: []
+  listActiveSpawners: []
+  buffStructures: []
+  gamePhase: A
+  dayNum: 0
+  levelEditorPartyLevel: 1
+  returnScene: 
 --- !u!1 &1181378772
 GameObject:
   m_ObjectHideFlags: 0
@@ -4215,6 +4255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showIfFile: 0
+  persistentData: {fileID: 1115800236}
 --- !u!1 &1837345781
 GameObject:
   m_ObjectHideFlags: 0

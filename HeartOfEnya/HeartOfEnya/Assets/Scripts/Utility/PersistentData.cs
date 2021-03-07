@@ -170,7 +170,10 @@ public class PersistentData : MonoBehaviour
             
             /***TODO: add some way of communicating the error to the player & prompting them to load a new game***/
         }
+    }
 
+    public void LoadReturnScene()
+    {
         //load the scene we saved on
         if (String.IsNullOrEmpty(returnScene))
         {

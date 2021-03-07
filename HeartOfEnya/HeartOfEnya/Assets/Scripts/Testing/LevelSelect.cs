@@ -8,6 +8,7 @@ public class LevelSelect : MonoBehaviour
     public bool goToSoup = true;
     public Encounter mainEncounter = null;
     public FMODUnity.StudioEventEmitter selectSfx;
+    public GenericConfirmationMenu confirmationPrompt;
     private Button[] buttons;
 
     private void Start()
@@ -64,36 +65,46 @@ public class LevelSelect : MonoBehaviour
 
     public void GoToBattle(string phase, int dayNum)
     {
-        SetPersistantData(phase, dayNum);
-        if(goToSoup && !(phase == PersistentData.gamePhaseTut1And2 && dayNum == PersistentData.dayNumStart))
+        confirmationPrompt.OnConfirm = null;
+        confirmationPrompt.OnConfirm += () =>
         {
-            SceneTransitionManager.main.TransitionScenes("Breakfast");
-        }
-        else
-        {
-            SceneTransitionManager.main.TransitionScenes("Battle");
-        }
+            SetPersistantData(phase, dayNum);
+            if (goToSoup && !(phase == PersistentData.gamePhaseTut1And2 && dayNum == PersistentData.dayNumStart))
+            {
+                SceneTransitionManager.main.TransitionScenes("Breakfast");
+            }
+            else
+            {
+                SceneTransitionManager.main.TransitionScenes("Battle");
+            }
+        };
+        confirmationPrompt.Show();
     }
 
     public void GoToCamp(string phase, int dayNum)
     {
-        SetPersistantData(phase, dayNum);
-        var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        if (phase == PersistentData.gamePhaseIntro)
+        confirmationPrompt.OnConfirm = null;
+        confirmationPrompt.OnConfirm += () =>
         {
-            SceneTransitionManager.main.TransitionScenes("IntroCamp");
-        }
-        else if(phase == PersistentData.gamePhaseAbsoluteZeroBattle)
-        {
-            pData.absoluteZeroPhase1Defeated = true;
-            SceneTransitionManager.main.TransitionScenes("OutroCamp");
-        }
-        else
-        {
-            if (pData.InLuaBattle)
-                pData.luaBossPhase2Defeated = true;
-            SceneTransitionManager.main.TransitionScenes("Camp");
-        }
+            SetPersistantData(phase, dayNum);
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
+            if (phase == PersistentData.gamePhaseIntro)
+            {
+                SceneTransitionManager.main.TransitionScenes("IntroCamp");
+            }
+            else if (phase == PersistentData.gamePhaseAbsoluteZeroBattle)
+            {
+                pData.absoluteZeroPhase1Defeated = true;
+                SceneTransitionManager.main.TransitionScenes("OutroCamp");
+            }
+            else
+            {
+                if (pData.InLuaBattle)
+                    pData.luaBossPhase2Defeated = true;
+                SceneTransitionManager.main.TransitionScenes("Camp");
+            }
+        };
+        confirmationPrompt.Show();
     }
 
     private void SetPersistantData(string phase, int dayNum)
@@ -123,14 +134,6 @@ public class LevelSelect : MonoBehaviour
                 totalEnemies += mainEncounter.Waves[i].enemies.Count;
             }
             pData.numEnemiesLeft = totalEnemies;
-        }
-
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }   
     }
 }

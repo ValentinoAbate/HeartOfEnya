@@ -197,7 +197,7 @@ public class PartyMember : Combatant, IPausable
         deathSfxEvent.Play();
         DeathsDoor = true;
         Debug.Log(DisplayName + "Has Enetered Death's Door");
-        FMODBattle.main.Music.SetParameter("Crisis", 1);
+        FMODBattle.main.EnterCrisis(this);
         deathsDoorUI.SetActive(true);
         hpImage.gameObject.SetActive(false);
         fpText.transform.parent.gameObject.SetActive(false);
@@ -375,9 +375,18 @@ public class PartyMember : Combatant, IPausable
     public void Run()
     {
         RanAway = true;
+
+        FMODBattle.main.PartyMemberOutOfCrisis(this);
+        // if there are no remaining party members in crisis
         if (DeathsDoor && PhaseManager.main.PartyPhase.Party.Count((p) => p.DeathsDoor && !p.RanAway) <= 0)
-            if(PhaseManager.main.PartyPhase.Party.Count((p) => p != null && !p.RanAway) >= 1)
-                FMODBattle.main.Music.SetParameter("Crisis", 0);
+        {
+            // but there are still party members on the field
+            if (PhaseManager.main.PartyPhase.Party.Count((p) => p != null && !p.RanAway) >= 1)
+            {
+                FMODBattle.main.ExitCrisis();
+            }
+        }
+
         EndTurn();
         // Destroy(gameObject);
         gameObject.SetActive(false);

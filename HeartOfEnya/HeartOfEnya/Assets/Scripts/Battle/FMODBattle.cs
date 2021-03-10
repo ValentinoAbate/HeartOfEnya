@@ -44,7 +44,24 @@ public class FMODBattle : MonoBehaviour
         get
         {
             var pData = DoNotDestroyOnLoad.Instance.persistentData;
-            return pData.gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle ? abs0Music : music;
+            //return pData.gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle ? abs0Music : music;
+
+            if (pData.InAbs0Battle)
+            {
+                return abs0Music;
+            }
+            else if (pData.InLuaBattle)
+            {
+                return luacicle;
+            }
+            else if (pData.LuaUnfrozen)
+            {
+                return luaUnfrozen;
+            }
+            else
+            {
+                return music;
+            }
         }
     }
 
@@ -53,6 +70,10 @@ public class FMODBattle : MonoBehaviour
     private StudioEventEmitter music;
     [SerializeField]
     private StudioEventEmitter abs0Music;
+    [SerializeField]
+    private StudioEventEmitter luaUnfrozen;
+    [SerializeField]
+    private StudioEventEmitter luacicle;
 
     [Header("Ambient")]
     public StudioEventEmitter storm;
@@ -91,6 +112,7 @@ public class FMODBattle : MonoBehaviour
         Music.Play();
     }
 
+
     public void TriggerNewWave()
     {
         NewWave = true;
@@ -113,6 +135,22 @@ public class FMODBattle : MonoBehaviour
     {
         storm.SetParameter("Enemy Turn", 0);
         InEnemyTurn = false;
+    }
+
+    public void EnterCrisis(PartyMember partyMember)
+    {
+        Music.SetParameter("Crisis", 1);
+        Music.SetParameter(partyMember.DisplayName + "Crisis", 1);
+    }
+
+    public void PartyMemberOutOfCrisis(PartyMember partyMember)
+    {
+        Music.SetParameter(partyMember.DisplayName + "Crisis", 0);
+    }
+
+    public void ExitCrisis()
+    {
+        Music.SetParameter("Crisis", 0);
     }
 
     private void TurnOffNewWave() => NewWave = false;

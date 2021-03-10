@@ -22,7 +22,7 @@ public class LevelSelect : MonoBehaviour
         {
             if (phase == latestPhaseInt)
             {
-                if (latestPhase == PersistentData.gamePhaseTut3AndLuaBattle && day > 0)
+                if (latestPhase == PersistentData.gamePhaseTut3AndLuaBattle && latestDay > 0 && day > 0)
                     return pSaveData.OnBattle && camp;
                 if (latestPhase == PersistentData.gamePhaseAbsoluteZeroBattle)
                     return pSaveData.OnBattle && camp;

@@ -22,8 +22,7 @@ public class PersistentSaveData : MonoBehaviour
         {
             if (latestDay < pData.dayNum)
                 latestDay = pData.dayNum;
-            if (onBattle && camp)
-                onBattle = (pData.InLuaBattle && !pData.luaBossPhase2Defeated) || (pData.InAbs0Battle && !pData.absoluteZeroPhase1Defeated) || false;
+            onBattle = !camp || (pData.InLuaBattle && !pData.luaBossPhase2Defeated) || (pData.InAbs0Battle && !pData.absoluteZeroPhase1Defeated);
         }
         else if(PersistentData.GamePhaseToInt(latestGamePhase) < PersistentData.GamePhaseToInt(pData.gamePhase))
         {

@@ -52,7 +52,7 @@ public class GenericConfirmationMenu : MonoBehaviour
         {
             if(scene == "MainMenu")
             {
-                DoNotDestroyOnLoad.Instance.ResetPersistantData();
+                DoNotDestroyOnLoad.Instance?.ResetPersistantData();
             }
             SceneTransitionManager.main.TransitionScenes(scene);
         }

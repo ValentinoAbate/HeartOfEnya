@@ -169,6 +169,7 @@ public class PersistentData : MonoBehaviour
             Debug.LogError("Error parsing save data: " + e.Message);
             
             /***TODO: add some way of communicating the error to the player & prompting them to load a new game***/
+            DisplayLoadError();
         }
     }
 
@@ -179,10 +180,26 @@ public class PersistentData : MonoBehaviour
         {
             //if no return scene was specified, abort
             Debug.LogWarning("No return scene specified! Cannot complete load!");
+            DisplayLoadError();
         }
         else
         {
             SceneTransitionManager.main.TransitionScenes(returnScene);
         }
+    }
+
+    public void DisplayLoadError() //string message)
+    {
+        // Debug.Log(message);
+        //This is a terrible way to get a reference to the error popup, but unfortunately it's necessary because any variable
+        //in this script with global scope (such as an editor-visible reference variable) will get saved to file, which could
+        //cause all sorts of issues (especially if we later change the reference and then load an older save).
+        //Also, since the popup game object starts off as inactive, we can't even use GameObject.Find() directly - we need to
+        //call Find() on its parent, then use transform.Find() to get the child.
+        //This has absolutely awful performance, but since A) this should never even trigger during normal gameplay and B)
+        //even if it does trigger it should only do so about once or twice (unless the user just keeps spamming the "load" button),
+        //the performance is justifiable. 
+        GameObject errorUI = GameObject.Find("MainMenuCanvas").transform.Find("LoadFailureNotification").gameObject;
+        errorUI.SetActive(true);
     }
 }

@@ -8,11 +8,12 @@ public class MainMenuSelector : MonoBehaviour
     private string ExistActionText => showIfFile ? "enabling" : "disabling";
     private string NotExistActionText => showIfFile ?  "disabling" : "enabling";
     public bool showIfFile = false;
+    public PersistentData persistentData;
     // disable the button if there isn't a save file
     void Start()
     {
         //get path to the save file
-        string savePath = Path.Combine(Application.persistentDataPath, "data");
+        string savePath = Path.Combine(Application.persistentDataPath, PersistentData.saveDataPath);
         savePath = Path.Combine(savePath, "SaveData.txt"); //naughty ben, hardcoding filenames! Should probably fix later
 
         //abort if the save file and/or directory doesn't exist
@@ -31,13 +32,8 @@ public class MainMenuSelector : MonoBehaviour
         else
         {
             Debug.Log("Save file detected - " + ExistActionText + " " + name);
-            gameObject.SetActive(showIfFile);
+            persistentData.LoadFromFile();
+            gameObject.SetActive(showIfFile ^ persistentData.gamePhase == PersistentData.gamePhaseGameComplete);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

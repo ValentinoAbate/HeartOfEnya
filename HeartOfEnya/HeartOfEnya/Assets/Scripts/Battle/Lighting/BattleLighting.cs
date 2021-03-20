@@ -44,7 +44,7 @@ public class BattleLighting : MonoBehaviour
         current = lighting[0];
         index = 0;
 
-        // StartCoroutine(TestLighting());
+         //StartCoroutine(TestLighting());
     }
 
     public bool ReadyToProgress(int turn)
@@ -54,7 +54,7 @@ public class BattleLighting : MonoBehaviour
     }
 
     // progress lighting to next time of day
-    public void ProgressLighting(float timeInSeconds = 1.0f)
+    public void ProgressLighting(float timeInSeconds = 5.0f)
     {
         if(index >= lighting.Length - 1)
         {
@@ -62,14 +62,22 @@ public class BattleLighting : MonoBehaviour
             return;
         }
         index++;
+
+        StopAllCoroutines();
+        UpdateCurrent();
+
         StartCoroutine(TransitionOverTime(lighting[index], timeInSeconds));
     }
 
     // transition to lighting by name
     // using enums
-    public void TransitionLightingByName(Time name, float timeInSeconds = 1.0f)
+    public void TransitionLightingByName(Time name, float timeInSeconds = 5.0f)
     {
         index = (int)name;
+
+        StopAllCoroutines();
+        UpdateCurrent();
+
         StartCoroutine(TransitionOverTime(lighting[index], timeInSeconds));
         return;
         
@@ -83,7 +91,7 @@ public class BattleLighting : MonoBehaviour
         float timeElapsed = 0f;
         while (timeElapsed < timeInSeconds)
         {
-            float ratio = timeElapsed / timeInSeconds;
+            float ratio = Mathf.SmoothStep(0f, 1f, timeElapsed / timeInSeconds);
 
             // lerp global lighting
             global.color = Color.Lerp(current.globalCol, next.globalCol, ratio);
@@ -126,7 +134,20 @@ public class BattleLighting : MonoBehaviour
 
         current = next;
 
-        Debug.Log("Lighting transition complete!");
+        Debug.Log("Lighting transition complete! Transitioned to " + next.name);
+    }
+
+    public void UpdateCurrent()
+    {
+        current.globalCol = global.color;
+        current.globalIntensity = global.intensity;
+
+        current.sunCol = sunGround.color;
+        current.sunIntensity = sunGround.intensity;
+        current.sunPos = new Vector2(sunGround.transform.position.x, sunGround.transform.position.y);
+        current.sunScale = new Vector2(sunGround.transform.localScale.x, sunGround.transform.localScale.y);
+
+        current.unitSunMult = sunUnits.intensity / sunGround.intensity;
     }
 
 
@@ -154,13 +175,12 @@ public class BattleLighting : MonoBehaviour
         Debug.Log(sunGround);
         Debug.Log(sunUnits);
         Debug.Log(global);
-        yield return new WaitForSeconds(1.0f);
-        TransitionLightingByName(Time.Morning);
+        yield return StartCoroutine(TransitionOverTime(lighting[(int)Time.Morning], 5.0f));
         yield return new WaitForSeconds(3.5f);
-        TransitionLightingByName(Time.Noon);
+        yield return StartCoroutine(TransitionOverTime(lighting[(int)Time.Noon], 5.0f));
         yield return new WaitForSeconds(3.5f);
-        TransitionLightingByName(Time.Afternoon);
+        yield return StartCoroutine(TransitionOverTime(lighting[(int)Time.Afternoon], 5.0f));
         yield return new WaitForSeconds(3.5f);
-        TransitionLightingByName(Time.Evening);
+        yield return StartCoroutine(TransitionOverTime(lighting[(int)Time.Evening], 5.0f));
     }
 }

@@ -8,27 +8,45 @@ public class LevelSelect : MonoBehaviour
     public bool goToSoup = true;
     public Encounter mainEncounter = null;
     public FMODUnity.StudioEventEmitter selectSfx;
+    public GenericConfirmationMenu confirmationPrompt;
     private Button[] buttons;
 
     private void Start()
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         var pSaveData = DoNotDestroyOnLoad.Instance.permanentSaveData;
-        int latestGamePhase = PersistentData.GamePhaseToInt(pSaveData.latestGamePhase);
-        int latestDay = pSaveData.latestDay;
+        string latestPhase = pSaveData.LatestGamePhase;
+        int latestPhaseInt = PersistentData.GamePhaseToInt(latestPhase);
+        int latestDay = pSaveData.LatestDay;
+        bool Disable(int phase, int day, bool camp)
+        {
+            if (phase == latestPhaseInt)
+            {
+                if (latestPhase == PersistentData.gamePhaseTut3AndLuaBattle && latestDay > 0 && day > 0)
+                    return pSaveData.OnBattle && camp;
+                if (latestPhase == PersistentData.gamePhaseAbsoluteZeroBattle)
+                    return pSaveData.OnBattle && camp;
+                if (day == latestDay)
+                    return pSaveData.OnBattle && camp;
+                return day > latestDay;
+            }
+            return phase > latestPhaseInt;
+        }
         buttons = GetComponentsInChildren<Button>();
         for (int i = 0; i < buttons.Length - 1; ++i)
         {
             var button = buttons[i];
+            // Why have i committed this crime against indices
             int phase = (i + 3) / 4;
             int day = ((i - 1) % 4) / 2;
-            if (phase > latestGamePhase || (phase == latestGamePhase && day > latestDay) || (phase == latestGamePhase && day == latestDay && pSaveData.onBattle && i % 2 == 0))
+            bool camp = i % 2 == 0;
+            if (Disable(phase, day, camp))
             {
                 button.GetComponentInChildren<Text>().text = "???";
                 continue;
             }
             button.interactable = true;
-            if (i % 2 == 0) // Button goes to camp scene
+            if (camp) // Button goes to camp scene
             {
                 button.onClick.AddListener(() => GoToCamp(PersistentData.IntToGamePhase(phase), day));
             }
@@ -47,36 +65,46 @@ public class LevelSelect : MonoBehaviour
 
     public void GoToBattle(string phase, int dayNum)
     {
-        SetPersistantData(phase, dayNum);
-        if(goToSoup && !(phase == PersistentData.gamePhaseTut1And2 && dayNum == PersistentData.dayNumStart))
+        confirmationPrompt.OnConfirm = null;
+        confirmationPrompt.OnConfirm += () =>
         {
-            SceneTransitionManager.main.TransitionScenes("Breakfast");
-        }
-        else
-        {
-            SceneTransitionManager.main.TransitionScenes("Battle");
-        }
+            SetPersistantData(phase, dayNum);
+            if (goToSoup && !(phase == PersistentData.gamePhaseTut1And2 && dayNum == PersistentData.dayNumStart))
+            {
+                SceneTransitionManager.main.TransitionScenes("Breakfast");
+            }
+            else
+            {
+                SceneTransitionManager.main.TransitionScenes("Battle");
+            }
+        };
+        confirmationPrompt.Show();
     }
 
     public void GoToCamp(string phase, int dayNum)
     {
-        SetPersistantData(phase, dayNum);
-        var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        if (phase == PersistentData.gamePhaseIntro)
+        confirmationPrompt.OnConfirm = null;
+        confirmationPrompt.OnConfirm += () =>
         {
-            SceneTransitionManager.main.TransitionScenes("IntroCamp");
-        }
-        else if(phase == PersistentData.gamePhaseAbsoluteZeroBattle)
-        {
-            pData.absoluteZeroPhase1Defeated = true;
-            SceneTransitionManager.main.TransitionScenes("OutroCamp");
-        }
-        else
-        {
-            if (pData.InLuaBattle)
-                pData.luaBossPhase2Defeated = true;
-            SceneTransitionManager.main.TransitionScenes("Camp");
-        }
+            SetPersistantData(phase, dayNum);
+            var pData = DoNotDestroyOnLoad.Instance.persistentData;
+            if (phase == PersistentData.gamePhaseIntro)
+            {
+                SceneTransitionManager.main.TransitionScenes("IntroCamp");
+            }
+            else if (phase == PersistentData.gamePhaseAbsoluteZeroBattle)
+            {
+                pData.absoluteZeroPhase1Defeated = true;
+                SceneTransitionManager.main.TransitionScenes("OutroCamp");
+            }
+            else
+            {
+                if (pData.InLuaBattle)
+                    pData.luaBossPhase2Defeated = true;
+                SceneTransitionManager.main.TransitionScenes("Camp");
+            }
+        };
+        confirmationPrompt.Show();
     }
 
     private void SetPersistantData(string phase, int dayNum)
@@ -106,14 +134,6 @@ public class LevelSelect : MonoBehaviour
                 totalEnemies += mainEncounter.Waves[i].enemies.Count;
             }
             pData.numEnemiesLeft = totalEnemies;
-        }
-
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }   
     }
 }

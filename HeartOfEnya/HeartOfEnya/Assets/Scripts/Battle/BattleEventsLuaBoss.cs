@@ -115,6 +115,6 @@ public class BattleEventsLuaBoss : MonoBehaviour
         var runner = DialogManager.main.runner;
         runner.StartDialogue("LuaBossOutro");
         yield return new WaitWhile(() => runner.isDialogueRunning);
-        SceneTransitionManager.main.TransitionScenes("Camp");
+        PhaseManager.main.EndBattle();
     }
 }

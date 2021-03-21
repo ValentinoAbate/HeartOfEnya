@@ -114,11 +114,10 @@ public class PhaseManager : MonoBehaviour, IPausable
     public void EndBattle()
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        var enemyList = pData.listEnemiesLeft;
-        enemyList.Clear();
+        pData.listEnemiesLeft.Clear();
         foreach (var enemy in EnemyPhase.Enemies)
         {
-            enemyList.Add(new PersistentData.SavedCombatant()
+            pData.listEnemiesLeft.Add(new PersistentData.SavedCombatant()
             {
                 prefabAsset = enemy.PrefabOrigin,
                 remainingHP = enemy.Hp,

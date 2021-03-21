@@ -124,7 +124,6 @@ public class LevelSelect : MonoBehaviour
             else if(phase == PersistentData.gamePhaseLuaUnfrozen)
             {
                 pData.waveNum = dayNum == PersistentData.dayNumStart ? 8 : 12;
-                pData.waveNum = 19;
             }
             else if(phase == PersistentData.gamePhaseAbsoluteZeroBattle)
             {

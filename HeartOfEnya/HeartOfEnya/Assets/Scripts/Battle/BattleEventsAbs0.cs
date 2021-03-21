@@ -120,7 +120,7 @@ public class BattleEventsAbs0 : MonoBehaviour
         var runner = DialogManager.main.runner;
         runner.StartDialogue("Abs0BossOutro");
         yield return new WaitWhile(() => runner.isDialogueRunning);
-        SceneTransitionManager.main.TransitionScenes("OutroCamp");
+        PhaseManager.main.EndBattle();
         battleEvents.Unpause();
     }
 }

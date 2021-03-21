@@ -116,6 +116,7 @@ public class LevelSelect : MonoBehaviour
         {
             pData.luaBossPhase2Defeated = true;
             pData.lastEncounter = mainEncounter;
+            int waveMod = 0;
             if(phase == PersistentData.gamePhaseBeginMain && dayNum == PersistentData.dayNumStart + 1)
             {
                 pData.waveNum = 4;
@@ -123,15 +124,18 @@ public class LevelSelect : MonoBehaviour
             else if(phase == PersistentData.gamePhaseLuaUnfrozen)
             {
                 pData.waveNum = dayNum == PersistentData.dayNumStart ? 8 : 12;
+                pData.waveNum = 19;
             }
             else if(phase == PersistentData.gamePhaseAbsoluteZeroBattle)
             {
-                pData.waveNum = 16;
+                pData.waveNum = 15;
+                waveMod = 1; // Don't include the first wave
             }
             int totalEnemies = 0;
-            for (int i = mainEncounter.Waves.Length - 1; i >= pData.waveNum; --i)
+            // Add remaining unspawned waves
+            for (int waveNum = pData.waveNum + waveMod; waveNum < mainEncounter.Waves.Length; ++waveNum)
             {
-                totalEnemies += mainEncounter.Waves[i].enemies.Count;
+                totalEnemies += mainEncounter.Waves[waveNum].enemies.Count;
             }
             pData.numEnemiesLeft = totalEnemies;
         }   

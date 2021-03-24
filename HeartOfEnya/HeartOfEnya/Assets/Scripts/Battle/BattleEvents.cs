@@ -226,7 +226,7 @@ public class BattleEvents : MonoBehaviour
         // unrestrict movement/targeting
         BattleUI.main.MoveableTiles.Clear();
         BattleUI.main.TargetableTiles.Clear();
-        BattleUI.main.ShowPrompt("Click on Bapy to select them.");
+        BattleUI.main.ShowPrompt("Click on Bapy to select them, then click a tile to move.");
         Unpause();
     }
 
@@ -334,7 +334,7 @@ public class BattleEvents : MonoBehaviour
     private IEnumerator BapySelectTrigger2Post(DialogueRunner runner)
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
-        BattleUI.main.ShowPrompt("Click on Bapy to select them, then click a tile to move"); 
+        BattleUI.main.ShowPrompt("Click on Bapy to select them, then click a tile to move."); 
         Unpause();
     }
 
@@ -593,6 +593,6 @@ public class BattleEvents : MonoBehaviour
     private IEnumerator NoEnemiesLeftInMainPhaseTriggerPost(DialogueRunner runner)
     {
         yield return new WaitWhile(() => runner.isDialogueRunning);
-        SceneTransitionManager.main.TransitionScenes("Camp");
+        PhaseManager.main.EndBattle();
     }
 }

@@ -57,8 +57,14 @@ public class CreditsAnimation : MonoBehaviour
         if (thisanim.GetCurrentAnimatorStateInfo(0).IsName("Credits") &&
             thisanim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
         {
-            sm.TransitionScenes("MainMenu");
             finished = true;
+            StartCoroutine(DelayedTransition());
         }
+    }
+
+    IEnumerator DelayedTransition()
+    {
+        yield return new WaitForSeconds(1.5f);
+        sm.TransitionScenes("MainMenu");
     }
 }

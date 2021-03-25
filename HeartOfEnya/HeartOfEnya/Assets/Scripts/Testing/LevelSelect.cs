@@ -146,7 +146,6 @@ public class LevelSelect : MonoBehaviour
                     {
                         pData.waveNum = d2WaveNum;
                     }
-
                 }
                 else
                 {

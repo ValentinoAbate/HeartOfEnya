@@ -68,7 +68,7 @@ public class LevelSelect : MonoBehaviour
         confirmationPrompt.OnConfirm = null;
         confirmationPrompt.OnConfirm += () =>
         {
-            SetPersistantData(phase, dayNum);
+            SetPersistantData(phase, dayNum, false);
             if (goToSoup && !(phase == PersistentData.gamePhaseTut1And2 && dayNum == PersistentData.dayNumStart))
             {
                 SceneTransitionManager.main.TransitionScenes("Breakfast");
@@ -86,7 +86,7 @@ public class LevelSelect : MonoBehaviour
         confirmationPrompt.OnConfirm = null;
         confirmationPrompt.OnConfirm += () =>
         {
-            SetPersistantData(phase, dayNum);
+            SetPersistantData(phase, dayNum, true);
             var pData = DoNotDestroyOnLoad.Instance.persistentData;
             if (phase == PersistentData.gamePhaseIntro)
             {
@@ -106,9 +106,13 @@ public class LevelSelect : MonoBehaviour
         };
         confirmationPrompt.Show();
     }
-
-    private void SetPersistantData(string phase, int dayNum)
+    const int c2WaveNum = 4;
+    const int d1WaveNum = 8;
+    const int d2WaveNum = 12;
+    const int e1WaveNum = 15;
+    private void SetPersistantData(string phase, int dayNum, bool camp)
     {
+
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         pData.dayNum = dayNum;
         pData.gamePhase = phase;
@@ -116,18 +120,42 @@ public class LevelSelect : MonoBehaviour
         {
             pData.luaBossPhase2Defeated = true;
             pData.lastEncounter = mainEncounter;
+            bool dayTwo = dayNum == PersistentData.dayNumStart + 1;
             int waveMod = 0;
-            if(phase == PersistentData.gamePhaseBeginMain && dayNum == PersistentData.dayNumStart + 1)
+            if(phase == PersistentData.gamePhaseBeginMain)
             {
-                pData.waveNum = 4;
+                if (camp)
+                {
+                    pData.waveNum = dayTwo ? d1WaveNum : c2WaveNum;
+                }
+                else if(dayTwo)
+                {
+                    pData.waveNum = c2WaveNum;
+                }
             }
             else if(phase == PersistentData.gamePhaseLuaUnfrozen)
             {
-                pData.waveNum = dayNum == PersistentData.dayNumStart ? 8 : 12;
+                if (camp)
+                {
+                    if(dayTwo)
+                    {
+                        pData.waveNum = e1WaveNum;
+                        waveMod = 1; // Don't include the first wave
+                    }
+                    else
+                    {
+                        pData.waveNum = d2WaveNum;
+                    }
+
+                }
+                else
+                {
+                    pData.waveNum = dayTwo ? d2WaveNum : d1WaveNum;
+                }
             }
             else if(phase == PersistentData.gamePhaseAbsoluteZeroBattle)
             {
-                pData.waveNum = 15;
+                pData.waveNum = e1WaveNum;
                 waveMod = 1; // Don't include the first wave
             }
             int totalEnemies = 0;

@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
+﻿using UnityEngine;
 
 /// <summary>
 /// A cursor that can be moved around the grid by the mouse.

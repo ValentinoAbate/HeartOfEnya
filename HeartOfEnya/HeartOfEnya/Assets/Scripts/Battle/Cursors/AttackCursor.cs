@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
-using System.Linq;
 
 /// <summary>
 /// A cursor class responisible for displaying and enacting attack target selection for party members.

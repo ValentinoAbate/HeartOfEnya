@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
+﻿using UnityEngine;
 
 /// <summary>
 /// Cursor that moves selected units (now with mouse control)

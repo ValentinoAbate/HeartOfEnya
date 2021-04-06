@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
 
 public class Pot : MonoBehaviour
 {
@@ -15,37 +13,14 @@ public class Pot : MonoBehaviour
     public List<GameObject> luaLvl;
 
 	private List<DraggableIngredient> chosenIngredients = new List<DraggableIngredient>(); //stores currently-active ingredients
-	private Controls _controls; //used to access the control system for "remove most recent ingredient" functionality
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    private void Awake()
-    {
-    	_controls = new Controls();
-    }
-
-    //turn on the "right click to cancel" function
-    private void OnEnable()
-    {
-        _controls.UI.Cancel.performed += RemoveMostRecent; //add RemoveMostRecent to the behaviors performed by left click
-        _controls.UI.Cancel.Enable(); //turn on the behavior
-    }
-
-    //turn off the "right click to cancel" function
-    private void OnDisable()
-    {
-        _controls.UI.Cancel.performed -= RemoveMostRecent; //remove RemoveMostRecent from the behaviors performed by left
-        _controls.UI.Cancel.Disable(); //turn off the behavior
+        if (Input.GetMouseButtonDown(1))
+        {
+            RemoveMostRecent();
+        }
     }
 
     //attempts to add an ingredient to the pot.
@@ -158,7 +133,7 @@ public class Pot : MonoBehaviour
     /// A variant of RemoveIngredient that removes the last ingredient added to the pot.
     /// Used with the right-click functionality.
     /// </summary>
-    private void RemoveMostRecent(InputAction.CallbackContext context)
+    private void RemoveMostRecent()
     {
         //abort if player interaction is disabled
         if (!SoupManager.main.AllowInteraction)

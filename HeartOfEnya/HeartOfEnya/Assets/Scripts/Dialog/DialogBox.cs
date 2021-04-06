@@ -1,12 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
-using UnityEngine.Experimental;
-using System;
-using UnityEngine.InputSystem;
 using System.Linq;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogBox : MonoBehaviour, IPausable
 {

@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Yarn.Unity;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
 
 public class SoupEvents : MonoBehaviour
 {
@@ -55,9 +53,6 @@ public class SoupEvents : MonoBehaviour
     private Image potArrow; //arrow pointing to the active ingredient, used in step 3
     private Image makeSoupArrow; //arrow pointing to the "make soup" button, used in step 6
 
-    //Controls object used for click-to-continue transitions
-    public Controls _controls;
-
     //tutorial state tracking
     private TutorialState tutorialState;
 
@@ -90,35 +85,17 @@ public class SoupEvents : MonoBehaviour
         //other setup
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
         tutorialDay2 = pData.InTutorialSecondDay;
-        _controls = new Controls();
         tutorialState = TutorialState.grabIngredient;
         Debug.Log("EVENTS LOADING " + tutorialDay2);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //
-    }
-
-    //set up an action to listen for mouse/spacebar and (if appropriate) advance the tutorial
-    private void OnEnable()
-    {
-        _controls.UI.Confirm.performed += AdvanceTutorial;
-        _controls.UI.Confirm.Enable();
-    }
-
-    //disable the action once we're done
-    private void OnDisable()
-    {
-        _controls.UI.Confirm.performed -= AdvanceTutorial;
-        _controls.UI.Confirm.Disable();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            AdvanceTutorial();
+        }
     }
 
     //Disables all UI elements. Intended for use in switching between tutorial states.
@@ -132,7 +109,7 @@ public class SoupEvents : MonoBehaviour
     }
 
     //used in handling click-to-advance transitions
-    private void AdvanceTutorial(InputAction.CallbackContext context)
+    private void AdvanceTutorial()
     {
         //figure out which transition to do
         switch (tutorialState)

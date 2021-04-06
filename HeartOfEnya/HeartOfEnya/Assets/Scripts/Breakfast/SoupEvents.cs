@@ -92,6 +92,10 @@ public class SoupEvents : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SoupManager.main.PauseHandle.Paused)
+        {
+            return;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             AdvanceTutorial();

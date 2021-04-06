@@ -97,6 +97,10 @@ public class DraggableIngredient : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SoupManager.main.PauseHandle.Paused)
+        {
+            return;
+        }
         //handle drag-&-drop
         if (dragging && SoupManager.main.AllowInteraction)
         {
@@ -110,6 +114,10 @@ public class DraggableIngredient : MonoBehaviour
     //if clicked, start dragging
     private void OnMouseDown()
     {
+        if (SoupManager.main.PauseHandle.Paused)
+        {
+            return;
+        }
         //abort if player interaction is disabled
         if (!SoupManager.main.AllowInteraction)
         {
@@ -170,6 +178,10 @@ public class DraggableIngredient : MonoBehaviour
     //if unclicked, stop dragging
     private void OnMouseUp()
     {
+        if (SoupManager.main.PauseHandle.Paused)
+        {
+            return;
+        }
         //abort if player interaction is disabled
         if (!SoupManager.main.AllowInteraction)
         {
@@ -213,6 +225,10 @@ public class DraggableIngredient : MonoBehaviour
     //detect mouse over & display the target/effect data
     private void OnMouseEnter()
     {
+        if (SoupManager.main.PauseHandle.Paused)
+        {
+            return;
+        }
         //abort if player interaction is disabled
         if (!SoupManager.main.AllowInteraction)
         {
@@ -230,6 +246,10 @@ public class DraggableIngredient : MonoBehaviour
     //detect mouse no longer over & hide the target/effect data
     private void OnMouseExit()
     {
+        if (SoupManager.main.PauseHandle.Paused)
+        {
+            return;
+        }
         //abort if player interaction is disabled
         if (!SoupManager.main.AllowInteraction)
         {

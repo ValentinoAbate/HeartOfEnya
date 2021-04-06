@@ -17,7 +17,11 @@ public class Pot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (SoupManager.main.PauseHandle.Paused)
+        {
+            return;
+        }
+        if (Input.GetMouseButtonDown(1) && !SoupManager.main.AllowOnlyRemove)
         {
             RemoveMostRecent();
         }

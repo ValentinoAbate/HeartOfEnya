@@ -105,7 +105,15 @@ public class SpawnPhase : Phase
         // Add saved enemies first
         foreach(var savedEnemy in pData.listEnemiesLeft)
         {
-            enemies.Add(savedEnemy.prefabAsset);
+            //blacklist Abs0 from his own reinforcement pool to avoid the dupe glitch.
+            if (savedEnemy.prefabAsset.name == "EnemyBossAbs0") //this will break if we rename the prefab, but at this point in development I don't think that's likely
+            {
+                Debug.Log("Abs0 has been banned from his own reinforcements");
+            }
+            else
+            {
+                enemies.Add(savedEnemy.prefabAsset);
+            }
         }
         // Added saved spawns second
         foreach(var savedSpawn in pData.listActiveSpawners)
@@ -194,6 +202,9 @@ public class SpawnPhase : Phase
             return;
 
         // This is a fresh encounter or a boss fight, just spawn everything
+        //NOTE: pData.InAbs0Battle will return false in the 2nd phase; it might be better to use "pData.gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle" instead.
+        //Discovered this behavior during Abs0 dupe bugtesting; I left the original statement in to avoid causing new bugs (since this line doesn't actually cause the dupe glitch)
+        //but I'm leaving this comment here just in case we ever need to mess with this again
         if (CurrEncounter != pData.lastEncounter || pData.InLuaBattle || pData.InAbs0Battle)
         {
             waveNum = startAtWave - 1;

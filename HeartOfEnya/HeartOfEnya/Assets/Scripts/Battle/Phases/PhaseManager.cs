@@ -114,15 +114,19 @@ public class PhaseManager : MonoBehaviour, IPausable
     public void EndBattle()
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        pData.listEnemiesLeft.Clear();
-        foreach (var enemy in EnemyPhase.Enemies)
+        // If in the main phase, save the main encounter data
+        if(pData.InMainPhase)
         {
-            pData.listEnemiesLeft.Add(new PersistentData.SavedCombatant()
+            pData.listEnemiesLeft.Clear();
+            foreach (var enemy in EnemyPhase.Enemies)
             {
-                prefabAsset = enemy.PrefabOrigin,
-                remainingHP = enemy.Hp,
-                spawnPos = enemy.OriginalPos
-            });
+                pData.listEnemiesLeft.Add(new PersistentData.SavedCombatant()
+                {
+                    prefabAsset = enemy.PrefabOrigin,
+                    remainingHP = enemy.Hp,
+                    spawnPos = enemy.OriginalPos
+                });
+            }
         }
         SpawnPhase.LogPersistentData();
         if (pData.absoluteZeroPhase1Defeated)

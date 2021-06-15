@@ -202,10 +202,7 @@ public class SpawnPhase : Phase
             return;
 
         // This is a fresh encounter or a boss fight, just spawn everything
-        //NOTE: pData.InAbs0Battle will return false in the 2nd phase; it might be better to use "pData.gamePhase == PersistentData.gamePhaseAbsoluteZeroBattle" instead.
-        //Discovered this behavior during Abs0 dupe bugtesting; I left the original statement in to avoid causing new bugs (since this line doesn't actually cause the dupe glitch)
-        //but I'm leaving this comment here just in case we ever need to mess with this again
-        if (CurrEncounter != pData.lastEncounter || pData.InLuaBattle || pData.InAbs0Battle)
+        if (CurrEncounter != pData.lastEncounter || pData.InLuaBattle || pData.InAbs0Battle || pData.absoluteZeroPhase1Defeated)
         {
             waveNum = startAtWave - 1;
             SpawnAllEnemiesAndObstacles(CurrWave);
@@ -477,12 +474,15 @@ public class SpawnPhase : Phase
     public void LogPersistentData()
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        pData.waveNum = waveNum;
         pData.lastEncounter = CurrEncounter;
-        pData.listActiveSpawners.Clear();
-        foreach (var spawner in spawners)
-            pData.listActiveSpawners.Add(spawner.SpawnData);
-
+        // If in the main phase, save the main whase data
+        if (pData.InMainPhase)
+        {
+            pData.waveNum = waveNum;
+            pData.listActiveSpawners.Clear();
+            foreach (var spawner in spawners)
+                pData.listActiveSpawners.Add(spawner.SpawnData);
+        }
         // Log playtest data from previous wave
         logger.testData.NewDataLog(
             waveNum, pData.dayNum, CurrWave.enemies.Count, "party retreated"

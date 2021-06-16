@@ -105,7 +105,15 @@ public class SpawnPhase : Phase
         // Add saved enemies first
         foreach(var savedEnemy in pData.listEnemiesLeft)
         {
-            enemies.Add(savedEnemy.prefabAsset);
+            //blacklist Abs0 from his own reinforcement pool to avoid the dupe glitch.
+            if (savedEnemy.prefabAsset.name == "EnemyBossAbs0") //this will break if we rename the prefab, but at this point in development I don't think that's likely
+            {
+                Debug.Log("Abs0 has been banned from his own reinforcements");
+            }
+            else
+            {
+                enemies.Add(savedEnemy.prefabAsset);
+            }
         }
         // Added saved spawns second
         foreach(var savedSpawn in pData.listActiveSpawners)
@@ -194,7 +202,7 @@ public class SpawnPhase : Phase
             return;
 
         // This is a fresh encounter or a boss fight, just spawn everything
-        if (CurrEncounter != pData.lastEncounter || pData.InLuaBattle || pData.InAbs0Battle)
+        if (CurrEncounter != pData.lastEncounter || pData.InLuaBattle || pData.InAbs0Battle || pData.absoluteZeroPhase1Defeated)
         {
             waveNum = startAtWave - 1;
             SpawnAllEnemiesAndObstacles(CurrWave);
@@ -466,12 +474,15 @@ public class SpawnPhase : Phase
     public void LogPersistentData()
     {
         var pData = DoNotDestroyOnLoad.Instance.persistentData;
-        pData.waveNum = waveNum;
         pData.lastEncounter = CurrEncounter;
-        pData.listActiveSpawners.Clear();
-        foreach (var spawner in spawners)
-            pData.listActiveSpawners.Add(spawner.SpawnData);
-
+        // If in the main phase, save the main whase data
+        if (pData.InMainPhase)
+        {
+            pData.waveNum = waveNum;
+            pData.listActiveSpawners.Clear();
+            foreach (var spawner in spawners)
+                pData.listActiveSpawners.Add(spawner.SpawnData);
+        }
         // Log playtest data from previous wave
         logger.testData.NewDataLog(
             waveNum, pData.dayNum, CurrWave.enemies.Count, "party retreated"

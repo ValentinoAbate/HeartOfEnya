@@ -1,43 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
+﻿using UnityEngine;
 
 /// <summary>
 /// Cursor that moves selected units (now with mouse control)
 /// </summary>
 public class MouseMoveCursor : MoveCursor
 {
-    //get a Controls object to access the input system
-	public Controls controlSys;
-
-	//set up & enable the actions we'll be using
-	private void OnEnable()
-	{
-        if(controlSys == null)
-            controlSys = new Controls();
-        controlSys.BattleUI.MousePos.performed += FollowMouse;
-		controlSys.BattleUI.MousePos.Enable();
-		controlSys.BattleUI.Select.performed += HandleSelect;
-		controlSys.BattleUI.Select.Enable();
-		controlSys.BattleUI.Deselect.performed += HandleDeselect;
-		controlSys.BattleUI.Deselect.Enable();
-	}
-
-	//clean up the actions once we're done (to avoid memory leaks)
-	private void OnDisable()
-	{
-        if (controlSys == null)
-            controlSys = new Controls();
-        controlSys.BattleUI.MousePos.performed -= FollowMouse;
-		controlSys.BattleUI.MousePos.Disable();
-		controlSys.BattleUI.Select.performed -= HandleSelect;
-		controlSys.BattleUI.Select.Disable();
-		controlSys.BattleUI.Deselect.performed -= HandleDeselect;
-		controlSys.BattleUI.Deselect.Disable();
-	}
-
 	public override void Highlight(Pos newPos)
     {
         if (newPos == Pos)
@@ -55,25 +22,25 @@ public class MouseMoveCursor : MoveCursor
     }
 
     //highlight whichever square is currently moused over
-    private void FollowMouse(InputAction.CallbackContext context)
+    private void FollowMouse(Vector3 mousePos)
     {
         if (PauseHandle.Paused)
             return;
     	//convert mouse coords from screenspace to worldspace to BattleGrid coords
-    	Pos newPos = BattleGrid.main.GetPos(Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>()));
+    	Pos newPos = BattleGrid.main.GetPos(Camera.main.ScreenToWorldPoint(mousePos));
     	Highlight(newPos);
     	// Debug.Log(Pos);
     }
 
     //gotta make a wrapper for Select so the input system can see it
-    private void HandleSelect(InputAction.CallbackContext context)
+    private void HandleSelect()
     {
         if (PauseHandle.Paused)
             return;
         Select();
     }
 
-    private void HandleDeselect(InputAction.CallbackContext context)
+    private void HandleDeselect()
     {
         if (PauseHandle.Paused || BonusMode || !BattleUI.main.CancelingEnabled)
             return;
@@ -83,8 +50,22 @@ public class MouseMoveCursor : MoveCursor
         PhaseManager.main.PartyPhase.CancelAction(partyMember);
     }
 
-	public override void ProcessInput()
-	{
+    private Vector3 oldMousePos;
 
-	}
+    public override void ProcessInput()
+	{
+        if (Input.mousePosition != oldMousePos)
+        {
+            FollowMouse(Input.mousePosition);
+            oldMousePos = Input.mousePosition;
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            HandleSelect();
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            HandleDeselect();
+        }
+    }
 }

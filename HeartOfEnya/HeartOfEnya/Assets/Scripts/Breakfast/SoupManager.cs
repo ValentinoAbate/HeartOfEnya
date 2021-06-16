@@ -6,7 +6,7 @@ using UnityEngine;
 /// controls all soup-related items & behaviors, including what buttons are active, what ingredients are selected, etc.
 /// </summary>
 [System.Serializable]
-public class SoupManager : MonoBehaviour
+public class SoupManager : MonoBehaviour, IPausable
 {
     //globally-accessible instance used to access the data.
     public static SoupManager main;
@@ -66,6 +66,8 @@ public class SoupManager : MonoBehaviour
         }
     }
 
+    public PauseHandle PauseHandle { get; set; }
+
     private FMODUnity.StudioEventEmitter sfxCancel;
     private FMODUnity.StudioEventEmitter sfxPlaceItem;
 
@@ -91,6 +93,7 @@ public class SoupManager : MonoBehaviour
     {
         sfxCancel = GameObject.Find("UICancel").GetComponent<FMODUnity.StudioEventEmitter>();
         sfxPlaceItem = GameObject.Find("PlaceItem").GetComponent<FMODUnity.StudioEventEmitter>();
+        PauseHandle = new PauseHandle();
 
         //spawn ingredient buttons
         int totalSpawned = 0; //how many buttons we've currently spawned

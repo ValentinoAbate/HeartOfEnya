@@ -33,6 +33,7 @@ namespace Dialog
         public Canvas dialogCanvas;
         public GameObject dialogBoxPrefab;
         public bool battleMode = false;
+        public Button dialogBoxButton;
         public List<Button> optionButtonsNormal;
         public List<Button> optionButtonsSolo;
         public List<Button> optionButtonsBattle;
@@ -80,6 +81,7 @@ namespace Dialog
             else
                 Debug.LogError("No dialog box prefab set in DialogUI on object: " + name);
             PauseHandle = new PauseHandle((pause) => dialogBox?.PauseHandle.SetPauseAll(pause));
+            dialogBoxButton.gameObject.transform.SetAsFirstSibling();
         }
 
         public override IEnumerator RunCommand(Command command)
@@ -180,6 +182,12 @@ namespace Dialog
             yield break;
         }
 
+        public void GoToNextState()
+        {
+            if(dialogBox != null)
+                dialogBox.GoToNext();
+        }
+
         public override IEnumerator RunLine(Line line)
         {
             if(newDialog)
@@ -187,6 +195,7 @@ namespace Dialog
                 newDialog = false;
                 foreach (var chara in characters)
                     chara.Expression = Character.defaultExpression;
+                dialogBoxButton.gameObject.SetActive(true);
             }
 
             // Correct the formatting
@@ -283,6 +292,7 @@ namespace Dialog
         public override IEnumerator DialogueComplete()
         {
             newDialog = true;
+            dialogBoxButton.gameObject.SetActive(false);
             if (dialogBox != null)
             {
                 dialogBox.Stop();

@@ -88,6 +88,10 @@ public class SoupButton : MonoBehaviour
     /// </summary>
     public void MakeSoup(string nextSceneName)
     {
+        if (SoupManager.main.PauseHandle.Paused)
+        {
+            return;
+        }
         if (clickEnabled)
         {
             //if the recipe is valid, perform any final actions and load the next level
@@ -135,6 +139,10 @@ public class SoupButton : MonoBehaviour
 
     public void OnSelect(BaseEventData eventData)
     {
+        if (SoupManager.main.PauseHandle.Paused)
+        {
+            return;
+        }
         sfxHighlight.Play();
         eventData.Use();
     }

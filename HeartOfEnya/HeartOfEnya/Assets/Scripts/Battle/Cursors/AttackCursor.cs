@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
-using System.Linq;
 
 /// <summary>
 /// A cursor class responisible for displaying and enacting attack target selection for party members.
@@ -25,72 +22,30 @@ public class AttackCursor : GridAndSelectionListCursor
     private readonly HashSet<Pos> inRange = new HashSet<Pos>();
     private readonly List<TileUI.Entry> tileUIEntries = new List<TileUI.Entry>();
 
-    public Controls controlSys;
-
     // Secondary mode fields
     private Pos primaryTarget = Pos.Zero;
     private bool inSecondaryMode = false;
 
- /// <summary>
- /// Copied from Mouse Cursor
- /// </summary>
-    private void OnEnable()
-    {
-        if (controlSys == null)
-            controlSys = new Controls();
-        controlSys.BattleUI.MousePos.performed += FollowMouse;
-        controlSys.BattleUI.MousePos.Enable();
-        controlSys.BattleUI.Select.performed += HandleSelect;
-        controlSys.BattleUI.Select.Enable();
-        controlSys.BattleUI.Deselect.performed += HandleCancel;
-        controlSys.BattleUI.Deselect.Enable();
-    }
-
     /// <summary>
     /// Copied from Mouse Cursor
     /// </summary>
-    private void OnDisable()
-    {
-        if (controlSys == null)
-            controlSys = new Controls();
-        controlSys.BattleUI.MousePos.performed -= FollowMouse;
-        controlSys.BattleUI.MousePos.Disable();
-        controlSys.BattleUI.Select.performed -= HandleSelect;
-        controlSys.BattleUI.Select.Disable();
-        controlSys.BattleUI.Deselect.performed -= HandleCancel;
-        controlSys.BattleUI.Deselect.Disable();
-    }
-
-    /// <summary>
-    /// Copied from Mouse Cursor
-    /// </summary>
-    private void FollowMouse(InputAction.CallbackContext context)
+    private void FollowMouse(Vector3 mousePos)
     {
         if (PauseHandle.Paused)
             return;
         //convert mouse coords from screenspace to worldspace to BattleGrid coords
-        Pos newPos = BattleGrid.main.GetPos(Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>()));
+        Pos newPos = BattleGrid.main.GetPos(Camera.main.ScreenToWorldPoint(mousePos));
         Highlight(newPos);
     }
 
     /// <summary>
     /// Copied From Mouse Cursor
     /// </summary>
-    private void HandleSelect(InputAction.CallbackContext context)
+    private void HandleSelect()
     {
         if (PauseHandle.Paused)
             return;
         Select();
-    }
-
-    /// <summary>
-    /// Adds in right click doing a move functionality.
-    /// </summary>
-    private void HandleCancel(InputAction.CallbackContext context)
-    {
-        if (PauseHandle.Paused || !BattleUI.main.CancelingEnabled)
-            return;
-        Cancel();
     }
 
     /// <summary>
@@ -290,12 +245,23 @@ public class AttackCursor : GridAndSelectionListCursor
         SetActive(false);
     }
 
-    /// <summary>
-    /// Basic grid and selection input plus canceling and special input logic for directional attacks.
-    /// </summary>
+    private Vector3 oldMousePos;
+
     public override void ProcessInput()
     {
-
+        if (Input.mousePosition != oldMousePos)
+        {
+            FollowMouse(Input.mousePosition);
+            oldMousePos = Input.mousePosition;
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            HandleSelect();
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            Cancel();
+        }
     }
 
     public bool CanMoveThrough(FieldObject obj)

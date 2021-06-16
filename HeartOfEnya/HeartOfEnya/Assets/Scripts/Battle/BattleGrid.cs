@@ -1,9 +1,6 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using System.Linq;
-using System;
 
 /// <summary>
 /// Top-Level class responsible for storing, organizing, and accessing all field entities involved with battle,
